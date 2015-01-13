@@ -1,0 +1,96 @@
+\pagebreak
+\chapter{\code{target} Construct}
+\label{chap:target}
+
+\section{\code{target} Construct on \code{parallel} Construct}
+
+This following example shows how the \code{target} construct offloads a code 
+region to a target device. The variables \plc{p}, \plc{v1}, \plc{v2}, and \plc{N} are implicitly mapped 
+to the the target device.
+
+\cexample{target}{1c}
+
+\fexample{target}{1f}
+
+\section{\code{target} Construct with \code{map} Clause}
+
+This following example shows how the \code{target} construct offloads a code 
+region to a target device. The variables \plc{p}, \plc{v1} and \plc{v2} are explicitly mapped to the 
+the target device using the map clause. The variable \plc{N} is implicitly mapped to 
+the target device.
+
+\cexample{target}{2c}
+
+\fexample{target}{2f}
+
+\section{\code{map} Clause with \code{to}/\code{from} map-types}
+
+The following example shows how the \code{target} construct offloads a code region 
+to a target device. In the \code{map} clause, the \code{to} and \code{from} 
+map-types define the mapping between the original (host) data and the target (device) 
+data. The \code{to} map-type specifies that the data will only be read on the 
+device, and the \code{from} map-type specifies that the data will only be written 
+to on the device. By specifying a guaranteed access on the device, data transfers 
+can be reduced for the \code{target} region.
+
+The \code{to} map-type indicates that at the start of the \code{target} region 
+the variables \plc{v1} and \plc{v2} are initialized with the values of the corresponding variables 
+on the host device, and at the end of the \code{target} region the variables 
+\plc{v1} and \plc{v2} are not assigned to their corresponding variables on the host device.
+
+The \code{from} map-type indicates that at the start of the \code{target} region 
+the variable \plc{p} is not initialized with the value of the corresponding variable 
+on the host device, and at the end of the \code{target} region the variable \plc{p} 
+is assigned to the corresponding variable on the host device.
+
+\cexample{target}{3c}
+
+The \code{to} and \code{from} map-types allow programmers to optimize data 
+motion. Since data for the \plc{v} arrays are not returned, and data for the \plc{p} array 
+are not transferred to the device, only one-half of the data is moved, compared 
+to the default behavior of an implicit mapping.
+
+\fexample{target}{3f}
+
+\section{\code{map} Clause with Array Sections}
+
+The following example shows how the \code{target} construct offloads a code region 
+to a target device. In the \code{map} clause, map-types are used to optimize 
+the mapping of variables to the target device. Because variables \plc{p}, \plc{v1} and \plc{v2} are 
+pointers, array section notation must be used to map the arrays. The notation \code{:N} 
+is equivalent to \code{0:N}.
+
+\cexample{target}{4c}
+
+In C, the length of the pointed-to array must be specified. In Fortran the extent 
+of the array is known and the length need not be specified. A section of the array 
+can be specified with the usual Fortran syntax, as shown in the following example. 
+The value 1 is assumed for the lower bound for array section \plc{v2(:N)}.
+
+\fexample{target}{4f}
+
+A more realistic situation in which an assumed-size array is passed to \code{vec\_mult} 
+requires that the length of the arrays be specified, because the compiler does 
+not know the size of the storage. A section of the array must be specified with 
+the usual Fortran syntax, as shown in the following example. The value 1 is assumed 
+for the lower bound for array section \plc{v2(:N)}.
+
+\fexample{target}{4bf}
+
+\section{\code{target} Construct with \code{if} Clause}
+
+The following example shows how the \code{target} construct offloads a code region 
+to a target device.
+
+The \code{if} clause on the \code{target} construct indicates that if the variable 
+\plc{N} is smaller than a given threshold, then the \code{target} region will be executed 
+by the host device.
+
+The \code{if} clause on the \code{parallel} construct indicates that if the 
+variable \plc{N} is smaller than a second threshold then the \code{parallel} region 
+is inactive.
+
+\cexample{target}{5c}
+
+\fexample{target}{5f}
+

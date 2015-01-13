@@ -1,0 +1,69 @@
+% This is the introduction for the OpenMP Examples document.
+% This is an included file. See the master file (openmp-examples.tex) for more information.
+%
+% When editing this file:
+%
+%    1. To change formatting, appearance, or style, please edit openmp.sty.
+%
+%    2. Custom commands and macros are defined in openmp.sty.
+%
+%    3. Be kind to other editors -- keep a consistent style by copying-and-pasting to
+%       create new content.
+%
+%    4. We use semantic markup, e.g. (see openmp.sty for a full list):
+%         \code{}     % for bold monospace keywords, code, operators, etc.
+%         \plc{}      % for italic placeholder names, grammar, etc.
+%
+%    5. Other recommendations:
+%         Use the convenience macros defined in openmp.sty for the minor headers
+%         such as Comments, Syntax, etc.
+%
+%         To keep items together on the same page, prefer the use of 
+%         \begin{samepage}.... Avoid \parbox for text blocks as it interrupts line numbering.
+%         When possible, avoid \filbreak, \pagebreak, \newpage, \clearpage unless that's
+%         what you mean. Use \needspace{} cautiously for troublesome paragraphs.
+%
+%         Avoid absolute lengths and measures in this file; use relative units when possible.
+%         Vertical space can be relative to \baselineskip or ex units. Horizontal space
+%         can be relative to \linewidth or em units.
+%
+%         Prefer \emph{} to italicize terminology, e.g.:
+%             This is a \emph{definition}, not a placeholder.
+%             This is a \plc{var-name}.
+%
+
+\chapter*{Introduction}
+\label{chap:introduction}
+This collection of programming examples supplements the OpenMP API for Shared
+Memory Parallelization specifications, and is not part of the formal specifications. It
+assumes familiarity with the OpenMP specifications, and shares the typographical
+conventions used in that document.
+
+\notestart
+\noteheader – This first release of the OpenMP Examples reflects the OpenMP Version 4.0
+specifications. Additional examples are being developed and will be published in future
+releases of this document.
+\noteend
+
+The OpenMP API specification provides a model for parallel programming that is
+portable across shared memory architectures from different vendors. Compilers from
+numerous vendors support the OpenMP API.
+
+The directives, library routines, and environment variables demonstrated in this
+document allow users to create and manage parallel programs while permitting
+portability. The directives extend the C, C++ and Fortran base languages with single
+program multiple data (SPMD) constructs, tasking constructs, device constructs,
+worksharing constructs, and synchronization constructs, and they provide support for
+sharing and privatizing data. The functionality to control the runtime environment is
+provided by library routines and environment variables. Compilers that support the
+OpenMP API often include a command line option to the compiler that activates and
+allows interpretation of all OpenMP directives.
+
+Complete information about the OpenMP API and a list of the compilers that support
+the OpenMP API can be found at the OpenMP.org web site
+
+\code{http://www.openmp.org}
+
+
+% This is the end of introduction.tex of the OpenMP Examples document.
+

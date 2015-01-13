@@ -1,0 +1,31 @@
+\pagebreak
+\chapter{Placement of \code{flush}, \code{barrier}, \code{taskwait} 
+and \code{taskyield} Directives}
+\label{chap:standalone}
+
+The following example is non-conforming, because the \code{flush}, \code{barrier}, 
+\code{taskwait}, and \code{taskyield}  directives are stand-alone directives 
+and cannot be the immediate substatement of an \code{if} statement. 
+
+\cexample{standalone}{1c}
+
+The following example is non-conforming, because the \code{flush}, \code{barrier}, 
+\code{taskwait}, and \code{taskyield}  directives are stand-alone directives 
+and cannot be the action statement of an \code{if} statement or a labeled branch 
+target.
+
+\fexample{standalone}{1f}
+
+The following version of the above example is conforming because the \code{flush}, 
+\code{barrier}, \code{taskwait}, and \code{taskyield} directives are enclosed 
+in a compound statement. 
+
+\cexample{standalone}{2c}
+
+The following example is conforming because the \code{flush}, \code{barrier}, 
+\code{taskwait}, and \code{taskyield} directives are enclosed in an \code{if} 
+construct or follow the labeled branch target.
+
+\fexample{standalone}{2f}
+
+

@@ -1,0 +1,243 @@
+\pagebreak
+\chapter{The \code{proc\_bind} Clause}
+\label{chap:affinity}
+
+The following examples demonstrate how to use the \code{proc\_bind} clause to 
+control the thread binding for a team of threads in a \code{parallel} region. 
+The machine architecture is depicted in the figure below. It consists of two sockets, 
+each equipped with a quad-core processor and configured to execute two hardware 
+threads simultaneously on each core. These examples assume a contiguous core numbering 
+starting from 0, such that the hardware threads 0,1 form the first physical core.
+
+\ifpdf
+%\begin{figure}[htbp]
+\centerline{\includegraphics[width=3.8in,keepaspectratio=true]%
+{figs/proc_bind_fig.pdf}}
+%\end{figure}
+\fi
+
+The following equivalent place list declarations consist of eight places (which 
+we designate as p0 to p7):
+
+\code{OMP\_PLACES=\texttt{"}\{0,1\},\{2,3\},\{4,5\},\{6,7\},\{8,9\},\{10,11\},\{12,13\},\{14,15\}\texttt{"}}
+
+or
+
+\code{OMP\_PLACES=\texttt{"}\{0:2\}:8:2\texttt{"}}
+
+\section{Spread Affinity Policy}
+
+The following example shows the result of the \code{spread} affinity policy on 
+the partition list when the number of threads is less than or equal to the number 
+of places in the parent's place partition, for the machine architecture depicted 
+above. Note that the threads are bound to the first place of each subpartition.
+
+\cexample{affinity}{1c}
+
+\fexample{affinity}{1f}
+
+It is unspecified on which place the master thread is initially started. If the 
+master thread is initially started on p0, the following placement of threads will 
+be applied in the parallel region:
+
+\begin{compactitem}
+\item thread 0 executes on p0 with the place partition p0,p1
+
+\item thread 1 executes on p2 with the place partition p2,p3
+
+\item thread 2 executes on p4 with the place partition p4,p5
+
+\item thread 3 executes on p6 with the place partition p6,p7
+\end{compactitem}
+
+
+If the master thread would initially be started on p2, the placement of threads 
+and distribution of the place partition would be as follows:
+
+\begin{compactitem}
+\item thread 0 executes on p2 with the place partition p2,p3
+
+\item thread 1 executes on p4 with the place partition p4,p5
+
+\item thread 2 executes on p6 with the place partition p6,p7
+
+\item thread 3 executes on p0 with the place partition p0,p1
+\end{compactitem}
+
+The following example illustrates the \code{spread} thread affinity policy when 
+the number of threads is greater than the number of places in the parent's place 
+partition.
+
+Let \plc{T} be the number of threads in the team, and \plc{P} be the number of places in the 
+parent's place partition. The first \plc{T/P} threads of the team (including the master 
+thread) execute on the parent's place. The next \plc{T/P} threads execute on the next 
+place in the place partition, and so on, with wrap around. 
+
+\cexample{affinity}{2c}
+
+\fexample{affinity}{2f}
+
+It is unspecified on which place the master thread is initially started. If the 
+master thread is initially started on p0, the following placement of threads will 
+be applied in the parallel region:
+
+\begin{compactitem}
+\item threads 0,1 execute on p0 with the place partition p0
+
+\item threads 2,3 execute on p1 with the place partition p1
+
+\item threads 4,5 execute on p2 with the place partition p2
+
+\item threads 6,7 execute on p3 with the place partition p3
+
+\item threads 8,9 execute on p4 with the place partition p4
+
+\item threads 10,11 execute on p5 with the place partition p5
+
+\item threads 12,13 execute on p6 with the place partition p6
+
+\item threads 14,15 execute on p7 with the place partition p7
+\end{compactitem}
+
+If the master thread would initially be started on p2, the placement of threads 
+and distribution of the place partition would be as follows:
+
+\begin{compactitem}
+\item threads 0,1 execute on p2 with the place partition p2
+
+\item threads 2,3 execute on p3 with the place partition p3
+
+\item threads 4,5 execute on p4 with the place partition p4
+
+\item threads 6,7 execute on p5 with the place partition p5
+
+\item threads 8,9 execute on p6 with the place partition p6
+
+\item threads 10,11 execute on p7 with the place partition p7
+
+\item threads 12,13 execute on p0 with the place partition p0
+
+\item threads 14,15 execute on p1 with the place partition p1
+\end{compactitem}
+
+\section{Close Affinity Policy}
+
+The following example shows the result of the \code{close} affinity policy on 
+the partition list when the number of threads is less than or equal to the number 
+of places in parent's place partition, for the machine architecture depicted above. 
+The place partition is not changed by the \code{close} policy.
+
+\cexample{affinity}{3c}
+
+\fexample{affinity}{3f}
+
+It is unspecified on which place the master thread is initially started. If the 
+master thread is initially started on p0, the following placement of threads will 
+be applied in the \code{parallel} region:
+
+\begin{compactitem}
+\item thread 0 executes on p0 with the place partition p0-p7
+
+\item thread 1 executes on p1 with the place partition p0-p7
+
+\item thread 2 executes on p2 with the place partition p0-p7
+
+\item thread 3 executes on p3 with the place partition p0-p7
+\end{compactitem}
+
+If the master thread would initially be started on p2, the placement of threads 
+and distribution of the place partition would be as follows:
+
+\begin{compactitem}
+\item thread 0 executes on p2 with the place partition p0-p7
+
+\item thread 1 executes on p3 with the place partition p0-p7
+
+\item thread 2 executes on p4 with the place partition p0-p7
+
+\item thread 3 executes on p5 with the place partition p0-p7
+\end{compactitem}
+
+The following example illustrates the \code{close} thread affinity policy when 
+the number of threads is greater than the number of places in the parent's place 
+partition.
+
+Let \plc{T} be the number of threads in the team, and \plc{P} be the number of places in the 
+parent's place partition. The first \plc{T/P} threads of the team (including the master 
+thread) execute on the parent's place. The next \plc{T/P} threads execute on the next 
+place in the place partition, and so on, with wrap around. The place partition 
+is not changed by the \code{close} policy.
+
+\cexample{affinity}{4c}
+
+\fexample{affinity}{4f}
+
+It is unspecified on which place the master thread is initially started. If the 
+master thread is initially running on p0, the following placement of threads will 
+be applied in the parallel region:
+
+\begin{compactitem}
+\item threads 0,1 execute on p0 with the place partition p0-p7
+
+\item threads 2,3 execute on p1 with the place partition p0-p7
+
+\item threads 4,5 execute on p2 with the place partition p0-p7
+
+\item threads 6,7 execute on p3 with the place partition p0-p7
+
+\item threads 8,9 execute on p4 with the place partition p0-p7
+
+\item threads 10,11 execute on p5 with the place partition p0-p7
+
+\item threads 12,13 execute on p6 with the place partition p0-p7
+
+\item threads 14,15 execute on p7 with the place partition p0-p7
+\end{compactitem}
+
+If the master thread would initially be started on p2, the placement of threads 
+and distribution of the place partition would be as follows:
+
+\begin{compactitem}
+\item threads 0,1 execute on p2 with the place partition p0-p7
+
+\item threads 2,3 execute on p3 with the place partition p0-p7
+
+\item threads 4,5 execute on p4 with the place partition p0-p7
+
+\item threads 6,7 execute on p5 with the place partition p0-p7
+
+\item threads 8,9 execute on p6 with the place partition p0-p7
+
+\item threads 10,11 execute on p7 with the place partition p0-p7
+
+\item threads 12,13 execute on p0 with the place partition p0-p7
+
+\item threads 14,15 execute on p1 with the place partition p0-p7
+\end{compactitem}
+
+\section{Master Affinity Policy}
+
+The following example shows the result of the \code{master} affinity policy on 
+the partition list for the machine architecture depicted above. The place partition 
+is not changed by the master policy.
+
+\cexample{affinity}{5c}
+
+\fexample{affinity}{5f}
+
+It is unspecified on which place the master thread is initially started. If the 
+master thread is initially running on p0, the following placement of threads will 
+be applied in the parallel region:
+
+\begin{compactitem}
+\item threads 0-3 execute on p0 with the place partition p0-p7
+\end{compactitem}
+
+If the master thread would initially be started on p2, the placement of threads 
+and distribution of the place partition would be as follows:
+
+\begin{compactitem}
+\item threads 0-3 execute on p2 with the place partition p0-p7
+\end{compactitem}
+
+

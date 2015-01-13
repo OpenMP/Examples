@@ -1,0 +1,111 @@
+\pagebreak
+\chapter{\code{declare} \code{target} Construct}
+\label{chap:declare_target}
+
+\section{\code{declare} \code{target} and \code{end} \code{declare} \code{target} for a Function}
+
+The following example shows how the \code{declare} \code{target} directive 
+is used to indicate that the corresponding call inside a \code{target} region 
+is to a \code{fib} function that can execute on the default target device.
+
+A version of the function is also available on the host device. When the \code{if} 
+clause conditional expression on the \code{target} construct evaluates to \plc{false}, 
+the \code{target} region (thus \code{fib}) will execute on the host device.
+
+For C/C++ codes the declaration of the function \code{fib} appears between the \code{declare} 
+\code{target} and \code{end} \code{declare} \code{target} directives.
+
+\cexample{declare_target}{1c}
+
+The Fortran \code{fib} subroutine contains a \code{declare} \code{target} declaration 
+to indicate to the compiler to create an device executable version of the procedure. 
+The subroutine name has not been included on the \code{declare} \code{target} 
+directive and is, therefore, implicitly assumed.
+
+The program uses the \code{module\_fib} module, which presents an explicit interface to 
+the compiler with the \code{declare} \code{target} declarations for processing 
+the \code{fib} call.
+
+\fexample{declare_target}{1f}
+
+The next Fortran example shows the use of an external subroutine. Without an explicit 
+interface (through module use or an interface block) the \code{declare} \code{target} 
+declarations within a external subroutine are unknown to the main program unit; 
+therefore, a \code{declare} \code{target} must be provided within the program 
+scope for the compiler to determine that a target binary should be available.
+
+\fexample{declare_target}{2f}
+
+\section{\code{declare} \code{target} Construct for Class Type}
+
+The following example shows how the \code{declare} \code{target} and \code{end} 
+\code{declare} \code{target} directives are used to enclose the declaration 
+of a variable \plc{varY} with a class type \code{typeY}. The member function \code{typeY::foo()} cannot 
+be accessed on a target device because its declaration did not appear between \code{declare} 
+\code{target} and \code{end} \code{declare} \code{target} directives.
+
+\cexample{declare_target}{2c}
+
+\section{\code{declare} \code{target} and \code{end} \code{declare} \code{target} for Variables}
+
+The following examples show how the \code{declare} \code{target} and \code{end} 
+\code{declare} \code{target} directives are used to indicate that global variables 
+are mapped to the implicit device data environment of each target device.
+
+In the following example, the declarations of the variables \plc{p}, \plc{v1}, and \plc{v2} appear 
+between \code{declare} \code{target} and \code{end} \code{declare} \code{target} 
+directives indicating that the variables are mapped to the implicit device data 
+environment of each target device. The \code{target} \code{update} directive 
+is then used to manage the consistency of the variables \plc{p}, \plc{v1}, and \plc{v2} between the 
+data environment of the encountering host device task and the implicit device data 
+environment of the default target device.
+
+\cexample{declare_target}{3c}
+
+The Fortran version of the above C code uses a different syntax. Fortran modules 
+use a list syntax on the \code{declare} \code{target} directive to declare 
+mapped variables.
+
+\fexample{declare_target}{3f}
+
+The following example also indicates that the function \code{Pfun()} is available on the 
+target device, as well as the variable \plc{Q}, which is mapped to the implicit device 
+data environment of each target device. The \code{target} \code{update} directive 
+is then used to manage the consistency of the variable \plc{Q} between the data environment 
+of the encountering host device task and the implicit device data environment of 
+the default target device.
+
+In the following example, the function and variable declarations appear between 
+the \code{declare} \code{target} and \code{end} \code{declare} \code{target} 
+directives.
+
+\cexample{declare_target}{4c}
+
+The Fortran version of the above C code uses a different syntax. In Fortran modules 
+a list syntax on the \code{declare} \code{target} directive is used to declare 
+mapped variables and procedures. The \plc{N} and \plc{Q} variables are declared as a comma 
+separated list. When the \code{declare} \code{target} directive is used to 
+declare just the procedure, the procedure name need not be listed -- it is implicitly 
+assumed, as illustrated in the \code{Pfun()} function.
+
+\fexample{declare_target}{4f}
+
+\section{\code{declare} \code{target} and \code{end} \code{declare} \code{target} with \code{declare} \code{simd}}
+
+The following example shows how the \code{declare} \code{target} and \code{end} 
+\code{declare} \code{target} directives are used to indicate that a function 
+is available on a target device. The \code{declare} \code{simd} directive indicates 
+that there is a SIMD version of the function \code{P()} that is available on the target 
+device as well as one that is available on the host device.
+
+\cexample{declare_target}{5c}
+
+The Fortran version of the above C code uses a different syntax. Fortran modules 
+use a list syntax of the \code{declare} \code{target} declaration for the mapping. 
+Here the \plc{N} and \plc{Q} variables are declared in the list form as a comma separated list. 
+The function declaration does not use a list and implicitly assumes the function 
+name. In this Fortran example row and column indices are reversed relative to the 
+C/C++ example, as is usual for codes optimized for memory access.
+
+\fexample{declare_target}{5f}
+

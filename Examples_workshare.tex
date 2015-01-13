@@ -1,0 +1,76 @@
+\pagebreak
+\chapter{The \code{workshare} Construct}
+\fortranspecificstart
+\label{chap:workshare}
+
+The following are examples of the \code{workshare} construct. 
+
+In the following example, \code{workshare} spreads work across the threads executing 
+the \code{parallel} region, and there is a barrier after the last statement. 
+Implementations must enforce Fortran execution rules inside of the \code{workshare} 
+block.
+
+\fnexample{workshare}{1f}
+
+In the following example, the barrier at the end of the first \code{workshare} 
+region is eliminated with a \code{nowait} clause. Threads doing \code{CC = 
+DD} immediately begin work on \code{EE = FF} when they are done with \code{CC 
+= DD}.
+
+\fnexample{workshare}{2f}
+% blue line floater at top of this page for "Fortran, cont."
+\begin{figure}[t!]
+\linewitharrows{-1}{dashed}{Fortran (cont.)}{8em}
+\end{figure}
+
+The following example shows the use of an \code{atomic} directive inside a \code{workshare} 
+construct. The computation of \code{SUM(AA)} is workshared, but the update to 
+\code{R} is atomic.
+
+\fnexample{workshare}{3f}
+
+Fortran \code{WHERE} and \code{FORALL} statements are \emph{compound statements}, 
+made up of a \emph{control} part and a \emph{statement} part. When \code{workshare} 
+is applied to one of these compound statements, both the control and the statement 
+parts are workshared. The following example shows the use of a \code{WHERE} statement 
+in a \code{workshare} construct.
+
+Each task gets worked on in order by the threads:
+
+\code{AA = BB} then
+\\
+\code{CC = DD} then
+\\
+\code{EE .ne. 0} then
+\\
+\code{FF = 1 / EE} then
+\\
+\code{GG = HH}
+
+\fnexample{workshare}{4f}
+% blue line floater at top of this page for "Fortran, cont."
+\begin{figure}[t!]
+\linewitharrows{-1}{dashed}{Fortran (cont.)}{8em}
+\end{figure}
+
+In the following example, an assignment to a shared scalar variable is performed 
+by one thread in a \code{workshare} while all other threads in the team wait.
+
+\fnexample{workshare}{5f}
+
+The following example contains an assignment to a private scalar variable, which 
+is performed by one thread in a \code{workshare} while all other threads wait. 
+It is non-conforming because the private scalar variable is undefined after the 
+assignment statement. 
+
+\fnexample{workshare}{6f}
+
+Fortran execution rules must be enforced inside a \code{workshare} construct. 
+In the following example, the same result is produced in the following program 
+fragment regardless of whether the code is executed sequentially or inside an OpenMP 
+program with multiple threads:
+
+\fnexample{workshare}{7f}
+\fortranspecificend
+
+

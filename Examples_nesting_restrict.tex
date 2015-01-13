@@ -1,0 +1,52 @@
+\pagebreak
+\chapter{Restrictions on Nesting of Regions}
+\label{chap:nesting_restrict}
+
+The examples in this section illustrate the region nesting rules. 
+
+The following example is non-conforming because the inner and outer loop regions 
+are closely nested:
+
+\cexample{nesting_restrict}{1c}
+
+\fexample{nesting_restrict}{1f}
+
+The following orphaned version of the preceding example is also non-conforming:
+
+\cexample{nesting_restrict}{2c}
+
+\fexample{nesting_restrict}{2f}
+
+The following example is non-conforming because the loop and \code{single} regions 
+are closely nested:
+
+\cexample{nesting_restrict}{3c}
+
+\fexample{nesting_restrict}{3f}
+
+The following example is non-conforming because a \code{barrier} region cannot 
+be closely nested inside a loop region:
+
+\cexample{nesting_restrict}{4c}
+
+\fexample{nesting_restrict}{4f}
+
+The following example is non-conforming because the \code{barrier} region cannot 
+be closely nested inside the \code{critical} region. If this were permitted, 
+it would result in deadlock due to the fact that only one thread at a time can 
+enter the \code{critical} region:
+
+\cexample{nesting_restrict}{5c}
+
+\fexample{nesting_restrict}{5f}
+
+The following example is non-conforming because the \code{barrier} region cannot 
+be closely nested inside the \code{single} region. If this were permitted, it 
+would result in deadlock due to the fact that only one thread executes the \code{single} 
+region:
+
+\cexample{nesting_restrict}{6c}
+
+\fexample{nesting_restrict}{6f}
+
+

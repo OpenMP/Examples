@@ -1,0 +1,20 @@
+\pagebreak
+\chapter{The \code{taskgroup} Construct}
+\label{chap:taskgroup}
+
+In this example, tasks are grouped and synchronized using the \code{taskgroup} 
+construct.
+
+Initially, one task (the task executing the \code{start\_background\_work()} 
+call) is created in the \code{parallel} region, and later a parallel tree traversal 
+is started (the task executing the root of the recursive \code{compute\_tree()} 
+calls). While synchronizing tasks at the end of each tree traversal, using the 
+\code{taskgroup} construct ensures that the formerly started background task 
+does not participate in the synchronization, and is left free to execute in parallel. 
+This is opposed to the behaviour of the \code{taskwait} construct, which would 
+include the background tasks in the synchronization.
+
+\cexample{taskgroup}{1c}
+
+\fexample{taskgroup}{1f}
+

@@ -1,0 +1,14 @@
+\pagebreak
+\chapter{The \code{taskyield} Directive}
+\label{chap:taskyield}
+
+The following example illustrates the use of the \code{taskyield}  directive. 
+The tasks in the example compute something useful and then do some computation 
+that must be done in a critical region. By using \code{taskyield} when a task 
+cannot get access to the \code{critical} region the implementation can suspend 
+the current task and schedule some other task that can do something useful. 
+
+\cexample{taskyield}{1c}
+
+\fexample{taskyield}{1f}
+

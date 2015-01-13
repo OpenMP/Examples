@@ -1,0 +1,484 @@
+% This is openmp.sty, the preamble and style definitions for the OpenMP specification.
+% This is an include file. Please see the master file for more information.
+%
+% When editing this file:
+%
+%    1. To change formatting, appearance, or style, please edit openmp.sty.
+%
+%    2. Custom commands and macros are defined in openmp.sty.
+%
+%    3. Be kind to other editors -- keep a consistent style by copying-and-pasting to
+%       create new content.
+%
+%    4. We use semantic markup, e.g. (see openmp.sty for a full list):
+%         \code{}     % for bold monospace keywords, code, operators, etc.
+%         \plc{}      % for italic placeholder names, grammar, etc.
+%
+%    5. Other recommendations:
+%         Use the convenience macros defined in openmp.sty for the minor headers
+%         such as Comments, Syntax, etc.
+%
+%         To keep items together on the same page, prefer the use of 
+%         \begin{samepage}.... Avoid \parbox for text blocks as it interrupts line numbering.
+%         When possible, avoid \filbreak, \pagebreak, \newpage, \clearpage unless that's
+%         what you mean. Use \needspace{} cautiously for troublesome paragraphs.
+%
+%         Avoid absolute lengths and measures in this file; use relative units when possible.
+%         Vertical space can be relative to \baselineskip or ex units. Horizontal space
+%         can be relative to \linewidth or em units.
+%
+%         Prefer \emph{} to italicize terminology, e.g.:
+%             This is a \emph{definition}, not a placeholder.
+%             This is a \plc{var-name}.
+%
+% Quick list of the environments, commands and macros supported. Search below for more details.
+%
+%    \binding                   % makes header of the same name
+%    \comments
+%    \constraints
+%    \crossreferences
+%    \descr
+%    \effect
+%    \format
+%    \restrictions
+%    \summary
+%    \syntax
+%    
+%    \code{}                    % monospace, bold
+%    \plc{}                     % for any kind of placeholder: italic
+%    \begin{codepar}            % for blocks of verbatim code: monospace, bold
+%    \begin{boxedcode}          % outlined verbatim code for syntax definitions, prototypes, etc.
+%    \begin{indentedcodelist}   % used with,e.g., "where clause is one of the following:"
+%
+%    \specref{}                 % formats the cross-reference "Section X on page Y"
+%    
+%    \notestart                 % black horizontal rule for Notes
+%    \noteend
+%    
+%    \cspecificstart            % blue horizontal rule for C-specific text
+%    \cspecificend
+%    
+%    \cppspecificstart          % blue horizontal rule for C++ -specific text
+%    \cppspecificend
+%    
+%    \ccppspecificstart         % blue horizontal rule for C / C++ -specific text
+%    \ccppspecificend
+%    
+%    \fortranspecificstart      % blue horizontal rule for Fortran-specific text
+%    \fortranspecificend
+%    
+%    \glossaryterm              % for use in formatting glossary entries
+%    \glossarydefstart
+%    \glossarydefend
+%
+%    \compactitem               % single-spaced itemized lists for the Examples doc
+%    \cexample                  % C/C++ code example for the Examples doc
+%    \fexample                  % Fortran code example for the Examples doc
+
+
+\usepackage{comment}            % allow use of \begin{comment}
+\usepackage{ifpdf,ifthen}       % allow conditional tests in LaTeX definitions
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document data
+%
+\author{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fonts
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{courier}
+\usepackage{helvet}
+\usepackage[utf8]{inputenc}
+
+% Main body serif font:
+\usepackage{tgtermes}
+\usepackage[T1]{fontenc}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Graphic elements
+
+\usepackage{graphicx}
+\usepackage{framed}    % for making boxes with \begin{framed}
+\usepackage{tikz}      % for flow charts, diagrams, arrows
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Page formatting
+
+\usepackage[paperwidth=7.5in, paperheight=9in, 
+            top=0.75in, bottom=1.0in, left=1.4in, right=0.6in]{geometry}
+
+\usepackage{changepage}   % allows left/right-page margin readjustments
+
+\setlength{\oddsidemargin}{0.45in}
+\setlength{\evensidemargin}{0.185in}
+\raggedbottom
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Paragraph formatting
+
+\usepackage{setspace}     % allows use of \singlespacing, \onehalfspacing
+\usepackage{needspace}    % allows use of \needspace to keep lines together
+\usepackage{parskip}      % removes paragraph indenting
+
+\raggedright
+\usepackage[raggedrightboxes]{ragged2e}  % is this needed?
+
+\lefthyphenmin=60         % only hyphenate if the left part is >= this many chars
+\righthyphenmin=60        % only hyphenate if the right part is >= this many chars
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bulleted (itemized) lists
+%    Align bullets with section header
+%    Align text left
+%    Small bullets
+%    \compactitem for single-spaced lists (used in the Examples doc)
+
+\usepackage{enumitem}     % for setting margins on lists
+\setlist{leftmargin=*}    % don't indent bullet items
+\renewcommand{\labelitemi}{{\normalsize$\bullet$}} % bullet size
+
+% There is a \compactitem defined in package parlist (and perhaps others), however,
+% we'll define our own version of compactitem in terms of package enumitem that
+% we already use:
+\newenvironment{compactitem}
+{\begin{itemize}[itemsep=-1.2ex]}
+{\end{itemize}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Tables
+
+% This allows tables to flow across page breaks, headers on each new page, etc.
+\usepackage{supertabular}
+\usepackage{caption}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Line numbering
+
+\usepackage[pagewise]{lineno}       % for line numbers on left side of the page
+\pagewiselinenumbers
+\setlength\linenumbersep{6em}
+\renewcommand\linenumberfont{\normalfont\small\sffamily}
+\nolinenumbers            % start with line numbers off
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Footers
+
+\usepackage{fancyhdr}     % makes right/left footers
+\pagestyle{fancy}
+\fancyhead{} % clear all header fields
+\cfoot{}
+\renewcommand{\headrulewidth}{0pt}
+
+% Left side on even pages:
+% This requires that \footerText be defined in the master document:
+\fancyfoot[LE]{\bfseries \thepage \mdseries \hspace{2em} \footerText}
+\fancyhfoffset[E]{4em}
+
+% Right side on odd pages:
+\fancyfoot[RO]{\mdseries  \leftmark \hspace{2em} \bfseries \thepage}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Section header format - we use four levels: \chapter \section \subsection \subsubsection.
+
+\usepackage{titlesec}     % format headers with \titleformat{}
+
+% Format and spacing for chapter, section, subsection, and subsubsection headers:
+
+\setcounter{secnumdepth}{4}          % show numbers down to subsubsection level
+
+\titleformat{\chapter}[display]%
+{\normalfont\sffamily\upshape\Huge\bfseries\fontsize{20}{20}\selectfont}%
+{\normalfont\sffamily\scshape\large\bfseries \hspace{-0.7in} \MakeUppercase%
+    {\chaptertitlename} \thechapter}%
+{0.8in}{}[\vspace{2ex}\hrule]
+\titlespacing{\chapter}{0ex}{0em plus 1em minus 1em}{3em plus 1em minus 1em}[10em]
+
+\titleformat{\section}[hang]{\huge\bfseries\sffamily\fontsize{16}{16}\selectfont}{\thesection}{1.0em}{}
+\titlespacing{\section}{-5em}{5em plus 1em minus 1em}{1em plus 0.5em minus 0em}[10em]
+
+\titleformat{\subsection}[hang]{\LARGE\bfseries\sffamily\fontsize{14}{14}\selectfont}{\thesubsection}{1.0em}{}
+\titlespacing{\subsection}{-5em}{4em plus 1em minus 2.0em}{0.75em plus 0.5em minus 0em}[10em]
+
+\titleformat{\subsubsection}[hang]{\needspace{1\baselineskip}%
+\Large\bfseries\sffamily\fontsize{12}{12}\selectfont}{\thesubsubsection}{1.0em}{}
+\titlespacing{\subsubsection}{-5em}{3em plus 1em minus 1em}{0.5em plus 0.5em minus 0em}[10em]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Macros for minor headers: Summary, Syntax, Description, etc.
+% These headers are defined in terms of \paragraph
+
+\titleformat{\paragraph}[block]{\large\bfseries\sffamily\fontsize{11}{11}\selectfont}{}{}{}
+\titlespacing{\paragraph}{0em}{1.5em plus 0.55em minus 0.5em}{0.0em plus 0.55em minus 0.0em}
+
+% Use one of the convenience macros below, or \littleheader{} for an arbitrary header
+\newcommand{\littleheader}[1] {\paragraph*{#1}}
+
+\newcommand{\binding} {\littleheader{Binding}}
+\newcommand{\comments} {\littleheader{Comments}}
+\newcommand{\constraints} {\littleheader{Constraints on Arguments}}
+\newcommand{\crossreferences} {\littleheader{Cross References}}
+\newcommand{\descr} {\littleheader{Description}}
+\newcommand{\effect} {\littleheader{Effect}}
+\newcommand{\format} {\littleheader{Format}}
+\newcommand{\restrictions} {\littleheader{Restrictions}}
+\newcommand{\summary} {\littleheader{Summary}}
+\newcommand{\syntax} {\littleheader{Syntax}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Code and placeholder semantic tagging.
+%
+% When possible, prefer semantic tags instead of typographic tags. The
+% following semantics tags are defined here:
+%
+%     \code{}     % for bold monospace keywords, code, operators, etc.
+%     \plc{}      % for italic placeholder names, grammar, etc.
+%
+% For function prototypes or other code snippets, you can use \code{} as
+% the outer wrapper, and use \plc{{} inside. Example:
+%
+%     \code{\#pragma omp directive ( \plc{some-placeholder-identifier} :}
+%
+% To format text in italics for emphasis (rather than text as a placeholder),
+% use the generic \emph{} command. Example:
+%
+%     This sentence \emph{emphasizes some non-placeholder words}.
+
+% Enable \alltt{} for formatting blocks of code:
+\usepackage{alltt}
+
+% This sets the default \code{} font to tt (monospace) and bold:
+\newcommand{\code}[1]{{\texttt{\textbf{#1}}}}
+\newcommand{\nspace}[1]{{\textrm{\textmd{ }}}}
+
+% This defines the \plc{} placeholder font to be tt normal slanted:
+\newcommand{\plc}[1] {{\textrm{\textmd{\itshape{#1}}}}}
+
+% Environment for a paragraph of literal code, single-spaced, no outline, no indenting:
+\newenvironment{codepar}[1]
+{\begin{alltt}\bfseries #1}
+{\end{alltt}}
+
+% For blocks of code inside a box frame:
+\newenvironment{boxedcode}[1]
+{\vspace{0.25em plus 5em minus 0.25em}\begin{framed}\begin{minipage}[t]{\textwidth}\begin{alltt}\bfseries #1}
+{\end{alltt}\end{minipage}\end{framed}\vspace{0.25em plus 5em minus 0.25em}}
+
+% This sets the margins in the framed box:
+\setlength{\FrameSep}{0.6em}
+
+% For indented lists of verbatim code at a relaxed line spacing,
+% e.g., for use after "where clause is one of the following:"
+\usepackage{setspace}
+\newenvironment{indentedcodelist}{%
+    \begin{adjustwidth}{0.25in}{}\begin{spacing}{1.5}\begin{alltt}\bfseries}
+    {\end{alltt}\end{spacing}\vspace{-0.25\baselineskip}\end{adjustwidth}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Macros for the black and blue lines and arrows delineating language-specific
+% and notes sections. Example:
+%
+%   \fortranspecificstart
+%   This is text that applies to Fortran.
+%   \fortranspecificend
+
+% local parameters for use \linewitharrows and \notelinewitharrows:
+\newlength{\sbsz}\setlength{\sbsz}{0.05in}  % size of arrows
+\newlength{\sblw}\setlength{\sblw}{1.35pt}  % line width (thickness)
+\newlength{\sbtw}                           % text width
+\newlength{\sblen}                          % total width of horizontal rule
+\newlength{\sbht}                           % height of arrows
+\newlength{\sbhadj}                         % vertical adjustment for aligning arrows with the line
+\newlength{\sbns}\setlength{\sbns}{7\baselineskip}       % arg for \needspace for downward arrows
+
+% \notelinewitharrows is a helper command that makes a black Note marker:
+%     arg 1 = 1 or -1 for up or down arrows
+%     arg 2 = solid or dashed or loosely dashed, etc.
+\newcommand{\notelinewitharrows}[2]{%
+    \needspace{0.1\baselineskip}%
+    \vbox{\begin{tikzpicture}%
+        \setlength{\sblen}{\linewidth}%
+        \setlength{\sbht}{#1\sbsz}\setlength{\sbht}{1.4\sbht}%
+        \setlength{\sbhadj}{#1\sblw}\setlength{\sbhadj}{0.25\sbhadj}%
+        \filldraw (\sblen, 0) -- (\sblen - \sbsz, \sbht) -- (\sblen - 2\sbsz, 0) -- (\sblen, 0);
+        \draw[line width=\sblw, #2] (2\sbsz - \sblw, \sbhadj) -- (\sblen - 2\sbsz + \sblw, \sbhadj);
+        \filldraw (0, 0) -- (\sbsz, \sbht) -- (0 + 2\sbsz, 0) -- (0, 0);
+    \end{tikzpicture}}}
+
+% \linewitharrows is a helper command that makes a blue horizontal line, up or down arrows, and some text:
+% arg 1 = 1 or -1 for up or down arrows
+% arg 2 = solid or dashed or loosely dashed, etc.
+% arg 3 = text
+% arg 4 = text width
+\newcommand{\linewitharrows}[4]{%
+    \needspace{0.1\baselineskip}%
+    \vbox to 1\baselineskip {\begin{tikzpicture}%
+        \setlength{\sbtw}{#4}%
+        \setlength{\sblen}{\linewidth}%
+        \setlength{\sbht}{#1\sbsz}\setlength{\sbht}{1.4\sbht}%
+        \setlength{\sbhadj}{#1\sblw}\setlength{\sbhadj}{0.25\sbhadj}%
+        \filldraw[color=blue!40] (\sblen, 0) -- (\sblen - \sbsz, \sbht) -- (\sblen - 2\sbsz, 0) -- (\sblen, 0);
+        \draw[line width=\sblw, color=blue!40, #2] (2\sbsz - \sblw, \sbhadj) -- (0.5\sblen - 0.5\sbtw, \sbhadj);
+        \draw[line width=\sblw, color=blue!40, #2] (0.5\sblen + 0.5\sbtw, \sbhadj) -- (\sblen - 2\sbsz + \sblw, \sbhadj);
+        \filldraw[color=blue!40] (0, 0) -- (\sbsz, \sbht) -- (0 + 2\sbsz, 0) -- (0, 0);
+        \node[color=blue!90] at (0.5\sblen, 0) {\large  \textsf{\textup{#3}}};
+    \end{tikzpicture}}}
+
+\newcommand{\VSPb}{\vspace{0.5ex plus 5ex minus 0.25ex}}
+\newcommand{\VSPa}{\vspace{0.25ex plus 5ex minus 0.25ex}}
+
+% C
+\newcommand{\cspecificstart}{\needspace{\sbns}\linewitharrows{-1}{solid}{C}{3em}}
+\newcommand{\cspecificend}{\linewitharrows{1}{solid}{C}{3em}\bigskip}
+
+% C/C++
+\newcommand{\ccppspecificstart}{\VSPb\linewitharrows{-1}{solid}{C / C++}{6em}\VSPa}
+\newcommand{\ccppspecificend}{\VSPb\linewitharrows{1}{solid}{C / C++}{6em}\VSPa}
+
+% C++
+\newcommand{\cppspecificstart}{\needspace{\sbns}\linewitharrows{-1}{solid}{C++}{6em}}
+\newcommand{\cppspecificend}{\linewitharrows{1}{solid}{C++}{6em}\bigskip}
+
+% C90
+\newcommand{\cNinetyspecificstart}{\needspace{\sbns}\linewitharrows{-1}{solid}{C90}{4em}}
+\newcommand{\cNinetyspecificend}{\linewitharrows{1}{solid}{C90}{4em}\bigskip}
+
+% C99
+\newcommand{\cNinetyNinespecificstart}{\needspace{\sbns}\linewitharrows{-1}{solid}{C99}{4em}}
+\newcommand{\cNinetyNinespecificend}{\linewitharrows{1}{solid}{C99}{4em}\bigskip}
+
+% Fortran
+\newcommand{\fortranspecificstart}{\VSPb\linewitharrows{-1}{solid}{Fortran}{6em}\VSPa}
+\newcommand{\fortranspecificend}{\VSPb\linewitharrows{1}{solid}{Fortran}{6em}\VSPa}
+
+% Note
+\newcommand{\notestart}{\VSPb\notelinewitharrows{-1}{solid}\VSPa}
+\newcommand{\noteend}{\VSPb\notelinewitharrows{1}{solid}\VSPa}
+
+% convenience macro for formatting the word "Note:" at the beginning of note blocks:
+\newcommand{\noteheader}{{\textrm{\textsf{\textbf\textup\normalsize{{{{Note }}}}}}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Glossary formatting
+
+\newcommand{\glossaryterm}[1]{\needspace{1ex}
+\begin{adjustwidth}{-0.75in}{0.0in}
+\nolinenumbers\parbox[b][-0.95\baselineskip][t]{1.4in}{\flushright \textbf{#1}}
+\end{adjustwidth}\linenumbers}
+
+\newcommand{\glossarydefstart}{
+\begin{adjustwidth}{0.79in}{0.0in}}
+
+\newcommand{\glossarydefend}{
+\end{adjustwidth}\vspace{-1.5\baselineskip}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Indexing and Table of Contents
+
+\usepackage{makeidx}
+\usepackage[nodotinlabels]{titletoc}   % required for its [nodotinlabels] option
+
+% Clickable links in TOC and index:
+\usepackage[hyperindex=true,linktocpage=true]{hyperref}
+\hypersetup{
+  colorlinks  = true, % Colors links instead of red boxes
+  urlcolor    = blue, % Color for external links
+  linkcolor   = blue  % Color for internal links
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formats a cross reference label as "Section X on page Y".
+
+\newcommand{\specref}[1]{Section~\ref{#1} on page~\pageref{#1}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Code example formatting for the Examples document
+% This defines:
+%     /cexample       formats blue markers, caption, and code for C/C++ examples
+%     /fexample       formats blue markers, caption, and code for Fortran examples
+% Thanks to Jin, Haoqiang H. for the original definitions of the following:
+
+\usepackage{color,fancyvrb}  % for \VerbatimInput
+\usepackage{toolbox}         % for \toolboxMakeSplit
+
+\renewcommand\theFancyVerbLine{\normalfont\footnotesize\sffamily S-\arabic{FancyVerbLine}}
+
+\newcommand{\myreplace}[3]{\bgroup\toolboxMakeSplit*{#1}{DoSplit}%
+   \long\def\DoReplace##1{\DoSplit{##1}\lefttext\righttext
+   \lefttext
+   \toolboxIfElse{\ifx\righttext\undefined}{}%
+      {#2\expandafter\DoReplace\expandafter{\righttext}}}%
+   \DoReplace{#3}\egroup}
+
+\newcommand{\escstr}[1]{\myreplace{_}{\_}{#1}}
+
+\def\exampleheader#1#2{%
+   \ifthenelse{ \equal{#1}{} }{
+      \def\cname{#2}
+      \def\ename\cname
+   }{
+      \def\cname{#1.#2}
+% Use following line for old numbering
+      \def\ename{\thechapter.#2}
+% Use following for mneumonics
+%      \def\ename{\escstr{#1}.#2}
+   }
+   \noindent
+   \textit{Example \ename}
+   %\vspace*{-3mm}
+}
+
+\def\cnexample#1#2{%
+   \exampleheader{#1}{#2}
+   \code{\VerbatimInput[numbers=left,numbersep=10ex,firstnumber=1,firstline=8,fontsize=\small]%
+   %\code{\VerbatimInput[numbers=left,firstnumber=1,firstline=8,fontsize=\small]%
+   %\code{\VerbatimInput[firstline=8,fontsize=\small]%
+      {sources/Example_\cname.c}} 
+}
+
+\def\fnexample#1#2{%
+   \exampleheader{#1}{#2}
+   \code{\VerbatimInput[numbers=left,numbersep=10ex,firstnumber=1,firstline=6,fontsize=\small]%
+   %\code{\VerbatimInput[numbers=left,firstnumber=1,firstline=6,fontsize=\small]%
+   %\code{\VerbatimInput[firstline=6,fontsize=\small]%
+      {sources/Example_\cname.f}}
+}
+
+\newcommand\cexample[2]{%
+\needspace{5\baselineskip}\ccppspecificstart
+\cnexample{#1}{#2}
+\ccppspecificend
+}
+
+\newcommand\fexample[2]{%
+\needspace{5\baselineskip}\fortranspecificstart
+\fnexample{#1}{#2}
+\fortranspecificend
+}
+
+
+% Set default fonts:
+\rmfamily\mdseries\upshape\normalsize
+
+
+% This is the end of openmp.sty of the OpenMP specification.

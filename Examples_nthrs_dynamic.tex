@@ -1,0 +1,30 @@
+\pagebreak
+\chapter{Interaction Between the \code{num\_threads} Clause and \code{omp\_set\_dynamic}}
+\label{chap:nthrs_dynamic}
+
+The following example demonstrates the \code{num\_threads} clause  and the effect 
+of the \\
+\code{omp\_set\_dynamic} routine  on it.
+
+The call to the \code{omp\_set\_dynamic} routine with argument \code{0} in 
+C/C++, or \code{.FALSE.} in Fortran, disables the dynamic adjustment of the number 
+of threads in OpenMP implementations that support it. In this case, 10 threads 
+are provided. Note that in case of an error the OpenMP implementation is free to 
+abort the program or to supply any number of threads available.
+
+\cexample{nthrs_dynamic}{1c}
+
+\fexample{nthrs_dynamic}{1f}
+
+The call to the \code{omp\_set\_dynamic} routine with a non-zero argument in 
+C/C++, or \code{.TRUE.} in Fortran, allows the OpenMP implementation to choose 
+any number of threads between 1 and 10.
+
+\cexample{nthrs_dynamic}{2c}
+
+\fexample{nthrs_dynamic}{2f}
+
+It is good practice to set the \plc{dyn-var} ICV explicitly by calling the \code{omp\_set\_dynamic} 
+routine, as its default setting is implementation defined.
+
+

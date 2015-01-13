@@ -1,0 +1,16 @@
+\pagebreak
+\chapter{The \code{critical} Construct}
+\label{chap:critical}
+
+The following example includes several \code{critical} constructs . The example 
+illustrates a queuing model in which a task is dequeued and worked on. To guard 
+against multiple threads dequeuing the same task, the dequeuing operation must 
+be in a \code{critical} region. Because the two queues in this example are independent, 
+they are protected by \code{critical} constructs with different names, \plc{xaxis} 
+and \plc{yaxis}.
+
+\cexample{critical}{1c}
+
+\fexample{critical}{1f}
+
+

@@ -1,0 +1,118 @@
+\pagebreak
+\chapter{\code{teams} Constructs}
+\label{chap:teams}
+
+\section{\code{target} and \code{teams} Constructs with \code{omp\_get\_num\_teams}\\
+and \code{omp\_get\_team\_num} Routines}
+
+The following example shows how the \code{target} and \code{teams} constructs 
+are used to create a league of thread teams that execute a region. The \code{teams} 
+construct creates a league of at most two teams where the master thread of each 
+team executes the \code{teams} region.
+
+The \code{omp\_get\_num\_teams} routine returns the number of teams executing in a \code{teams} 
+region. The \code{omp\_get\_team\_num} routine returns the team number, which is an integer 
+between 0 and one less than the value returned by \code{omp\_get\_num\_teams}. The following 
+example manually distributes a loop across two teams.
+
+\cexample{teams}{1c}
+
+\fexample{teams}{1f}
+
+\section{\code{target}, \code{teams}, and \code{distribute} Constructs}
+
+The following example shows how the \code{target}, \code{teams}, and \code{distribute} 
+constructs are used to execute a loop nest in a \code{target} region. The \code{teams} 
+construct creates a league and the master thread of each team executes the \code{teams} 
+region. The \code{distribute} construct schedules the subsequent loop iterations 
+across the master threads of each team.
+
+The number of teams in the league is less than or equal to the variable \plc{num\_blocks}. 
+Each team in the league has a number of threads less than or equal to the variable 
+\plc{block\_threads}. The iterations in the outer loop are distributed among the master 
+threads of each team.
+
+When a team's master thread encounters the parallel loop construct before the inner 
+loop, the other threads in its team are activated. The team executes the \code{parallel} 
+region and then workshares the execution of the loop.
+
+Each master thread executing the \code{teams} region has a private copy of the 
+variable \plc{sum} that is created by the \code{reduction} clause on the \code{teams} construct. 
+The master thread and all threads in its team have a private copy of the variable 
+\plc{sum} that is created by the \code{reduction} clause on the parallel loop construct. 
+The second private \plc{sum} is reduced into the master thread's private copy of \plc{sum} 
+created by the \code{teams} construct. At the end of the \code{teams} region, 
+each master thread's private copy of \plc{sum} is reduced into the final \plc{sum} that is 
+implicitly mapped into the \code{target} region.
+
+\cexample{teams}{2c}
+
+\fexample{teams}{2f}
+
+\section{\code{target} \code{teams}, and Distribute Parallel Loop Constructs}
+
+The following example shows how the \code{target} \code{teams} and distribute 
+parallel loop constructs are used to execute a \code{target} region. The \code{target} 
+\code{teams} construct creates a league of teams where the master thread of each 
+team executes the \code{teams} region.
+
+The distribute parallel loop construct schedules the loop iterations across the 
+master threads of each team and then across the threads of each team.
+
+\cexample{teams}{3c}
+
+\fexample{teams}{3f}
+
+\section{\code{target} \code{teams} and Distribute Parallel Loop 
+Constructs with Scheduling Clauses}
+
+The following example shows how the \code{target} \code{teams} and distribute 
+parallel loop constructs are used to execute a \code{target} region. The \code{teams} 
+construct creates a league of at most eight teams where the master thread of each 
+team executes the \code{teams} region. The number of threads in each team is 
+less than or equal to 16.
+
+The \code{distribute} parallel loop construct schedules the subsequent loop iterations 
+across the master threads of each team and then across the threads of each team.
+
+The \code{dist\_schedule} clause on the distribute parallel loop construct indicates 
+that loop iterations are distributed to the master thread of each team in chunks 
+of 1024 iterations.
+
+The \code{schedule} clause indicates that the 1024 iterations distributed to 
+a master thread are then assigned to the threads in its associated team in chunks 
+of 64 iterations.
+
+\cexample{teams}{4c}
+
+\fexample{teams}{4f}
+
+\section{\code{target} \code{teams} and \code{distribute} \code{simd} Constructs}
+
+The following example shows how the \code{target} \code{teams} and \code{distribute} 
+\code{simd} constructs are used to execute a loop in a \code{target} region. 
+The \code{target} \code{teams} construct creates a league of teams where the 
+master thread of each team executes the \code{teams} region.
+
+The \code{distribute} \code{simd} construct schedules the loop iterations across 
+the master thread of each team and then uses SIMD parallelism to execute the iterations.
+
+\cexample{teams}{5c}
+
+\fexample{teams}{5f}
+
+\section{\code{target} \code{teams} and Distribute Parallel Loop SIMD Constructs}
+
+The following example shows how the \code{target} \code{teams} and the distribute 
+parallel loop SIMD constructs are used to execute a loop in a \code{target} \code{teams} 
+region. The \code{target} \code{teams} construct creates a league of teams 
+where the master thread of each team executes the \code{teams} region.
+
+The distribute parallel loop SIMD construct schedules the loop iterations across 
+the master thread of each team and then across the threads of each team where each 
+thread uses SIMD parallelism.
+
+\cexample{teams}{6c}
+
+\fexample{teams}{6f}
+

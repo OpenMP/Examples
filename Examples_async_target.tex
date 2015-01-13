@@ -1,0 +1,31 @@
+\pagebreak
+\chapter{Asynchronous Execution of a \code{target} Region Using Tasks}
+\label{chap:async_target}
+
+The following example shows how the \code{task} and \code{target} constructs 
+are used to execute multiple \code{target} regions asynchronously. The task that 
+encounters the \code{task} construct generates an explicit task that contains 
+a \code{target} region. The thread executing the explicit task encounters a task 
+scheduling point while waiting for the execution of the \code{target} region 
+to complete, allowing the thread to switch back to the execution of the encountering 
+task or one of the previously generated explicit tasks.
+
+\cexample{async_target}{1c}
+
+The Fortran version has an interface block that contains the \code{declare} \code{target}. 
+An identical statement exists in the function declaration (not shown here).
+
+\fexample{async_target}{1f}
+
+The following example shows how the \code{task} and \code{target} constructs 
+are used to execute multiple \code{target} regions asynchronously. The task dependence 
+ensures that the storage is allocated and initialized on the device before it is 
+accessed.
+
+\cexample{async_target}{2c}
+
+The Fortran example uses allocatable arrays for dynamic memory on the device. 
+
+\fexample{async_target}{2f}
+
+

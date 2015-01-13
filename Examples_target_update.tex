@@ -1,0 +1,53 @@
+\pagebreak
+\chapter{\code{target} \code{update} Construct}
+\label{chap:target_update}
+
+\section{Simple \code{target} \code{data} and \code{target} \code{update} Constructs}
+
+The following example shows how the \code{target} \code{update} construct updates 
+variables in a device data environment.
+
+The \code{target} \code{data} construct maps array sections \plc{v1[:N]} and \plc{v2[:N]} 
+(arrays \plc{v1} and \plc{v2} in the Fortran code) into a device data environment.
+
+The task executing on the host device encounters the first \code{target} region 
+and waits for the completion of the region.
+
+After the execution of the first \code{target} region, the task executing on 
+the host device then assigns new values to \plc{v1[:N]} and \plc{v2[:N]} (\plc{v1} and \plc{v2} arrays 
+in Fortran code) in the task's data environment by calling the function \code{init\_again()}.
+
+The \code{target} \code{update} construct assigns the new values of \plc{v1} and 
+\plc{v2} from the task's data environment to the corresponding mapped array sections 
+in the device data environment of the \code{target} \code{data} construct.
+
+The task executing on the host device then encounters the second \code{target} 
+region and waits for the completion of the region.
+
+The second \code{target} region uses the updated values of \plc{v1[:N]} and \plc{v2[:N]}.
+
+\cexample{target_update}{1c}
+
+\fexample{target_update}{1f}
+
+\section{\code{target} \code{update} Construct with \code{if} Clause}
+
+The following example shows how the \code{target} \code{update} construct updates 
+variables in a device data environment.
+
+The \code{target} \code{data} construct maps array sections \plc{v1[:N]} and \plc{v2[:N]} 
+(arrays \plc{v1} and \plc{v2} in the Fortran code) into a device data environment. In between 
+the two \code{target} regions, the task executing on the host device conditionally 
+assigns new values to \plc{v1} and \plc{v2} in the task's data environment. The function \code{maybe\_init\_again()} 
+returns \plc{true} if new data is written.
+
+When the conditional expression (the return value of \code{maybe\_init\_again()}) in the 
+\code{if} clause is \plc{true}, the \code{target} \code{update} construct 
+assigns the new values of \plc{v1} and \plc{v2} from the task's data environment to the corresponding 
+mapped array sections in the \code{target} \code{data} construct's device data 
+environment.
+
+\cexample{target_update}{2c}
+
+\fexample{target_update}{2f}
+

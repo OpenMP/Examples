@@ -1,0 +1,35 @@
+\pagebreak
+\chapter{Device Routines}
+\label{chap:device}
+
+\section{\code{omp\_is\_initial\_device} Routine}
+
+The following example shows how the \code{omp\_is\_initial\_device} runtime library routine 
+can be used to query if a code is executing on the initial host device or on a 
+target device. The example then sets the number of threads in the \code{parallel} 
+region based on where the code is executing.
+
+\cexample{device}{1c}
+
+\fexample{device}{1f}
+
+\section{\code{omp\_get\_num\_devices} Routine}
+
+The following example shows how the \code{omp\_get\_num\_devices} runtime library routine 
+can be used to determine the number of devices.
+
+\cexample{device}{2c}
+
+\fexample{device}{2f}
+
+\section{\code{omp\_set\_default\_device} and \\
+\code{omp\_get\_default\_device} Routines}
+
+The following example shows how the \code{omp\_set\_default\_device} and \code{omp\_get\_default\_device} 
+runtime library routines can be used to set the default device and determine the 
+default device respectively.
+
+\cexample{device}{3c}
+
+\fexample{device}{3f}
+

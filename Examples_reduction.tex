@@ -1,0 +1,60 @@
+\pagebreak
+\chapter{The \code{reduction} Clause}
+\label{chap:reduction}
+
+The following example demonstrates the \code{reduction} clause ; note that some 
+reductions can be expressed in the loop in several ways, as shown for the \code{max} 
+and \code{min} reductions below:
+
+\cexample{reduction}{1c}
+
+\fexample{reduction}{1f}
+
+A common implementation of the preceding example is to treat it as if it had been 
+written as follows:
+
+\cexample{reduction}{2c}
+
+\fortranspecificstart
+\fnexample{reduction}{2f}
+
+The following program is non-conforming because the reduction is on the 
+\emph{intrinsic procedure name} \code{MAX} but that name has been redefined to be the variable 
+named \code{MAX}.
+% blue line floater at top of this page for "Fortran, cont."
+\begin{figure}[t!]
+\linewitharrows{-1}{dashed}{Fortran (cont.)}{8em}
+\end{figure}
+
+\fnexample{reduction}{3f}
+
+The following conforming program performs the reduction using the 
+\emph{intrinsic procedure name} \code{MAX} even though the intrinsic \code{MAX} has been renamed 
+to \code{REN}.
+
+\fnexample{reduction}{4f}
+
+The following conforming program performs the reduction using 
+\plc{intrinsic procedure name} \code{MAX} even though the intrinsic \code{MAX} has been renamed 
+to \code{MIN}.
+
+\fnexample{reduction}{5f}
+\fortranspecificend
+
+The following example is non-conforming because the initialization (\code{a = 
+0}) of the original list item \code{a} is not synchronized with the update of 
+\code{a} as a result of the reduction computation in the \code{for} loop. Therefore, 
+the example may print an incorrect value for \code{a}.
+
+To avoid this problem, the initialization of the original list item \code{a} 
+should complete before any update of \code{a} as a result of the \code{reduction} 
+clause. This can be achieved by adding an explicit barrier after the assignment 
+\code{a = 0}, or by enclosing the assignment \code{a = 0} in a \code{single} 
+directive (which has an implied barrier), or by initializing \code{a} before 
+the start of the \code{parallel} region.
+
+\cexample{reduction}{3c}
+
+\fexample{reduction}{6f}
+
+

@@ -1,0 +1,28 @@
+\pagebreak
+\chapter{The \code{ordered} Clause and the \code{ordered} Construct}
+\label{chap:ordered}
+
+Ordered constructs  are useful for sequentially ordering the output from work that 
+is done in parallel. The following program prints out the indices in sequential 
+order:
+
+\cexample{ordered}{1c}
+
+\fexample{ordered}{1f}
+
+It is possible to have multiple \code{ordered} constructs within a loop region 
+with the \code{ordered} clause specified. The first example is non-conforming 
+because all iterations execute two \code{ordered} regions. An iteration of a 
+loop must not execute more than one \code{ordered} region:
+
+\cexample{ordered}{2c}
+
+\fexample{ordered}{2f}
+
+The following is a conforming example with more than one \code{ordered} construct. 
+Each iteration will execute only one \code{ordered} region:
+
+\cexample{ordered}{3c}
+
+\fexample{ordered}{3f}
+

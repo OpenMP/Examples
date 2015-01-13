@@ -1,0 +1,14 @@
+\pagebreak
+\chapter{The \code{lastprivate} Clause}
+\label{chap:lastprivate}
+
+Correct execution sometimes depends on the value that the last iteration of a loop 
+assigns to a variable. Such programs must list all such variables in a \code{lastprivate} 
+clause  so that the values of the variables are the same as when the loop is executed 
+sequentially.
+
+\cexample{lastprivate}{1c}
+
+\fexample{lastprivate}{1f}
+
+

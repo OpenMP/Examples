@@ -1,0 +1,51 @@
+\pagebreak
+\chapter{The \code{copyprivate} Clause}
+\label{chap:copyprivate}
+
+The \code{copyprivate} clause can be used to broadcast values acquired by a single 
+thread directly to all instances of the private variables in the other threads. 
+In this example, if the routine is called from the sequential part, its behavior 
+is not affected by the presence of the directives. If it is called from a \code{parallel} 
+region, then the actual arguments with which \code{a} and \code{b} are associated 
+must be private. 
+
+The thread that executes the structured block associated with the \code{single} 
+ construct broadcasts the values of the private variables \code{a}, \code{b}, 
+\code{x}, and 
+\code{y} from its implicit task's data environment to the data environments 
+of the other implicit tasks in the thread team. The broadcast completes before 
+any of the threads have left the barrier at the end of the construct.
+
+\cexample{copyprivate}{1c}
+
+\fexample{copyprivate}{1f}
+
+In this example, assume that the input must be performed by the master thread. 
+Since the \code{master} construct does not support the \code{copyprivate} clause, 
+it cannot broadcast the input value that is read. However, \code{copyprivate} 
+is used to broadcast an address where the input value is stored.
+
+\cexample{copyprivate}{2c}
+
+\fexample{copyprivate}{2f}
+
+Suppose that the number of lock variables required within a \code{parallel} region 
+cannot easily be determined prior to entering it. The \code{copyprivate} clause 
+can be used to provide access to shared lock variables that are allocated within 
+that \code{parallel} region.
+
+\cexample{copyprivate}{3c}
+
+\fortranspecificstart
+\fnexample{copyprivate}{3f}
+
+Note that the effect of the \code{copyprivate} clause on a variable with the 
+\code{allocatable} attribute is different than on a variable with the \code{pointer} 
+attribute. The value of \code{A} is copied (as if by intrinsic assignment) and 
+the pointer \code{B} is copied (as if by pointer assignment) to the corresponding 
+list items in the other implicit tasks belonging to the \code{parallel} region. 
+
+\fnexample{copyprivate}{4f}
+\fortranspecificend
+
+
