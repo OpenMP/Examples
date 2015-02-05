@@ -12,7 +12,7 @@ subroutine example(n, dim)
 ! ...
 !$omp do private(s, B)
   do i=1, n
-!$omp cancellation point
+!$omp cancellation point do
     allocate(B(dim(i)), stat=s)
     if (s .gt. 0) then
 !$omp atomic write

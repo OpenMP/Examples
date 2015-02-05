@@ -1,0 +1,109 @@
+\pagebreak
+\chapter{SIMD Constructs}
+\label{chap:SIMD}
+
+The following examples illustrate the use of SIMD constructs for vectorization.
+
+Compilers may not vectorize loops when they are complex or possibly have 
+dependencies, even though the programmer is certain the loop will execute 
+correctly as a vectorized loop.  The \code{simd} construct assures the compiler 
+that the loop can be vectorized.
+
+\cexample{SIMD}{1c}
+
+\fexample{SIMD}{1f}
+ 
+
+When a function can be inlined within a loop the compiler has an opportunity to 
+vectorize the loop. By guaranteeing SIMD behavior of a function's operations, 
+characterizing the arguments of the function and privatizing temporary 
+variables of the loop, the compiler can often create faster, vector code for 
+the loop. In the examples below the \code{declare} \code{simd} construct is 
+used on the \plc{add1} and \plc{add2} functions to enable creation of their 
+corresponding SIMD function versions for execution within the associated SIMD 
+loop. The functions characterize two different approaches of accessing data 
+within the function: by a single variable and as an element in a data array, 
+respectively. The \plc{add3} C function uses dereferencing.
+
+The \code{declare} \code{simd} constructs also illustrate the use of 
+\code{uniform} and \code{linear} clauses.  The \code{uniform(fact)} clause 
+indicates that the variable \plc{fact} is invariant across the SIMD lanes. In 
+the \plc{add2} function \plc{a} and \plc{b} are included in the \code{unform} 
+list because the C pointer and the Fortran array references are constant.  The 
+\plc{i} index used in the \plc{add2} function is included in a \code{linear} 
+clause with a constant-linear-step of 1, to guarantee a unity increment of the 
+associated loop. In the \code{declare} \code{simd} construct for the \plc{add3} 
+C function the  \code{linear(a,b:1)} clause instructs the compiler to generate 
+unit-stride loads across the SIMD lanes; otherwise,  costly \emph{gather} 
+instructions would be generated for the unknown sequence of access of the 
+pointer dereferences.
+
+In the \code{simd} constructs for the loops the \code{private(tmp)} clause is 
+necessary to assure that the each vector operation has its own \plc{tmp} 
+variable.
+
+\cexample{SIMD}{2c}
+
+\fexample{SIMD}{2f}
+
+
+A thread that encounters a SIMD construct executes a vectorized code of the 
+iterations. Similar to the concerns of a worksharing loop a loop vectorized 
+with a SIMD construct must assure that temporary and reduction variables are 
+privatized and declared as reductions with clauses.  The example below 
+illustrates the use of \code{private} and \code{reduction} clauses in a SIMD 
+construct.
+
+\cexample{SIMD}{3c}
+
+\fexample{SIMD}{3f}
+
+
+A \code{safelen(N)} clause in a \code{simd} construct assures the compiler that 
+there are no loop-carried dependencies for vectors of size \plc{N} or below. If 
+the \code{safelen} clause is not specified, then the default safelen value is 
+the number of loop iterations.
+ 
+The \code{safelen(16)} clause in the example below guarantees that the vector 
+code is safe for vectors up to and including size 16.  In the loop, \plc{m} can 
+be 16 or greater, for correct code execution.  If the value of \plc{m} is less 
+than 16, the behavior is undefined.
+
+\cexample{SIMD}{4c}
+
+\fexample{SIMD}{4f}
+
+
+The following SIMD construct instructs the compiler to collapse the \plc{i} and 
+\plc{j} loops into a single SIMD loop in which SIMD chunks are executed by 
+threads of the team. Within the workshared loop chunks of a thread, the SIMD 
+chunks are executed in the lanes of the vector units.
+
+\cexample{SIMD}{5c}
+
+\fexample{SIMD}{5f}
+
+
+The following examples illustrate the use of the \code{declare} \code{simd} 
+construct with the \code{inbranch} and \code{notinbranch} clauses. The 
+\code{notinbranch} clause informs the compiler that the function \plc{foo} is 
+never called conditionally in the SIMD loop of the function \plc{myaddint}. On 
+the other hand, the \code{inbranch} clause for the function goo indicates that 
+the function is always called conditionally in the SIMD loop inside 
+the function \plc{myaddfloat}.
+
+\cexample{SIMD}{6c}
+
+\fexample{SIMD}{6f}
+
+
+In the code below, the function \plc{fib()} is called in the main program and 
+also recursively called in the function \plc{fib()} within an \code{if} 
+condition. The compiler creates a masked vector version and a non-masked vector 
+version for the function \plc{fib()} while retaining the original scalar 
+version of the \plc{fib()} function.
+
+\cexample{SIMD}{7c}
+
+\fexample{SIMD}{7f}
+

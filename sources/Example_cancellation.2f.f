@@ -15,22 +15,18 @@ contains
     type(binary_tree), intent(in), pointer :: tree
     integer, intent(in) :: value, level
     type(binary_tree), pointer :: found
-    type(binary_tree), pointer :: found_left => NULL(), &
-       found_right => NULL()
-
-    if (.not. associated(found)) then
-      allocate(found)
-    endif
+    type(binary_tree), pointer :: found_left => NULL(), found_right => NULL()
 
     if (associated(tree)) then
       if (tree%value .eq. value) then
-        found = tree
+        found => tree
       else
 !$omp task shared(found) if(level<10)
         call search_tree(tree%left, value, level+1, found_left)
         if (associated(found_left)) then
-!$omp atomic write
-          found = found_left
+!$omp critical
+          found => found_left
+!$omp end critical
 
 !$omp cancel taskgroup
         endif
@@ -39,8 +35,9 @@ contains
 !$omp task shared(found) if(level<10)
         call search_tree(tree%right, value, level+1, found_right)
         if (associated(found_right)) then
-!$omp atomic write
-          found = found_right
+!$omp critical
+          found => found_right
+!$omp end critical
 
 !$omp cancel taskgroup
         endif
@@ -56,9 +53,7 @@ contains
     integer, intent(in) :: value
     type(binary_tree), pointer :: found
 
-    if (associated(found)) then
-      allocate(found)
-    endif
+    found => NULL()
 !$omp parallel shared(found, tree, value)
 !$omp master
 !$omp taskgroup

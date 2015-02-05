@@ -19,6 +19,7 @@ void foo(float *p0, float *v1, float *v2, int N)
 }
 void vec_mult(float *p1, float *v3, float *v4, int N)
 {
+   int i;
    #pragma omp target map(to: v3[0:N], v4[:N]) map(from: p1[0:N])
    #pragma omp parallel for
    for (i=0; i<N; i++)

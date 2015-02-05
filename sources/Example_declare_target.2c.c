@@ -8,12 +8,13 @@
 struct typeX
 {
    int a;
-}
+};
 class typeY
 {
-   int foo() { return a^0x01;}
    int a;
-}
+  public:
+   int foo() { return a^0x01;}
+};
 #pragma omp declare target
 struct typeX varX;  // ok
 class typeY varY; // ok if varY.foo() not called on target device

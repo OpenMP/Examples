@@ -47,7 +47,8 @@ that loop is divided among the threads in the current team. An \code{ordered}
 clause is added to the loop construct, because an ordered region binds to the loop 
 region arising from the loop construct.
 
-According to \$, a thread must not execute more than one ordered region that binds 
+According to Section 2.12.8 of the OpenMP 4.0 specification, 
+a thread must not execute more than one ordered region that binds 
 to the same loop region. So the \code{collapse} clause is required for the example 
 to be conforming. With the \code{collapse} clause, the iterations of the \code{k} 
 and \code{j} loops are collapsed into one loop, and therefore only one ordered 

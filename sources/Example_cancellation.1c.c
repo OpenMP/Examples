@@ -5,6 +5,15 @@
 * @@linkable:	no
 * @@expect:	success
 */
+#include <iostream>
+#include <exception>
+
+#define N 10000
+
+extern void causes_an_exception();
+extern void phase_1();
+extern void phase_2();
+
 void example() {
     std::exception *ex = NULL;
 #pragma omp parallel shared(ex)
@@ -15,7 +24,7 @@ void example() {
             try {
                 causes_an_exception();
             }
-            catch (const std::exception *e) {
+            catch (std::exception *e) {
                 // still must remember exception for later handling
 #pragma omp atomic write
                 ex = e;

@@ -33,6 +33,7 @@ end interface
       !$omp end task
 
    end do
+   !$omp taskwait
    print*, z
 
 end subroutine pipedF

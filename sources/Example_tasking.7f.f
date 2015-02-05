@@ -9,7 +9,6 @@
       integer var
       contains
       subroutine work
-      use globals
 !$omp task
          ! do work here
 !$omp task
