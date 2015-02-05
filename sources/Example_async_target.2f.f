@@ -10,7 +10,7 @@
    integer ::  i, idev
    !$omp declare target (init)
 
-   !$omp task depend(out: v1,v2)
+   !$omp task shared(v1,v2) depend(out: v1,v2)
       !$omp target device(idev) map(v1,v2)
          if( omp_is_initial_device() ) &
             stop "not executing on target device"
@@ -21,7 +21,7 @@
 
    call foo()  ! execute other work asychronously
 
-   !$omp task depend(in: v1,v2)
+   !$omp task shared(v1,v2,p) depend(in: v1,v2)
       !$omp target device(idev) map(to: v1,v2) map(from: p)
          if( omp_is_initial_device() ) &
             stop "not executing on target device"
