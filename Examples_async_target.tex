@@ -34,14 +34,14 @@ is initially populated with host values. In this case, the \plc{v1} and \plc{v2}
 non-associated state on the device. When space for \plc{v1} and \plc{v2} is allocated on the device
 the addresses to the space will be included in their descriptors.
 
-At the end of the device region, the descriptor (of an unshaped specification of an allocatable
+At the end of the first \code{target} region, the descriptor (of an unshaped specification of an allocatable
 array in a \code{map} clause) is returned with the raw device address of the allocated space.
 The content of the array is not returned. In the example the data in arrays \plc{v1} and \plc{v2}
-are not returned. In the second target directive, the \plc{v1} and \plc{v2} descriptors are
+are not returned. In the second \code{target} directive, the \plc{v1} and \plc{v2} descriptors are
 re-created on the device with the descriptive information; and references to the
-vectors point to the correct local storage, of the space that was not freed in the first target
-directive.  At the end of the \code{target} region the data in array \plc{p} is copied back
-to the host, since \plc{p} is not an allocatable array.
+vectors point to the correct local storage, of the space that was not freed in the first \code{target}
+directive.  At the end of the second \code{target} region, the data in array \plc{p} is copied back
+to the host since \plc{p} is not an allocatable array.
 
 \fexample{async_target}{2f}
 
