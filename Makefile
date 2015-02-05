@@ -1,4 +1,4 @@
-# Makefile for the OpenMP Examples document in LaTex format. 
+# Makefile for the OpenMP Examples document in LaTex format.
 # For more information, see the master document, openmp-examples.tex.
 
 version=4.0.1ltx
@@ -74,13 +74,14 @@ INTERMEDIATE_FILES=openmp-examples.pdf \
 		openmp-examples.ilg \
 		openmp-examples.ind \
 		openmp-examples.out \
-		openmp-examples.log
+		openmp-examples.log \
+		openmp-examples.pyg
 
 openmp-examples.pdf: $(CHAPTERS) openmp.sty openmp-examples.tex openmp-logo.png
 	rm -f $(INTERMEDIATE_FILES)
-	pdflatex -interaction=batchmode -file-line-error openmp-examples.tex
-	pdflatex -interaction=batchmode -file-line-error openmp-examples.tex
-	pdflatex -interaction=batchmode -file-line-error openmp-examples.tex
+	pdflatex -shell-escape -interaction=batchmode -file-line-error openmp-examples.tex
+	pdflatex -shell-escape -interaction=batchmode -file-line-error openmp-examples.tex
+	pdflatex -shell-escape -interaction=batchmode -file-line-error openmp-examples.tex
 	cp openmp-examples.pdf openmp-examples-${version}.pdf
 
 clean:

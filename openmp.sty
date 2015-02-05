@@ -420,6 +420,7 @@
 
 \usepackage{color,fancyvrb}  % for \VerbatimInput
 \usepackage{toolbox}         % for \toolboxMakeSplit
+\usepackage{minted}         % for \toolboxMakeSplit
 
 \renewcommand\theFancyVerbLine{\normalfont\footnotesize\sffamily S-\arabic{FancyVerbLine}}
 
@@ -447,21 +448,27 @@
    \textit{Example \ename}
    %\vspace*{-3mm}
 }
+\usemintedstyle{trac}
+\newmintedfile[mintc]{c}{linenos,numbersep=5ex,firstnumber=1,firstline=8,fontsize=\small}
 
 \def\cnexample#1#2{%
    \exampleheader{#1}{#2}
-   \code{\VerbatimInput[numbers=left,numbersep=5ex,firstnumber=1,firstline=8,fontsize=\small]%
+   % \code{\VerbatimInput[numbers=left,numbersep=5ex,firstnumber=1,firstline=8,fontsize=\small]%
+   \par\mintc
    %\code{\VerbatimInput[numbers=left,firstnumber=1,firstline=8,fontsize=\small]%
    %\code{\VerbatimInput[firstline=8,fontsize=\small]%
-      {sources/Example_\cname.c}} 
+   {sources/Example_\cname.c}
 }
+
+\newmintedfile[mintf]{fortran}{linenos,numbersep=5ex,firstnumber=1,firstline=6,fontsize=\small}
 
 \def\fnexample#1#2{%
    \exampleheader{#1}{#2}
-   \code{\VerbatimInput[numbers=left,numbersep=5ex,firstnumber=1,firstline=6,fontsize=\small]%
+   % \code{\VerbatimInput[numbers=left,numbersep=5ex,firstnumber=1,firstline=6,fontsize=\small]%
+   \par\mintf
    %\code{\VerbatimInput[numbers=left,firstnumber=1,firstline=6,fontsize=\small]%
    %\code{\VerbatimInput[firstline=6,fontsize=\small]%
-      {sources/Example_\cname.f}}
+   {sources/Example_\cname.f}
 }
 
 \newcommand\cexample[2]{%
