@@ -6,7 +6,7 @@
 * @@expect:	success
 */
 #define N 1024*1024
-float dotprod(float B[], float C[], int N)
+float dotprod(float B[], float C[])
 {
     float sum = 0;
     int i;

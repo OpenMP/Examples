@@ -1,7 +1,7 @@
 # Makefile for the OpenMP Examples document in LaTex format. 
 # For more information, see the master document, openmp-examples.tex.
 
-version=4.0.1ltx
+version=4.0.2
 default: openmp-examples.pdf
 
 
@@ -24,6 +24,7 @@ CHAPTERS=Title_Page.tex \
 	Examples_fpriv_sections.tex \
 	Examples_single.tex \
 	Examples_tasking.tex \
+	Examples_task_dep.tex \
 	Examples_taskgroup.tex \
 	Examples_taskyield.tex \
 	Examples_workshare.tex \
@@ -57,6 +58,7 @@ CHAPTERS=Title_Page.tex \
 	Examples_lock_owner.tex \
 	Examples_simple_lock.tex \
 	Examples_nestable_lock.tex \
+	Examples_SIMD.tex \
 	Examples_target.tex \
 	Examples_target_data.tex \
 	Examples_target_update.tex \

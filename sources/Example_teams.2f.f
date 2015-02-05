@@ -10,7 +10,7 @@ implicit none
     sum = 0.0e0
     !$omp target map(to: B, C)
     !$omp teams num_teams(num_teams) thread_limit(block_threads) &
-	reduction(+:sum)
+    !$omp&  reduction(+:sum)
     !$omp distribute
        do i0=1,N, block_size
           !$omp parallel do reduction(+:sum)

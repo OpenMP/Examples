@@ -5,6 +5,11 @@
 * @@linkable:	no
 * @@expect:	success
 */
+typedef struct binary_tree_s {
+   int value;
+   struct binary_tree_s *left, *right;
+} binary_tree_t;
+
 binary_tree_t *search_tree(binary_tree_t *tree, int value, int level) {
     binary_tree_t *found = NULL;
     if (tree) {

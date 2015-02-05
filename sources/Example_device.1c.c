@@ -16,7 +16,7 @@ extern void init_vars(float *, float *, int);
 extern void output(float *, int);
 void foo()
 {
-   N = init_vars(&p, &v1, &v2);
+   init_vars(v1, v2, N);
    #pragma omp target device(42) map(p[:N], v1[:N], v2[:N])
    {
       vec_mult(p, v1, v2, N);
@@ -26,7 +26,7 @@ void foo()
 void vec_mult(float *p, float *v1, float *v2, int N)
 {
    int i;
-   int nthreads = omp_is_initial_device() ? 8 : 1024;
+   int nthreads;
    if (!omp_is_initial_device())
    {
       printf("1024 threads on target device\n");

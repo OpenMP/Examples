@@ -7,7 +7,7 @@
 */
 void foo ()
 {
-   int A[30];
+   int A[30], *p;
 #pragma omp target data map( A[0:10] )
 {
    p = &A[0];

@@ -1,3 +1,47 @@
+[2-Feb-2015] Version 4.0.2
+Changes from 4.0.1ltx
+
+1. Source code changes (Ticket #342)
+
+2. New addition (Ticket #299)
+
+Examples_SIMD.tex
+Example_SIMD.1c.c
+Example_SIMD.1f.f
+Example_SIMD.2c.c
+Example_SIMD.2f.f
+Example_SIMD.3c.c
+Example_SIMD.3f.f
+Example_SIMD.4c.c
+Example_SIMD.4f.f
+Example_SIMD.5c.c
+Example_SIMD.5f.f
+Example_SIMD.6c.c
+Example_SIMD.6f.f
+Example_SIMD.7c.c
+Example_SIMD.7f.f
+Example_SIMD.8c.c
+Example_SIMD.8f.f
+
+3. Other changes
+
+- Move task depedence examples from tasking to a separate chapter.
+   tasking.15-19 -> task_dep.1-5
+
+- Fix broken links
+   -Chap-4 (icv), page 11: "According to $"
+      According to Section 2.3 of the OpenMP 4.0 specification
+
+   -Chap-10 (fort_loopvar), page 31: "see $ and $"
+      see Section 2.7.1 and Section 2.14.1 of the OpenMP 4.0 specification
+
+   -Chap-12 (collapse), page 39: "According to $"
+      According to Section 2.12.8 of the OpenMP 4.0 specification
+
+   -Chap-16 (tasking). page 54, 57: "illustrated in $"
+      illustrated in Section 2.11.3 of the OpenMP 4.0 specification
+
+
 [6-Jan-2015] Version 4.0.1ltx
 Changes from 4.0.1ltx-21Nov-2014
 

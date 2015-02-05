@@ -6,8 +6,10 @@
 * @@expect:	success
 */
 #include <math.h>
-void gramSchmidt(restrict float Q[][COLS], const int rows, const int cols)
+#define COLS 100
+void gramSchmidt(float Q[][COLS], const int rows)
 {
+    int cols = COLS;
     #pragma omp target data map(Q[0:rows][0:cols])
     for(int k=0; k < cols; k++)
     {
