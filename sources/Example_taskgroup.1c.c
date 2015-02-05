@@ -56,4 +56,5 @@ int main()
     }
   } // only now is background work required to be complete
   print_results();
+  return 0;
 }

@@ -26,4 +26,5 @@ int main (void)
     #pragma omp single
     printf ("Sum is %d\n", a);
   }
+  return 0;
 }
