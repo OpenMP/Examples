@@ -43,6 +43,12 @@ vectors point to the correct local storage, of the space that was not freed in t
 directive.  At the end of the second \code{target} region, the data in array \plc{p} is copied back
 to the host since \plc{p} is not an allocatable array.
 
+A \code{depend} clause is used in the \code{task} directive to provide a wait at the beginning of the second 
+\code{target} region, to insure that there is no race condition with \plc{v1} and \plc{v2} in the two tasks.
+It would be noncompliant to use \plc{v1} and/or \plc{v2} in lieu of \plc{N} in the \code{depend} clauses, 
+because the use of non-allocated allocatable arrays as list items in the first \code{depend} clause would 
+lead to unspecified behavior. 
+
 \fexample{async_target}{2f}
 
 

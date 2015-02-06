@@ -39,5 +39,6 @@ void vec_mult(float *p, int N, int dev)
        free(v1);
        free(v2);
    }
+   #pragma omp taskwait
    output(p, N);
 }
