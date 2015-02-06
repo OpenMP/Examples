@@ -12,10 +12,11 @@ extern void init(float *, float *, int);
 #pragma omp end declare target
 extern void foo();
 extern void output(float *, int);
-void vec_mult(float *p, float *v1, float *v2, int N, int dev)
+void vec_mult(float *p, int N, int dev)
 {
+   float *v1, *v2;
    int i;
-   #pragma omp task depend(out: v1, v2)
+   #pragma omp task shared(v1, v2) depend(out: v1, v2)
    #pragma omp target device(dev) map(v1, v2)
    {
        // check whether on device dev
@@ -26,7 +27,7 @@ void vec_mult(float *p, float *v1, float *v2, int N, int dev)
        init(v1, v2, N);
    }
    foo(); // execute other work asychronously
-   #pragma omp task depend(in: v1, v2)
+   #pragma omp task shared(v1, v2, p) depend(in: v1, v2)
    #pragma omp target device(dev) map(to: v1, v2) map(from: p[0:N])
    {
        // check whether on device dev
@@ -38,5 +39,6 @@ void vec_mult(float *p, float *v1, float *v2, int N, int dev)
        free(v1);
        free(v2);
    }
+   #pragma omp taskwait
    output(p, N);
 }
