@@ -53,9 +53,10 @@ For a brief revision history, please see Changes.log.
    \fnexample{<ename>}{<seq-no>f}
 
 - Language h-rules
-   \cspecificbegin, \cspecificend
-   \cppspecificbegin, \cppspecificend
-   \fortranspecificbegin, \fortranspecificend
+   \cspecificstart, \cspecificend
+   \cppspecificstart, \cppspecificend
+   \ccppspecificstart, \ccppspecificend
+   \fortranspecificstart, \fortranspecificend
 
 - See openmp.sty for more information
 
