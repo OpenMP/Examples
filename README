@@ -55,6 +55,7 @@ For a brief revision history, please see Changes.log.
 - Language h-rules
    \cspecificbegin, \cspecificend
    \cppspecificbegin, \cppspecificend
+   \ccppspecificbegin, \ccppspecificend
    \fortranspecificbegin, \fortranspecificend
 
 - See openmp.sty for more information
