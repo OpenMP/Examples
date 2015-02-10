@@ -4,12 +4,15 @@
 
 The following example distinguishes the variables that are affected by the \code{default(none)} 
 clause from those that are not. 
+
+\ccppspecificstart
 Beginning with OpenMP 4.0, variables with \code{const}-qualified type and no mutable member 
 are no longer predetermined shared.  Thus, these variables (variable \plc{c} in the example) 
 need to be explicitly listed
 in data-sharing attribute clauses when the \code{default(none)} clause is specified.
 
-\cexample{default_none}{1c}
+\cnexample{default_none}{1c}
+\ccppspecificend
 
 \fexample{default_none}{1f}
 

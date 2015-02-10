@@ -12,7 +12,7 @@ This change in ownership requires extra care when using locks. The following pro
 is conforming in OpenMP 2.5 because the thread that releases the lock \code{lck} 
 in the parallel region is the same thread that acquired the lock in the sequential 
 part of the program (master thread of parallel region and the initial thread are 
-the same). However, it is not conforming after OpenMP 2.5, because the task 
+the same). However, it is not conforming beginning with OpenMP 3.0, because the task 
 region that releases the lock \code{lck} is different from the task region that 
 acquires the lock.
 
