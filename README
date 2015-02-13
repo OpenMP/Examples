@@ -1,3 +1,61 @@
-This is the OpenMP 4.0.1 Examples in LaTex format.
+This is the OpenMP Examples document in LaTeX format.
 Please see the master file, openmp-examples.tex, for more information.
+
+For a brief revision history, please see Changes.log.
+
+
+1) Process for adding an example
+
+   - Prepare source code and text description
+   - Give a high level description in a trac ticket
+   - Determine a name (ename) for the example
+      - Propose a new name if creating a new chapter
+      - Use the existing name if adding to an existing chapter
+   - Number the example within the chapter (seq-no)
+   - Create files for the source code with proper tags in
+      sources/Example_<ename>.<seq-no>c.c
+      sources/Example_<ename>.<seq-no>f.f
+   - Create or update the description text in the chapter file
+      Examples_<ename>,tex
+   - If needed, add the new chapter file name in 
+      Makefile
+      openmp-examples.tex
+   - Commit the changes in git and push to the GitHub repo
+   - Discuss and vote in committee
+
+2) Tags (meta data) for example sources
+
+  @@name:        <ename>.<seq-no>[c|f]
+  @@type:        C|C++|F-fixed|F-free
+  @@compilable:  yes|no|maybe
+  @@linkable:    yes|no|maybe
+  @@expect:      success|failure|nothing|rt-error
+
+  "name" is the name of an example
+  "type" is the source code type, which can be translated into or from
+          proper file extension (c,cpp,f,f90)
+  "compilable" indicates whether the source code is compilable
+  "linkable" indicates whether the source code is linkable
+  "expect" indicates some expected result for testing purpose
+          "success|failure|nothing" applies to the result of code compilation
+          "rt-error" is for a case where compilation may be successful, 
+          but the code contains potential runtime issues (such as race condition).
+          Alternative would be to just use "conforming" or "non-conforming".
+
+3) LaTeX macros for examples
+
+- Source code with language h-rules
+   \cexample{<ename>}{<seq-no>c}
+   \fexample{<ename>}{<seq-no>f}
+
+- Source code without language h-rules
+   \cnexample{<ename>}{<seq-no>c}
+   \fnexample{<ename>}{<seq-no>f}
+
+- Language h-rules
+   \cspecificbegin, \cspecificend
+   \cppspecificbegin, \cppspecificend
+   \fortranspecificbegin, \fortranspecificend
+
+- See openmp.sty for more information
 
