@@ -4,7 +4,7 @@
 
 Ownership of locks has changed since OpenMP 2.5. In OpenMP 2.5, locks are owned 
 by threads; so a lock released by the \code{omp\_unset\_lock} routine must be 
-owned by the same thread executing the routine.  With OpenMP 3.0, locks are owned 
+owned by the same thread executing the routine.  Beginning with OpenMP 3.0, locks are owned 
 by task regions; so a lock released by the \code{omp\_unset\_lock} routine in 
 a task region must be owned by the same task region.
 
@@ -12,7 +12,7 @@ This change in ownership requires extra care when using locks. The following pro
 is conforming in OpenMP 2.5 because the thread that releases the lock \code{lck} 
 in the parallel region is the same thread that acquired the lock in the sequential 
 part of the program (master thread of parallel region and the initial thread are 
-the same). However, it is not conforming in OpenMP 3.0 and 3.1, because the task 
+the same). However, it is not conforming beginning with OpenMP 3.0, because the task 
 region that releases the lock \code{lck} is different from the task region that 
 acquires the lock.
 

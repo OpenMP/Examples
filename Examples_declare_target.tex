@@ -38,13 +38,15 @@ scope for the compiler to determine that a target binary should be available.
 
 \section{\code{declare} \code{target} Construct for Class Type}
 
+\cppspecificstart
 The following example shows how the \code{declare} \code{target} and \code{end} 
 \code{declare} \code{target} directives are used to enclose the declaration 
 of a variable \plc{varY} with a class type \code{typeY}. The member function \code{typeY::foo()} cannot 
 be accessed on a target device because its declaration did not appear between \code{declare} 
 \code{target} and \code{end} \code{declare} \code{target} directives.
 
-\cexample{declare_target}{2c}
+\cnexample{declare_target}{2c}
+\cppspecificend
 
 \section{\code{declare} \code{target} and \code{end} \code{declare} \code{target} for Variables}
 

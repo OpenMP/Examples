@@ -67,7 +67,8 @@ CHAPTERS=Title_Page.tex \
 	Examples_async_target.tex \
 	Examples_array_sections.tex \
 	Examples_device.tex \
-	Examples_associate.tex
+	Examples_associate.tex \
+	History.tex
 
 INTERMEDIATE_FILES=openmp-examples.pdf \
 		openmp-examples.toc \
