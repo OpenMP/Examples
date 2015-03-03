@@ -48,7 +48,7 @@
 \documentclass[10pt,letterpaper,twoside,makeidx,hidelinks]{scrreprt}
 
 % Text to appear in the footer on even-numbered pages:
-\newcommand{\footerText}{OpenMP Examples Version 4.0.2 - February 2015}
+\newcommand{\footerText}{OpenMP Examples Version 4.0.2 - March 2015}
 
 % Unified style sheet for OpenMP documents:
 \input{openmp.sty}
@@ -135,6 +135,11 @@
     \input{Examples_array_sections}
     \input{Examples_device}
     \input{Examples_associate}
+
+    \setcounter{chapter}{0}  % restart chapter numbering with "letter A"
+    \renewcommand{\thechapter}{\Alph{chapter}}%
+    \appendix
+
     \input{History}
 \end{document}
 

@@ -20,7 +20,8 @@ void default_none(int a) {
      a = z[j];   /* O.K.  - a is listed in private clause */
                  /*       - z is listed in shared clause */
      x = c;      /* O.K.  - x is threadprivate */
-                 /*       - c has const-qualified type and is listed in shared */
+                 /*       - c has const-qualified type and
+                              is listed in shared clause */
      z[i] = y;   /* Error - cannot reference i or y here */
 
   #pragma omp for firstprivate(y)
