@@ -63,6 +63,15 @@ Example_SIMD.8f.f
    -Chap-16 (tasking). page 54, 57: "illustrated in $"
       illustrated in Section 2.11.3 of the OpenMP 4.0 specification
 
+- Fix Make clean
+
+- Added creation of *.tar.gz and *.zip files in Make
+
+- VER and VERDATE created in Title_page to be used throughout
+
+- Reference to github sources in Title_page and Introduction
+
+
 
 [6-Jan-2015] Version 4.0.1ltx
 Changes from 4.0.1ltx-21Nov-2014
