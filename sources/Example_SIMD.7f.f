@@ -21,7 +21,7 @@ program fibonacci
    end do
    
    write(*,*) "Done a(", N-1, ") = ", a(N-1)
-                        ! 44  1134903168
+                        ! 44  701408733
 end program
 
 recursive function fib(n) result(r)
@@ -29,7 +29,7 @@ recursive function fib(n) result(r)
    implicit none
    integer  :: n, r
 
-   if (n <= 2) then
+   if (n <= 1) then
       r = n
    else 
       r = fib(n-1) + fib(n-2)
