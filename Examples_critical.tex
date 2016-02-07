@@ -2,7 +2,7 @@
 \chapter{The \code{critical} Construct}
 \label{chap:critical}
 
-The following example includes several \code{critical} constructs . The example 
+The following example includes several \code{critical} constructs. The example 
 illustrates a queuing model in which a task is dequeued and worked on. To guard 
 against multiple threads dequeuing the same task, the dequeuing operation must 
 be in a \code{critical} region. Because the two queues in this example are independent, 
@@ -13,4 +13,8 @@ and \plc{yaxis}.
 
 \fexample{critical}{1f}
 
+The following example extends the previous example by adding the \code{hint} clause to the \code{critical} constructs.
 
+\cexample{critical}{2c}
+
+\fexample{critical}{2f}
