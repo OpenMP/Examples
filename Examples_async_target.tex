@@ -1,6 +1,9 @@
 \pagebreak
-\chapter{Asynchronous Execution of a \code{target} Region Using Tasks}
+\chapter{Asynchronous Execution of a \code{target} Region}
 \label{chap:async_target}
+
+\section{Target synchronization using explicit tasks}
+\label{section:target_synchronization_using_explicit_tasks}
 
 The following example shows how the \code{task} and \code{target} constructs 
 are used to execute multiple \code{target} regions asynchronously. The task that 
@@ -16,6 +19,14 @@ The Fortran version has an interface block that contains the \code{declare} \cod
 An identical statement exists in the function declaration (not shown here).
 
 \fexample{async_target}{1f}
+
+
+
+
+
+
+\section{Target synchronization using explicit tasks with dependences}
+\label{section:target_synchronization_using_explicit_tasks_with_dependences}
 
 The following example shows how the \code{task} and \code{target} constructs 
 are used to execute multiple \code{target} regions asynchronously. The task dependence 
@@ -52,3 +63,27 @@ lead to unspecified behavior.
 \fexample{async_target}{2f}
 
 
+
+
+
+
+\section{Target synchronization using target dependences}
+\label{section:target_synchronization_using_target_dependences}
+
+More details on dependences can be found in \specref{chap:task_dep}, Task Dependences. In this example,
+there are three flow dependences. In the first two dependences the target task does not execute until
+the preceding explicit tasks have finished. These dependences are produced by arrays \plc{v1} and
+\plc{v2} with the \code{out} dependence type in the first two tasks, and the \code{in} dependence type
+in the target task. 
+
+The last dependence is produced by array \plc{p} with the \code{out} dependence type in the target task,
+and the \code{in} dependence type in the last task. The last task does not execute until the target task
+finishes.
+
+The \code{nowait} clause on the \code{target} construct allows the generating task (executing in the
+\code{single} region) to create a \plc{target task} to perform the target execution as though it were
+just another \code{task} in the region.
+
+\cexample{async_target}{4c}
+\fexample{async_target}{4f}
+%end
