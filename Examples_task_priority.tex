@@ -1,0 +1,22 @@
+\pagebreak
+\chapter{Task Priority}
+\label{chap:task_priority}
+
+
+
+\section{Task Priority}
+\label{section:task_priority}
+
+In this example we compute arrays in a matrix through a \plc{compute\_array} routine.
+Each task has a priority value equal to the value of the loop variable \plc{i} at the
+moment of its creation. A higher priority on a task means that a task is a candidate
+to run sooner.
+
+The creation of tasks occurs in ascending order (according to the iteration space of
+the loop) but a hint, by means of the \code{priority} clause, is provided to reverse
+the execution order.
+
+\cexample{task_priority}{1c}
+
+\fexample{task_priority}{1f}
+
