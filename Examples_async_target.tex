@@ -1,6 +1,9 @@
 \pagebreak
-\chapter{Asynchronous Execution of a \code{target} Region Using Tasks}
+\chapter{Asynchronous Execution of a \code{target} Region}
 \label{chap:async_target}
+
+\section{Target synchronization using explicit tasks}
+\label{section:target_synchronization_using_explicit_tasks}
 
 The following example shows how the \code{task} and \code{target} constructs 
 are used to execute multiple \code{target} regions asynchronously. The task that 
@@ -16,6 +19,14 @@ The Fortran version has an interface block that contains the \code{declare} \cod
 An identical statement exists in the function declaration (not shown here).
 
 \fexample{async_target}{1f}
+
+
+
+
+
+
+\section{Target synchronization using explicit tasks with dependences}
+\label{section:target_synchronization_using_explicit_tasks_with_dependences}
 
 The following example shows how the \code{task} and \code{target} constructs 
 are used to execute multiple \code{target} regions asynchronously. The task dependence 
@@ -56,8 +67,8 @@ lead to unspecified behavior.
 
 
 
-\section{Target Dependences}
-\label{section:target_dependences}
+\section{Target synchronization using target dependences}
+\label{section:target_synchronization_using_target_dependences}
 
 More details on dependences can be found in \specref{chap:task_dep}, Task Dependences. In this example,
 there are three flow dependences. In the first two dependences the target task does not execute until
