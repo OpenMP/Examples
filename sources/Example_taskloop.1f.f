@@ -2,8 +2,8 @@
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no
-! @@expect:	successBla
-subroutine taskloop
+! @@expect:	success
+subroutine parallel_work
    integer i
    integer j
 !$omp taskgroup

@@ -2,10 +2,12 @@
 \chapter{The \code{taskloop} Construct}
 \label{chap:taskloop}
 
-The following example illustrates how to use the \code{taskloop} construct to overlap a long running tasks and an imbalanced loop.
-The function \code{long\_running\_running} will be executed in an OpenMP task, while the \code{taskloop} generates OpenMP tasks for the \code{for} and \code{do} loops.
-The \code{grainsize} clause specifies that each chunk has at least 500, but no more than 1,000, logical loop iterations.
-The \code{nogroup} clause removes the implicit taskgroup of the \code{taskloop} construct; the explicit \code{taskgroup} construct in the example ensures that the function is not exited, before both the long-running task and the loops have finished execution.
+The following example illustrates how to execute a long running task concurrently with tasks created
+with a \code{task loop} directive for a loop having unbalanced amounts of work for its iterations.
+
+The \code{grainsize} clause specifies that each task is to execute at least 500 iterations of the loop. 
+
+The \code{nogroup} clause removes the implicit taskgroup of the \code{taskloop} construct; the explicit \code{taskgroup} construct in the example ensures that the function is not exited before the long-running task and the loops have finished execution.
 
 \cexample{taskloop}{1c}
 

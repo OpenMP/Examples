@@ -8,7 +8,7 @@
 void long_running_task(void);
 void loop_body(int i, int j);
 
-void taskloop(void) {
+void parallel_work(void) {
    int i, j;
 #pragma omp taskgroup
    {
