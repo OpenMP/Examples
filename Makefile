@@ -27,6 +27,7 @@ CHAPTERS=Title_Page.tex \
 	Examples_task_dep.tex \
 	Examples_taskgroup.tex \
 	Examples_taskyield.tex \
+    Examples_taskloop.tex \
 	Examples_workshare.tex \
 	Examples_master.tex \
 	Examples_critical.tex \

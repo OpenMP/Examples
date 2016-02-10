@@ -1,0 +1,14 @@
+\pagebreak
+\chapter{The \code{taskloop} Construct}
+\label{chap:taskloop}
+
+The following example illustrates how to execute a long running task concurrently with tasks created
+with a \code{task loop} directive for a loop having unbalanced amounts of work for its iterations.
+
+The \code{grainsize} clause specifies that each task is to execute at least 500 iterations of the loop. 
+
+The \code{nogroup} clause removes the implicit taskgroup of the \code{taskloop} construct; the explicit \code{taskgroup} construct in the example ensures that the function is not exited before the long-running task and the loops have finished execution.
+
+\cexample{taskloop}{1c}
+
+\fexample{taskloop}{1f}
