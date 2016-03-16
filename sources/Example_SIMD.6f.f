@@ -11,7 +11,7 @@ function foo(p) result(r)
   r = p
 end function foo
 
-function myaddint(int *a, int *b, int n) result(r)
+function myaddint(a, b, n) result(r)
   implicit none
   integer :: a(*), b(*), n, r
   integer :: i
@@ -19,7 +19,7 @@ function myaddint(int *a, int *b, int n) result(r)
 
   !$omp simd
   do i=1, n
-      a(i) = foo(b[i])  ! foo is not called under a condition
+      a(i) = foo(b(i))  ! foo is not called under a condition
   end do
   r = a(n)
 
