@@ -1,6 +1,6 @@
 \pagebreak
-\chapter{The \code{proc\_bind} Clause}
-\label{chap:affinity}
+\section{The \code{proc\_bind} Clause}
+\label{sec:affinity}
 
 The following examples demonstrate how to use the \code{proc\_bind} clause to 
 control the thread binding for a team of threads in a \code{parallel} region. 
@@ -25,16 +25,18 @@ or
 
 \code{OMP\_PLACES=\texttt{"}\{0:2\}:8:2\texttt{"}}
 
-\section{Spread Affinity Policy}
+\subsection{Spread Affinity Policy}
+\label{subsec:affinity_spread}
+
 
 The following example shows the result of the \code{spread} affinity policy on 
 the partition list when the number of threads is less than or equal to the number 
 of places in the parent's place partition, for the machine architecture depicted 
 above. Note that the threads are bound to the first place of each subpartition.
 
-\cexample{affinity}{1c}
+\cexample{affinity}{1}
 
-\fexample{affinity}{1f}
+\fexample{affinity}{1}
 
 It is unspecified on which place the master thread is initially started. If the 
 master thread is initially started on p0, the following placement of threads will 
@@ -73,9 +75,9 @@ parent's place partition. The first \plc{T/P} threads of the team (including the
 thread) execute on the parent's place. The next \plc{T/P} threads execute on the next 
 place in the place partition, and so on, with wrap around. 
 
-\cexample{affinity}{2c}
+\cexample{affinity}{2}
 
-\fexample{affinity}{2f}
+\ffreeexample{affinity}{2}
 
 It is unspecified on which place the master thread is initially started. If the 
 master thread is initially started on p0, the following placement of threads will 
@@ -120,16 +122,17 @@ and distribution of the place partition would be as follows:
 \item threads 14,15 execute on p1 with the place partition p1
 \end{compactitem}
 
-\section{Close Affinity Policy}
+\subsection{Close Affinity Policy}
+\label{subsec:affinity_close}
 
 The following example shows the result of the \code{close} affinity policy on 
 the partition list when the number of threads is less than or equal to the number 
 of places in parent's place partition, for the machine architecture depicted above. 
 The place partition is not changed by the \code{close} policy.
 
-\cexample{affinity}{3c}
+\cexample{affinity}{3}
 
-\fexample{affinity}{3f}
+\fexample{affinity}{3}
 
 It is unspecified on which place the master thread is initially started. If the 
 master thread is initially started on p0, the following placement of threads will 
@@ -168,9 +171,9 @@ thread) execute on the parent's place. The next \plc{T/P} threads execute on the
 place in the place partition, and so on, with wrap around. The place partition 
 is not changed by the \code{close} policy.
 
-\cexample{affinity}{4c}
+\cexample{affinity}{4}
 
-\fexample{affinity}{4f}
+\ffreeexample{affinity}{4}
 
 It is unspecified on which place the master thread is initially started. If the 
 master thread is initially running on p0, the following placement of threads will 
@@ -215,15 +218,16 @@ and distribution of the place partition would be as follows:
 \item threads 14,15 execute on p1 with the place partition p0-p7
 \end{compactitem}
 
-\section{Master Affinity Policy}
+\subsection{Master Affinity Policy}
+\label{subsec:affinity_master}
 
 The following example shows the result of the \code{master} affinity policy on 
 the partition list for the machine architecture depicted above. The place partition 
 is not changed by the master policy.
 
-\cexample{affinity}{5c}
+\cexample{affinity}{5}
 
-\fexample{affinity}{5f}
+\fexample{affinity}{5}
 
 It is unspecified on which place the master thread is initially started. If the 
 master thread is initially running on p0, the following placement of threads will 

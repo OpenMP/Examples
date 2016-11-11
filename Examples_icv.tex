@@ -1,6 +1,6 @@
 \pagebreak
-\chapter{Internal Control Variables (ICVs)}
-\label{chap:icv}
+\section{Internal Control Variables (ICVs)}
+\label{sec:icv}
 
 According to Section 2.3 of the OpenMP 4.0 specification, an OpenMP implementation must act as if there are ICVs that control 
 the behavior of the program.  This example illustrates two ICVs, \plc{nthreads-var} 
@@ -50,7 +50,7 @@ one of the threads in the team. Since we have a total of two inner \code{paralle
 regions, the print statement will be executed twice -- once per inner \code{parallel} 
 region.
 
-\cexample{icv}{1c}
+\cexample{icv}{1}
 
-\fexample{icv}{1f}
+\fexample{icv}{1}
 

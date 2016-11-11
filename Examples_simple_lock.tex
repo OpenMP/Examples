@@ -1,6 +1,5 @@
-\pagebreak
-\chapter{Simple Lock Routines}
-\label{chap:simple_lock}
+\subsection{Simple Lock Routines}
+\label{subsec:simple_lock}
 
 In the following example, the lock routines cause the threads to be idle while 
 waiting for entry to the first critical section, but to do other work while waiting 
@@ -10,10 +9,10 @@ function does not, allowing the work in \code{skip} to be done.
 Note that the argument to the lock routines should have type \code{omp\_lock\_t}, 
 and that there is no need to flush it. 
 
-\cexample{simple_lock}{1c}
+\cexample{simple_lock}{1}
 
 Note that there is no need to flush the lock variable. 
 
-\fexample{simple_lock}{1f}
+\fexample{simple_lock}{1}
 
 

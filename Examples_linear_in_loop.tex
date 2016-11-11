@@ -1,0 +1,13 @@
+\section{\code{linear} Clause in Loop Constructs}
+\label{sec:linear_in_loop}
+
+The following example shows the use of the \code{linear} clause in a loop 
+construct to allow the proper parallelization of a loop that contains 
+an induction variable (\plc{j}).  At the end of the execution of 
+the loop construct, the original variable \plc{j} is updated with 
+the value \plc{N/2} from the last iteration of the loop.
+
+\cexample{linear_in_loop}{1}
+
+\ffreeexample{linear_in_loop}{1}
+

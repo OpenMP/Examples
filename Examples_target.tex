@@ -1,29 +1,32 @@
 \pagebreak
-\chapter{\code{target} Construct}
-\label{chap:target}
+\section{\code{target} Construct}
+\label{sec:target}
 
-\section{\code{target} Construct on \code{parallel} Construct}
+\subsection{\code{target} Construct on \code{parallel} Construct}
+\label{subsec:target_parallel}
 
 This following example shows how the \code{target} construct offloads a code 
 region to a target device. The variables \plc{p}, \plc{v1}, \plc{v2}, and \plc{N} are implicitly mapped 
 to the target device.
 
-\cexample{target}{1c}
+\cexample{target}{1}
 
-\fexample{target}{1f}
+\ffreeexample{target}{1}
 
-\section{\code{target} Construct with \code{map} Clause}
+\subsection{\code{target} Construct with \code{map} Clause}
+\label{subsec:target_map}
 
 This following example shows how the \code{target} construct offloads a code 
 region to a target device. The variables \plc{p}, \plc{v1} and \plc{v2} are explicitly mapped to the 
 target device using the \code{map} clause. The variable \plc{N} is implicitly mapped to 
 the target device.
 
-\cexample{target}{2c}
+\cexample{target}{2}
 
-\fexample{target}{2f}
+\ffreeexample{target}{2}
 
-\section{\code{map} Clause with \code{to}/\code{from} map-types}
+\subsection{\code{map} Clause with \code{to}/\code{from} map-types}
+\label{subsec:target_map_tofrom}
 
 The following example shows how the \code{target} construct offloads a code region 
 to a target device. In the \code{map} clause, the \code{to} and \code{from} 
@@ -43,16 +46,17 @@ the variable \plc{p} is not initialized with the value of the corresponding vari
 on the host device, and at the end of the \code{target} region the variable \plc{p} 
 is assigned to the corresponding variable on the host device.
 
-\cexample{target}{3c}
+\cexample{target}{3}
 
 The \code{to} and \code{from} map-types allow programmers to optimize data 
 motion. Since data for the \plc{v} arrays are not returned, and data for the \plc{p} array 
 are not transferred to the device, only one-half of the data is moved, compared 
 to the default behavior of an implicit mapping.
 
-\fexample{target}{3f}
+\ffreeexample{target}{3}
 
-\section{\code{map} Clause with Array Sections}
+\subsection{\code{map} Clause with Array Sections}
+\label{subsec:target_array_section}
 
 The following example shows how the \code{target} construct offloads a code region 
 to a target device. In the \code{map} clause, map-types are used to optimize 
@@ -60,14 +64,14 @@ the mapping of variables to the target device. Because variables \plc{p}, \plc{v
 pointers, array section notation must be used to map the arrays. The notation \code{:N} 
 is equivalent to \code{0:N}.
 
-\cexample{target}{4c}
+\cexample{target}{4}
 
 In C, the length of the pointed-to array must be specified. In Fortran the extent 
 of the array is known and the length need not be specified. A section of the array 
 can be specified with the usual Fortran syntax, as shown in the following example. 
 The value 1 is assumed for the lower bound for array section \plc{v2(:N)}.
 
-\fexample{target}{4f}
+\ffreeexample{target}{4}
 
 A more realistic situation in which an assumed-size array is passed to \code{vec\_mult} 
 requires that the length of the arrays be specified, because the compiler does 
@@ -75,9 +79,10 @@ not know the size of the storage. A section of the array must be specified with
 the usual Fortran syntax, as shown in the following example. The value 1 is assumed 
 for the lower bound for array section \plc{v2(:N)}.
 
-\fexample{target}{4bf}
+\ffreeexample{target}{4b}
 
-\section{\code{target} Construct with \code{if} Clause}
+\subsection{\code{target} Construct with \code{if} Clause}
+\label{subsec:target_if}
 
 The following example shows how the \code{target} construct offloads a code region 
 to a target device.
@@ -90,7 +95,18 @@ The \code{if} clause on the \code{parallel} construct indicates that if the
 variable \plc{N} is smaller than a second threshold then the \code{parallel} region 
 is inactive.
 
-\cexample{target}{5c}
+\cexample{target}{5}
 
-\fexample{target}{5f}
+\ffreeexample{target}{5}
 
+The following example is a modification of the above \plc{target.5} code to show the combined \code{target}
+and parallel loop directives. It uses the \plc{directive-name} modifier in multiple \code{if}
+clauses to specify the component directive to which it applies. 
+
+The \code{if} clause with the \code{target} modifier applies to the \code{target} component of the 
+combined directive, and the \code{if} clause with the \code{parallel} modifier applies 
+to the \code{parallel} component of the combined directive.    
+
+\cexample{target}{6}
+
+\ffreeexample{target}{6}

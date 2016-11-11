@@ -1,58 +1,62 @@
 \pagebreak
-\chapter{Task Dependences}
-\label{chap:task_dep}
+\section{Task Dependences}
+\label{sec:task_depend}
 
-\section{Flow Dependence}
+\subsection{Flow Dependence}
+\label{subsec:task_flow_depend}
 
 In this example we show a simple flow dependence expressed using the \code{depend} 
 clause on the \code{task} construct.
 
-\cexample{task_dep}{1c}
+\cexample{task_dep}{1}
 
-\fexample{task_dep}{1f}
+\ffreeexample{task_dep}{1}
 
 The program will always print \texttt{"}x = 2\texttt{"}, because the \code{depend} 
 clauses enforce the ordering of the tasks. If the \code{depend} clauses had been 
 omitted, then the tasks could execute in any order and the program and the program 
 would have a race condition.
 
-\section{Anti-dependence}
+\subsection{Anti-dependence}
+\label{subsec:task_anti_depend}
 
 In this example we show an anti-dependence expressed using the \code{depend} 
 clause on the \code{task} construct.
 
-\cexample{task_dep}{2c}
+\cexample{task_dep}{2}
 
-\fexample{task_dep}{2f}
+\ffreeexample{task_dep}{2}
 
 The program will always print \texttt{"}x = 1\texttt{"}, because the \code{depend} 
 clauses enforce the ordering of the tasks. If the \code{depend} clauses had been 
 omitted, then the tasks could execute in any order and the program would have a 
 race condition.
 
-\section{Output Dependence}
+\subsection{Output Dependence}
+\label{subsec:task_out_depend}
 
 In this example we show an output dependence expressed using the \code{depend} 
 clause on the \code{task} construct.
 
-\cexample{task_dep}{3c}
+\cexample{task_dep}{3}
 
-\fexample{task_dep}{3f}
+\ffreeexample{task_dep}{3}
 
 The program will always print \texttt{"}x = 2\texttt{"}, because the \code{depend} 
 clauses enforce the ordering of the tasks. If the \code{depend} clauses had been 
 omitted, then the tasks could execute in any order and the program would have a 
 race condition.
 
-\section{Concurrent Execution with Dependences}
+\subsection{Concurrent Execution with Dependences}
+\label{subsec:task_concurrent_depend}
 
 In this example we show potentially concurrent execution of tasks using multiple 
 flow dependences expressed using the \code{depend} clause on the \code{task} 
 construct.
 
-\cexample{task_dep}{4c}
+\cexample{task_dep}{4}
 
-\fexample{task_dep}{4f}
+\ffreeexample{task_dep}{4}
 
 The last two tasks are dependent on the first task. However there is no dependence 
 between the last two tasks, which may execute in any order (or concurrently if 
@@ -61,12 +65,13 @@ more than one thread is available). Thus, the possible outputs are \texttt{"}x
 If the \code{depend} clauses had been omitted, then all of the tasks could execute 
 in any order and the program would have a race condition.
 
-\section{Matrix multiplication}
+\subsection{Matrix multiplication}
+\label{subsec:task_matrix_mult}
 
 This example shows a task-based blocked matrix multiplication. Matrices are of 
 NxN elements, and the multiplication is implemented using blocks of BSxBS elements.
 
-\cexample{task_dep}{5c}
+\cexample{task_dep}{5}
 
-\fexample{task_dep}{5f}
+\ffreeexample{task_dep}{5}
 

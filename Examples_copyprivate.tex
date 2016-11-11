@@ -1,6 +1,6 @@
 \pagebreak
-\chapter{The \code{copyprivate} Clause}
-\label{chap:copyprivate}
+\section{The \code{copyprivate} Clause}
+\label{sec:copyprivate}
 
 The \code{copyprivate} clause can be used to broadcast values acquired by a single 
 thread directly to all instances of the private variables in the other threads. 
@@ -16,28 +16,28 @@ The thread that executes the structured block associated with the \code{single}
 of the other implicit tasks in the thread team. The broadcast completes before 
 any of the threads have left the barrier at the end of the construct.
 
-\cexample{copyprivate}{1c}
+\cexample{copyprivate}{1}
 
-\fexample{copyprivate}{1f}
+\fexample{copyprivate}{1}
 
 In this example, assume that the input must be performed by the master thread. 
 Since the \code{master} construct does not support the \code{copyprivate} clause, 
 it cannot broadcast the input value that is read. However, \code{copyprivate} 
 is used to broadcast an address where the input value is stored.
 
-\cexample{copyprivate}{2c}
+\cexample{copyprivate}{2}
 
-\fexample{copyprivate}{2f}
+\fexample{copyprivate}{2}
 
 Suppose that the number of lock variables required within a \code{parallel} region 
 cannot easily be determined prior to entering it. The \code{copyprivate} clause 
 can be used to provide access to shared lock variables that are allocated within 
 that \code{parallel} region.
 
-\cexample{copyprivate}{3c}
+\cexample{copyprivate}{3}
 
 \fortranspecificstart
-\fnexample{copyprivate}{3f}
+\fnexample{copyprivate}{3}
 
 Note that the effect of the \code{copyprivate} clause on a variable with the 
 \code{allocatable} attribute is different than on a variable with the \code{pointer} 
@@ -45,7 +45,7 @@ attribute. The value of \code{A} is copied (as if by intrinsic assignment) and
 the pointer \code{B} is copied (as if by pointer assignment) to the corresponding 
 list items in the other implicit tasks belonging to the \code{parallel} region. 
 
-\fnexample{copyprivate}{4f}
+\fnexample{copyprivate}{4}
 \fortranspecificend
 
 

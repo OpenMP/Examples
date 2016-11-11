@@ -1,0 +1,15 @@
+\pagebreak
+\section{Asynchronous \code{target} Execution and Dependences}
+\label{sec:async_target_exec_depend}
+
+Asynchronous execution of a \code{target} region can be accomplished
+by creating an explicit task around the \code{target} region. Examples
+with explicit tasks are shown at the beginning of this section. 
+
+As of OpenMP 4.5 and beyond the \code{nowait} clause can be used on the
+\code{target} directive for asynchronous execution. Examples with 
+\code{nowait} clauses follow the explicit \code{task} examples.
+
+This section also shows the use of \code{depend} clauses to order 
+executions through dependences.
+

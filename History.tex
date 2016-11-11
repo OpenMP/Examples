@@ -1,11 +1,39 @@
 \chapter{Document Revision History}
 \label{chap:history}
 
+\section{Changes from 4.0.2 to 4.5.0}
+\begin{itemize}
+\item Reorganized into chapters of major topics
+\item Included file extensions in example labels to indicate source type
+\item Applied the explicit \code{map(tofrom)} for scalar variables 
+in a number of examples to comply with 
+the change of the default behavior for scalar variables from 
+\code{map(tofrom)} to \code{firstprivate} in the 4.5 specification
+\item Added the following new examples:
+\begin{itemize}
+\item \code{linear} clause in loop constructs (\specref{sec:linear_in_loop})
+\item task priority (\specref{sec:task_priority})
+\item \code{taskloop} construct (\specref{sec:taskloop})
+\item \plc{directive-name} modifier in multiple \code{if} clauses on
+a combined construct (\specref{subsec:target_if})
+\item unstructured data mapping (\specref{sec:target_enter_exit_data})
+\item \code{link} clause for \code{declare}~\code{target} directive 
+(\specref{subsec:declare_target_link})
+\item asynchronous target execution with \code{nowait} clause (\specref{sec:async_target_exec_depend})
+\item device memory routines and device pointers
+(\specref{subsec:target_mem_and_device_ptrs})
+\item doacross loop nest (\specref{sec:doacross})
+\item locks with hints (\specref{sec:locks})
+\item C/C++ array reduction (\specref{sec:reduction})
+\item C++ reference types in data sharing clauses (\specref{sec:cpp_reference})
+\end{itemize}
+\end{itemize}
+
 \section{Changes from 4.0.1 to 4.0.2}
 
 \begin{itemize}
 \item Names of examples were changed from numbers to mnemonics
-\item Added SIMD examples (\specref{chap:SIMD})
+\item Added SIMD examples (\specref{sec:SIMD})
 \item Applied miscellaneous fixes in several source codes
 \item Added the revision history
 \end{itemize}
@@ -14,8 +42,8 @@
 
 Added the following new examples:
 \begin{itemize}
-\item the \code{proc\_bind} clause (\specref{chap:affinity})
-\item the \code{taskgroup} construct (\specref{chap:taskgroup})
+\item the \code{proc\_bind} clause (\specref{sec:affinity})
+\item the \code{taskgroup} construct (\specref{sec:taskgroup})
 \end{itemize}
 
 \section{Changes from 3.1 to 4.0}
@@ -25,16 +53,16 @@ from the specification document.
 
 Version 4.0 added the following new examples:
 \begin{itemize}
-\item task dependences (\specref{chap:task_dep})
-\item cancellation constructs (\specref{chap:cancellation})
-\item \code{target} construct (\specref{chap:target})
-\item \code{target} \code{data} construct (\specref{chap:target_data})
-\item \code{target} \code{update} construct (\specref{chap:target_update})
-\item \code{declare} \code{target} construct (\specref{chap:declare_target})
-\item \code{teams} constructs (\specref{chap:teams})
+\item task dependences (\specref{sec:task_depend})
+\item \code{target} construct (\specref{sec:target})
+\item \code{target} \code{data} construct (\specref{sec:target_data})
+\item \code{target} \code{update} construct (\specref{sec:target_update})
+\item \code{declare} \code{target} construct (\specref{sec:declare_target})
+\item \code{teams} constructs (\specref{sec:teams})
 \item asynchronous execution of a \code{target} region using tasks
- (\specref{chap:async_target})
-\item array sections in device constructs (\specref{chap:array_sections})
-\item device runtime routines (\specref{chap:device})
-\item Fortran ASSOCIATE construct (\specref{chap:associate})
+ (\specref{subsec:async_target_with_tasks})
+\item array sections in device constructs (\specref{sec:array_sections})
+\item device runtime routines (\specref{sec:device})
+\item Fortran ASSOCIATE construct (\specref{sec:associate})
+\item cancellation constructs (\specref{sec:cancellation})
 \end{itemize}

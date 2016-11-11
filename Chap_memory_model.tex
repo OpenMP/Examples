@@ -1,0 +1,105 @@
+\pagebreak
+\chapter{Memory Model}
+\label{chap:memory_model}
+
+In this chapter, examples illustrate race conditions on access to variables with
+shared data-sharing attributes.  A race condition can exist when two
+or more threads are involved in accessing a variable in which not all
+of the accesses are reads; that is, a WaR, RaW or WaW condition
+exists (R=read, a=after, W=write). A RaR does not produce a race condition.
+ Ensuring thread execution order at
+the processor level is not enough to avoid race conditions, because the
+local storage at the processor level (registers, caches, etc.)
+must be synchronized so that a consistent view of the variable in the
+memory hierarchy can be seen by the threads accessing the variable.
+
+OpenMP provides a shared-memory model which allows all threads access
+to \plc{memory} (shared data).  Each thread also has exclusive
+access to \plc{threadprivate memory} (private data).  A private
+variable referenced in an OpenMP directive's structured block is a
+new version of the original variable (with the same name) for each
+task (or SIMD lane) within the code block.  A private variable is
+initially undefined (except for variables in \code{firstprivate}
+and \code{linear} clauses), and the original variable value is
+unaltered by assignments to the private variable, (except for
+\code{reduction}, \code{lastprivate} and \code{linear} clauses).
+
+Private variables in an outer \code{parallel} region can be
+shared by implicit tasks of an inner \code{parallel} region 
+(with a \code{share} clause on the inner \code{parallel} directive).
+Likewise, a private variable may be shared in the region of an
+explicit \code{task} (through a \code{shared} clause).
+
+
+The \code{flush} directive forces a  consistent view of local variables
+of the thread executing the \code{flush}.
+When a list is supplied on the directive, only the items (variables)
+in the list are guaranteed to be flushed.
+
+Implied flushes exist at prescribed locations of certain constructs. 
+For the complete list of these locations and associated constructs,
+please refer to the \plc{flush Construct} section of the OpenMP 
+Specifications document.
+
+% The following table lists construct in which implied flushes exist, and the
+% location of their execution.
+% 
+% %\begin{table}[hb]
+% \begin{center}
+% %\caption {Execution Location for Implicit Flushes. } 
+% \begin{tabular}{ | p{0.6\linewidth} | l | } 
+% \hline
+% \code{CONSTRUCT}                                   & \makecell{\code{EXECUTION} \\ \code{LOCATION}} \\
+% \hline
+% \code{parallel}                                    & upon entry and exit \\
+% \hline
+% \makecell[l]{worksharing \\ \hspace{1.5em}\code{for}, \code{do} 
+%                          \\ \hspace{1.5em}\code{sections} 
+%                          \\ \hspace{1.5em}\code{single} 
+%                          \\ \hspace{1.5em}\code{workshare} }  
+%                                                    & upon exit \\ 
+% \hline
+% \code{critical}                                    & upon entry and exit \\
+% \hline
+% \code{target}                                      & upon entry and exit \\
+% \hline
+% \code{barrier}                                     & during \\
+% \hline
+% \code{atomic} operation with \plc{seq\_cst} clause & upon entry and exit \\
+% \hline
+% \code{ordered}*                                    & upon entry and exit \\
+% \hline
+% \code{cancel}** and \code{cancellation point}**    & during \\
+% \hline
+% \code{target data}                                 & upon entry and exit \\
+% \hline
+% \code{target update} + \code{to} clause,   
+% \code{target enter data}                           & on entry \\
+% \hline
+% \code{target update} + \code{from} clause, 
+% \code{target exit data}                            & on exit \\
+% \hline
+% \code{omp\_set\_lock}                              & during \\
+% \hline
+% \makecell[l]{ \code{omp\_set/unset\_lock}, \code{omp\_test\_lock}*** 
+%            \\ \code{omp\_set/unset/test\_nest\_lock}*** }
+%                                                    & during \\
+% \hline
+% task scheduling point                              & \makecell[l]{immediately \\ before and after} \\
+% \hline
+% \end{tabular}
+% %\caption {Execution Location for Implicit Flushes. } 
+% 
+% \end{center}
+% %\end{table}
+% 
+% * without clauses and with \code{threads} or \code{depend} clauses \newline
+% ** when \plc{cancel-var} ICV is \plc{true} (cancellation is turned on) and cancellation is activated \newline
+% *** if the region causes the lock to be set or unset
+% 
+% A flush with a list is implied for non-sequentially consistent \code{atomic} operations
+% (\code{atomic} directive without a \code{seq\_cst} clause), where the list item is the
+% specific storage location accessed atomically (specified as the \plc{x} variable
+% in \plc{atomic Construct} subsection of the OpenMP Specifications document).
+
+Examples 1-3 show the difficulty of synchronizing threads through \code{flush} and \code{atomic} directives.

@@ -1,0 +1,43 @@
+\section{Affinity Query Functions}
+\label{sec: affinity_query}
+
+In the example below a team of threads is generated on each socket of
+the system, using nested parallelism. Several query functions are used
+to gather information to support the creation of the teams and to obtain 
+socket and thread numbers.
+
+For proper execution of the code, the user must create a place partition, such that
+each place is a listing of the core numbers for a socket. For example,
+in a 2 socket system with 8 cores in each socket, and sequential numbering
+in the socket for the core numbers, the \code{OMP\_PLACES} variable would be set
+to "\{0:8\},\{8:8\}", using the place syntax \{\plc{lower\_bound}:\plc{length}:\plc{stride}\},
+and the default stride of 1.
+
+The code determines the number of sockets (\plc{n\_sockets})
+using the \code{omp\_get\_num\_places()} query function.
+In this example each place is constructed with a list of 
+each socket's core numbers, hence the number of places is equal
+to the number of sockets. 
+
+The outer parallel region forms a team of threads, and each thread 
+executes on a socket (place) because the \code{proc\_bind} clause uses 
+\code{spread} in the outer \code{parallel} construct.
+Next, in the \plc{socket\_init} function, an inner parallel region creates a team 
+of threads equal to the number of elements (core numbers) from the place
+of the parent thread. Because the outer \code{parallel} construct uses 
+a \code{spread} affinity policy, each of its threads inherits a subpartition of 
+the original partition.  Hence, the \code{omp\_get\_place\_num\_procs} query function
+returns the number of elements (here procs = cores) in the subpartition of the thread.  
+After each parent thread creates its nested parallel region on the section,
+the socket number and thread number are reported.
+
+Note: Portable tools like hwloc (Portable HardWare LOCality package), which support
+many common operating systems, can be used to determine the configuration of a system.  
+On some systems there are utilities, files or user guides that provide configuration
+information.  For instance, the socket number and proc\_id's for a socket 
+can be found in the /proc/cpuinfo text file on Linux systems.
+
+\cexample{affinity}{6}
+
+\ffreeexample{affinity}{6}
+

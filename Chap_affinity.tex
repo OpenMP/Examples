@@ -1,0 +1,118 @@
+\pagebreak
+\chapter{OpenMP Affinity}
+\label{chap:openmp_affinity}
+
+OpenMP Affinity consists of a \code{proc\_bind} policy (thread affinity policy) and a specification of
+places (\texttt{"}location units\texttt{"} or \plc{processors} that may be cores, hardware
+threads, sockets, etc.).  
+OpenMP Affinity enables users to bind computations on specific places.
+The placement will hold for the duration of the parallel region. 
+However, the runtime is free to migrate the OpenMP threads 
+to different cores (hardware threads, sockets, etc.) prescribed within a given place, 
+if two or more cores (hardware threads, sockets, etc.) have been assigned to a given place.
+
+Often the binding can be managed without resorting to explicitly setting places.
+Without the specification of places in the \code{OMP\_PLACES} variable, 
+the OpenMP runtime will distribute and bind threads using the entire range of processors for 
+the OpenMP program, according to the \code{OMP\_PROC\_BIND} environment variable
+or the \code{proc\_bind} clause.  When places are specified, the OMP runtime
+binds threads to the places according to a default distribution policy, or
+those specified in the \code{OMP\_PROC\_BIND} environment variable or the
+\code{proc\_bind} clause.
+
+In the OpenMP Specifications document a processor refers to an execution unit that
+is enabled for an OpenMP thread to use.  A processor is a core when there is
+no SMT (Simultaneous Multi-Threading) support or SMT is disabled.  When 
+SMT is enabled, a processor is a hardware thread (HW-thread). (This is the
+usual case; but actually, the execution unit is implementation defined.) Processor
+numbers are numbered sequentially from 0 to the number of cores less one (without SMT), or
+0 to the number HW-threads less one (with SMT). OpenMP places use the processor number to designate
+binding locations (unless an \texttt{"}abstract name\texttt{"} is used.) 
+
+
+The processors available to a process may be a subset of the system's
+processors.  This restriction may be the result of a 
+wrapper process controlling the execution (such as \code{numactl} on Linux systems), 
+compiler options, library-specific environment variables, or default
+kernel settings.  For instance, the execution of multiple MPI processes,
+launched on a single compute node, will each have a subset of processors as
+determined by the MPI launcher or set by MPI affinity environment 
+variables for the MPI library.  %Forked threads within an MPI process
+%(for a hybrid execution of MPI and OpenMP code) inherit the valid 
+%processor set for execution from the parent process (the initial task region) 
+%when a parallel region forks threads.  The binding policy set in 
+%\code{OMP\_PROC\_BIND} or the \code{proc\_bind} clause will be applied to 
+%the subset of processors available to \plc{the particular} MPI process.
+
+%Also, setting an explicit list of processor numbers in the \code{OMP\_PLACES} 
+%variable before an MPI launch (which involves more than one MPI process) will
+%result in unspecified behavior (and doesn't make sense) because the set of 
+%processors in the places list must not contain processors outside the subset 
+%of processors for an MPI process. A separate \code{OMP\_PLACES} variable must
+%be set for each MPI process, and is usually accomplished by launching a script 
+%which sets \code{OMP\_PLACES} specifically for the MPI process. 
+
+Threads of a team are positioned onto places in a compact manner, a 
+scattered distribution, or onto the master's place, by setting the 
+\code{OMP\_PROC\_BIND} environment variable or the \code{proc\_bind} clause  to 
+\plc{close}, \plc{spread}, or \plc{master}, respectively.  When 
+\code{OMP\_PROC\_BIND} is set to FALSE no binding is enforced; and 
+when the value is TRUE, the binding is implementation defined to 
+a set of places in the \code{OMP\_PLACES} variable or to places 
+defined by the implementation if the \code{OMP\_PLACES} variable 
+is not set.
+
+The \code{OMP\_PLACES} variable can also be set to an abstract name 
+(\plc{threads}, \plc{cores}, \plc{sockets}) to specify that a place is
+either a single hardware thread, a core, or a socket, respectively. 
+This description of the \code{OMP\_PLACES} is most useful when the 
+number of threads is equal to the number of hardware thread, cores
+or sockets.  It can also be used with a \plc{close} or \plc{spread} 
+distribution policy when the equality doesn't hold.
+
+
+% We need an example of using sockets, cores and threads:
+
+% case 1 cores:
+
+%     Hyper-Threads on (2 hardware threads per core)
+%     1 socket x 4 cores x 2 HW-threads
+%   
+%     export OMP_NUM_THREADS=4
+%     export OMP_PLACES=threads
+%     
+%          core #      0    1    2    3
+%     processor #     0,1  2,3  4,5  6,7  
+%     thread #     0  * _  _ _  _ _  _ _   #mask for thread 0
+%     thread #     1  _ _  * _  _ _  _ _   #mask for thread 1
+%     thread #     2  _ _  _ _  * _  _ _   #mask for thread 2
+%     thread #     3  _ _  _ _  _ _  * _   #mask for thread 3
+
+% case 2 threads:
+%   
+%     Hyper-Threads on (2 hardware threads per core)
+%     1 socket x 4 cores x 2 HW-threads
+%    
+%     export OMP_NUM_THREADS=4
+%     export OMP_PLACES=cores
+%     
+%          core #      0    1    2    3
+%     processor #     0,1  2,3  4,5  6,7  
+%     thread #     0  * *  _ _  _ _  _ _   #mask for thread 0
+%     thread #     1  _ _  * *  _ _  _ _   #mask for thread 1
+%     thread #     2  _ _  _ _  * *  _ _   #mask for thread 2
+%     thread #     3  _ _  _ _  _ _  * *   #mask for thread 3
+
+% case 3 sockets:
+%   
+%     No Hyper-Threads
+%     3 socket x 4 cores 
+%     
+%     export OMP_NUM_THREADS=3
+%     export OMP_PLACES=sockets
+%     
+%        socket #        0         1          2
+%     processor #     0,1,2,3   4,5,6,7   8,9,10,11
+%     thread #     0  * * * *   _ _ _ _   _ _  _  _   #mask for thread 0
+%     thread #     0  _ _ _ _   * * * *   _ _  _  _   #mask for thread 1
+%     thread #     0  _ _ _ _   _ _ _ _   * *  *  *   #mask for thread 2

@@ -1,6 +1,5 @@
-\pagebreak
-\chapter{Ownership of Locks}
-\label{chap:lock_owner}
+\subsection{Ownership of Locks}
+\label{subsec:lock_owner}
 
 Ownership of locks has changed since OpenMP 2.5. In OpenMP 2.5, locks are owned 
 by threads; so a lock released by the \code{omp\_unset\_lock} routine must be 
@@ -16,8 +15,8 @@ the same). However, it is not conforming beginning with OpenMP 3.0, because the 
 region that releases the lock \code{lck} is different from the task region that 
 acquires the lock.
 
-\cexample{lock_owner}{1c}
+\cexample{lock_owner}{1}
 
-\fexample{lock_owner}{1f}
+\fexample{lock_owner}{1}
 
 

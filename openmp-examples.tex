@@ -48,8 +48,8 @@
 \documentclass[10pt,letterpaper,twoside,makeidx,hidelinks]{scrreprt}
 
 % Text to appear in the footer on even-numbered pages:
-\newcommand{\VER}{4.0.2}
-\newcommand{\VERDATE}{March 2015}
+\newcommand{\VER}{4.5.0}
+\newcommand{\VERDATE}{November 2016}
 \newcommand{\footerText}{OpenMP Examples Version \VER{} - \VERDATE}
 
 % Unified style sheet for OpenMP documents:
@@ -77,71 +77,120 @@
 
     \setcounter{chapter}{0}  % start chapter numbering here
 
-    \input{Examples_ploop}
-    \input{Examples_mem_model}
-    \input{Examples_cond_comp}
-    \input{Examples_icv}
-    \input{Examples_parallel}
-    \input{Examples_nthrs_nesting}
-    \input{Examples_nthrs_dynamic}
-    \input{Examples_affinity}
-    \input{Examples_fort_do}
-    \input{Examples_fort_loopvar}
-    \input{Examples_nowait}
-    \input{Examples_collapse}
-    \input{Examples_psections}
-    \input{Examples_fpriv_sections}
-    \input{Examples_single}
-    \input{Examples_tasking}
-    \input{Examples_task_dep}
-    \input{Examples_taskgroup}
-    \input{Examples_taskyield}
-    \input{Examples_workshare}
-    \input{Examples_master}
-    \input{Examples_critical}
-    \input{Examples_worksharing_critical}
-    \input{Examples_barrier_regions}
-    \input{Examples_atomic}
-    \input{Examples_atomic_restrict}
-    \input{Examples_flush_nolist}
-    \input{Examples_standalone}
-    \input{Examples_ordered}
-    \input{Examples_cancellation}
-    \input{Examples_threadprivate}
-    \input{Examples_pra_iterator}
-    \input{Examples_fort_sp_common}
-    \input{Examples_default_none}
-    \input{Examples_fort_race}
-    \input{Examples_private}
-    \input{Examples_fort_sa_private}
-    \input{Examples_carrays_fpriv}
-    \input{Examples_lastprivate}
-    \input{Examples_reduction}
-    \input{Examples_copyin}
-    \input{Examples_copyprivate}
-    \input{Examples_nested_loop}
-    \input{Examples_nesting_restrict}
-    \input{Examples_set_dynamic_nthrs}
-    \input{Examples_get_nthrs}
-    \input{Examples_init_lock}
-    \input{Examples_lock_owner}
-    \input{Examples_simple_lock}
-    \input{Examples_nestable_lock}
-    \input{Examples_SIMD}
-    \input{Examples_target}
-    \input{Examples_target_data}
-    \input{Examples_target_update}
-    \input{Examples_declare_target}
-    \input{Examples_teams}
-    \input{Examples_async_target}
-    \input{Examples_array_sections}
-    \input{Examples_device}
-    \input{Examples_associate}
+    \input{Chap_parallel_execution}
+       \input{Examples_ploop}
+       \input{Examples_parallel}
+       \input{Examples_nthrs_nesting}
+       \input{Examples_nthrs_dynamic}
+       \input{Examples_fort_do}
+       \input{Examples_nowait}
+       \input{Examples_collapse}
+     % linear Clause 475
+       \input{Examples_linear_in_loop}
+       \input{Examples_psections}
+       \input{Examples_fpriv_sections}
+       \input{Examples_single}
+       \input{Examples_workshare}
+       \input{Examples_master}
+       \input{Examples_pra_iterator}
+       \input{Examples_set_dynamic_nthrs}
+       \input{Examples_get_nthrs}
+
+    \input{Chap_affinity}
+       \input{Examples_affinity}
+       \input{Examples_affinity_query}
+
+    \input{Chap_tasking}
+       \input{Examples_tasking}
+       \input{Examples_task_priority}
+       \input{Examples_task_dep}
+       \input{Examples_taskgroup}
+       \input{Examples_taskyield}
+       \input{Examples_taskloop}
+
+    \input{Chap_devices}
+       \input{Examples_target}
+       \input{Examples_target_data}
+       \input{Examples_target_unstructured_data}
+       \input{Examples_target_update}
+       \input{Examples_declare_target}
+           % Link clause 474
+       \input{Examples_teams}
+       \input{Examples_async_target_depend}
+       \input{Examples_async_target_with_tasks}
+           %Title change of 57.1 and 57.2
+           %New subsection
+       \input{Examples_async_target_nowait}
+       \input{Examples_async_target_nowait_depend}
+       \input{Examples_array_sections}
+     % Structure Element in map 487
+       \input{Examples_device}
+            % MemoryRoutine and Device ptr  473
+
+    \input{Chap_SIMD}
+       \input{Examples_SIMD}
+      % Forward Depend 370
+      % simdlen  476
+      % simd linear modifier 480
+
+    \input{Chap_synchronization}
+       \input{Examples_critical}
+       \input{Examples_worksharing_critical}
+       \input{Examples_barrier_regions}
+       \input{Examples_atomic}
+       \input{Examples_atomic_restrict}
+       \input{Examples_flush_nolist}
+       \input{Examples_ordered}
+     % Doacross loop  405
+       \input{Examples_doacross}
+       \input{Examples_locks}
+            \input{Examples_init_lock}
+            \input{Examples_init_lock_with_hint} 
+            \input{Examples_lock_owner}
+            \input{Examples_simple_lock}
+            \input{Examples_nestable_lock}
+    %  % LOCK with Hints 478
+    %       % Hint Clause  xxxxxx (included after init_lock)
+    %       % Lock routines with hint
+           
+
+    \input{Chap_data_environment}
+       \input{Examples_threadprivate}
+       \input{Examples_default_none}
+       \input{Examples_private}
+       \input{Examples_fort_loopvar}
+       \input{Examples_fort_sp_common}
+       \input{Examples_fort_sa_private}
+       \input{Examples_carrays_fpriv}
+       \input{Examples_lastprivate}
+       \input{Examples_reduction}
+     %  User UDR  287
+     %  C array reduction 377
+       \input{Examples_copyin}
+       \input{Examples_copyprivate}
+       \input{Examples_cpp_reference}
+     %  Fortran 2003 features  482
+            \input{Examples_associate}  %section--> subsection
+
+    \input{Chap_memory_model}
+       \input{Examples_mem_model}
+       \input{Examples_fort_race}
+
+    \input{Chap_program_control}
+       \input{Examples_cond_comp}
+       \input{Examples_icv}
+     % If multi-ifs  471
+       \input{Examples_standalone}
+       \input{Examples_cancellation}
+     % New Section Nested Regions
+           \input{Examples_nested_loop}
+           \input{Examples_nesting_restrict}
+
 
     \setcounter{chapter}{0}  % restart chapter numbering with "letter A"
     \renewcommand{\thechapter}{\Alph{chapter}}%
     \appendix
-
     \input{History}
+
 \end{document}
 

@@ -1,6 +1,6 @@
 \pagebreak
-\chapter{Cancellation Constructs}
-\label{chap:cancellation}
+\section{Cancellation Constructs}
+\label{sec:cancellation}
 
 The following example shows how the \code{cancel} directive can be used to terminate 
 an OpenMP region. Although the \code{cancel} construct terminates the OpenMP 
@@ -11,7 +11,7 @@ exception is properly handled in the sequential part. If cancellation of the \co
 region has been requested, some threads might have executed \code{phase\_1()}. 
 However, it is guaranteed that none of the threads executed \code{phase\_2()}.
 
-\cexample{cancellation}{1c}
+\cppexample{cancellation}{1}
 
 
 The following example illustrates the use of the \code{cancel} construct in error 
@@ -20,7 +20,7 @@ the cancellation is activated. The encountering thread sets the shared variable
 \code{err} and other threads of the binding thread set proceed to the end of 
 the worksharing construct after the cancellation has been activated. 
 
-\fexample{cancellation}{1f}
+\ffreeexample{cancellation}{1}
 
 The following example shows how to cancel a parallel search on a binary tree as 
 soon as the search value has been detected. The code creates a task to descend 
@@ -32,11 +32,11 @@ task group to control the effect of the \code{cancel taskgroup} directive. The
 \plc{level} argument is used to create undeferred tasks after the first ten 
 levels of the tree.
 
-\cexample{cancellation}{2c}
+\cexample{cancellation}{2}
 
 
 The following is the equivalent parallel search example in Fortran.
 
-\fexample{cancellation}{2f}
+\ffreeexample{cancellation}{2}
 
 

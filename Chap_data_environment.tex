@@ -1,0 +1,75 @@
+\pagebreak
+\chapter{Data Environment}
+\label{chap:data_environment}
+The OpenMP \plc{data environment} contains data attributes of variables and
+objects.  Many constructs (such as \code{parallel}, \code{simd}, \code{task}) 
+accept clauses to control \plc{data-sharing} attributes
+of referenced variables in the construct, where \plc{data-sharing} applies to
+whether the attribute of the variable is \plc{shared}, 
+is \plc{private} storage, or has special operational characteristics 
+(as found in the \code{firstprivate}, \code{lastprivate}, \code{linear}, or \code{reduction} clause).
+
+The data environment for a device (distinguished as a \plc{device data environment})
+is controlled on the host by \plc{data-mapping} attributes, which determine the
+relationship of the data on the host, the \plc{original} data, and the data on the
+device, the \plc{corresponding} data.
+
+\bigskip
+DATA-SHARING ATTRIBUTES
+
+Data-sharing attributes of variables can be classified as being \plc{predetermined},
+\plc{explicitly determined} or \plc{implicitly determined}.
+
+Certain variables and objects have predetermined attributes.  
+A commonly found case is the loop iteration variable in associated loops 
+of a \code{for} or \code{do} construct. It has a private data-sharing attribute.
+Variables with predetermined data-sharing attributes can not be listed in a data-sharing clause; but there are some
+exceptions (mainly concerning loop iteration variables).
+
+Variables with explicitly determined data-sharing attributes are those that are
+referenced in a given construct and are listed in a data-sharing attribute
+clause on the construct. Some of the common data-sharing clauses are:
+\code{shared}, \code{private}, \code{firstprivate}, \code{lastprivate}, 
+\code{linear}, and \code{reduction}. % Are these all of them?
+
+Variables with implicitly determined data-sharing attributes are those
+that are referenced in a given construct, do not have predetermined
+data-sharing attributes, and are not listed in a data-sharing
+attribute clause of an enclosing construct.
+For a complete list of variables and objects with predetermined and
+implicitly determined attributes, please refer to the
+\plc{Data-sharing Attribute Rules for Variables Referenced in a Construct}
+subsection of the OpenMP Specifications document.  
+
+\bigskip
+DATA-MAPPING ATTRIBUTES
+
+The \code{map} clause on a device construct explictly specifies how the list items in
+the clause are mapped from the encountering task's data environment (on the host)
+to the corresponding item in the device data environment (on the device).
+The common \plc{list items} are arrays, array sections, scalars, pointers, and
+structure elements (members). 
+
+Procedures and global variables have predetermined data mapping if they appear
+within the list or block of a \code{declare target} directive. Also, a C/C++ pointer
+is mapped as a zero-length array section, as is a C++ variable that is a reference to a pointer.
+% Waiting for response from Eric on this.
+
+Without explict mapping, non-scalar and non-pointer variables within the scope of the \code{target}
+construct are implicitly mapped with a \plc{map-type} of \code{tofrom}.
+Without explicit mapping, scalar variables within the scope of the \code{target}
+construct are not mapped, but have an implicit firstprivate data-sharing
+attribute. (That is, the value of the original variable is given to a private
+variable of the same name on the device.) This behavior can be changed with
+the \code{defaultmap} clause.
+
+The \code{map} clause can appear on \code{target}, \code{target data} and 
+\code{target enter/exit data} constructs.  The operations of creation and
+removal of device storage as well as assignment of the original list item 
+values to the corresponding list items may be complicated when the list 
+item appears on multiple constructs or when the host and device storage 
+is shared. In these cases the item's reference count, the number of times
+it has been referenced (+1 on entry and -1 on exited) in nested (structured)
+map regions and/or accumulative (unstructured) mappings, determines the operation.
+Details of the \code{map} clause and reference count operation are specified 
+in the \plc{map Clause} subsection of the OpenMP Specifications document.

@@ -1,6 +1,6 @@
 \pagebreak
-\chapter{The \code{atomic} Construct}
-\label{chap:atomic}
+\section{The \code{atomic} Construct}
+\label{sec:atomic}
 
 The following example avoids race conditions (simultaneous updates of an element 
 of \plc{x} by multiple threads) by using the \code{atomic} construct .
@@ -14,9 +14,9 @@ Note that the \code{atomic} directive applies only to the statement immediately
 following it. As a result, elements of \plc{y} are not updated atomically in 
 this example.
 
-\cexample{atomic}{1c}
+\cexample{atomic}{1}
 
-\fexample{atomic}{1f}
+\fexample{atomic}{1}
 
 The following example illustrates the \code{read} and \code{write}  clauses 
 for the \code{atomic} directive. These clauses ensure that the given variable 
@@ -26,9 +26,9 @@ another part of the variable. Note that most hardware provides atomic reads and
 writes for some set of properly aligned variables of specific sizes, but not necessarily 
 for all the variable types supported by the OpenMP API.
 
-\cexample{atomic}{2c}
+\cexample{atomic}{2}
 
-\fexample{atomic}{2f}
+\fexample{atomic}{2}
 
 The following example illustrates the \code{capture} clause for the \code{atomic} 
 directive. In this case the value of a variable is captured, and then the variable 
@@ -37,8 +37,8 @@ be implemented using the fetch-and-add instruction available on many kinds of ha
 The example also shows a way to implement a spin lock using the \code{capture} 
  and \code{read} clauses.
 
-\cexample{atomic}{3c}
+\cexample{atomic}{3}
 
-\fexample{atomic}{3f}
+\fexample{atomic}{3}
 
 

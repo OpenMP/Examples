@@ -1,6 +1,6 @@
 \pagebreak
-\chapter{Fortran Restrictions on the \code{do} Construct}
-\label{chap:fort_do}
+\section{Fortran Restrictions on the \code{do} Construct}
+\label{sec:fort_do}
 \fortranspecificstart
 
 If an \code{end do} directive follows a \plc{do-construct}  in which several 
@@ -8,12 +8,12 @@ If an \code{end do} directive follows a \plc{do-construct}  in which several
 directive can only be specified for the outermost of these \code{DO} statements. 
 The following example contains correct usages of loop constructs:
 
-\fnexample{fort_do}{1f}
+\fnexample{fort_do}{1}
 
 The following example is non-conforming because the matching \code{do} directive 
 for the \code{end do} does not precede the outermost loop:
 
-\fnexample{fort_do}{2f}
+\fnexample{fort_do}{2}
 \fortranspecificend
 
 

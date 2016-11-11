@@ -1,44 +1,44 @@
 \pagebreak
-\chapter{The \code{reduction} Clause}
-\label{chap:reduction}
+\section{The \code{reduction} Clause}
+\label{sec:reduction}
 
 The following example demonstrates the \code{reduction} clause ; note that some 
 reductions can be expressed in the loop in several ways, as shown for the \code{max} 
 and \code{min} reductions below:
 
-\cexample{reduction}{1c}
+\cexample{reduction}{1}
 
-\fexample{reduction}{1f}
+\ffreeexample{reduction}{1}
 
 A common implementation of the preceding example is to treat it as if it had been 
 written as follows:
 
-\cexample{reduction}{2c}
+\cexample{reduction}{2}
 
 \fortranspecificstart
-\fnexample{reduction}{2f}
+\ffreenexample{reduction}{2}
 
 The following program is non-conforming because the reduction is on the 
 \emph{intrinsic procedure name} \code{MAX} but that name has been redefined to be the variable 
 named \code{MAX}.
+
+\ffreenexample{reduction}{3}
 % blue line floater at top of this page for "Fortran, cont."
 \begin{figure}[t!]
 \linewitharrows{-1}{dashed}{Fortran (cont.)}{8em}
 \end{figure}
 
-\fnexample{reduction}{3f}
-
 The following conforming program performs the reduction using the 
 \emph{intrinsic procedure name} \code{MAX} even though the intrinsic \code{MAX} has been renamed 
 to \code{REN}.
 
-\fnexample{reduction}{4f}
+\ffreenexample{reduction}{4}
 
 The following conforming program performs the reduction using 
 \plc{intrinsic procedure name} \code{MAX} even though the intrinsic \code{MAX} has been renamed 
 to \code{MIN}.
 
-\fnexample{reduction}{5f}
+\ffreenexample{reduction}{5}
 \fortranspecificend
 
 The following example is non-conforming because the initialization (\code{a = 
@@ -53,8 +53,13 @@ clause. This can be achieved by adding an explicit barrier after the assignment
 directive (which has an implied barrier), or by initializing \code{a} before 
 the start of the \code{parallel} region.
 
-\cexample{reduction}{3c}
+\cexample{reduction}{6}
 
-\fexample{reduction}{6f}
+\fexample{reduction}{6}
+
+The following example demonstrates the reduction of array \plc{a}.  In C/C++ this is illustrated by the explicit use of an array section \plc{a[0:N]} in the \code{reduction} clause.  The corresponding Fortran example uses array syntax supported in the base language.  As of the OpenMP 4.5 specification the explicit use of array section in the \code{reduction} clause in Fortran is not permitted.  But this oversight will be fixed in the next release of the specification.
 
 
+\cexample{reduction}{7}
+
+\ffreeexample{reduction}{7}

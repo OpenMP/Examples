@@ -1,0 +1,68 @@
+\pagebreak
+\section{Doacross Loop Nest}
+\label{sec:doacross}
+
+An \code{ordered} clause can be used on a loop construct with an integer
+parameter argument to define the number of associated loops within 
+a \plc{doacross loop nest} where cross-iteration dependences exist.
+A \code{depend} clause on an \code{ordered} construct within an ordered 
+loop describes the dependences of the \plc{doacross} loops. 
+
+In the code below, the \code{depend(sink:i-1)} clause defines an \plc{i-1} 
+to \plc{i} cross-iteration dependence that specifies a wait point for 
+the completion of computation from iteration \plc{i-1} before proceeding 
+to the subsequent statements. The \code{depend(source)} clause indicates 
+the completion of computation from the current iteration (\plc{i}) 
+to satisfy the cross-iteration dependence that arises from the iteration.
+For this example the same sequential ordering could have been achieved 
+with an \code{ordered} clause without a parameter, on the loop directive, 
+and a single \code{ordered} directive without the \code{depend} clause
+specified for the statement executing the \plc{bar} function.
+
+\cexample{doacross}{1}
+
+\ffreeexample{doacross}{1}
+
+The following code is similar to the previous example but with 
+\plc{doacross loop nest} extended to two nested loops, \plc{i} and \plc{j}, 
+as specified by the \code{ordered(2)} clause on the loop directive. 
+In the C/C++ code, the \plc{i} and \plc{j} loops are the first and
+second associated loops, respectively, whereas
+in the Fortran code, the \plc{j} and \plc{i} loops are the first and
+second associated loops, respectively.
+The \code{depend(sink:i-1,j)} and \code{depend(sink:i,j-1)} clauses in 
+the C/C++ code define cross-iteration dependences in two dimensions from 
+iterations (\plc{i-1, j}) and (\plc{i, j-1}) to iteration (\plc{i, j}).  
+Likewise, the \code{depend(sink:j-1,i)} and \code{depend(sink:j,i-1)} clauses 
+in the Fortran code define cross-iteration dependences from iterations 
+(\plc{j-1, i}) and (\plc{j, i-1}) to iteration (\plc{j, i}).
+
+\cexample{doacross}{2}
+
+\ffreeexample{doacross}{2}
+
+
+The following example shows the incorrect use of the \code{ordered} 
+directive with a \code{depend} clause.  There are two issues with the code.  
+The first issue is a missing \code{ordered}~\code{depend(source)} directive,
+which could cause a deadlock.  
+The second issue is the \code{depend(sink:i+1,j)} and \code{depend(sink:i,j+1)} 
+clauses define dependences on lexicographically later 
+source iterations (\plc{i+1, j}) and (\plc{i, j+1}), which could cause 
+a deadlock as well since they may not start to execute until the current iteration completes.
+
+\cexample{doacross}{3}
+
+\ffreeexample{doacross}{3}
+
+
+The following example illustrates the use of the \code{collapse} clause for
+a \plc{doacross loop nest}.  The \plc{i} and \plc{j} loops are the associated
+loops for the collapsed loop as well as for the \plc{doacross loop nest}.
+The example also shows a compliant usage of the dependence source
+directive placed before the corresponding sink directive.
+Checking the completion of computation from previous iterations at the sink point can occur after the source statement.
+
+\cexample{doacross}{4}
+
+\ffreeexample{doacross}{4}

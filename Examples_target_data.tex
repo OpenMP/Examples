@@ -1,8 +1,9 @@
 \pagebreak
-\chapter{\code{target} \code{data} Construct}
-\label{chap:target_data}
+\section{\code{target} \code{data} Construct}
+\label{sec:target_data}
 
-\section{Simple \code{target} \code{data} Construct}
+\subsection{Simple \code{target} \code{data} Construct}
+\label{subsec:target_data_simple}
 
 This example shows how the \code{target} \code{data} construct maps variables 
 to a device data environment. The \code{target} \code{data} construct creates 
@@ -13,15 +14,16 @@ variables \plc{v1}, \plc{v2}, and \plc{p} from the enclosing device data environ
 \plc{N} is mapped into the new device data environment from the encountering task's data 
 environment.
 
-\cexample{target_data}{1c}
+\cexample{target_data}{1}
 
 The Fortran code passes a reference and specifies the extent of the arrays in the 
 declaration. No length information is necessary in the map clause, as is required 
 with C/C++ pointers.
 
-\fexample{target_data}{1f}
+\ffreeexample{target_data}{1}
 
-\section{\code{target} \code{data} Region Enclosing Multiple \code{target} Regions}
+\subsection{\code{target} \code{data} Region Enclosing Multiple \code{target} Regions}
+\label{subsec:target_data_multiregion}
 
 The following examples show how the \code{target} \code{data} construct maps 
 variables to a device data environment of a \code{target} region. The \code{target} 
@@ -36,7 +38,7 @@ In the following example the variables \plc{v1} and \plc{v2} are mapped at each 
 construct. Instead of mapping the variable \plc{p} twice, once at each \code{target} 
 construct, \plc{p} is mapped once by the \code{target} \code{data} construct.
 
-\cexample{target_data}{2c}
+\cexample{target_data}{2}
 
 
 The Fortran code uses reference and specifies the extent of the \plc{p}, \plc{v1} and \plc{v2} arrays. 
@@ -45,14 +47,14 @@ C/C++ pointers. The arrays \plc{v1} and \plc{v2} are mapped at each \code{target
 Instead of mapping the array \plc{p} twice, once at each target construct, \plc{p} is mapped 
 once by the \code{target} \code{data} construct.
 
-\fexample{target_data}{2f}
+\ffreeexample{target_data}{2}
 
 In the following example, the variable tmp defaults to \code{tofrom} map-type 
 and is mapped at each \code{target} construct. The array \plc{Q} is mapped once at 
 the enclosing \code{target} \code{data} region instead of at each \code{target} 
 construct. 
 
-\cexample{target_data}{3c}
+\cexample{target_data}{3}
 
 In the following example the arrays \plc{v1} and \plc{v2} are mapped at each \code{target} 
 construct. Instead of mapping the array \plc{Q} twice at each \code{target} construct, 
@@ -61,9 +63,9 @@ variable is implicitly remapped for each \code{target} region, mapping the value
 from the device to the host at the end of the first \code{target} region, and 
 from the host to the device for the second \code{target} region.
 
-\fexample{target_data}{3f}
+\ffreeexample{target_data}{3}
 
-\section{\code{target} \code{data} Construct with Orphaned Call}
+\subsection{\code{target} \code{data} Construct with Orphaned Call}
 
 The following two examples show how the \code{target} \code{data} construct 
 maps variables to a device data environment. The \code{target} \code{data} 
@@ -88,7 +90,7 @@ of the storage location associated with their corresponding array sections. Note
 that the following pairs of array section storage locations are equivalent (\plc{p0[:N]}, 
 \plc{p1[:N]}), (\plc{v1[:N]},\plc{v3[:N]}), and (\plc{v2[:N]},\plc{v4[:N]}).
 
-\cexample{target_data}{4c}
+\cexample{target_data}{4}
 
 The Fortran code maps the pointers and storage in an identical manner (same extent, 
 but uses indices from 1 to \plc{N}).
@@ -104,7 +106,7 @@ assigned the address of the storage location associated with their corresponding
 array sections. Note that the following pair of array storage locations are equivalent 
 (\plc{p0},\plc{p1}), (\plc{v1},\plc{v3}), and (\plc{v2},\plc{v4}).
 
-\fexample{target_data}{4f}
+\ffreeexample{target_data}{4}
 
 
 In the following example, the variables \plc{p1}, \plc{v3}, and \plc{v4} are references to the pointer 
@@ -113,7 +115,7 @@ environment inherits the pointer variables \plc{p0}, \plc{v1}, and \plc{v2} from
 \code{data} construct's device data environment. Thus, \plc{p1}, \plc{v3}, and \plc{v4} are already 
 present in the device data environment.
 
-\cexample{target_data}{5c}
+\cppexample{target_data}{5}
 
 In the following example, the usual Fortran approach is used for dynamic memory. 
 The \plc{p0}, \plc{v1}, and \plc{v2} arrays are allocated in the main program and passed as references 
@@ -123,9 +125,10 @@ environment inherits the arrays \plc{p0}, \plc{v1}, and \plc{v2} from the enclos
 device data environment. Thus, \plc{p1}, \plc{v3}, and \plc{v4} are already present in the device 
 data environment.
 
-\fexample{target_data}{5f}
+\ffreeexample{target_data}{5}
 
-\section{\code{target} \code{data} Construct with \code{if} Clause}
+\subsection{\code{target} \code{data} Construct with \code{if} Clause}
+\label{subsec:target_data_if}
 
 The following two examples show how the \code{target} \code{data} construct 
 maps variables to a device data environment.
@@ -140,7 +143,7 @@ variable \plc{p} is implicitly mapped with a map-type of \code{tofrom}, but the 
 location for the array section \plc{p[0:N]} will not be mapped in the device data environments 
 of the \code{target} constructs.
 
-\cexample{target_data}{6c}
+\cexample{target_data}{6}
 
 The \code{if} clauses work the same way for the following Fortran code. The \code{target} 
 constructs enclosed in the \code{target} \code{data} region should also use 
@@ -148,7 +151,7 @@ an \code{if} clause with the same condition, so that the \code{target} \code{dat
 region and the \code{target} region are either both created for the device, or 
 are both ignored.
 
-\fexample{target_data}{6f}
+\ffreeexample{target_data}{6}
 
 In the following example, when the \code{if} clause conditional expression on 
 the \code{target} construct evaluates to \plc{false}, the target region will 
@@ -159,7 +162,7 @@ region the array section \plc{p[0:N]} will be assigned from the device data envi
 to the corresponding variable in the data environment of the task that encountered 
 the \code{target} \code{data} construct, resulting in undefined values in \plc{p[0:N]}.
 
-\cexample{target_data}{7c}
+\cexample{target_data}{7}
 
 The \code{if} clauses work the same way for the following Fortran code. When 
 the \code{if} clause conditional expression on the \code{target} construct 
@@ -171,5 +174,5 @@ region the \plc{p} array will be assigned from the device data environment to th
 variable in the data environment of the task that encountered the \code{target} 
 \code{data} construct, resulting in undefined values in \plc{p}.
 
-\fexample{target_data}{7f}
+\ffreeexample{target_data}{7}
 
