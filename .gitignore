@@ -1,0 +1,17 @@
+# ignore the output file
+openmp-examples.pdf
+openmp-examples-*.*.*.pdf
+
+# ignore LaTeX intermediate files
+openmp-examples.aux
+openmp-examples.log
+openmp-examples.out
+openmp-examples.toc
+
+# ignore typical backup files
+*~
+*.bak
+
+# ignore compiler outputs
+*.o
+*.obj
