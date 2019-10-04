@@ -1,0 +1,16 @@
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "C",
+   "language": "c",
+   "name": "c"
+  },
+  "language_info": {
+   "file_extension": ".c",
+   "mimetype": "text/plain",
+   "name": "c"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
