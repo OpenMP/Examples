@@ -1,18 +1,50 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3.6
 # -*- coding: utf-8 -*-
 
 import re
 import os
 
 # ipynb sets
-with open('NBSets/LanguageSet.txt', 'r') as f:
-    LanguageSet = f.read()
+# previously these settings are from .txt, now they are included in this file
+# with open('NBSets/LanguageSet.txt', 'r') as f:
+#     LanguageSet = f.read()
 
-with open('NBSets/markdown.txt', 'r') as f:
-    MB = f.read()
+# with open('NBSets/markdown.txt', 'r') as f:
+#     MB = f.read()
 
-with open('NBSets/code.txt', 'r') as f:
-    CB = f.read()
+# with open('NBSets/code.txt', 'r') as f:
+#     CB = f.read()
+
+LanguageSet = '],\n' + \
+              '"metadata": {\n' + \
+              ' "kernelspec": {\n' + \
+              '  "display_name": "C",\n' + \
+              '  "language": "c",\n' + \
+              '  "name": "c"\n' + \
+              ' },\n' + \
+              ' "language_info": {\n' + \
+              '  "file_extension": ".c",\n' + \
+              '  "mimetype": "text/plain",\n' + \
+              '  "name": "c"\n' + \
+              ' }\n' + \
+              '},\n' + \
+              '"nbformat": 4,\n' + \
+              '"nbformat_minor": 2\n' + \
+              '}\n'
+
+MB = '{\n' + \
+     ' "cell_type": "markdown",\n' + \
+     ' "metadata": {},\n' + \
+     ' "source": [\n' + \
+     '  "'
+
+CB = '{\n' + \
+     ' "cell_type": "code",\n' + \
+     ' "execution_count": null,\n' + \
+     ' "metadata": {},\n' + \
+     ' "outputs": [],\n' + \
+     ' "source": [\n' + \
+     ' "'
 
 E = '"\n   ]\n  },\n'
 E1 = ' \n   ]\n  },\n'
@@ -201,7 +233,7 @@ def replace_example(Str):
         else:
             Str = Str[12 : l-2] + '.' + Str[l-2 :] + '.f90'
 
-    return '%load ~/Documents/Examples/sources/Example_' + Str
+    return '%load ../sources/Example_' + Str
 
 # get file list
 path = '../'
