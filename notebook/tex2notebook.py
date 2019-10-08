@@ -326,3 +326,7 @@ for FileName in mylists:
         f.write(E2)
 
         f.write(LanguageSet)
+        os.remove(testfile)
+
+os.remove('MyList.txt')
+
