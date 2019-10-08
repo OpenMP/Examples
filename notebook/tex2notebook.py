@@ -6,15 +6,8 @@ import os
 
 # ipynb sets
 # previously these settings are from .txt, now they are included in this file
-# with open('NBSets/LanguageSet.txt', 'r') as f:
-#     LanguageSet = f.read()
-
-# with open('NBSets/markdown.txt', 'r') as f:
-#     MB = f.read()
-
-# with open('NBSets/code.txt', 'r') as f:
-#     CB = f.read()
-
+# languageSet is the code blocks in the end of the .ipynb file to show the setting of kernels
+# in this situaiton, the kernel is called Native, which is a C kernel.
 LanguageSet = ' ],\n' + \
               ' "metadata": {\n' + \
               '  "kernelspec": {\n' + \
@@ -31,13 +24,14 @@ LanguageSet = ' ],\n' + \
               ' "nbformat": 4,\n' + \
               ' "nbformat_minor": 2\n' + \
               '}'
-
+# Also, markdown and code cells are declarated with certain start mark and end mark
+# This is start mark for Markdown cells
 MB = '  {\n' + \
      '   "cell_type": "markdown",\n' + \
      '   "metadata": {},\n' + \
      '   "source": [\n' + \
      '    "'
-
+# this is start mark for code cells
 CB = '  {\n' + \
      '   "cell_type": "code",\n' + \
      '   "execution_count": null,\n' + \
@@ -46,11 +40,14 @@ CB = '  {\n' + \
      '   "source": [\n' + \
      '    "'
 
+# plus, the end marks may vary, for if it is the last one in the cells block or not
+# There is a "," if the cell is not the last one
 E = '"\n   ]\n  },\n'
-E1 = '\n   ]\n  },\n'
 E2 = '"\n   ]\n  }\n'
 
-# Do some changes
+# Do some changes to the .tex files
+# mainly changing some .tex symbols to .ipynb symbols, or simple get rid of them
+
 # ilegal symbols
 def replace_underscore(Str):
     Str = re.sub('"', '\'', Str)
@@ -62,6 +59,7 @@ def replace_underscore(Str):
     Str = re.sub('\\fortranspecificend', '', Str)
     return Str
 
+# dash, "\\\\\"
 def replace_dash(Str):
     Str = re.sub('\\\\', '', Str)
     return Str
@@ -181,6 +179,10 @@ def replace_href(Str):
     return Str
 
 # examples
+# There are 7 different kinds of examples that marked with 7 flags, such as "cexample"
+# This part is to get the file name of source code for them
+# For instance, the flag in .tex file is {cexample}{xxxx1}
+# The source code name should be "Example_xxxx.1.c"
 def replace_example(Str):
     Str = re.sub('{', '', Str)
     Str = re.sub('}', '', Str)
@@ -236,6 +238,9 @@ def replace_example(Str):
     return '%load ../sources/Example_' + Str
 
 # get file list
+# The file list is a temprary .txt file that records the names of .tex files to be processed
+# This list will be read line by line in terms of getting access to the .tex files.
+# The .tex files are located in the higher level of folder
 path = '../'
 dir = os.listdir(path)
 
@@ -250,13 +255,14 @@ with open('MyList.txt', 'r') as f:
 
 mylist = mylist[: -1]
 mylists = re.split('\n', mylist)
-#print mylists
+# print mylists
 
 # check grammar
 LIST = ['\\pa', '\\ch', '\\se', '\\su', '\\la', '\\ce', '\\cn', '\\cp', '\\fe', '\\fn', '\\ff']
 
 CodeList = ['ce', 'cn', 'cp', 'fe', 'fn', 'ff']
 
+# test files are created, which are intermediate files that awaiting for futher translation
 for FileName in mylists:
     print(FileName)
     FileLen = len(FileName)
@@ -281,7 +287,8 @@ for FileName in mylists:
                 f.write(' ')
                 f.write(line)
 
-    # read and write
+# read and write
+# read the test files and write the results
     with open(testfile, 'r') as f:
         s = f.read()
 
@@ -326,7 +333,9 @@ for FileName in mylists:
         f.write(E2)
 
         f.write(LanguageSet)
+# get rid of the test files
         os.remove(testfile)
 
+# finally get rid of the file list
 os.remove('MyList.txt')
 
