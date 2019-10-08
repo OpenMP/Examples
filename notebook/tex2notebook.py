@@ -30,7 +30,7 @@ LanguageSet = ' ],\n' + \
               ' },\n' + \
               ' "nbformat": 4,\n' + \
               ' "nbformat_minor": 2\n' + \
-              '}\n'
+              '}'
 
 MB = '  {\n' + \
      '   "cell_type": "markdown",\n' + \
@@ -46,9 +46,9 @@ CB = '  {\n' + \
      '   "source": [\n' + \
      '    "'
 
-E = ' "\n   ]\n  },\n'
-E1 = ' \n   ]\n  },\n'
-E2 = ' "\n   ]\n  }\n'
+E = '"\n   ]\n  },\n'
+E1 = '\n   ]\n  },\n'
+E2 = '"\n   ]\n  }\n'
 
 # Do some changes
 # ilegal symbols
