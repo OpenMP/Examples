@@ -32,23 +32,23 @@ LanguageSet = '],\n' + \
               '"nbformat_minor": 2\n' + \
               '}\n'
 
-MB = '{\n' + \
-     ' "cell_type": "markdown",\n' + \
-     ' "metadata": {},\n' + \
-     ' "source": [\n' + \
+MB = ' {\n' + \
+     '  "cell_type": "markdown",\n' + \
+     '  "metadata": {},\n' + \
+     '  "source": [\n' + \
+     '   "'
+
+CB = ' {\n' + \
+     '  "cell_type": "code",\n' + \
+     '  "execution_count": null,\n' + \
+     '  "metadata": {},\n' + \
+     '  "outputs": [],\n' + \
+     '  "source": [\n' + \
      '  "'
 
-CB = '{\n' + \
-     ' "cell_type": "code",\n' + \
-     ' "execution_count": null,\n' + \
-     ' "metadata": {},\n' + \
-     ' "outputs": [],\n' + \
-     ' "source": [\n' + \
-     ' "'
-
-E = '"\n   ]\n  },\n'
+E = ' "\n   ]\n  },\n'
 E1 = ' \n   ]\n  },\n'
-E2 = '"\n   ]\n  }\n'
+E2 = ' "\n   ]\n  }\n'
 
 # Do some changes
 # ilegal symbols
