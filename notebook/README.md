@@ -7,7 +7,7 @@ Convert .tex to .ipynb
 read .tex -> change .tex(template) -> write .ipynb
 
 ```
-$ python ReadWrite.py
+$ python tex2notebook.py
 ```
 
 #### notes
