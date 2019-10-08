@@ -15,21 +15,21 @@ import os
 # with open('NBSets/code.txt', 'r') as f:
 #     CB = f.read()
 
-LanguageSet = '],\n' + \
-              '"metadata": {\n' + \
-              ' "kernelspec": {\n' + \
-              '  "display_name": "C",\n' + \
-              '  "language": "c",\n' + \
-              '  "name": "c"\n' + \
+LanguageSet = ' ],\n' + \
+              ' "metadata": {\n' + \
+              '  "kernelspec": {\n' + \
+              '   "display_name": "C",\n' + \
+              '   "language": "c",\n' + \
+              '   "name": "c"\n' + \
+              '  },\n' + \
+              '  "language_info": {\n' + \
+              '   "file_extension": ".c",\n' + \
+              '   "mimetype": "text/plain",\n' + \
+              '   "name": "c"\n' + \
+              '  }\n' + \
               ' },\n' + \
-              ' "language_info": {\n' + \
-              '  "file_extension": ".c",\n' + \
-              '  "mimetype": "text/plain",\n' + \
-              '  "name": "c"\n' + \
-              ' }\n' + \
-              '},\n' + \
-              '"nbformat": 4,\n' + \
-              '"nbformat_minor": 2\n' + \
+              ' "nbformat": 4,\n' + \
+              ' "nbformat_minor": 2\n' + \
               '}\n'
 
 MB = ' {\n' + \
@@ -44,7 +44,7 @@ CB = ' {\n' + \
      '  "metadata": {},\n' + \
      '  "outputs": [],\n' + \
      '  "source": [\n' + \
-     '  "'
+     '   "'
 
 E = ' "\n   ]\n  },\n'
 E1 = ' \n   ]\n  },\n'
