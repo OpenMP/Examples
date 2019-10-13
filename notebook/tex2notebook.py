@@ -50,13 +50,27 @@ E2 = '"\n   ]\n  }\n'
 
 # ilegal symbols
 def replace_underscore(Str):
+    Str = re.sub('\\\\fortranspecificstart', '', Str)
+    Str = re.sub('\\\\fortranspecificend', '', Str)
+    Str = re.sub('\\\\cppspecificstart', '', Str)
+    Str = re.sub('\\\\cppspecificend', '', Str)
+    Str = re.sub('\\\\ccppspecificstart', '', Str)
+    Str = re.sub('\\\\ccppspecificend', '', Str)
+
     Str = re.sub('"', '\'', Str)
     Str = re.sub('\\\\_', '_', Str)
-    Str = re.sub('\\ifpdf', '', Str)
-    Str = re.sub('\\item ', '(item)', Str)
-    Str = re.sub('\\fi', '', Str)
-    Str = re.sub('\\fortranspecificstart', '', Str)
-    Str = re.sub('\\fortranspecificend', '', Str)
+    Str = re.sub('\\\\ifpdf', '', Str)
+    Str = re.sub('\\\\item ', '(item)', Str)
+    Str = re.sub('\\\\fi', '', Str)
+
+    Str = re.sub('\\\\bigskip', '', Str)
+    Str = re.sub('\\%begin', '', Str)
+    Str = re.sub('\\%end', '', Str)
+    Str = re.sub('\\%\\%\\% section', '', Str)
+    Str = re.sub(r'blue line .*', '', Str)
+    Str = re.sub(r'\% .*', '', Str) # tex comments
+    Str = re.sub('\\\\code{LOCATION}} \\\\', '', Str)
+
     return Str
 
 # dash, "\\\\\"
@@ -69,7 +83,7 @@ def replce_pattern(Str):
     if '[htbp]' in Str:
         Str = ''
     
-    if ' {figs or' in Str:
+    if ' {figs' in Str:
         Str = ''
 
     return Str
@@ -79,10 +93,11 @@ def replace_page(Str):
     Str = re.sub(r'\\pagebreak', '', Str)
     return Str
 
-# \label
+# \labels
 def replace_label(Str):
     Str = re.sub(r'\\label\{[^\{\}]*\}', '', Str)
     Str = re.sub(r'\\specref\{[^\{\}]*\}', '', Str)
+    Str = re.sub(r'\\addcontentsline\{[^\{\}]*\}\{[^\{\}]*\}{[^\{\}]*\{[*]*\}[^\{\}]*\}', '', Str)
     return Str
 
 # \chapter
@@ -93,6 +108,7 @@ def rep_chapter(match):
     return out
 
 def replace_chapter(Str):
+    Str = re.sub('\\\\chapter\*', '\\\\chapter', Str)
     Str = re.sub(r'\\chapter\{[^\{\}]*\}', rep_chapter, Str)
     return Str
 
@@ -214,6 +230,12 @@ def replace_example(Str):
         else:
             Str = Str[9 : l-2] + '.' + Str[l-2 :] + '.c'
 
+    elif 'cppnexample' in Str:
+        if Str[l-2] not in ['1', '2', '3', '4']:
+            Str = Str[11 : l-1] + '.' + Str[l-1] + '.cpp'
+        else:
+            Str = Str[11 : l-2] + '.' + Str[l-2 :] + '.cpp'
+
     elif 'fnexample' in Str:
         # Str = Str[9 : ] + '.f'
         if Str[l-2] not in ['1', '2', '3', '4']:
@@ -234,6 +256,12 @@ def replace_example(Str):
             Str = Str[12 : l-1] + '.' + Str[l-1] + '.f90'
         else:
             Str = Str[12 : l-2] + '.' + Str[l-2 :] + '.f90'
+
+    elif 'ffreenexample' in Str:
+        if Str[l-2] not in ['1', '2', '3', '4']:
+            Str = Str[13 : l-1] + '.' + Str[l-1] + '.f90'
+        else:
+            Str = Str[13 : l-2] + '.' + Str[l-2 :] + '.f90'
 
     return '%load ../sources/Example_' + Str
 
@@ -258,7 +286,7 @@ mylists = re.split('\n', mylist)
 # print mylists
 
 # check grammar
-LIST = ['\\pa', '\\ch', '\\se', '\\su', '\\la', '\\ce', '\\cn', '\\cp', '\\fe', '\\fn', '\\ff']
+LIST = ['\\pa', '\\ch', '\\se', '\\su', '\\la', '\\ce', '\\cn', '\\cp', '\\fe', '\\fn', '\\ff', '\\fo', '\\cc']
 
 CodeList = ['ce', 'cn', 'cp', 'fe', 'fn', 'ff']
 
@@ -280,7 +308,8 @@ for FileName in mylists:
             l = len(line)
             if line[ : 3] in LIST:
                 f.write(line)
-                f.write('\n')
+                if line[l-1] != '\\':
+                    f.write('\n')
             elif l == 0:
                 f.write('\n')
             else :
@@ -338,4 +367,6 @@ for FileName in mylists:
 
 # finally get rid of the file list
 os.remove('MyList.txt')
+os.remove('openmp-examples.ipynb')
+os.remove('Title_Page.ipynb')
 
