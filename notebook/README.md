@@ -9,10 +9,11 @@ By doing that, users won't need to to set it manually when open a notebook. Of c
 ### To convert
 
 ```
+cd notebook
 $ python tex2notebook.py
 ```
 
-All the notebooks will be generated under current folders. The title page and TOC page are removed since they are not properly processed. 
+All the notebooks will be generated under the current folder. The title page and TOC page are removed since they are not properly processed. 
 
 
 ### Notebook Copyright
