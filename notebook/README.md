@@ -1,10 +1,5 @@
 ## tex2notebook.py for OpenMP examples document 
-The tex2notebook.py script generates Jupyter Notebooks from the tex files of the OpenMP examples document. Each tex file is processed by the script which generates a single Jupyter notebook file. The textual content of the tex file is converted to markdown-formatted content enclosed in a notebook cell. A reference to a program source file (example source code in the example document) that appears in the tex file is converted to a cell that uses Jupyter `%load` magic, e.g. `%load ../sources/Example_parallel.1.c` such that running the cell causes loading the content of the file and then replacing the cell with the content. `%load` recognizes both absolute path and related path. Now the default one is `../sources/Example_*`.
-
-Since all the OpenMP example source files are either C/C++ and Fortran. The correct setting for the notebook kernel
-should be a kernel that can recognize C/C++ and Fortran. As of now, C/C++ and Fortran are not 
-officially supported by Jupyter notebook. Thus the script sets Python as the notebook kernel (Python3 works as well). 
-By doing that, users won't need to to set it manually when open a notebook. Of course, the C/C++/Fortran code is not compiliable or executable. User can always select a kernel from notebook interface if she has C/C++/Fortran kernel. 
+The tex2notebook.py script generates Jupyter Notebooks from the tex files of the OpenMP examples document. 
 
 ### To convert
 
@@ -15,6 +10,13 @@ $ python tex2notebook.py
 
 All the notebooks will be generated under the current folder. The title page and TOC page are removed since they are not properly processed. 
 
+### Details and limitation
+Each tex file is processed by the script which generates a single Jupyter notebook file. The textual content of the tex file is converted to markdown-formatted content enclosed in a notebook cell. A reference to a program source file (example source code in the example document) that appears in the tex file is converted to a cell that uses Jupyter `%load` magic, e.g. `%load ../sources/Example_parallel.1.c` such that running the cell causes loading the content of the file and then replacing the cell with the content. `%load` recognizes both absolute path and related path. Now the default one is `../sources/Example_*`.
+
+Since all the OpenMP example source files are either C/C++ and Fortran. The correct setting for the notebook kernel
+should be a kernel that can recognize C/C++ and Fortran. As of now, C/C++ and Fortran are not 
+officially supported by Jupyter notebook. Thus the script sets Python as the notebook kernel (Python3 works as well). 
+By doing that, users won't need to to set it manually when open a notebook. Of course, the C/C++/Fortran code is not compiliable or executable. User can always select a kernel from notebook interface if she has C/C++/Fortran kernel. 
 
 ### Notebook Copyright
 The generated notebooks have the same copyright as the orginal tex file and the official OpenMP document. 
