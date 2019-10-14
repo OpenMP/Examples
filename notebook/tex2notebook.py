@@ -4,16 +4,17 @@
 import re
 import os
 
-# ipynb sets
-# previously these settings are from .txt, now they are included in this file
 # languageSet is the code blocks in the end of the .ipynb file to show the setting of kernels
-# in this situaiton, the kernel is called Native, which is a C kernel.
+# Since all the OpenMP example source files are either C and Fortran. The correct setting should be
+# a kernel that can recognize C/C++ and Fortran. As of now, since C/C++ and Fortran are not 
+# officially supported by Jupyter notebook, we set it as python so it won't need users to set it 
+# manually when open a notebook. Of course, the C/C++/Fortran code is not compiliable or executable. 
 LanguageSet = ' ],\n' + \
               ' "metadata": {\n' + \
               '  "kernelspec": {\n' + \
-              '   "display_name": "C",\n' + \
-              '   "language": "c",\n' + \
-              '   "name": "c"\n' + \
+              '   "display_name": "Python 3",\n' + \
+              '   "language": "python",\n' + \
+              '   "name": "python3"\n' + \
               '  },\n' + \
               '  "language_info": {\n' + \
               '   "file_extension": ".c",\n' + \
@@ -24,6 +25,7 @@ LanguageSet = ' ],\n' + \
               ' "nbformat": 4,\n' + \
               ' "nbformat_minor": 2\n' + \
               '}'
+
 # Also, markdown and code cells are declarated with certain start mark and end mark
 # This is start mark for Markdown cells
 MB = '  {\n' + \
@@ -265,34 +267,24 @@ def replace_example(Str):
 
     return '%load ../sources/Example_' + Str
 
-# get file list
-# The file list is a temprary .txt file that records the names of .tex files to be processed
-# This list will be read line by line in terms of getting access to the .tex files.
-# The .tex files are located in the higher level of folder
+# get a list of .text file that will be processed to generate notebook. 
+# The .tex files are located in parent folder
 path = '../'
 dir = os.listdir(path)
 
-with open('MyList.txt', 'w') as f:
-    for i in dir:
-        if os.path.splitext(i)[1] == '.tex':
-            f.write(i)
-            f.write('\n')
-
-with open('MyList.txt', 'r') as f:
-     mylist = f.read()
-
-mylist = mylist[: -1]
-mylists = re.split('\n', mylist)
-# print mylists
+mylists = []
+for i in dir:
+    if os.path.splitext(i)[1] == '.tex':
+        mylists.append(i)
 
 # check grammar
 LIST = ['\\pa', '\\ch', '\\se', '\\su', '\\la', '\\ce', '\\cn', '\\cp', '\\fe', '\\fn', '\\ff', '\\fo', '\\cc']
 
 CodeList = ['ce', 'cn', 'cp', 'fe', 'fn', 'ff']
 
-# test files are created, which are intermediate files that awaiting for futher translation
+# test files are created, which are intermediate files for futher translation
 for FileName in mylists:
-    print(FileName)
+#    print(FileName)
     FileLen = len(FileName)
     input = '../' + FileName
     output = FileName[:(FileLen - 4)] + '.ipynb'
@@ -365,8 +357,7 @@ for FileName in mylists:
 # get rid of the test files
         os.remove(testfile)
 
-# finally get rid of the file list
-os.remove('MyList.txt')
+# Title page and table-of-content *.tex files that are properly translated. 
 os.remove('openmp-examples.ipynb')
 os.remove('Title_Page.ipynb')
 
