@@ -8,8 +8,8 @@ By doing that, users won't need to to set it manually when open a notebook. Of c
 
 ### To convert
 
+Under the `notebook` folder of the repository
 ```
-cd notebook
 $ python tex2notebook.py
 ```
 
@@ -27,7 +27,8 @@ permission of OpenMP Architecture Review Board.**
 
 ### Acknowledgement
 [Kewei Yan](https://github.com/ambipomyan) from PASSlab (https://passlab.github.io) of 
-UNC Charlotte is the main developer of this script. The script is licensed with 3-clause BSD License, 
+UNC Charlotte is the main developer of this script. When this become a question, 
+the script is licensed with 3-clause BSD License, 
 and Copyrighted @ 2019 by PASSlab (https://passlab.github.io) 
 from University of North Carolina at Charlotte. All rights reserved. 
 To contact, reach Kewei or Yonghong Yan (yanyh15@github or gmail). 
