@@ -29,7 +29,7 @@ permission of OpenMP Architecture Review Board.**
 
 ### Acknowledgement
 [Kewei Yan](https://github.com/ambipomyan) from PASSlab (https://passlab.github.io) of 
-UNC Charlotte is the main developer of this script. When this become a question, 
+UNC Charlotte is the main developer of this script. When this becomes a question, 
 the script is licensed with 3-clause BSD License, 
 and Copyrighted @ 2019 by PASSlab (https://passlab.github.io) 
 from University of North Carolina at Charlotte. All rights reserved. 
