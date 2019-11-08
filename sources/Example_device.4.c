@@ -22,7 +22,7 @@ void get_dev_cos(double *mem, size_t s)
       exit(1);
    }
 
-   mem_dev_cpy = omp_target_alloc( sizeof(double) * s, t);
+   mem_dev_cpy = (double *)omp_target_alloc( sizeof(double) * s, t);
    if(mem_dev_cpy == NULL){
       printf(" ERROR: No space left on device.\n");
       exit(1);

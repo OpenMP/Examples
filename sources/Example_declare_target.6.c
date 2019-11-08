@@ -7,10 +7,10 @@
 */
 #define N 100000000
 
-#pragma omp declare target link(sp,sv1,sv2) \
-                           link(dp,dv1,dv2)
 float  sp[N], sv1[N], sv2[N];
 double dp[N], dv1[N], dv2[N];
+#pragma omp declare target link(sp,sv1,sv2) \
+                           link(dp,dv1,dv2)
 
 void s_init(float *, float *, int);
 void d_init(double *, double *, int);

@@ -1,0 +1,31 @@
+\pagebreak
+\section{The \code{requires} Directive}
+\label{sec:requires}
+
+The declarative \code{requires} directive can be used to 
+specify features that an implementation must provide to compile and 
+execute correctly.
+
+In the following example the \code{unified\_shared\_memory} clause 
+of the \code{requires} directive ensures that the host and all 
+devices accessible through OpenMP provide a \plc{unified address} space
+for memory that is shared by all devices.
+
+The example illustrates the use of the \code{requires} directive specifying
+\plc{unified shared memory} in file scope, before any device 
+directives or device routines. No \code{map} clause is needed for
+the \plc{p} structure on the device (and its address \plc{\&p}, for the C++ code,
+is the same address on the host and device).
+However, scalar variables referenced within the \code{target}
+construct still have a default data-sharing attribute of firstprivate.
+The \plc{q} scalar is incremented on the device, and its change is
+not updated on the host.
+% will defaultmap(toform:scalar) make q use shared address space? 
+%Or will it be ignored at this point.
+% Does before device routines also mean before prototype?
+
+%\pagebreak
+
+\cppexample{requires}{1}
+
+\ffreeexample{requires}{1}

@@ -16,9 +16,9 @@
              !Flush of FLAG is implied by the atomic directive
          ELSE IF(OMP_GET_THREAD_NUM() .EQ. 1) THEN
              ! Loop until we see that FLAG reaches 1
-             !$OMP FLUSH(FLAG, DATA)
+             !$OMP FLUSH(FLAG)
              DO WHILE(FLAG .LT. 1)
-                 !$OMP FLUSH(FLAG, DATA)
+                 !$OMP FLUSH(FLAG)
              ENDDO
 
              PRINT *, 'Thread 1 awoken'
@@ -29,9 +29,9 @@
              !Flush of FLAG is implied by the atomic directive
          ELSE IF(OMP_GET_THREAD_NUM() .EQ. 2) THEN
              ! Loop until we see that FLAG reaches 2
-             !$OMP FLUSH(FLAG, DATA)
+             !$OMP FLUSH(FLAG)
              DO WHILE(FLAG .LT. 2)
-                 !$OMP FLUSH(FLAG,    DATA)
+                 !$OMP FLUSH(FLAG)
              ENDDO
 
              PRINT *, 'Thread 2 awoken'

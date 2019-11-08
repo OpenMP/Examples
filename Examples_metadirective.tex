@@ -1,0 +1,88 @@
+\pagebreak
+\section{Metadirective Directive}
+\label{sec:metadirective}
+
+A \code{metadirective} directive provides a mechanism to select a directive in
+a \code{when} clause to be used, depending upon one or more contexts:  
+implementation, available devices and the present enclosing construct. 
+The directive in a \code{default} clause is used when a directive of the 
+\code{when} clause is not selected.
+
+In the \code{when} clause the \plc{context selector} (or just \plc{selector}) defines traits that are
+evaluated for selection of the directive that follows the selector. 
+This "selectable" directive is called a \plc{directive variant}.
+Traits are grouped by \plc{construct}, \plc{implementation} and 
+\plc{device} \plc{sets} to be used by a selector of the same name.
+
+In the first example the architecture trait \plc{arch} of the 
+\plc{device} selector set specifies that if an \plc{nvptx} (NVIDIA) architecture is
+active in the OpenMP context, then the \code{teams}~\code{loop} 
+\plc{directive variant} is selected as the directive; otherwise, the \code{parallel}~\code{loop}
+\plc{directive variant} of the \code{default} clause is selected as the directive.
+That is, if a \plc{device} of \plc{nvptx} architecture is supported by the implementation within
+the enclosing \code{target} construct, its \plc{directive variant} is selected.
+The architecture names, such as \plc{nvptx}, are implementation defined.
+Also, note that \plc{device} as used in a \code{target} construct specifies
+a device number, while \plc{device}, as used in the \code{metadirective}
+directive as selector set, has traits of \plc{kind}, \plc{isa} and \plc{arch}.
+
+
+
+\cexample{metadirective}{1}
+
+\ffreeexample{metadirective}{1}
+
+%\pagebreak
+In the second example, the \plc{implementation} selector set is specified
+in the \code{when} clause to distinguish between AMD and NVIDIA platforms. 
+Additionally, specific architectures are specified with the \plc{device} 
+selector set.
+
+In the code, different \code{teams} constructs are employed as determined
+by the \code{metadirective} directive.
+The number of teams is restricted by a \code{num\_teams} clause
+and a thread limit is also set by a \code{thread\_limit} clause for 
+\plc{vendor} AMD and NVIDIA platforms and specific architecture
+traits.  Otherwise, just the \code{teams} construct is used without
+any clauses, as prescribed by the \code{default} clause.
+
+
+\cexample{metadirective}{2}
+
+\ffreeexample{metadirective}{2}
+
+\clearpage
+
+%\pagebreak
+In the third example, a \plc{construct} selector set is specified in the \code{when} clause.  
+Here, a \code{metadirective} directive is used within a function that is also
+compiled as a function for a target device as directed by the \code{declare}~\code{target} directive.
+The \plc{target} directive name of the \code{construct} selector ensures that the
+\code{distribute}~\code{parallel}~\code{for/do} construct is employed for the target compilation.
+Otherwise, for the host-compiled version the \code{parallel}~\code{for/do}~\code{simd} construct is used.
+
+In the first call to the \plc{exp\_pi\_diff()} routine the context is a
+\code{target}~\code{teams} construct and the \code{distribute}~\code{parallel}~\code{for/do}
+construct version of the function is invoked,
+while in the second call the \code{parallel}~\code{for/do}~\code{simd} construct version is used.
+
+%%%%%%%%
+This case illustrates an important point for users that may want to hoist the 
+\code{target} directive out of a function that contains the usual 
+\code{target}~\code{teams}~\code{distribute}~\code{parallel}~\code{for/do} construct
+(for providing alternate constructs through the \code{metadirective} directive as here).
+While this combined construct can be decomposed into a \code{target} and
+\code{teams distribute parallel for/do} constructs, the OpenMP 5.0 specification has the restriction:
+``If a \code{teams} construct is nested within a \code{target} construct, that \code{target} construct must
+contain no statements, declarations or directives outside of the \code{teams} construct''.
+So, the \code{teams} construct must immediately follow the \code{target} construct without any intervening
+code statements (which includes function calls).  
+Since the \code{target} construct alone cannot be hoisted out of a function, 
+the \code{target}~\code{teams} construct has been hoisted out of the function, and the 
+\code{distribute}~\code{parallel}~\code{for/do} construct is used
+as the \plc{variant} directive of the \code{metadirective} directive within the function.
+%%%%%%%%
+
+\cexample{metadirective}{3}
+
+\ffreeexample{metadirective}{3}

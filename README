@@ -27,7 +27,7 @@ For copyright information, please see omp_copyright.txt.
 
 2) Tags (meta data) for example sources
 
-  @@name:        <ename>.<seq-no>[c|f]
+  @@name:        <ename>.<seq-no>[c|cpp|f|f90]
   @@type:        C|C++|F-fixed|F-free
   @@compilable:  yes|no|maybe
   @@linkable:    yes|no|maybe
@@ -47,12 +47,16 @@ For copyright information, please see omp_copyright.txt.
 3) LaTeX macros for examples
 
 - Source code with language h-rules
-   \cexample{<ename>}{<seq-no>c}
-   \fexample{<ename>}{<seq-no>f}
+   \cexample{<ename>}{<seq-no>}     % for C/C++ examples
+   \cppexample{<ename>}{<seq-no>}   % for C++ examples
+   \fexample{<ename>}{<seq-no>}     % for fixed-form Fortran examples
+   \ffreeexample{<ename>}{<seq-no>} % for free-form Fortran examples
 
 - Source code without language h-rules
-   \cnexample{<ename>}{<seq-no>c}
-   \fnexample{<ename>}{<seq-no>f}
+   \cnexample{<ename>}{<seq-no>}
+   \cppnexample{<ename>}{<seq-no>}
+   \fnexample{<ename>}{<seq-no>}
+   \ffreenexample{<ename>}{<seq-no>}
 
 - Language h-rules
    \cspecificstart, \cspecificend

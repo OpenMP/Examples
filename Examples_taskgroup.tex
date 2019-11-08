@@ -11,7 +11,7 @@ is started (the task executing the root of the recursive \code{compute\_tree()}
 calls). While synchronizing tasks at the end of each tree traversal, using the 
 \code{taskgroup} construct ensures that the formerly started background task 
 does not participate in the synchronization, and is left free to execute in parallel. 
-This is opposed to the behaviour of the \code{taskwait} construct, which would 
+This is opposed to the behavior of the \code{taskwait} construct, which would 
 include the background tasks in the synchronization.
 
 \cexample{taskgroup}{1}

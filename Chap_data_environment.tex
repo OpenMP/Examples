@@ -44,7 +44,7 @@ subsection of the OpenMP Specifications document.
 \bigskip
 DATA-MAPPING ATTRIBUTES
 
-The \code{map} clause on a device construct explictly specifies how the list items in
+The \code{map} clause on a device construct explicitly specifies how the list items in
 the clause are mapped from the encountering task's data environment (on the host)
 to the corresponding item in the device data environment (on the device).
 The common \plc{list items} are arrays, array sections, scalars, pointers, and
@@ -55,7 +55,7 @@ within the list or block of a \code{declare target} directive. Also, a C/C++ poi
 is mapped as a zero-length array section, as is a C++ variable that is a reference to a pointer.
 % Waiting for response from Eric on this.
 
-Without explict mapping, non-scalar and non-pointer variables within the scope of the \code{target}
+Without explicit mapping, non-scalar and non-pointer variables within the scope of the \code{target}
 construct are implicitly mapped with a \plc{map-type} of \code{tofrom}.
 Without explicit mapping, scalar variables within the scope of the \code{target}
 construct are not mapped, but have an implicit firstprivate data-sharing

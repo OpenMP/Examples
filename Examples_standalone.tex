@@ -9,6 +9,7 @@ and cannot be the immediate substatement of an \code{if} statement.
 
 \cexample{standalone}{1}
 
+\pagebreak
 The following example is non-conforming, because the \code{flush}, \code{barrier}, 
 \code{taskwait}, and \code{taskyield}  directives are stand-alone directives 
 and cannot be the action statement of an \code{if} statement or a labeled branch 
@@ -22,6 +23,7 @@ in a compound statement.
 
 \cexample{standalone}{2}
 
+\pagebreak
 The following example is conforming because the \code{flush}, \code{barrier}, 
 \code{taskwait}, and \code{taskyield} directives are enclosed in an \code{if} 
 construct or follow the labeled branch target.

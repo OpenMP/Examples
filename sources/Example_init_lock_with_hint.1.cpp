@@ -16,7 +16,8 @@ omp_lock_t *new_locks()
     for (i=0; i<1000; i++)
     {
       omp_init_lock_with_hint(&lock[i], 
-        omp_lock_hint_contended | omp_lock_hint_speculative);
+        static_cast<omp_lock_hint_t>(omp_lock_hint_contended |
+                                     omp_lock_hint_speculative));
     }
     return lock;
 }

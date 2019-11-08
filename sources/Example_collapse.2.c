@@ -5,6 +5,7 @@
 * @@linkable:	no
 * @@expect:	success
 */
+
 #include <stdio.h>
 void test()
 {

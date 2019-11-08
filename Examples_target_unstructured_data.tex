@@ -24,6 +24,7 @@ construct occurs before the host data is deleted.
 
 \cppexample{target_unstructured_data}{1}
 
+\pagebreak
 The following C code allocates and frees the data member of a Matrix structure.
 The \code{init\_matrix} function allocates the memory used in the structure and
 uses the \code{target}~\code{enter}~\code{data} directive to map it to the target device. The
@@ -34,6 +35,7 @@ and then frees the memory on the host.  Note, the stand-alone
 
 \cexample{target_unstructured_data}{1}
 
+\pagebreak
 The following Fortran code allocates and deallocates a module array.  The
 \code{initialize} subroutine allocates the module array and uses the
 \code{target}~\code{enter}~\code{data} directive to map it to the target device. The
