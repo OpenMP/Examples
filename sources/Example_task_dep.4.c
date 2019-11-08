@@ -6,8 +6,7 @@
 * @@expect:	success
 */
 #include <stdio.h>
-int main()
-{
+int main() {
    int x = 1;
    #pragma omp parallel
    #pragma omp single

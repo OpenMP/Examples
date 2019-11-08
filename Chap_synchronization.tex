@@ -19,10 +19,15 @@ mechanism.
 On a finer scale the \code{atomic} construct allows only a single thread at 
 a time to have atomic access to a storage location involving a single read, 
 write, update or capture statement, and a limited number of combinations 
-when specifying the \code{capture} \plc{atomic-clause} clause.  The \plc{atomic-clause} clause
-is required for some expression statements, but are not required for 
-\code{update} statements. Please see the details in the \plc{atomic Construct} 
-subsection of the \plc{Directives} chapter in the OpenMP Specifications document.
+when specifying the \code{capture} \plc{atomic-clause} clause.  The
+\plc{atomic-clause} clause is required for some expression statements, but is
+not required for \code{update} statements. The \plc{memory-order} clause can be
+used to specify the degree of memory ordering enforced by an \code{atomic}
+construct. From weakest to strongest, they are \code{relaxed} (the default),
+acquire and/or release clauses (specified with \code{acquire}, \code{release},
+or \code{acq\_rel}), and \code{seq\_cst}.  Please see the details in the
+\plc{atomic Construct} subsection of the \plc{Directives} chapter in the OpenMP
+Specifications document.
 
 % The following three sentences were stolen from the spec.
 The \code{ordered} construct either specifies a structured block in a loop, 
@@ -37,15 +42,22 @@ iteration vector argument (vec) to indicate the iteration that satisfies the
 dependence.  The \code{depend} clause with a \code{source}
 \plc{dependence-type} specifies dependence satisfaction.
 
-The \code{flush} directive is a stand-alone construct that forces a thread's 
-temporal local storage (view) of a variable to memory where a consistent view
-of the variable storage can be accesses.  When the construct is used without 
-a variable list, all the locally thread-visible data as defined by the 
-base language are flushed.  A construct with a list applies the flush 
-operation only to the items in the list.  The \code{flush} construct also 
-effectively insures that no memory (load or store) operation for
-the variable set (list items, or default set) may be reordered across 
-the \code{flush} directive. 
+The \code{flush} directive is a stand-alone construct for enforcing consistency
+between a thread's view of memory and the view of memory for other threads (see
+the Memory Model chapter of this document for more details). When the construct
+is used with an explicit variable list, a \plc{strong flush} that forces a
+thread's temporary view of memory to be consistent with the actual memory is
+applied to all listed variables. When the construct is used without an explicit
+variable list and without a \plc{memory-order} clause, a strong flush is
+applied to all locally thread-visible data as defined by the base language, and
+additionally the construct provides both acquire and release memory ordering
+semantics.  When an explicit variable list is not present and a
+\plc{memory-order} clause is present, the construct provides acquire and/or
+release memory ordering semantics according to the \plc{memory-order} clause,
+but no strong flush is performed. A resulting strong flush that applies to a
+set of variables effectively ensures that no memory (load or store)
+operation for the affected variables may be reordered across the \code{flush}
+directive.
 
 General-purpose routines provide mutual exclusion semantics through locks, 
 represented by lock variables.  

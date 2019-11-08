@@ -3,17 +3,21 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+
       MODULE LIST
           TYPE NODE
              INTEGER :: PAYLOAD
              TYPE (NODE), POINTER :: NEXT
           END TYPE NODE
       CONTAINS
+
           SUBROUTINE PROCESS(p)
              TYPE (NODE), POINTER :: P
                  ! do work here
           END SUBROUTINE
+
           SUBROUTINE INCREMENT_LIST_ITEMS (HEAD)
+
              TYPE (NODE), POINTER :: HEAD
              TYPE (NODE), POINTER :: P
              !$OMP PARALLEL PRIVATE(P)
@@ -29,5 +33,7 @@
                      END DO
                  !$OMP END SINGLE
              !$OMP END PARALLEL
+
           END SUBROUTINE
+
       END MODULE

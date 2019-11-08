@@ -12,3 +12,28 @@ The \code{nogroup} clause removes the implicit taskgroup of the \code{taskloop} 
 \cexample{taskloop}{1}
 
 \ffreeexample{taskloop}{1}
+
+%\clearpage
+
+Because a \code{taskloop} construct encloses a loop, it is often incorrectly 
+perceived as a worksharing construct (when it is directly nested in 
+a \code{parallel} region).
+
+While a worksharing construct distributes the loop iterations across all threads in a team,
+the entire loop of a \code{taskloop} construct is executed by every thread of the team.
+
+In the example below the first taskloop occurs closely nested within 
+a \code{parallel} region and the entire loop is executed by each of the \plc{T} threads; 
+hence the reduction sum is executed \plc{T}*\plc{N} times.
+ 
+The loop of the second taskloop is within a \code{single} region and is executed
+by a single thread so that only \plc{N} reduction sums occur.  (The other
+\plc{N}-1 threads of the \code{parallel} region will participate in executing the 
+tasks. This is the common use case for the \code{taskloop} construct.)
+
+In the example, the code thus prints \code{x1 = 16384} (\plc{T}*\plc{N}) and 
+\code{x2 = 1024} (\plc{N}).
+
+\cexample{taskloop}{2}
+
+\ffreeexample{taskloop}{2}

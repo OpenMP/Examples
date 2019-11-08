@@ -1,38 +1,27 @@
 /*
-* @@name:	affinity.6c
-* @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
-* @@expect:	success
+* @@name: affinity.1.c
+* @@type: C
+* @@compilable: yes, omp_5.0
+* @@linkable: no
+* @@expect: success
 */
 
-#include <stdio.h>
-#include <omp.h>
+double * alloc_init_B(double *A, int N);
+void     compute_on_B(double *B, int N);
 
-void socket_init(int socket_num)
+void task_affinity(double *A, int N)
 {
-   int n_procs;
-
-   n_procs = omp_get_place_num_procs(socket_num);
-   #pragma omp parallel num_threads(n_procs) proc_bind(close)
+   double * B;
+   #pragma omp task depend(out:B) shared(B) affinity(A[0:N])
    {
-      printf("Reporting in from socket num, thread num:  %d %d\n", 
-                                socket_num,omp_get_thread_num() );
+     B = alloc_init_B(A,N);
    }
+
+   #pragma omp task depend( in:B) shared(B) affinity(A[0:N])
+   {
+     compute_on_B(B,N);
+   }
+
+   #pragma omp taskwait
 }
 
-int main()
-{
-   int n_sockets, socket_num;
-
-   omp_set_nested(1);              // or export OMP_NESTED=true
-   omp_set_max_active_levels(2);   // or export OMP_MAX_ACTIVE_LEVELS=2
-
-   n_sockets = omp_get_num_places();
-   #pragma omp parallel num_threads(n_sockets) private(socket_num) \ 
-                        proc_bind(spread)
-   {
-      socket_num = omp_get_place_num();
-      socket_init(socket_num);
-   }
-}

@@ -1,0 +1,54 @@
+\pagebreak
+\section{Structure mapping}
+\label{sec:structure_mapping}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In the example below, only structure elements \plc{S.a}, \plc{S.b} and \plc{S.p} 
+of the \plc{S} structure appear in \code{map} clauses of a \code{target} construct.
+Only these components have corresponding variables and storage on the device.  
+Hence, the large arrays, \plc{S.buffera} and \plc{S.bufferb}, and the \plc{S.x} component have no storage 
+on the device and cannot be accessed.  
+
+Also, since the pointer member \plc{S.p} is used in an array section of a 
+\code{map} clause, the array storage of the array section on the device, 
+\plc{S.p[:N]}, is \emph{attached} to the pointer member \plc{S.p} on the device.
+Explicitly mapping the pointer member \plc{S.p} is optional in this case.
+
+Note: The buffer arrays and the \plc{x} variable have been grouped together, so that
+the components that will reside on the device are all together (without gaps).
+This allows the runtime to optimize the transfer and the storage footprint on the device.
+
+\cexample{target_struct_map}{1}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The following example is a slight modification of the above example for 
+a C++ class.  In the member function \plc{SAXPY::driver} 
+the array section \plc{p[:N]} is \emph{attached} to the pointer member \plc{p}
+on the device.
+ 
+\cppexample{target_struct_map}{2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%In this example a pointer, \plc{p}, is mapped in a 
+%\code{target}~\code{data} construct (\code{map(p)}) and remains 
+%persistent throughout the \code{target}~\code{data} region. The address stored
+%on the host is not assigned to the device pointer variable, and 
+%the device value is not copied back to the host at the end of the
+%region (for a pointer, it is as though \code{map(alloc:p}) is effectively
+%used).  The array section, \plc{p[:N]}, is mapped on both \code{target}
+%constructs, and the pointer \plc{p} on the device is attached at the
+%beginning and detached at the end of the regions to the newly created
+%array section on the device.
+%
+%Also, in the following example the global variable, \plc{a}, becomes 
+%allocated when it is first used on the device in a \code{target} region, 
+%and persists on the device for all target regions.  The value on the
+%device and host may be different, as shown by the print statements.
+%The values may be made consistent with the \code{update} construct,
+%as shown in the \plc{declare\_target.3.c} and \plc{declare\_target.3.f90} 
+%examples.
+%
+%\cexample{target_struct_map}{2}

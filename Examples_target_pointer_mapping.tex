@@ -1,0 +1,53 @@
+\pagebreak
+\section{Pointer mapping}
+\label{sec:pointer_mapping}
+
+The following example shows the basics of mapping pointers with and without
+associated storage on the host.
+
+Storage for pointers \plc{ptr1} and \plc{ptr2} is created on the host. 
+To map storage that is associated with a pointer on the host, the data can be
+explicitly mapped as an array section so that the compiler knows 
+the amount of data to be assigned in the device (to the "corresponding" data storage area).
+On the \code{target} construct array sections are mapped; however, the pointer \plc{ptr1}
+is mapped, while \plc{ptr2} is not. Since \plc{ptr2} is not explicitly mapped, it is
+firstprivate.  This creates a subtle difference in the way these pointers can be used.
+
+As a firstprivate pointer, \plc{ptr2} can be manipulated on the device;
+however, as an explicitly mapped pointer, 
+\plc{ptr1} becomes an \emph{attached} pointer and cannot be manipulated.
+In both cases the host pointer is not updated with the device pointer 
+address---as one would expect for distributed memory. 
+The storage data on the host is updated from the corresponding device
+data at the end of the \code{target} region.
+
+As a comparison, note that the \plc{aray} array is automatically mapped, 
+since the compiler knows the extent of the array. 
+
+The pointer \plc{ptr3} is used in the \code{target} region and has
+a data-sharing attribute of firstprivate.  
+The pointer is implicitly mapped to a zero-length array section.
+Neither the pointer address nor any 
+of its locally assigned data on the device is returned
+to the host.  
+
+\cexample{target_ptr_map}{1}
+
+In the following example the global pointer \plc{p} appears in a
+\code{declare}~\code{target} directive.  Hence, the pointer \plc{p} will 
+persist on the device throughout executions in all target regions.  
+
+The pointer is also used in an array section of a \code{map} clause on 
+a \code{target} construct.  When storage associated with 
+a \code{declare}~\code{target} pointer
+is mapped, as for the array section \plc{p[:N]} in the
+\code{target} construct, the array section on the device is \emph{attached}
+to the device pointer \plc{p} on entry to the construct, and
+the value of the device pointer \plc{p} becomes undefined on exit. 
+(Of course, storage allocation for
+the array section on the device will occur before the 
+pointer on the device is \emph{attached}.)
+% For globals with declare target is there such a things a
+% original and corresponding?
+
+\cexample{target_ptr_map}{2}

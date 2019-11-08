@@ -5,6 +5,8 @@
 * @@linkable:	no
 * @@expect:	nothing
 */
+struct T { T (); T (int); ~T (); int t; };
+int f();
 static T t1;
 #pragma omp threadprivate(t1)
 static T t2( 23 );

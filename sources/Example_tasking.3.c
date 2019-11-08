@@ -5,6 +5,7 @@
 * @@linkable:	no
 * @@expect:	success
 */
+
 typedef struct node node;
 struct node {
       int data;
@@ -15,6 +16,7 @@ void process(node * p)
 {
     /* do work here */
 }
+
 void increment_list_items(node * head)
 {
     #pragma omp parallel

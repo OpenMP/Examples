@@ -110,3 +110,35 @@ to the \code{parallel} component of the combined directive.
 \cexample{target}{6}
 
 \ffreeexample{target}{6}
+
+\subsection{target Reverse Offload}
+\label{subsec:target_reverse_offload}
+
+Beginning with OpenMP 5.0, implementations are allowed to
+offload back to the host (reverse offload).
+
+In the example below the \plc{error\_handler} function
+is executed back on the host, if an erroneous value is
+detected in the \plc{A} array on the device.
+
+This is accomplished by specifying the \plc{device-modifier}
+\code{ancestor} modifier, along with a device number of \code{1},
+to indicate that the execution is to be performed on the
+immediate parent (\plc{1st ancestor})-- the host.
+
+The \code{requires} directive (another 5.0 feature)
+uses the \code{reverse\_offload} clause to guarantee
+that the reverse offload is implemented.
+
+Note that the \code{declare target} directive uses the
+\code{device\_type} clause (another 5.0 feature) to specify that
+the \plc{error\_handler} function is compiled to
+execute on the \plc{host} only. This ensures that no
+attempt will be made to create a device version of the
+function.  This feature may be necessary if the function
+exists in another compile unit.
+
+
+\cexample{target_reverse_offload}{7}
+
+\ffreeexample{target_reverse_offload}{7}

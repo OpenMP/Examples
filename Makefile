@@ -1,11 +1,12 @@
 # Makefile for the OpenMP Examples document in LaTex format. 
 # For more information, see the master document, openmp-examples.tex.
 
-version=4.5.0
+version=5.0.0
 default: openmp-examples.pdf
 
 
 CHAPTERS=Title_Page.tex \
+	Foreword_Chapt.tex \
 	Introduction_Chapt.tex \
 	Examples_*.tex \
 	History.tex

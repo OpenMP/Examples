@@ -3,9 +3,14 @@
 ! @@compilable:	no
 ! @@linkable:	no
 ! @@expect:	failure
+
+
 SUBROUTINE STANDALONE_WRONG()
+
   INTEGER  A
+
   A = 1
+
   ! the FLUSH directive must not be the action statement
   ! in an IF statement
   IF (A .NE. 0) !$OMP FLUSH(A)

@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	yes
 ! @@expect:	success
+
       program test
 !$omp parallel
 !$omp do private(j,k) collapse(2) lastprivate(jlast, klast)

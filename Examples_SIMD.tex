@@ -8,6 +8,8 @@ to assure the compiler that the loop can be vectorized.
 \cexample{SIMD}{1}
 
 \ffreeexample{SIMD}{1}
+
+\clearpage
  
 
 When a function can be inlined within a loop the compiler has an opportunity to 
@@ -24,7 +26,7 @@ respectively. The \plc{add3} C function uses dereferencing.
 The \code{declare} \code{simd} constructs also illustrate the use of 
 \code{uniform} and \code{linear} clauses.  The \code{uniform(fact)} clause 
 indicates that the variable \plc{fact} is invariant across the SIMD lanes. In 
-the \plc{add2} function \plc{a} and \plc{b} are included in the \code{unform} 
+the \plc{add2} function \plc{a} and \plc{b} are included in the \code{uniform} 
 list because the C pointer and the Fortran array references are constant.  The 
 \plc{i} index used in the \plc{add2} function is included in a \code{linear} 
 clause with a constant-linear-step of 1, to guarantee a unity increment of the 
@@ -42,7 +44,7 @@ variable.
 
 \ffreeexample{SIMD}{2}
 
-
+\pagebreak
 A thread that encounters a SIMD construct executes a vectorized code of the 
 iterations. Similar to the concerns of a worksharing loop a loop vectorized 
 with a SIMD construct must assure that temporary and reduction variables are 
@@ -55,6 +57,7 @@ construct.
 \ffreeexample{SIMD}{3}
 
 
+\pagebreak
 A \code{safelen(N)} clause in a \code{simd} construct assures the compiler that 
 there are no loop-carried dependencies for vectors of size \plc{N} or below. If 
 the \code{safelen} clause is not specified, then the default safelen value is 
@@ -69,7 +72,7 @@ than 16, the behavior is undefined.
 
 \ffreeexample{SIMD}{4}
 
-
+\pagebreak
 The following SIMD construct instructs the compiler to collapse the \plc{i} and 
 \plc{j} loops into a single SIMD loop in which SIMD chunks are executed by 
 threads of the team. Within the workshared loop chunks of a thread, the SIMD 
@@ -110,6 +113,7 @@ version of the \plc{fib()} function.
 
 
 %%% section
+\pagebreak
 \section{Loop-Carried Lexical Forward Dependence}
 \label{sec:SIMD_forward_dep}
 

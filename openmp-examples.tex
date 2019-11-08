@@ -8,6 +8,7 @@
 %    openmp.sty                       - the main style file
 %    Title_Page.tex                   - the title page
 %    openmplogo.png                   - the logo
+%    Forward_Chapt.tex                - unnumbered introductory chapter
 %    Introduction_Chapt.tex           - unnumbered introductory chapter
 %    Examples_Chapt.tex               - unnumbered chapter
 %    Examples_Sects.tex               - examples
@@ -48,9 +49,10 @@
 \documentclass[10pt,letterpaper,twoside,makeidx,hidelinks]{scrreprt}
 
 % Text to appear in the footer on even-numbered pages:
-\newcommand{\VER}{4.5.0}
-\newcommand{\VERDATE}{November 2016}
-\newcommand{\footerText}{OpenMP Examples Version \VER{} - \VERDATE}
+\newcommand{\VER}{5.0.0}
+\newcommand{\PVER}{\VER{}}
+\newcommand{\VERDATE}{November 2019}
+\newcommand{\footerText}{OpenMP Examples Version \PVER{} - \VERDATE}
 
 % Unified style sheet for OpenMP documents:
 \input{openmp.sty}
@@ -70,6 +72,8 @@
     % Uncomment the next line to enable line numbering on the main body text:
     \linenumbers\pagewiselinenumbers
 
+    \input{Foreword_Chapt}
+
     \newpage\pagenumbering{arabic}
 
     \input{Introduction_Chapt}
@@ -80,6 +84,7 @@
     \input{Chap_parallel_execution}
        \input{Examples_ploop}
        \input{Examples_parallel}
+       \input{Examples_host_teams}
        \input{Examples_nthrs_nesting}
        \input{Examples_nthrs_dynamic}
        \input{Examples_fort_do}
@@ -92,12 +97,15 @@
        \input{Examples_single}
        \input{Examples_workshare}
        \input{Examples_master}
+       \input{Examples_loop}
        \input{Examples_pra_iterator}
        \input{Examples_set_dynamic_nthrs}
        \input{Examples_get_nthrs}
 
     \input{Chap_affinity}
        \input{Examples_affinity}
+       \input{Examples_task_affinity}
+       \input{Examples_affinity_display}
        \input{Examples_affinity_query}
 
     \input{Chap_tasking}
@@ -107,9 +115,15 @@
        \input{Examples_taskgroup}
        \input{Examples_taskyield}
        \input{Examples_taskloop}
+       \input{Examples_parallel_master_taskloop}
 
     \input{Chap_devices}
        \input{Examples_target}
+       \input{Examples_target_pointer_mapping}
+       \input{Examples_target_structure_mapping}
+       \input{Examples_array_sections}
+       \input{Examples_array_shaping}
+       \input{Examples_target_mapper}
        \input{Examples_target_data}
        \input{Examples_target_unstructured_data}
        \input{Examples_target_update}
@@ -122,8 +136,8 @@
            %New subsection
        \input{Examples_async_target_nowait}
        \input{Examples_async_target_nowait_depend}
-       \input{Examples_array_sections}
-     % Structure Element in map 487
+     % \input{Examples_array_sections}   moved after struct_ptr_map
+     % Structure Element in map 487      no 579
        \input{Examples_device}
             % MemoryRoutine and Device ptr  473
 
@@ -140,7 +154,9 @@
        \input{Examples_atomic}
        \input{Examples_atomic_restrict}
        \input{Examples_flush_nolist}
+       \input{Examples_acquire_release}
        \input{Examples_ordered}
+       \input{Examples_depobj}
      % Doacross loop  405
        \input{Examples_doacross}
        \input{Examples_locks}
@@ -165,7 +181,7 @@
        \input{Examples_lastprivate}
        \input{Examples_reduction}
      %  User UDR  287
-     %  C array reduction 377
+       \input{Examples_udr}
        \input{Examples_copyin}
        \input{Examples_copyprivate}
        \input{Examples_cpp_reference}
@@ -174,6 +190,7 @@
 
     \input{Chap_memory_model}
        \input{Examples_mem_model}
+       \input{Examples_allocators}
        \input{Examples_fort_race}
 
     \input{Chap_program_control}
@@ -182,9 +199,13 @@
      % If multi-ifs  471
        \input{Examples_standalone}
        \input{Examples_cancellation}
+       \input{Examples_requires}
+       \input{Examples_variant}
+       \input{Examples_metadirective}
      % New Section Nested Regions
-           \input{Examples_nested_loop}
-           \input{Examples_nesting_restrict}
+       \input{Examples_nested_loop}
+       \input{Examples_nesting_restrict}
+       \input{Examples_target_offload}
 
 
     \setcounter{chapter}{0}  % restart chapter numbering with "letter A"

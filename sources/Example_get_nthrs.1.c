@@ -8,8 +8,7 @@
 #include <omp.h>
 void work(int i);
 
-void incorrect()
-{
+void incorrect() {
   int np, i;
 
   np = omp_get_num_threads();  /* misplaced */

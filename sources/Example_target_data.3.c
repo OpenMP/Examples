@@ -5,8 +5,10 @@
 * @@linkable:	no
 * @@expect:	success
 */
+
 #include <math.h>
 #define COLS 100
+
 void gramSchmidt(float Q[][COLS], const int rows)
 {
     int cols = COLS;
@@ -14,6 +16,7 @@ void gramSchmidt(float Q[][COLS], const int rows)
     for(int k=0; k < cols; k++)
     {
         double tmp = 0.0;
+
         #pragma omp target map(tofrom: tmp)
         #pragma omp parallel for reduction(+:tmp)
         for(int i=0; i < rows; i++)

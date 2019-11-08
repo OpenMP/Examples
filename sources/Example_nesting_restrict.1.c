@@ -5,9 +5,12 @@
 * @@linkable:	no
 * @@expect:	failure
 */
+
 void work(int i, int j) {}
+
 void wrong1(int n)
 {
+
   #pragma omp parallel default(shared)
   {
     int i, j;
@@ -19,4 +22,5 @@ void wrong1(int n)
            work(i, j);
     }
   }
+
 }

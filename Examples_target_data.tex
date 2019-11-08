@@ -16,6 +16,7 @@ environment.
 
 \cexample{target_data}{1}
 
+\pagebreak
 The Fortran code passes a reference and specifies the extent of the arrays in the 
 declaration. No length information is necessary in the map clause, as is required 
 with C/C++ pointers.
@@ -49,19 +50,15 @@ once by the \code{target} \code{data} construct.
 
 \ffreeexample{target_data}{2}
 
-In the following example, the variable tmp defaults to \code{tofrom} map-type 
-and is mapped at each \code{target} construct. The array \plc{Q} is mapped once at 
-the enclosing \code{target} \code{data} region instead of at each \code{target} 
-construct. 
+In the following example, the array \plc{Q} is mapped once at the enclosing 
+\code{target}~\code{data} region instead of at each \code{target} construct. 
+In OpenMP 4.0, a scalar variable is implicitly mapped with the \code{tofrom} map-type.
+But since OpenMP 4.5, a scalar variable, such as the \plc{tmp} variable, has to be explicitly mapped with 
+the \code{tofrom} map-type at the first \code{target} construct in order to return 
+its reduced value from the parallel loop construct to the host.
+The variable defaults to firstprivate at the second \code{target} construct.
 
 \cexample{target_data}{3}
-
-In the following example the arrays \plc{v1} and \plc{v2} are mapped at each \code{target} 
-construct. Instead of mapping the array \plc{Q} twice at each \code{target} construct, 
-\plc{Q} is mapped once by the \code{target} \code{data} construct. Note, the \plc{tmp} 
-variable is implicitly remapped for each \code{target} region, mapping the value 
-from the device to the host at the end of the first \code{target} region, and 
-from the host to the device for the second \code{target} region.
 
 \ffreeexample{target_data}{3}
 
@@ -145,6 +142,7 @@ of the \code{target} constructs.
 
 \cexample{target_data}{6}
 
+\pagebreak
 The \code{if} clauses work the same way for the following Fortran code. The \code{target} 
 constructs enclosed in the \code{target} \code{data} region should also use 
 an \code{if} clause with the same condition, so that the \code{target} \code{data} 
@@ -153,6 +151,7 @@ are both ignored.
 
 \ffreeexample{target_data}{6}
 
+\pagebreak
 In the following example, when the \code{if} clause conditional expression on 
 the \code{target} construct evaluates to \plc{false}, the target region will 
 execute on the host device. However, the \code{target} \code{data} construct 
@@ -164,6 +163,7 @@ the \code{target} \code{data} construct, resulting in undefined values in \plc{p
 
 \cexample{target_data}{7}
 
+\pagebreak
 The \code{if} clauses work the same way for the following Fortran code. When 
 the \code{if} clause conditional expression on the \code{target} construct 
 evaluates to \plc{false}, the \code{target} region will execute on the host 

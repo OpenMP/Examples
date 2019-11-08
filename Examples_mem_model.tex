@@ -1,3 +1,4 @@
+
 \pagebreak
 \section{The OpenMP Memory Model}
 \label{sec:mem_model}
@@ -18,6 +19,7 @@ be printed by both Print 2 and Print 3.
 
 \ffreeexample{mem_model}{1}
 
+\pagebreak
 The following example demonstrates why synchronization is difficult to perform 
 correctly through variables. The value of flag is undefined in both prints on thread 
 1 and the value of data is only well-defined in the second print.
@@ -26,6 +28,7 @@ correctly through variables. The value of flag is undefined in both prints on th
 
 \fexample{mem_model}{2}
 
+\pagebreak
 The next example demonstrates why synchronization is difficult to perform correctly 
 through variables. Because the \plc{write}(1)-\plc{flush}(1)-\plc{flush}(2)-\plc{read}(2) 
 sequence cannot be guaranteed in the example, the statements on thread 0 and thread 
