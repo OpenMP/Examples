@@ -48,15 +48,14 @@ document.
 In this chapter, examples illustrate how race conditions may arise for accesses
 to variables with a \plc{shared} data-sharing attribute when flush operations
 are not properly employed.  A race condition can exist when two or more threads
-are involved in accessing a variable in which not all of the accesses are
-reads; that is, a WaR, RaW or WaW condition exists (R=read, a=after, W=write).
-A RaR does not produce a race condition. In particular, a data race will arise
-when conflicting accesses do not have a well-defined \emph{completion order}.
-The existence of data races in OpenMP programs result in undefined behavior,
-and so they should generally be avoided for programs to be correct.  The
-completion order of accesses to a shared variable is guaranteed in OpenMP
-through a set of memory consistency rules that are described in the \plc{OpenMP
-Memory Consitency} section of the OpenMP Specifications document.
+are involved in accessing a variable and at least one of the accesses modifies
+the variable.  In particular, a data race will arise when conflicting accesses
+do not have a well-defined \emph{completion order}.  The existence of data
+races in OpenMP programs result in undefined behavior, and so they should
+generally be avoided for programs to be correct.  The completion order of
+accesses to a shared variable is guaranteed in OpenMP through a set of memory
+consistency rules that are described in the \plc{OpenMP Memory Consitency}
+section of the OpenMP Specifications document.
 
 %This chapter also includes examples that exhibit non-sequentially consistent
 %(\emph{non-SC}) behavior. Sequential consistency (\emph{SC}) is the desirable

@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:	omp_4.0
 subroutine example(n, dim)
   integer, intent(in) :: n, dim(n)
   integer :: i, s, err

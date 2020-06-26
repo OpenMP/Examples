@@ -1,8 +1,9 @@
 ! @@name: acquire_release.4.f90
 ! @@type: F-free
-! @@compilable: yes, omp_5.0
+! @@compilable: yes
 ! @@linkable: yes
 ! @@expect: success
+! @@version: omp_5.0
 
 program rel_acq_ex4
    use omp_lib
@@ -13,7 +14,7 @@ program rel_acq_ex4
 !! !!! THIS CODE WILL FAIL TO PRODUCE CONSISTENT RESULTS !!!!!!!
 !! !!! DO NOT PROGRAM SYNCHRONIZATION THIS WAY !!!!!!!
 
-   !$omp parallel num_threads private(thrd) private(tmp)
+   !$omp parallel num_threads(2) private(thrd) private(tmp)
       thrd = omp_get_thread_num()
       if (thrd == 0) then
          !$omp critical

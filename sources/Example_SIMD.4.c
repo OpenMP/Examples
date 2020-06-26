@@ -4,6 +4,7 @@
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
+* @@version:	omp_4.0
 */
 void work( float *b, int n, int m )
 {

@@ -1,9 +1,10 @@
 /*
 * @@name: affinity.1.c
 * @@type: C
-* @@compilable: yes, omp_5.0
+* @@compilable: yes
 * @@linkable: no
 * @@expect: success
+* @@version: omp_5.0
 */
 
 double * alloc_init_B(double *A, int N);

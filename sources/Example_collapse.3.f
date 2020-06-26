@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:	omp_3.0
       program test
       include 'omp_lib.h'
 !$omp parallel num_threads(2)

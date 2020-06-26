@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:	omp_3.1
        function atomic_read(p)
        integer :: atomic_read
        integer, intent(in) :: p

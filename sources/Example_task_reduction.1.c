@@ -34,8 +34,7 @@ int linked_list_sum(node_t *p)
 }
 
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     int i;
 //                           Create the root node.
     node_t* root = (node_t*) malloc(sizeof(node_t));
@@ -44,8 +43,7 @@ int main(int argc, char *argv[])
     node_t* aux = root;
 
 //                           Create N-1 more nodes.
-    for(i=2;i<=N;++i)
-    {
+    for(i=2;i<=N;++i){
         aux->next = (node_t*) malloc(sizeof(node_t));
         aux = aux->next;
         aux->val = i;

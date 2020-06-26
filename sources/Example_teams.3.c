@@ -4,6 +4,7 @@
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
+* @@version:	omp_4.5
 */
 float dotprod(float B[], float C[], int N)
 {

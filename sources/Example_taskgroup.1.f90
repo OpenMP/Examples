@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	yes
 ! @@expect:	success
+! @@version:    omp_4.0
 module tree_type_mod
   integer, parameter :: max_steps=100
   type tree_type

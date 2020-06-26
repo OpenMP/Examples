@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	yes
 ! @@expect:	success
+! @@version:	omp_4.0
 module module_fib
 contains
    subroutine fib(N)

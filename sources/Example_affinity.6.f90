@@ -3,6 +3,7 @@
 ! @@compilable: yes
 ! @@linkable:   no
 ! @@expect:     success
+! @@version:	omp_5.0
 
 subroutine task_affinity(A, N)
 

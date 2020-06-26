@@ -417,10 +417,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Code example formatting for the Examples document
 % This defines:
-%     /cexample       formats blue markers, caption, and code for C examples
-%     /cppexample     formats blue markers, caption, and code for C++ examples
-%     /fexample       formats blue markers, caption, and code for Fortran (fixed) examples
-%     /ffreeexample     formats blue markers, caption, and code for Fortran90 (free) examples
+%     \cexample       formats blue markers, caption, and code for C examples
+%     \cppexample     formats blue markers, caption, and code for C++ examples
+%     \fexample       formats blue markers, caption, and code for Fortran (fixed) examples
+%     \ffreeexample   formats blue markers, caption, and code for Fortran90 (free) examples
 % Thanks to Jin, Haoqiang H. for the original definitions of the following:
 
 \usepackage{color,fancyvrb}  % for \VerbatimInput
@@ -437,7 +437,7 @@
 
 \newcommand{\escstr}[1]{\myreplace{_}{\_}{#1}}
 
-\def\exampleheader#1#2#3#4{%
+\def\exampleheader#1#2#3#4#5{%
    \ifthenelse{ \equal{#1}{} }{
       \def\cname{#2}
       \def\ename\cname
@@ -448,52 +448,61 @@
 % Use following for mneumonics
       \def\ename{\escstr{#1}.#2.#3}
    }
+   \newcount\cnt
+   \cnt=#4
+   \ifthenelse{ \equal{#5}{} }{
+      \def\vername{}
+   }{
+      \def\myver##1{\toolboxSplitAt{##1}{_}\lefttext\righttext
+         \lefttext\toolboxIfElse{\ifx\righttext\undefined}%
+         {\global\advance\cnt by 1}{\expandafter{\righttext}}}
+      \def\vername{\;\;(\code{\small{}omp\_\myver{#5}})}
+   }
    \noindent
-   \textit{Example \ename}
+   \textit{Example \ename}\vername
+   \def\fcnt{\the\cnt}
    %\vspace*{-3mm}
-   \code{\VerbatimInput[numbers=left,numbersep=5ex,firstnumber=1,firstline=#4,fontsize=\small]%
-   %\code{\VerbatimInput[numbers=left,firstnumber=1,firstline=#4,fontsize=\small]%
-   %\code{\VerbatimInput[firstline=#4,fontsize=\small]%
+   \code{\VerbatimInput[numbers=left,numbersep=5ex,firstnumber=1,firstline=\fcnt,fontsize=\small]%
       {sources/Example_\cname}} 
 }
 
-\def\cnexample#1#2{%
-   \exampleheader{#1}{#2}{c}{8}
+\newcommand\cnexample[3][]{%
+   \exampleheader{#2}{#3}{c}{8}{#1}
 }
 
-\def\cppnexample#1#2{%
-   \exampleheader{#1}{#2}{cpp}{8}
+\newcommand\cppnexample[3][]{%
+   \exampleheader{#2}{#3}{cpp}{8}{#1}
 }
 
-\def\fnexample#1#2{%
-   \exampleheader{#1}{#2}{f}{6}
+\newcommand\fnexample[3][]{%
+   \exampleheader{#2}{#3}{f}{6}{#1}
 }
 
-\def\ffreenexample#1#2{%
-   \exampleheader{#1}{#2}{f90}{6}
+\newcommand\ffreenexample[3][]{%
+   \exampleheader{#2}{#3}{f90}{6}{#1}
 }
 
-\newcommand\cexample[2]{%
+\newcommand\cexample[3][]{%
 \needspace{5\baselineskip}\ccppspecificstart
-\cnexample{#1}{#2}
+\cnexample[#1]{#2}{#3}
 \ccppspecificend
 }
 
-\newcommand\cppexample[2]{%
+\newcommand\cppexample[3][]{%
 \needspace{5\baselineskip}\cppspecificstart
-\cppnexample{#1}{#2}
+\cppnexample[#1]{#2}{#3}
 \cppspecificend
 }
 
-\newcommand\fexample[2]{%
+\newcommand\fexample[3][]{%
 \needspace{5\baselineskip}\fortranspecificstart
-\fnexample{#1}{#2}
+\fnexample[#1]{#2}{#3}
 \fortranspecificend
 }
 
-\newcommand\ffreeexample[2]{%
+\newcommand\ffreeexample[3][]{%
 \needspace{5\baselineskip}\fortranspecificstart
-\ffreenexample{#1}{#2}
+\ffreenexample[#1]{#2}{#3}
 \fortranspecificend
 }
 

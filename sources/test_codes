@@ -1,0 +1,55 @@
+#!/bin/csh
+
+set aopt=2	#default(auto), 0:no-copt, 1:with-copt
+if ( "$1" == "no-copt" || "$1" == "0" ) then
+  set aopt=0
+else if ( "$1" == "with-copt"i || "$1" == "1" ) then
+  set aopt=1
+else if ( "$1" == "auto" || "$1" == "2" ) then
+  set aopt=2
+else if ( "$1" == "-h" ) then
+  echo "usage: test_codes [no-copt | with-copt | auto]"
+  exit
+endif
+
+set copt="-fopenmp"
+set cntc=0
+set cntcpp=0
+set cntf=0
+set cntffree=0
+set cntfail=0
+set logf=test_codes.log
+
+set comp=gcc
+foreach f (*.c)
+  @ cntc++;
+  source test_code_one c
+end
+
+set comp=g++
+foreach f (*.cpp)
+  @ cntcpp++;
+  source test_code_one cpp
+end
+
+set comp=gfortran
+foreach f (*.f)
+  @ cntf++;
+  source test_code_one f
+end
+
+set comp=gfortran
+foreach f (*.f90)
+  @ cntffree++;
+  source test_code_one f90
+end
+
+echo "" | tee -a $logf
+echo "Total number of C examples: $cntc" | tee -a $logf
+echo "Total number of C++ examples: $cntcpp" | tee -a $logf
+echo "Total number of F-fixed examples: $cntf" | tee -a $logf
+echo "Total number of F-free examples: $cntffree" | tee -a $logf
+echo "Total number of failed examples: $cntfail" | tee -a $logf
+
+\rm -f *.o *.mod
+

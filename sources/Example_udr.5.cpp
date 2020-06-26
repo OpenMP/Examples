@@ -4,6 +4,7 @@
 * @@compilable:	no
 * @@linkable:	no
 * @@expect:	success
+* @@version:	omp_4.0
 */
 class V {
    float *p;

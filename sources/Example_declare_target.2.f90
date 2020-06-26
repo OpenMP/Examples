@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	yes
 ! @@expect:	success
+! @@version:	omp_4.0
 program my_fib
 integer :: N = 8
 !$omp declare target(fib)

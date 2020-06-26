@@ -1,9 +1,10 @@
 /*
 * @@name:       taskloop_reduction.1.c
 * @@type:       C
-* @@compilable: yes, omp_5.0
+* @@compilable: yes
 * @@linkable:   yes
 * @@expect:     success
+* @@version:    omp_5.0
 */
 #include <stdio.h>
 

@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:    omp_4.0
 module mults
 contains
 subroutine vec_mult(p,v1,v2,N)

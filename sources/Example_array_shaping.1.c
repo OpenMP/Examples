@@ -1,9 +1,10 @@
 /*
 * @@name: array_shaping.1.c
-* @@type: C, omp_5.0
+* @@type: C
 * @@compilable: yes
 * @@linkable: no
 * @@expect: success
+* @@version: omp_5.0
 */
 #pragma omp declare target
 int do_work(double *a, int nx, int ny);

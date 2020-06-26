@@ -4,6 +4,7 @@
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
+* @@version:	omp_4.0
 */
 #include <omp.h>
 extern void init(float *, float *, int);

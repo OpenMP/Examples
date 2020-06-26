@@ -4,6 +4,7 @@
 * @@compilable:	yes
 * @@linkable:	yes
 * @@expect:	success
+* @@version:	omp_5.0
 */
 #include <stdio.h>
 int main()

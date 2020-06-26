@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:     omp_3.1
 SUBROUTINE STANDALONE_OK()
   INTEGER  A
   A = 1

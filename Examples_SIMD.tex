@@ -5,9 +5,9 @@
 The following example illustrates the basic use of the \code{simd} construct 
 to assure the compiler that the loop can be vectorized.
 
-\cexample{SIMD}{1}
+\cexample[4.0]{SIMD}{1}
 
-\ffreeexample{SIMD}{1}
+\ffreeexample[4.0]{SIMD}{1}
 
 \clearpage
  
@@ -40,9 +40,9 @@ In the \code{simd} constructs for the loops the \code{private(tmp)} clause is
 necessary to assure that the each vector operation has its own \plc{tmp} 
 variable.
 
-\cexample{SIMD}{2}
+\cexample[4.0]{SIMD}{2}
 
-\ffreeexample{SIMD}{2}
+\ffreeexample[4.0]{SIMD}{2}
 
 \pagebreak
 A thread that encounters a SIMD construct executes a vectorized code of the 
@@ -52,9 +52,9 @@ privatized and declared as reductions with clauses.  The example below
 illustrates the use of \code{private} and \code{reduction} clauses in a SIMD 
 construct.
 
-\cexample{SIMD}{3}
+\cexample[4.0]{SIMD}{3}
 
-\ffreeexample{SIMD}{3}
+\ffreeexample[4.0]{SIMD}{3}
 
 
 \pagebreak
@@ -68,9 +68,9 @@ code is safe for vectors up to and including size 16.  In the loop, \plc{m} can
 be 16 or greater, for correct code execution.  If the value of \plc{m} is less 
 than 16, the behavior is undefined.
 
-\cexample{SIMD}{4}
+\cexample[4.0]{SIMD}{4}
 
-\ffreeexample{SIMD}{4}
+\ffreeexample[4.0]{SIMD}{4}
 
 \pagebreak
 The following SIMD construct instructs the compiler to collapse the \plc{i} and 
@@ -78,9 +78,9 @@ The following SIMD construct instructs the compiler to collapse the \plc{i} and
 threads of the team. Within the workshared loop chunks of a thread, the SIMD 
 chunks are executed in the lanes of the vector units.
 
-\cexample{SIMD}{5}
+\cexample[4.0]{SIMD}{5}
 
-\ffreeexample{SIMD}{5}
+\ffreeexample[4.0]{SIMD}{5}
 
 
 %%% section
@@ -95,9 +95,9 @@ the other hand, the \code{inbranch} clause for the function goo indicates that
 the function is always called conditionally in the SIMD loop inside 
 the function \plc{myaddfloat}.
 
-\cexample{SIMD}{6}
+\cexample[4.0]{SIMD}{6}
 
-\ffreeexample{SIMD}{6}
+\ffreeexample[4.0]{SIMD}{6}
 
 
 In the code below, the function \plc{fib()} is called in the main program and 
@@ -106,9 +106,9 @@ condition. The compiler creates a masked vector version and a non-masked vector
 version for the function \plc{fib()} while retaining the original scalar 
 version of the \plc{fib()} function.
 
-\cexample{SIMD}{7}
+\cexample[4.0]{SIMD}{7}
 
-\ffreeexample{SIMD}{7}
+\ffreeexample[4.0]{SIMD}{7}
 
 
 
@@ -124,7 +124,7 @@ A loop can be vectorized even though the iterations are not completely independe
 
 This test assures that the compiler preserves the loop carried lexical forward-dependence for generating a correct SIMD code.
 
-\cexample{SIMD}{8}
+\cexample[4.0]{SIMD}{8}
 
-\ffreeexample{SIMD}{8}
+\ffreeexample[4.0]{SIMD}{8}
 

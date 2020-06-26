@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	yes
 ! @@expect:	success
+! @@version:    omp_4.5
 program linear_loop
    implicit none
    integer, parameter :: N = 100

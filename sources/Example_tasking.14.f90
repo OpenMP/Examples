@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:    omp_3.1
 subroutine foo()
 integer i
 !$omp task if(.FALSE.) ! This task is undeferred

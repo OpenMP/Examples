@@ -1,0 +1,56 @@
+\pagebreak
+\section{\code{defaultmap} Clause}
+\label{sec:defaultmap}
+
+The implicitly-determined, data-mapping and data-sharing attribute
+rules of variables referenced in a \code{target} construct can be
+changed by the \code{defaultmap} clause introduced in OpenMP 5.0.
+The implicit behavior is specified as
+\code{alloc}, \code{to}, \code{from}, \code{tofrom},
+\code{firstprivate}, \code{none}, \code{default} or \code{present},
+and is applied to a variable-category, where
+\code{scalar}, \code{aggregate}, \code{allocatable},
+and \code{pointer} are the variable categories. 
+
+In OpenMP, a ``category'' has a common data-mapping and data-sharing 
+behavior for variable types within the category.
+In C/C++, \code{scalar} refers to base-language scalar variables, except pointers.
+In Fortran it refers to a scalar variable, as defined by the base language, 
+with intrinsic type, and excludes character type.
+
+Also, \code{aggregate} refers to arrays and structures (C/C++) and
+derived types (Fortran). Fortran has the additional category of \code{allocatable}.
+
+%In the example below, the first \code{target} construct uses  \code{defaultmap}
+%clauses to  explicitly set data-mapping attributes that reproduce 
+%the default implicit mapping (data-mapping and data-sharing attributes).  That is, 
+%if the \code{defaultmap} clauses were removed, the results would be identical.
+In the example below, the first \code{target} construct uses  \code{defaultmap}
+clauses to set data-mapping and possibly data-sharing attributes that reproduce 
+the default implicit mapping (data-mapping and data-sharing attributes).  That is, 
+if the \code{defaultmap} clauses were removed, the results would be identical.
+
+In the second \code{target} construct all implicit behavior is removed
+by specifying the \code{none} implicit behavior in the \code{defaultmap} clause.
+Hence, all variables must be explicitly mapped.  
+In the C/C++ code a scalar (\texttt{s}), an array (\texttt{A}) and a structure 
+(\texttt{S}) are explicitly mapped \code{tofrom}.  
+The Fortran code uses a derived type (\texttt{D}) in lieu of structure.
+
+The third \code{target} construct shows another usual case for using the \code{defaultmap} clause.
+The default mapping for (non-pointer) scalar variables is specified as \code{tofrom}.
+Here, the default implicit mapping for \texttt{s3} is \code{tofrom} as specified 
+in the \code{defaultmap} clause, and \texttt{s1} and \texttt{s2} are explicitly 
+mapped with the \code{firstprivate} data-sharing attribute.
+
+In the fourth \code{target} construct all arrays, structures (C/C++) and derived 
+types (Fortran) are mapped with \code{firstprivate} data-sharing behavior by a 
+\code{defaultmap} clause with an \code{aggregate} variable category.
+For the \texttt{H} allocated array in the Fortran code, the \code{allocable} 
+category must be used in a separate \code{defaultmap} clause to acquire 
+\code{firsprivate} data-sharing behavior (\texttt{H} has the Fortran allocatable attribute).
+% (Common use cases for C/C++ heap storage can be found in \specref{sec:pointer_mapping}.)
+
+\cexample[5.0]{target_defaultmap}{1}
+
+\ffreeexample[5.0]{target_defaultmap}{1}

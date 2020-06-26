@@ -4,6 +4,7 @@
 * @@compilable:	no
 * @@linkable:	no
 * @@expect:	failure
+* @@version:	omp_4.5
 */
 #define N 100
 

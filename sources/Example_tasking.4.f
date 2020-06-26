@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:	omp_3.0
       RECURSIVE INTEGER FUNCTION fib(n) RESULT(res)
       INTEGER n, i, j
       IF ( n .LT. 2) THEN

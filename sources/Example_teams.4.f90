@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:	omp_4.0
 module arrays
 integer,parameter :: N=1024*1024
 real :: B(N), C(N)

@@ -1,9 +1,10 @@
 /*
 * @@name: declare_variant.1c
 * @@type: C
-* @@compilable: yes, omp_5.0
+* @@compilable: yes
 * @@linkable: yes 
 * @@expect: success
+* @@version: omp_5.0
 */
 
 #define N 100
@@ -32,6 +33,7 @@ void t_vxv(int *v1,int *v2,int *v3,int n)   // function variant
    #pragma omp distribute simd
    for (int i= 0; i< n; i++)  v3[i] = v1[i] * v2[i]*2;
 }
+#pragma omp end declare target
 
 int main()
 {

@@ -67,8 +67,8 @@ by thread 0 and the read from \plc{x} by thread 1, and so thread 1 must see that
 \plc{x} equals 10.
 
 \pagebreak
-\cexample{acquire_release}{1}
-\ffreeexample{acquire_release}{1}
+\cexample[5.0]{acquire_release}{1}
+\ffreeexample[5.0]{acquire_release}{1}
 
 In the second example, the \code{critical} constructs are exchanged with
 \code{atomic} constructs that have \textit{explicit} memory ordering specified. When the
@@ -77,8 +77,8 @@ results in a release/acquire synchronization that in turn implies that the
 assignment to \plc{x} on thread 0 happens before the read of \plc{x} on thread
 1. Therefore, thread 1 will print ``x = 10''.
 
-\cexample{acquire_release}{2}
-\ffreeexample{acquire_release}{2}
+\cexample[5.0]{acquire_release}{2}
+\ffreeexample[5.0]{acquire_release}{2}
 
 \pagebreak
 In the third example, \code{atomic} constructs that specify relaxed atomic
@@ -105,8 +105,8 @@ construct used in Example 2 for thread 1.
 %}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%3
 
-\cexample{acquire_release}{3}
-\ffreeexample{acquire_release}{3}
+\cexample[5.0]{acquire_release}{3}
+\ffreeexample[5.0]{acquire_release}{3}
 
 Example 4 will fail to order the write to \plc{x} on thread 0 before the read
 from \plc{x} on thread 1. Importantly, the implicit release flush on exit from
@@ -137,5 +137,5 @@ modifies \plc{y} and provides release semantics must be specified.
 %by thread 0.
 %}
 
-\cexample{acquire_release_broke}{4}
-\ffreeexample{acquire_release_broke}{4}
+\cexample[5.0]{acquire_release_broke}{4}
+\ffreeexample[5.0]{acquire_release_broke}{4}

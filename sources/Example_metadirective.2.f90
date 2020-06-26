@@ -1,8 +1,9 @@
 ! @@name: metadirective.2f90
 ! @@type: F-free
-! @@compilable: yes, omp_5.0
+! @@compilable: yes
 ! @@linkable: no
 ! @@expect: success
+! @@version: omp_5.0
 
 program main                    !!Driver
   use omp_lib
@@ -13,10 +14,10 @@ program main                    !!Driver
 
   do idev=0,omp_get_num_devices()-1
 
-    !$omp target device(i)
-    !$omp metadirective \
+    !$omp target device(idev)
+    !$omp begin metadirective &
     !$omp&  when( implementation={vendor(nvidia)}, device={arch("kepler")}: &
-    !$omp         teams num_teams(512) thread_limit(32) )                   &
+    !$omp&        teams num_teams(512) thread_limit(32) )                   &
     !$omp&  when( implementation={vendor(amd)},    device={arch("fiji"  )}: &
     !$omp&        teams num_teams(512) thread_limit(64) )                   &
     !$omp&  default(                                                        &
@@ -25,6 +26,8 @@ program main                    !!Driver
     do i=1,N  
        call work_on_chunk(idev,i)
     end do
+    !$omp end metadirective
+    !$omp end target
 
   end do
 

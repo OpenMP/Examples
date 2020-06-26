@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	yes
 ! @@expect:	success
+! @@version:    omp_4.0
 program example
    integer :: x
    x = 1

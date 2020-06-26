@@ -1,9 +1,10 @@
 /*
 * @@name: target_mapper_map.1c
 * @@type: C
-* @@compilable: yes, omp_5.0
+* @@compilable: yes
 * @@linkable: no
 * @@expect: success
+* @@version: omp_5.0
 */
 #include  <stdlib.h>
 #include   <stdio.h>
@@ -19,7 +20,6 @@ typedef struct myvec{
 void init(myvec_t *s);
 
 int main(){
-
    myvec_t s;
 
    s.data = (double *)calloc(N,sizeof(double));
@@ -33,4 +33,3 @@ int main(){
 
 void init(myvec_t *s)
 { for(int i=0; i<s->len; i++) s->data[i]=i; }
-

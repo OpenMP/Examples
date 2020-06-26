@@ -3,6 +3,7 @@
 ! @@compilable:	no
 ! @@linkable:	no
 ! @@expect:	failure
+! @@version:	omp_4.0
 subroutine foo()
 integer,target  :: A(30)
 integer,pointer :: p(:)

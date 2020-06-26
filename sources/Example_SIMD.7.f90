@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	yes
 ! @@expect:	success
+! @@version:	omp_4.0
 program fibonacci
    implicit none
    integer,parameter :: N=45
@@ -25,8 +26,8 @@ program fibonacci
 end program
 
 recursive function fib(n) result(r)
-!$omp declare simd(fib) inbranch
    implicit none
+!$omp declare simd(fib) inbranch
    integer  :: n, r
 
    if (n <= 1) then

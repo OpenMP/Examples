@@ -8,9 +8,9 @@
 This example shows a simple flow dependence using a \code{depend} 
 clause on the \code{task} construct.
 
-\cexample{task_dep}{1}
+\cexample[4.0]{task_dep}{1}
 
-\ffreeexample{task_dep}{1}
+\ffreeexample[4.0]{task_dep}{1}
 
 The program will always print \texttt{"}x = 2\texttt{"}, because the \code{depend} 
 clauses enforce the ordering of the tasks. If the \code{depend} clauses had been 
@@ -23,9 +23,9 @@ would have a race condition.
 This example shows an anti-dependence using the \code{depend} 
 clause on the \code{task} construct.
 
-\cexample{task_dep}{2}
+\cexample[4.0]{task_dep}{2}
 
-\ffreeexample{task_dep}{2}
+\ffreeexample[4.0]{task_dep}{2}
 
 The program will always print \texttt{"}x = 1\texttt{"}, because the \code{depend} 
 clauses enforce the ordering of the tasks. If the \code{depend} clauses had been 
@@ -38,9 +38,9 @@ race condition.
 This example shows an output dependence using the \code{depend} 
 clause on the \code{task} construct.
 
-\cexample{task_dep}{3}
+\cexample[4.0]{task_dep}{3}
 
-\ffreeexample{task_dep}{3}
+\ffreeexample[4.0]{task_dep}{3}
 
 The program will always print \texttt{"}x = 2\texttt{"}, because the \code{depend} 
 clauses enforce the ordering of the tasks. If the \code{depend} clauses had been 
@@ -55,9 +55,9 @@ In this example we show potentially concurrent execution of tasks using multiple
 flow dependences expressed using the \code{depend} clause on the \code{task} 
 construct.
 
-\cexample{task_dep}{4}
+\cexample[4.0]{task_dep}{4}
 
-\ffreeexample{task_dep}{4}
+\ffreeexample[4.0]{task_dep}{4}
 
 The last two tasks are dependent on the first task. However there is no dependence 
 between the last two tasks, which may execute in any order (or concurrently if 
@@ -72,9 +72,9 @@ in any order and the program would have a race condition.
 This example shows a task-based blocked matrix multiplication. Matrices are of 
 NxN elements, and the multiplication is implemented using blocks of BSxBS elements.
 
-\cexample{task_dep}{5}
+\cexample[4.0]{task_dep}{5}
 
-\ffreeexample{task_dep}{5}
+\ffreeexample[4.0]{task_dep}{5}
 
 \subsection{\code{taskwait} with Dependences}
 \label{subsec:taskwait_depend}
@@ -105,9 +105,9 @@ Hence, immediately after the first \code{taskwait} it is unsafe to access the
 The second \code{taskwait} ensures that the second child task has completed; hence
 it is safe to access the \plc{y} variable in the following print statement.
 
-\cexample{task_dep}{6}
+\cexample[5.0]{task_dep}{6}
 
-\ffreeexample{task_dep}{6}
+\ffreeexample[5.0]{task_dep}{6}
 
 In this example the first two tasks are serialized, because a dependence on
 the first child is produced by \plc{x} with the \code{in} dependence type
@@ -123,9 +123,9 @@ included to illustrate how the child task dependences can be completely annotate
 in a data-flow model.)
 
 
-\cexample{task_dep}{7}
+\cexample[5.0]{task_dep}{7}
 
-\ffreeexample{task_dep}{7}
+\ffreeexample[5.0]{task_dep}{7}
 
 
 This example is similar to the previous one, except the generating task is
@@ -149,9 +149,9 @@ the dependence type of variables in the \code{taskwait} \code{depend} clause
 when selecting child tasks that the generating task must wait on, so that its execution after the
 taskwait does not produce race conditions on variables accessed by non-completed child tasks.
 
-\cexample{task_dep}{8}
+\cexample[5.0]{task_dep}{8}
 
-\ffreeexample{task_dep}{8}
+\ffreeexample[5.0]{task_dep}{8}
 
 \pagebreak
 \subsection{Mutually Exclusive Execution with Dependences}
@@ -168,18 +168,18 @@ to the \code{mutexinoutset} dependence type on \code{c}, T4 and T5 may be
 scheduled in any order with respect to each other, but not at the same
 time. Tasks T6 will be scheduled after both T4 and T5 are completed.
 
-\cexample{task_dep}{9}
+\cexample[5.0]{task_dep}{9}
 
-\ffreeexample{task_dep}{9}
+\ffreeexample[5.0]{task_dep}{9}
 
 The following example demonstrates a situation where the \code{mutexinoutset}
 dependence type is advantageous. If \code{shortTaskB} completes
 before \code{longTaskA}, the runtime can take advantage of this by
 scheduling \code{longTaskBC} before \code{shortTaskAC}.
 
-\cexample{task_dep}{10}
+\cexample[5.0]{task_dep}{10}
 
-\ffreeexample{task_dep}{10}
+\ffreeexample[5.0]{task_dep}{10}
 
 \subsection{Multidependences Using Iterators}
 \label{subsec:depend_iterator}
@@ -211,6 +211,31 @@ identical nor disjoint to the storage prescibed by the elements of the
 loop tasks.  The iterator overcomes this restriction by effectively
 creating n disjoint storage areas.
 
-\cexample{task_dep}{11}
+\cexample[5.0]{task_dep}{11}
 
-\ffreeexample{task_dep}{11}
+\ffreeexample[5.0]{task_dep}{11}
+
+\subsection{Dependence for Undeferred Tasks}
+\label{subsec:depend_undefer_task}
+
+In the following example, we show that even if a task is undeferred as specified
+by an \code{if} clause that evaluates to \plc{false}, task dependences are
+still honored.
+
+The \code{depend} clauses of the first and second explicit tasks specify that
+the first task is completed before the second task.
+
+The second explicit task has an \code{if} clause that evaluates to \plc{false}.
+This means that the execution of the generating task (the implicit task of
+the \code{single} region) must be suspended until the second explict task
+is completed.
+But, because of the dependence, the first explicit task must complete first,
+then the second explicit task can execute and complete, and only then 
+the generating task can resume to the print statement.
+Thus, the program will always print "\texttt{x = 2}".
+
+\cexample[4.0]{task_dep}{12}
+\clearpage
+
+\ffreeexample[4.0]{task_dep}{12}
+

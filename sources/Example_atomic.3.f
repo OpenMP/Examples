@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:	omp_3.1
        function fetch_and_add(p)
        integer:: fetch_and_add
        integer, intent(inout) :: p

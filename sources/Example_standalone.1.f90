@@ -3,6 +3,7 @@
 ! @@compilable:	no
 ! @@linkable:	no
 ! @@expect:	failure
+! @@version:     omp_3.1
 
 
 SUBROUTINE STANDALONE_WRONG()

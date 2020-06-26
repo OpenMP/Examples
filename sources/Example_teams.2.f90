@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:	omp_4.0
 function dotprod(B,C,N, block_size, num_teams, block_threads) result(sum)
 implicit none
     real    :: B(N), C(N), sum

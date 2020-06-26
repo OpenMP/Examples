@@ -4,6 +4,7 @@
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
+* @@version:	omp_4.0
 */
 double work( double *a, double *b, int n )
 {

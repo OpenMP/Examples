@@ -4,6 +4,7 @@
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	rt-error
+* @@version:	omp_3.0
 */
 void work()
 {

@@ -3,11 +3,12 @@
 ! @@compilable: yes
 ! @@linkable:   yes
 ! @@expect:     success
+! @@version:    omp_5.0
 
 !$omp requires reverse_offload
 
 subroutine error_handler(wrong_value, index)
-  integer :: error_value,index
+  integer :: wrong_value,index
   !$omp declare target device_type(host)
 
    write( *,'("Error in offload: A(",i3,")=",i3)' ) index,wrong_value
@@ -27,9 +28,9 @@ program rev_off
    !$omp target map(A)
       do i=1,N
          if (A(i) /= i)  then
-           !$omp omp target device(ancestor: 1) map(always,to :A(i))
+           !$omp target device(ancestor: 1) map(always,to :A(i))
                call error_handler(A(i), i)
-           !$omp omp end target
+           !$omp end target
          endif
       end do
    !$omp end target

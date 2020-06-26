@@ -1,8 +1,9 @@
 ! @@name: target_offload_control.1f90
 ! @@type: F-free
-! @@compilable: yes, omp_5.0
+! @@compilable: yes
 ! @@linkable: yes
 ! @@expect: success
+! @@version: omp_5.0
 
 
 module offload_policy

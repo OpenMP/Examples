@@ -28,9 +28,9 @@ not changed, so affinity is NOT reported.
 In the last parallel region, the thread affinities are reported
 because the thread affinity has changed.
 
-\cexample{affinity_display}{1}
+\cexample[5.0]{affinity_display}{1}
 
-\ffreeexample{affinity_display}{1}
+\ffreeexample[5.0]{affinity_display}{1}
 
 
 In the following example 2 threads are forked, and each executes on a socket. Next,
@@ -58,9 +58,9 @@ the parallel nesting level (\%L), the ancestor thread number (\%a), the thread n
 and the thread affinity (\%A). In the nested parallel region within the \plc{socket\_work} routine
 the affinities for the threads on each socket are printed according to this format.
 
-\cexample{affinity_display}{2}
+\cexample[5.0]{affinity_display}{2}
 
-\ffreeexample{affinity_display}{2}
+\ffreeexample[5.0]{affinity_display}{2}
 
 The next example illustrates more details about affinity formatting.
 First, the \code{omp\_get\_affininity\_format()} API routine is used to 
@@ -98,7 +98,7 @@ The maximum value for the number of characters (\plc{nchars}) returned by
 clause and the \plc{if(nchars >= max\_req\_store) max\_req\_store=nchars} statement. 
 It is used to report possible truncation (if \plc{max\_req\_store} > \plc{buffer\_store}).
 
-\cexample{affinity_display}{3}
+\cexample[5.0]{affinity_display}{3}
 
-\ffreeexample{affinity_display}{3}
+\ffreeexample[5.0]{affinity_display}{3}
 

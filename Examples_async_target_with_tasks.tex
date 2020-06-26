@@ -9,20 +9,20 @@ scheduling point while waiting for the execution of the \code{target} region
 to complete, allowing the thread to switch back to the execution of the encountering 
 task or one of the previously generated explicit tasks.
 
-\cexample{async_target}{1}
+\cexample[4.0]{async_target}{1}
 
 \pagebreak
 The Fortran version has an interface block that contains the \code{declare} \code{target}. 
 An identical statement exists in the function declaration (not shown here).
 
-\ffreeexample{async_target}{1}
+\ffreeexample[4.0]{async_target}{1}
 
 The following example shows how the \code{task} and \code{target} constructs 
 are used to execute multiple \code{target} regions asynchronously. The task dependence 
 ensures that the storage is allocated and initialized on the device before it is 
 accessed.
 
-\cexample{async_target}{2}
+\cexample[4.0]{async_target}{2}
 
 The Fortran example below is similar to the C version above. Instead of pointers, though, it uses
 the convenience of Fortran allocatable arrays on the device. In order to preserve the arrays 
@@ -52,4 +52,4 @@ section of the specification.)
 However, the intention is to relax the restrictions on mapping of allocatable variables in the next release
 of the specification so that the example will be compliant.
 
-\ffreeexample{async_target}{2}
+\ffreeexample[4.0]{async_target}{2}

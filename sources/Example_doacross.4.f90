@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:    omp_4.5
 subroutine work( N, M, A, B, C )
   integer :: N, M
   real(8), dimension(M, N) :: A, B, C

@@ -16,9 +16,9 @@ region. The \code{omp\_get\_team\_num} routine returns the team number, which is
 between 0 and one less than the value returned by \code{omp\_get\_num\_teams}. The following 
 example manually distributes a loop across two teams.
 
-\cexample{teams}{1}
+\cexample[4.0]{teams}{1}
 
-\ffreeexample{teams}{1}
+\ffreeexample[4.0]{teams}{1}
 
 \subsection{\code{target}, \code{teams}, and \code{distribute} Constructs}
 \label{subsec:teams_distribute}
@@ -47,9 +47,9 @@ created by the \code{teams} construct. At the end of the \code{teams} region,
 each master thread's private copy of \plc{sum} is reduced into the final \plc{sum} that is 
 implicitly mapped into the \code{target} region.
 
-\cexample{teams}{2}
+\cexample[4.0]{teams}{2}
 
-\ffreeexample{teams}{2}
+\ffreeexample[4.0]{teams}{2}
 
 \subsection{\code{target} \code{teams}, and Distribute Parallel Loop Constructs}
 \label{subsec:teams_distribute_parallel}
@@ -62,9 +62,9 @@ team executes the \code{teams} region.
 The distribute parallel loop construct schedules the loop iterations across the 
 master threads of each team and then across the threads of each team.
 
-\cexample{teams}{3}
+\cexample[4.5]{teams}{3}
 
-\ffreeexample{teams}{3}
+\ffreeexample[4.5]{teams}{3}
 
 \subsection{\code{target} \code{teams} and Distribute Parallel Loop 
 Constructs with Scheduling Clauses}
@@ -87,9 +87,9 @@ The \code{schedule} clause indicates that the 1024 iterations distributed to
 a master thread are then assigned to the threads in its associated team in chunks 
 of 64 iterations.
 
-\cexample{teams}{4}
+\cexample[4.0]{teams}{4}
 
-\ffreeexample{teams}{4}
+\ffreeexample[4.0]{teams}{4}
 
 \subsection{\code{target} \code{teams} and \code{distribute} \code{simd} Constructs}
 \label{subsec:teams_distribute_simd}
@@ -102,9 +102,9 @@ master thread of each team executes the \code{teams} region.
 The \code{distribute} \code{simd} construct schedules the loop iterations across 
 the master thread of each team and then uses SIMD parallelism to execute the iterations.
 
-\cexample{teams}{5}
+\cexample[4.0]{teams}{5}
 
-\ffreeexample{teams}{5}
+\ffreeexample[4.0]{teams}{5}
 
 \subsection{\code{target} \code{teams} and Distribute Parallel Loop SIMD Constructs}
 \label{subsec:teams_distribute_parallel_simd}
@@ -118,7 +118,7 @@ The distribute parallel loop SIMD construct schedules the loop iterations across
 the master thread of each team and then across the threads of each team where each 
 thread uses SIMD parallelism.
 
-\cexample{teams}{6}
+\cexample[4.0]{teams}{6}
 
-\ffreeexample{teams}{6}
+\ffreeexample[4.0]{teams}{6}
 

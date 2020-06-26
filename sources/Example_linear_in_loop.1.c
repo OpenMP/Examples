@@ -4,6 +4,7 @@
 * @@compilable:	yes
 * @@linkable:	yes
 * @@expect:	success
+* @@version:	omp_4.5
 */
 #include <stdio.h>
 

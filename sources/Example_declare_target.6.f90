@@ -3,6 +3,7 @@
 ! @@compilable: yes
 ! @@linkable: no
 ! @@expect: success
+! @@version: omp_4.5
 module m_dat
    integer, parameter :: N=100000000
    !$omp declare target link(sp,sv1,sv2)

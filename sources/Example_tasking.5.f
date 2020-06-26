@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:	omp_3.0
        real*8 item(10000000)
        integer i
 
@@ -16,4 +17,5 @@
        end do
 !$omp end single
 !$omp end parallel
+
        end

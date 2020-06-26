@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:    omp_4.0
 function dotprod(B,C,N) result(sum)
 use omp_lib, ONLY : omp_get_num_teams, omp_get_team_num
     real    :: B(N), C(N), sum,sum0, sum1

@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:    omp_4.0
 module my_mult
 contains
 subroutine foo(p0,v1,v2,N)

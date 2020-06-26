@@ -40,8 +40,9 @@ for executing the task to completion, even though it may leave the
 execution at a scheduling point and return later.  The thread is tied
 to the task.  Scheduling points can be introduced with the \code{taskyield}
 construct.  With an \code{untied} clause any other thread is allowed to continue
-the task.  An \code{if} clause with a \plc{true} expression allows the 
-generating thread to immediately execute the task as an undeferred task.
+the task.  An \code{if} clause with an expression that evaluates to \plc{false} 
+results in an \emph{undeferred} task, which instructs the runtime to suspend
+the generating task until the undeferred task completes its execution.
 By including the data environment of the generating task into the generated task with the 
 \code{mergeable} and \code{final} clauses, task generation overhead can be reduced.
 

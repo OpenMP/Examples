@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:    omp_4.0
 subroutine gramSchmidt(Q,rows,cols)
 integer             ::   rows,cols,  i,k
 double precision    :: Q(rows,cols), tmp

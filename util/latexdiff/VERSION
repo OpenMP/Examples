@@ -1,0 +1,4 @@
+The current version of latexdiff comes from:
+git clone -b openmp-rebased git@github.com:jprotze/latexdiff.git
+
+The commit is 1ed71be6fb71927473bd9468ce42f42e1431b5ab

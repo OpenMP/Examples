@@ -1,9 +1,10 @@
 /*
 * @@name: target_mapper_map.2.c
 * @@type: C
-* @@compilable: yes, omp_5.0
+* @@compilable: yes
 * @@linkable: no
 * @@expect: success
+* @@version: omp_5.0
 */
 #include <stdio.h>
 //                   N MUST BE EVEN

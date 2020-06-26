@@ -26,11 +26,11 @@ full structure, plus the dynamic storage of the \plc{data} element.
 %The associated Fortran allocatable \plc{data} array is automatically mapped with the derived
 %type, it does not require an array section as in the C/C++ example.
 
-\cexample{target_mapper}{1}
+\cexample[5.0]{target_mapper}{1}
 
-\ffreeexample{target_mapper}{1}
+\ffreeexample[5.0]{target_mapper}{1}
 
-\pagebreak
+%\pagebreak
 The next example illustrates the use of the \plc{mapper-identifier} and deep copy within a structure. 
 The structure, \plc{dzmat\_t},  represents a complex matrix, 
 with separate real (\plc{r\_m}) and imaginary (\plc{i\_m}) elements.
@@ -56,11 +56,11 @@ Note, the \plc{is} and \plc{ie} scalars are firstprivate
 by default for a target region, but are declared firstprivate anyway
 to remind the user of important firstprivate data-sharing properties required here.
 
-\cexample{target_mapper}{2}
+\cexample[5.0]{target_mapper}{2}
 
-\ffreeexample{target_mapper}{2}
+\ffreeexample[5.0]{target_mapper}{2}
 
-\pagebreak
+%\pagebreak
 In the third example \plc{myvec} structures are
 nested within a \plc{mypoints} structure. The \plc{myvec\_t} type is mapped
 as in the first example.  Following the \plc{mypoints} structure declaration, 
@@ -80,7 +80,7 @@ type structure.
 %Note, in the main program \plc{P} is an array of \plc{mypoints\_t} type structures, 
 %and hence every element of the array is mapped with the mapper prescription.
 
-\cexample{target_mapper}{3}
+\cexample[5.0]{target_mapper}{3}
 
-\ffreeexample{target_mapper}{3}
+\ffreeexample[5.0]{target_mapper}{3}
 

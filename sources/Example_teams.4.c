@@ -4,6 +4,7 @@
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
+* @@version:	omp_4.0
 */
 #define N 1024*1024
 float dotprod(float B[], float C[])

@@ -1,8 +1,9 @@
 ! @@name: acquire_release.3.f90
 ! @@type: F-free
-! @@compilable: yes, omp_5.0
+! @@compilable: yes
 ! @@linkable: yes
 ! @@expect: success
+! @@version: omp_5.0
 
 program rel_acq_ex3
    use omp_lib

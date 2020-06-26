@@ -4,6 +4,7 @@
 * @@compilable:	no
 * @@linkable:	no
 * @@expect:	failure
+* @@version:	omp_3.1
 */
 
 void standalone_wrong()

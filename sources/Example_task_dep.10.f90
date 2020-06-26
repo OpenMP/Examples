@@ -3,6 +3,7 @@
 ! @@compilable:	no
 ! @@linkable:	no
 ! @@expect:	failure
+! @@version:    omp_5.0
 subroutine foo
    integer :: a,b,c
    c = 0

@@ -3,6 +3,7 @@
 ! @@compilable: yes
 ! @@linkable:   no
 ! @@expect:     success
+! @@version:    omp_5.0
 module complex_mats
 
    integer, parameter :: N=100    !N must be even

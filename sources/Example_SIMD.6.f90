@@ -3,9 +3,10 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:	omp_4.0
 function foo(p) result(r)
-!$omp declare simd(foo) notinbranch
   implicit none
+!$omp declare simd(foo) notinbranch
   integer :: p, r
   p = p + 10
   r = p
@@ -26,8 +27,8 @@ function myaddint(a, b,  n) result(r)
 end function myaddint
 
 function goo(p) result(r)
-!$omp declare simd(goo) inbranch
   implicit none
+!$omp declare simd(goo) inbranch
   real :: p, r
   p = p + 18.5
   r = p

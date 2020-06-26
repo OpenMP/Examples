@@ -3,6 +3,7 @@
 ! @@compilable:	no
 ! @@linkable:	no
 ! @@expect:	failure
+! @@version:    omp_4.5
 subroutine work_wrong(N, p)
   integer :: N
   real(8), dimension(N,N,N) :: p

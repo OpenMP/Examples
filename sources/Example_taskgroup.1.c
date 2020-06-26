@@ -4,6 +4,7 @@
 * @@compilable:	yes
 * @@linkable:	yes
 * @@expect:	success
+* @@version:	omp_4.0
 */
 extern void start_background_work(void);
 extern void check_step(void);

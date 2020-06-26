@@ -1,8 +1,9 @@
 ! @@name: metadirective.3f90
 ! @@type: F-free
-! @@compilable: yes, omp_5.0
+! @@compilable: yes
 ! @@linkable: yes
 ! @@expect: success
+! @@version: omp_5.0
 
 module params
    integer, parameter :: N=1000
@@ -39,6 +40,7 @@ program main
 
       !$omp target teams map(from: d)
       call exp_pi_diff(d,my_pi)
+      !$omp end target teams
                                   ! value should be near 1
       print*, "d(N) = ",d(N)      ! 1.00000000000311
 

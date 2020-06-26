@@ -3,6 +3,8 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:	omp_4.5
+
 subroutine socket_init(socket_num)
    use omp_lib
    integer  :: socket_num, n_procs

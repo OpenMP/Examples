@@ -7,7 +7,7 @@ The following example is non-conforming, because the \code{flush}, \code{barrier
 \code{taskwait}, and \code{taskyield}  directives are stand-alone directives 
 and cannot be the immediate substatement of an \code{if} statement. 
 
-\cexample{standalone}{1}
+\cexample[3.1]{standalone}{1}
 
 \pagebreak
 The following example is non-conforming, because the \code{flush}, \code{barrier}, 
@@ -15,19 +15,19 @@ The following example is non-conforming, because the \code{flush}, \code{barrier
 and cannot be the action statement of an \code{if} statement or a labeled branch 
 target.
 
-\ffreeexample{standalone}{1}
+\ffreeexample[3.1]{standalone}{1}
 
 The following version of the above example is conforming because the \code{flush}, 
 \code{barrier}, \code{taskwait}, and \code{taskyield} directives are enclosed 
 in a compound statement. 
 
-\cexample{standalone}{2}
+\cexample[3.1]{standalone}{2}
 
 \pagebreak
 The following example is conforming because the \code{flush}, \code{barrier}, 
 \code{taskwait}, and \code{taskyield} directives are enclosed in an \code{if} 
 construct or follow the labeled branch target.
 
-\ffreeexample{standalone}{2}
+\ffreeexample[3.1]{standalone}{2}
 
 

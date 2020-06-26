@@ -1,8 +1,9 @@
 ! @@name:	taskloop_simd_reduction.1f90
 ! @@type:       F-free
-! @@compilable: yes, omp_5.0
+! @@compilable: yes
 ! @@linkable:   no
 ! @@expect:     success
+! @@version:    omp_5.0
 
 program main
 

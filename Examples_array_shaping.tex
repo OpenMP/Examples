@@ -23,5 +23,13 @@ Note the use of additional parentheses
 around the shape-operator and $a$ to ensure the correct precedence 
 over array-section operations.
 
-\cnexample{array_shaping}{1}
+\cnexample[5.0]{array_shaping}{1}
 \ccppspecificend
+
+The shape operator is not defined for Fortran.  Explicit array shaping
+of procedure arguments can be used instead to achieve a similar goal.
+Below is the Fortran-equivalent of the above example that illustrates
+the support of transferring two rows of noncontiguous boundary
+data in the \code{target}~\code{update} directive.
+ 
+\ffreeexample[5.0]{array_shaping}{1}

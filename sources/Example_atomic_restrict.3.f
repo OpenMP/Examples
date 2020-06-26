@@ -3,6 +3,7 @@
 ! @@compilable:	maybe
 ! @@linkable:	no
 ! @@expect:	failure
+! @@version:	omp_3.1
       SUBROUTINE ATOMIC_WRONG3
         INTEGER:: I
         REAL:: R

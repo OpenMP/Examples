@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:	omp_4.0
 subroutine work( b, n, m )
    implicit none
    real       :: b(n)

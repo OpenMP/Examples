@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:    omp_3.0
       RECURSIVE SUBROUTINE traverse ( P )
          TYPE Node
              TYPE(Node), POINTER :: left, right

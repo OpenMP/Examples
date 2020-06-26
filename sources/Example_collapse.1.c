@@ -4,6 +4,7 @@
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
+* @@version:	omp_3.0
 */
 
 void bar(float *a, int i, int j, int k);

@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:	omp_4.5
 function dotprod(B,C,N) result(sum)
    real    :: B(N), C(N), sum
    integer :: N, i

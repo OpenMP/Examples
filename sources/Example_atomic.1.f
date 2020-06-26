@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	yes
 ! @@expect:	success
+! @@version:	omp_3.1
       REAL FUNCTION WORK1(I)
         INTEGER I
         WORK1 = 1.0 * I

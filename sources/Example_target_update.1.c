@@ -4,6 +4,8 @@
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
+* @@expect:	success
+* @@version:	omp_4.0
 */
 extern void init(float *, float *, int);
 extern void init_again(float *, float *, int);

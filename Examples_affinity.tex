@@ -34,9 +34,9 @@ the partition list when the number of threads is less than or equal to the numbe
 of places in the parent's place partition, for the machine architecture depicted 
 above. Note that the threads are bound to the first place of each subpartition.
 
-\cexample{affinity}{1}
+\cexample[4.0]{affinity}{1}
 
-\fexample{affinity}{1}
+\fexample[4.0]{affinity}{1}
 
 It is unspecified on which place the master thread is initially started. If the 
 master thread is initially started on p0, the following placement of threads will 
@@ -75,9 +75,9 @@ parent's place partition. The first \plc{T/P} threads of the team (including the
 thread) execute on the parent's place. The next \plc{T/P} threads execute on the next 
 place in the place partition, and so on, with wrap around. 
 
-\cexample{affinity}{2}
+\cexample[4.0]{affinity}{2}
 
-\ffreeexample{affinity}{2}
+\ffreeexample[4.0]{affinity}{2}
 
 It is unspecified on which place the master thread is initially started. If the 
 master thread is initially started on p0, the following placement of threads will 
@@ -130,9 +130,9 @@ the partition list when the number of threads is less than or equal to the numbe
 of places in parent's place partition, for the machine architecture depicted above. 
 The place partition is not changed by the \code{close} policy.
 
-\cexample{affinity}{3}
+\cexample[4.0]{affinity}{3}
 
-\fexample{affinity}{3}
+\fexample[4.0]{affinity}{3}
 
 It is unspecified on which place the master thread is initially started. If the 
 master thread is initially started on p0, the following placement of threads will 
@@ -171,9 +171,9 @@ thread) execute on the parent's place. The next \plc{T/P} threads execute on the
 place in the place partition, and so on, with wrap around. The place partition 
 is not changed by the \code{close} policy.
 
-\cexample{affinity}{4}
+\cexample[4.0]{affinity}{4}
 
-\ffreeexample{affinity}{4}
+\ffreeexample[4.0]{affinity}{4}
 
 It is unspecified on which place the master thread is initially started. If the 
 master thread is initially running on p0, the following placement of threads will 
@@ -225,9 +225,9 @@ The following example shows the result of the \code{master} affinity policy on
 the partition list for the machine architecture depicted above. The place partition 
 is not changed by the master policy.
 
-\cexample{affinity}{5}
+\cexample[4.0]{affinity}{5}
 
-\fexample{affinity}{5}
+\fexample[4.0]{affinity}{5}
 
 It is unspecified on which place the master thread is initially started. If the 
 master thread is initially running on p0, the following placement of threads will 

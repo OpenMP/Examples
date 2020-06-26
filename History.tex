@@ -1,6 +1,46 @@
 \chapter{Document Revision History}
 \label{chap:history}
 
+\section{Changes from 5.0.0 to 5.0.1}
+\label{sec:history_50_to_501}
+
+\begin{itemize}
+\item Added version tags (\code{\small{}omp\_}\plc{x.y}) in example labels 
+and the corresponding source codes for all examples that feature
+OpenMP 3.0 and later. 
+
+\item Included additional examples for the 5.0 features:
+
+\begin{itemize}
+\item Extension to the \code{defaultmap} clause
+(\specref{sec:defaultmap})
+\item Transferring noncontiguous data with the \code{target}~\code{update} directive in Fortran (\specref{sec:array-shaping})
+\item \code{conditional} modifier for the \code{lastprivate} clause                             (\specref{sec:lastprivate})
+\item \code{task} modifier for the \code{reduction} clause                                      (\specref{subsec:task_reduction})
+\item Reduction on combined target constructs                                                     (\specref{subsec:target_reduction})
+\item Task reduction with target constructs 
+   (\specref{subsec:target_task_reduction})
+\item \code{scan} directive for returning the \emph{prefix sum} of a reduction                  (\specref{sec:scan})
+
+\end{itemize}
+
+\item Included additional examples for the 4.x features:
+
+\begin{itemize}
+\item Dependence for undeferred tasks
+(\specref{subsec:depend_undefer_task})
+\item \code{ref}, \code{val}, \code{uval} modifiers for \code{linear} clause (\specref{sec:linear_modifier})
+
+\end{itemize}
+
+\item Clarified the description of pointer mapping and pointer attachment in 
+\specref{sec:pointer_mapping}.
+\item Clarified the description of memory model examples
+in \specref{sec:mem_model}.
+
+\end{itemize}
+
+
 \section{Changes from 4.5.0 to 5.0.0}
 \label{sec:history_45_to_50}
 
@@ -21,6 +61,8 @@
 \item Combined constructs: \code{parallel}~\code{master}~\code{taskloop} and \code{parallel}~\code{master}~\code{taskloop}~\code{simd}
                                                                                   (\specref{sec:parallel_master_taskloop})
 \item Reverse Offload through \plc{ancestor} modifier of \code{device} clause.    (\specref{subsec:target_reverse_offload})
+\item Pointer Mapping  - behavior of mapped pointers                              (\specref{sec:pointer_mapping})   %Example_target_ptr_map*
+\item Structure Mapping  - behavior of mapped structures                          (\specref{sec:structure_mapping}) %Examples_target_structure_mapping.tex target_struct_map*
 \item Array Shaping with the \plc{shape-operator}                                 (\specref{sec:array-shaping})
 \item The \code{declare}~\code{mapper} construct                                  (\specref{sec:declare_mapper})
 \item Acquire and Release Semantics Synchronization: Memory ordering 
@@ -36,12 +78,16 @@
 \item \code{requires} directive specifies required features of implementation     (\specref{sec:requires})
 \item \code{declare}~\code{variant} directive - for function variants             (\specref{sec:declare_variant})
 \item \code{metadirective} directive  - for directive variants                    (\specref{sec:metadirective})
+\item \code{OMP\_TARGET\_OFFLOAD} Environment Variable  - controls offload behavior (\specref{sec:target_offload})
 \end{itemize}
 
 \item Included the following additional examples for the 4.x features:
 \begin{itemize}
 \item more taskloop examples (\specref{sec:taskloop})
 \item user-defined reduction (UDR) (\specref{subsec:UDR})
+%NEW 5.0
+%\item \code{target} \code{enter} and \code{exit} \code{data} unstructured data constructs  (\specref{sec:target_enter_exit_data}) %Example_target_unstructured_data.* ?
+
 \end{itemize}
 \end{itemize}
 
@@ -101,12 +147,12 @@ Added the following new examples:
 \begin{itemize}
 \item task dependences                       (\specref{sec:task_depend})
 \item \code{target} construct                (\specref{sec:target})
+\item array sections in device constructs    (\specref{sec:array_sections})
 \item \code{target}~\code{data} construct    (\specref{sec:target_data})
 \item \code{target}~\code{update} construct  (\specref{sec:target_update})
 \item \code{declare}~\code{target} construct (\specref{sec:declare_target})
 \item \code{teams} constructs                (\specref{sec:teams})
 \item asynchronous execution of a \code{target} region using tasks (\specref{subsec:async_target_with_tasks})
-\item array sections in device constructs    (\specref{sec:array_sections})
 \item device runtime routines                (\specref{sec:device})
 \item Fortran ASSOCIATE construct            (\specref{sec:associate})
 \item cancellation constructs                (\specref{sec:cancellation})

@@ -3,7 +3,8 @@
 ! @@compilable:	no
 ! @@linkable:	no
 ! @@expect:	failure
-      program example
+! @@version:	omp_4.0
+      program example_broken
       real :: a, c
       associate (b => a)
 !$omp parallel private(b, c)        ! invalid to privatize b

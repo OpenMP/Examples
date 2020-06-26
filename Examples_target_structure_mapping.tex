@@ -19,7 +19,7 @@ Note: The buffer arrays and the \plc{x} variable have been grouped together, so 
 the components that will reside on the device are all together (without gaps).
 This allows the runtime to optimize the transfer and the storage footprint on the device.
 
-\cexample{target_struct_map}{1}
+\cexample[5.0]{target_struct_map}{1}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,7 +28,7 @@ a C++ class.  In the member function \plc{SAXPY::driver}
 the array section \plc{p[:N]} is \emph{attached} to the pointer member \plc{p}
 on the device.
  
-\cppexample{target_struct_map}{2}
+\cppexample[5.0]{target_struct_map}{2}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

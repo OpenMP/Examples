@@ -3,6 +3,7 @@
 ! @@compilable:	no
 ! @@linkable:	no
 ! @@expect:	failure
+! @@version:	omp_4.0
 subroutine foo()
 integer :: A(30)
    A = 1

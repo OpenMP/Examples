@@ -10,9 +10,9 @@ can be used to query if a code is executing on the initial host device or on a
 target device. The example then sets the number of threads in the \code{parallel} 
 region based on where the code is executing.
 
-\cexample{device}{1}
+\cexample[4.0]{device}{1}
 
-\ffreeexample{device}{1}
+\ffreeexample[4.0]{device}{1}
 
 \subsection{\code{omp\_get\_num\_devices} Routine}
 \label{subsec:device_num_devices}
@@ -20,9 +20,9 @@ region based on where the code is executing.
 The following example shows how the \code{omp\_get\_num\_devices} runtime library routine 
 can be used to determine the number of devices.
 
-\cexample{device}{2}
+\cexample[4.0]{device}{2}
 
-\ffreeexample{device}{2}
+\ffreeexample[4.0]{device}{2}
 
 \subsection{\code{omp\_set\_default\_device} and \\
 \code{omp\_get\_default\_device} Routines}
@@ -32,9 +32,9 @@ The following example shows how the \code{omp\_set\_default\_device} and \code{o
 runtime library routines can be used to set the default device and determine the 
 default device respectively.
 
-\cexample{device}{3}
+\cexample[4.0]{device}{3}
 
-\ffreeexample{device}{3}
+\ffreeexample[4.0]{device}{3}
 
 
  \subsection{Target Memory and Device Pointers Routines}
@@ -53,5 +53,5 @@ in a \code{target} region by exposing the device pointer in an \code{is\_device\
 The example creates an array of cosine values on the default device, to be used
 on the host device. The function fails if a default device is not available.
 
-\cexample{device}{4}
+\cexample[4.5]{device}{4}
 

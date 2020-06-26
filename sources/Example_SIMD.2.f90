@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	yes
 ! @@expect:	success
+! @@version:	omp_4.0
 program main
    implicit none
    integer, parameter :: N=32
@@ -19,15 +20,15 @@ program main
 end program
 
 function add1(a,b,fact) result(c)
-!$omp declare simd(add1) uniform(fact)
    implicit none
+!$omp declare simd(add1) uniform(fact)
    double precision :: a,b,fact, c
    c = a + b + fact
 end function
 
 function add2(a,b,i, fact) result(c)
-!$omp declare simd(add2) uniform(a,b,fact) linear(i:1)
    implicit none
+!$omp declare simd(add2) uniform(a,b,fact) linear(i:1)
    integer          :: i
    double precision :: a(*),b(*),fact, c
    c = a(i) + b(i) + fact

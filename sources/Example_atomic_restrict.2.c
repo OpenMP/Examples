@@ -4,6 +4,7 @@
 * @@compilable:	maybe
 * @@linkable:	no
 * @@expect:	failure
+* @@version:	omp_3.1
 */
 void atomic_wrong2 ()
 {

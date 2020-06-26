@@ -3,6 +3,7 @@
 ! @@compilable:  yes
 ! @@linkable:    no
 ! @@expect:      success
+! @@version:     omp_4.5
 module example
   real(8), allocatable :: A(:)
 

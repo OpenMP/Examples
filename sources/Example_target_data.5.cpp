@@ -4,6 +4,7 @@
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
+* @@version:	omp_4.0
 */
 void vec_mult(float* &, float* &, float* &, int &);
 extern void init(float*, float*, int);

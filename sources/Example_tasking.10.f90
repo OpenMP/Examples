@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:    omp_3.0
       module example
       include 'omp_lib.h'
       integer (kind=omp_lock_kind) lock

@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:    omp_4.0
 subroutine matmul_depend (N, BS, A, B, C)
    integer :: N, BS, BM
    real, dimension(N, N) :: A, B, C

@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:	omp_4.5
       SUBROUTINE CRITICAL_EXAMPLE(X, Y)
         USE OMP_LIB        ! or INCLUDE "omp_lib.h"
         

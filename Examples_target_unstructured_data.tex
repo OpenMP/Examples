@@ -22,7 +22,7 @@ back to the host. Note, the stand-alone \code{target}~\code{enter}~\code{data} o
 after the host vector is created, and the \code{target}~\code{exit}~\code{data}
 construct occurs before the host data is deleted.
 
-\cppexample{target_unstructured_data}{1}
+\cppexample[4.5]{target_unstructured_data}{1}
 
 \pagebreak
 The following C code allocates and frees the data member of a Matrix structure.
@@ -33,7 +33,7 @@ and then frees the memory on the host.  Note, the stand-alone
 \code{target}~\code{enter}~\code{data} occurs after the host memory is allocated, and the 
 \code{target}~\code{exit}~\code{data} construct occurs before the host data is freed.
 
-\cexample{target_unstructured_data}{1}
+\cexample[4.5]{target_unstructured_data}{1}
 
 \pagebreak
 The following Fortran code allocates and deallocates a module array.  The
@@ -44,6 +44,6 @@ then deallocates the array on the host.  Note, the stand-alone
 \code{target}~\code{enter}~\code{data} occurs after the host memory is allocated, and the 
 \code{target}~\code{exit}~\code{data} construct occurs before the host data is deallocated.
 
-\ffreeexample{target_unstructured_data}{1}
+\ffreeexample[4.5]{target_unstructured_data}{1}
 %end
 

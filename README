@@ -32,6 +32,7 @@ For copyright information, please see omp_copyright.txt.
   @@compilable:  yes|no|maybe
   @@linkable:    yes|no|maybe
   @@expect:      success|failure|nothing|rt-error
+  @@version:     omp_<verno>
 
   "name" is the name of an example
   "type" is the source code type, which can be translated into or from
@@ -43,20 +44,27 @@ For copyright information, please see omp_copyright.txt.
           "rt-error" is for a case where compilation may be successful, 
           but the code contains potential runtime issues (such as race condition).
           Alternative would be to just use "conforming" or "non-conforming".
+  "version" indicates features for a specific OpenMP version, such as "omp_5.0"
 
 3) LaTeX macros for examples
 
 - Source code with language h-rules
-   \cexample{<ename>}{<seq-no>}     % for C/C++ examples
-   \cppexample{<ename>}{<seq-no>}   % for C++ examples
-   \fexample{<ename>}{<seq-no>}     % for fixed-form Fortran examples
-   \ffreeexample{<ename>}{<seq-no>} % for free-form Fortran examples
+   \cexample[<verno>]{<ename>}{<seq-no>}     % for C/C++ examples
+   \cppexample[<verno>]{<ename>}{<seq-no>}   % for C++ examples
+   \fexample[<verno>]{<ename>}{<seq-no>}     % for fixed-form Fortran examples
+   \ffreeexample[<verno>]{<ename>}{<seq-no>} % for free-form Fortran examples
 
 - Source code without language h-rules
-   \cnexample{<ename>}{<seq-no>}
-   \cppnexample{<ename>}{<seq-no>}
-   \fnexample{<ename>}{<seq-no>}
-   \ffreenexample{<ename>}{<seq-no>}
+   \cnexample[<verno>]{<ename>}{<seq-no>}
+   \cppnexample[<verno>]{<ename>}{<seq-no>}
+   \fnexample[<verno>]{<ename>}{<seq-no>}
+   \ffreenexample[<verno>]{<ename>}{<seq-no>}
+
+   Optional <verno> can be supplied in a macro to include a specific OpenMP
+   version in the example header.  This option also suggests one additional
+   tag (@@version) line is included in the corresponding source code. 
+   If this is not the case (i.e., no @@version tag line), one needs to 
+   prefix <verno> with an underscore '_' symbol in the macro.
 
 - Language h-rules
    \cspecificstart, \cspecificend

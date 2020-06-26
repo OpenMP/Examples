@@ -1,9 +1,10 @@
 /*
 * @@name: metadirective.1c
 * @@type: C
-* @@compilable: yes, omp_5.0
+* @@compilable: yes
 * @@linkable: yes
 * @@expect: success
+* @@version: omp_5.0
 */
 
 #define N 100

@@ -4,6 +4,7 @@
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
+* @@version:	omp_4.5
 */
 float foo(int i, int j);
 float bar(float a, float b, float c);

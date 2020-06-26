@@ -1,8 +1,10 @@
 ! @@name: affinity_display.2.f90
 ! @@type: F-free
-! @@compilable: yes, omp_5.0
+! @@compilable: yes
 ! @@linkable: yes
 ! @@expect: success
+! @@version: omp_5.0
+
 program affinity_display
 
    use omp_lib
@@ -43,6 +45,7 @@ program affinity_display
 end program
 
 subroutine socket_work(socket_num, n_thrds)
+   use omp_lib
    implicit none
    integer :: socket_num, n_thrds
    character(len=0) :: null

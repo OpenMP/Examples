@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:	omp_3.0
        real*8 item(10000000)
 !$omp parallel
 !$omp single

@@ -3,6 +3,7 @@
 ! @@compilable: yes
 ! @@linkable:   no
 ! @@expect: success
+! @@version: omp_4.5
 subroutine parallel_work
     implicit none
     integer :: x1, x2

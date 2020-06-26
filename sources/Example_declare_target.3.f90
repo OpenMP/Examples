@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:	omp_4.0
 module my_arrays
 !$omp declare target (N, p, v1, v2)
 integer, parameter :: N=1000

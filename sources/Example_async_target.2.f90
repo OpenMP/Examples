@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:	omp_4.0
  subroutine mult(p,  N, idev)
    use omp_lib, ONLY: omp_is_initial_device
    real             :: p(N)

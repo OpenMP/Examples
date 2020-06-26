@@ -4,7 +4,10 @@
 * @@compilable:	no
 * @@linkable:	no
 * @@expect:	failure
+* @@version:	omp_5.0
 */
+extern int longTaskA(), shortTaskB();
+extern int shortTaskAC(int,int), longTaskBC(int,int);
 void foo (void)
 {
   int a, b, c;

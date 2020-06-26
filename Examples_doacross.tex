@@ -19,9 +19,9 @@ with an \code{ordered} clause without a parameter, on the loop directive,
 and a single \code{ordered} directive without the \code{depend} clause
 specified for the statement executing the \plc{bar} function.
 
-\cexample{doacross}{1}
+\cexample[4.5]{doacross}{1}
 
-\ffreeexample{doacross}{1}
+\ffreeexample[4.5]{doacross}{1}
 
 The following code is similar to the previous example but with 
 \plc{doacross loop nest} extended to two nested loops, \plc{i} and \plc{j}, 
@@ -37,9 +37,9 @@ Likewise, the \code{depend(sink:j-1,i)} and \code{depend(sink:j,i-1)} clauses
 in the Fortran code define cross-iteration dependences from iterations 
 (\plc{j-1, i}) and (\plc{j, i-1}) to iteration (\plc{j, i}).
 
-\cexample{doacross}{2}
+\cexample[4.5]{doacross}{2}
 
-\ffreeexample{doacross}{2}
+\ffreeexample[4.5]{doacross}{2}
 
 
 The following example shows the incorrect use of the \code{ordered} 
@@ -51,9 +51,9 @@ clauses define dependences on lexicographically later
 source iterations (\plc{i+1, j}) and (\plc{i, j+1}), which could cause 
 a deadlock as well since they may not start to execute until the current iteration completes.
 
-\cexample{doacross}{3}
+\cexample[4.5]{doacross}{3}
 
-\ffreeexample{doacross}{3}
+\ffreeexample[4.5]{doacross}{3}
 
 
 The following example illustrates the use of the \code{collapse} clause for
@@ -63,6 +63,6 @@ The example also shows a compliant usage of the dependence source
 directive placed before the corresponding sink directive.
 Checking the completion of computation from previous iterations at the sink point can occur after the source statement.
 
-\cexample{doacross}{4}
+\cexample[4.5]{doacross}{4}
 
-\ffreeexample{doacross}{4}
+\ffreeexample[4.5]{doacross}{4}

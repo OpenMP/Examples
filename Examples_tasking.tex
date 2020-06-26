@@ -9,17 +9,17 @@ note that the tasks will be executed in no specified order because there are no
 synchronization directives. Thus, assuming that the traversal will be done in post 
 order, as in the sequential code, is wrong.
 
-\cexample{tasking}{1}
+\cexample[3.0]{tasking}{1}
 
-\ffreeexample{tasking}{1}
+\ffreeexample[3.0]{tasking}{1}
 
 In the next example, we force a postorder traversal of the tree by adding a \code{taskwait} 
 directive. Now, we can safely assume that the left and right sons have been executed 
 before we process the current node.
 
-\cexample{tasking}{2}
+\cexample[3.0]{tasking}{2}
 
-\ffreeexample{tasking}{2}
+\ffreeexample[3.0]{tasking}{2}
 
 The following example demonstrates how to use the \code{task} construct to process 
 elements of a linked list in parallel. The thread executing the \code{single} 
@@ -28,18 +28,19 @@ in the current team. The pointer \plc{p} is \code{firstprivate} by default
 on the \code{task} construct so it is not necessary to specify it in a \code{firstprivate} 
 clause.
 
-\cexample{tasking}{3}
+\cexample[3.0]{tasking}{3}
 
-\ffreeexample{tasking}{3}
+\ffreeexample[3.0]{tasking}{3}
 
 The \code{fib()} function should be called from within a \code{parallel}  region 
 for the different specified tasks to be executed in parallel. Also, only one thread 
 of the \code{parallel} region should call \code{fib()} unless multiple concurrent 
 Fibonacci computations are desired. 
 
-\cexample{tasking}{4}
+\cexample[3.0]{tasking}{4}
 
-\fexample{tasking}{4}
+\fexample[3.0]{tasking}{4}
+\clearpage
 
 Note: There are more efficient algorithms for computing Fibonacci numbers. This 
 classic recursion algorithm is for illustrative purposes.
@@ -52,9 +53,9 @@ loop to suspend its task at the task scheduling point in the \code{task} directi
 and start executing unassigned tasks.  Once the number of unassigned tasks is sufficiently 
 low, the thread may resume execution of the task generating loop.
 
-\cexample{tasking}{5}
+\cexample[3.0]{tasking}{5}
 
-\fexample{tasking}{5}
+\fexample[3.0]{tasking}{5}
 
 The following example is the same as the previous one, except that the tasks are 
 generated in an untied task. While generating the tasks, the implementation may 
@@ -69,9 +70,9 @@ to resume the task generating loop. In the previous examples, the other threads
 would be forced to idle until the generating thread finishes its long task, since 
 the task generating loop was in a tied task.
 
-\cexample{tasking}{6}
+\cexample[3.0]{tasking}{6}
 
-\fexample{tasking}{6}
+\fexample[3.0]{tasking}{6}
 
 The following two examples demonstrate how the scheduling rules illustrated in 
 Section 2.11.3 of the OpenMP 4.0 specification affect the usage of 
@@ -86,20 +87,20 @@ both of the task regions that modify \code{tp}. The parts of these task regions
 in which \code{tp} is modified may be executed in any order so the resulting 
 value of \code{var} can be either 1 or 2.
 
-\cexample{tasking}{7}
+\cexample[3.0]{tasking}{7}
 
 
-\fexample{tasking}{7}
+\fexample[3.0]{tasking}{7}
 
 In this example, scheduling constraints prohibit a thread in the team from executing 
 a new task that modifies \code{tp}  while another such task region tied to the 
 same thread is suspended. Therefore, the value written will persist across the 
 task scheduling point.
 
-\cexample{tasking}{8}
+\cexample[3.0]{tasking}{8}
 
 
-\fexample{tasking}{8}
+\fexample[3.0]{tasking}{8}
 
 The following two examples demonstrate how the scheduling rules illustrated in 
 Section 2.11.3 of the OpenMP 4.0 specification affect the usage of locks 
@@ -112,20 +113,20 @@ it encounters the task scheduling point at task 3, it could suspend task 1 and
 begin task 2 which will result in a deadlock when it tries to enter critical region 
 1.
 
-\cexample{tasking}{9}
+\cexample[3.0]{tasking}{9}
 
 
-\fexample{tasking}{9}
+\fexample[3.0]{tasking}{9}
 
 In the following example, \code{lock} is held across a task scheduling point. 
  However, according to the scheduling restrictions, the executing thread can't 
 begin executing one of the non-descendant tasks that also acquires \code{lock} before 
 the task region is complete.  Therefore, no deadlock is possible.
 
-\cexample{tasking}{10}
+\cexample[3.0]{tasking}{10}
 
-
-\ffreeexample{tasking}{10}
+\ffreeexample[3.0]{tasking}{10}
+\clearpage
 
 The following examples illustrate the use of the \code{mergeable} clause in the 
 \code{task} construct. In this first example, the \code{task} construct has 
@@ -139,9 +140,9 @@ outcome does not depend on whether or not the task is merged (that is, the task
 will always increment the same variable and will always compute the same value 
 for \code{x}).
 
-\cexample{tasking}{11}
+\cexample[3.1]{tasking}{11}
 
-\ffreeexample{tasking}{11}
+\ffreeexample[3.1]{tasking}{11}
 
 This second example shows an incorrect use of the \code{mergeable} clause. In 
 this example, the created task will access different instances of the variable 
@@ -150,9 +151,9 @@ it will access the same variable \code{x} if the task is merged. As a result,
 the behavior of the program is unspecified and it can print two different values 
 for \code{x} depending on the decisions taken by the implementation.
 
-\cexample{tasking}{12}
+\cexample[3.1]{tasking}{12}
 
-\ffreeexample{tasking}{12}
+\ffreeexample[3.1]{tasking}{12}
 
 The following example shows the use of the \code{final} clause and the \code{omp\_in\_final} 
 API call in a recursive binary search program. To reduce overhead, once a certain 
@@ -170,9 +171,9 @@ in the stack could also be avoided but it would make this example less clear. Th
 clause since all tasks created in a \code{final} task region are included tasks 
 that can be merged if the \code{mergeable} clause is present.
 
-\cexample{tasking}{13}
+\cexample[3.1]{tasking}{13}
 
-\ffreeexample{tasking}{13}
+\ffreeexample[3.1]{tasking}{13}
 
 The following example illustrates the difference between the \code{if}  and the 
 \code{final} clauses. The \code{if} clause has a local effect. In the first 
@@ -184,7 +185,7 @@ task itself. In the second nest of tasks, the nested tasks will be created as in
 tasks. Note also that the conditions for the \code{if} and \code{final} clauses 
 are usually the opposite.
 
-\cexample{tasking}{14}
+\cexample[3.1]{tasking}{14}
 
-\ffreeexample{tasking}{14}
+\ffreeexample[3.1]{tasking}{14}
 

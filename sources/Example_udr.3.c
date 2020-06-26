@@ -4,6 +4,7 @@
 * @@compilable:	yes
 * @@linkable:	yes
 * @@expect:	success
+* @@version:	omp_4.0
 */
 
 #include <stdio.h>
@@ -14,12 +15,9 @@ struct mx_s {
    int index;
 };
 
-
 /* prototype functions for combiner and initializer in
    the declare reduction */
-
 void mx_combine(struct mx_s *out, struct mx_s *in);
-
 void mx_init(struct mx_s *priv, struct mx_s *orig);
 
 #pragma omp declare reduction(maxloc: struct mx_s: \
@@ -34,13 +32,11 @@ void mx_combine(struct mx_s *out, struct mx_s *in)
    }
 }
 
-
 void mx_init(struct mx_s *priv, struct mx_s *orig)
 {
    priv->value = orig->value;
    priv->index = orig->index;
 }
-
 
 int main(void)
 {

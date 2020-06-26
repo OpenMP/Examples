@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:    omp_3.1
 recursive subroutine bin_search(pos, n, state)
   use omp_lib
   integer :: pos, n

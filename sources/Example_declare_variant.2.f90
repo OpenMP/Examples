@@ -1,8 +1,9 @@
 ! @@name: declare_variant.2f90
 ! @@type: F-free
-! @@compilable: yes, omp_5.0
+! @@compilable: yes
 ! @@linkable: yes
 ! @@expect: success
+! @@version: omp_5.0
 
 module subs
   use omp_lib

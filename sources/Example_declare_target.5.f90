@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:	omp_4.0
 module my_global_array
 !$omp declare target (N,Q)
 integer, parameter :: N=10000, M=1024

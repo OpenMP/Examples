@@ -4,6 +4,7 @@
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
+* @@version:	omp_3.0
 */
 #define LARGE_NUMBER 10000000
 double item[LARGE_NUMBER];

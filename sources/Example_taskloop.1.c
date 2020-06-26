@@ -4,6 +4,7 @@
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
+* @@version:	omp_4.5
 */
 void long_running_task(void);
 void loop_body(int i, int j);

@@ -4,6 +4,7 @@
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
+* @@version:	omp_3.1
 */
 #include <math.h>
 void reduction1(float *x, int *y, int n)

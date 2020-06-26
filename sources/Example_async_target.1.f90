@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
+! @@version:	omp_4.0
 module parameters
 integer, parameter :: N=1000000000, CHUNKSZ=1000000
 end module

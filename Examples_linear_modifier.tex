@@ -1,0 +1,76 @@
+%%% section
+\section{\code{ref}, \code{val}, \code{uval} Modifiers for \code{linear} Clause}
+\label{sec:linear_modifier}
+
+When generating vector functions from \code{declare}~\code{simd} directives, it is important for a compiler to know the proper types of function arguments in
+order to generate efficient codes.
+This is especially true for C++ reference types and Fortran arguments.
+
+In the following example, the function \plc{add\_one2} has a C++ reference
+parameter (or Fortran argument) \plc{p}.  Variable \plc{p} gets incremented by 1 in the function.
+The caller loop \plc{i} in the main program passes 
+a variable \plc{k} as a reference to the function \plc{add\_one2} call.   
+The \code{ref} modifier for the \code{linear} clause on the 
+\code{declare}~\code{simd} directive is used to annotate the 
+reference-type parameter \plc{p} to match the property of the variable 
+\plc{k} in the loop.  
+This use of reference type is equivalent to the second call to 
+\plc{add\_one2} with a direct passing of the array element \plc{a[i]}.  
+In the example, the preferred vector 
+length 8 is specified for both the caller loop and the callee function.
+
+When \code{linear(ref(p))} is applied to an argument passed by reference, 
+it tells the compiler that the addresses in its vector argument are consecutive,
+and so the compiler can generate a single vector load or store instead of 
+a gather or scatter. This allows more efficient SIMD code to be generated with 
+less source changes.
+
+\cppexample[4.5]{linear_modifier}{1}
+\ffreeexample[4.5]{linear_modifier}{1}
+\clearpage
+
+ 
+The following example is a variant of the above example. The function \plc{add\_one2} in the C++ code includes an additional C++ reference parameter \plc{i}. 
+The loop index \plc{i} of the caller loop \plc{i} in the main program 
+is passed as a reference to the function \plc{add\_one2} call.   
+The loop index \plc{i} has a uniform address with
+linear value of step 1 across SIMD lanes. 
+Thus, the \code{uval} modifier is used for the \code{linear} clause 
+to annotate the C++ reference-type parameter \plc{i} to match 
+the property of loop index \plc{i}.
+
+In the correponding Fortran code the arguments \plc{p} and
+\plc{i} in the routine \plc{add\_on2} are passed by references. 
+Similar modifiers are used for these variables in the \code{linear} clauses
+to match with the property at the caller loop in the main program.
+
+When \code{linear(uval(i))} is applied to an argument passed by reference, it 
+tells the compiler that its addresses in the vector argument are uniform 
+so that the compiler can generate a scalar load or scalar store and create 
+linear values. This allows more efficient SIMD code to be generated with 
+less source changes.
+
+\cppexample[4.5]{linear_modifier}{2}
+\ffreeexample[4.5]{linear_modifier}{2}
+
+In the following example, the function \plc{func} takes arrays \plc{x} and \plc{y} as arguments, and accesses the array elements referenced by 
+the index \plc{i}.
+The caller loop \plc{i} in the main program passes a linear copy of
+the variable \plc{k} to the function \plc{func}.
+The \code{val} modifier is used for the \code{linear} clause 
+in the \code{declare}~\code{simd} directive for the function
+\plc{func} to annotate argument \plc{i} to match the property of 
+the actual argument \plc{k} passed in the SIMD loop.
+Arrays \plc{x} and \plc{y} have uniform addresses across SIMD lanes.
+
+When \code{linear(val(i):1)} is applied to an argument, 
+it tells the compiler that its addresses in the vector argument may not be 
+consecutive, however, their values are linear (with stride 1 here). When the value of \plc{i} is used 
+in subscript of array references (e.g., \plc{x[i]}), the compiler can generate 
+a vector load or store instead of a gather or scatter. This allows more 
+efficient SIMD code to be generated with less source changes.
+
+\cexample[4.5]{linear_modifier}{3}
+\ffreeexample[4.5]{linear_modifier}{3}
+
+

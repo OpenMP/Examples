@@ -49,9 +49,9 @@
 \documentclass[10pt,letterpaper,twoside,makeidx,hidelinks]{scrreprt}
 
 % Text to appear in the footer on even-numbered pages:
-\newcommand{\VER}{5.0.0}
+\newcommand{\VER}{5.0.1}
 \newcommand{\PVER}{\VER{}}
-\newcommand{\VERDATE}{November 2019}
+\newcommand{\VERDATE}{June 2020}
 \newcommand{\footerText}{OpenMP Examples Version \PVER{} - \VERDATE}
 
 % Unified style sheet for OpenMP documents:
@@ -119,6 +119,7 @@
 
     \input{Chap_devices}
        \input{Examples_target}
+       \input{Examples_target_defaultmap}
        \input{Examples_target_pointer_mapping}
        \input{Examples_target_structure_mapping}
        \input{Examples_array_sections}
@@ -146,6 +147,8 @@
       % Forward Depend 370
       % simdlen  476
       % simd linear modifier 480
+       \input{Examples_linear_modifier}
+
 
     \input{Chap_synchronization}
        \input{Examples_critical}
@@ -182,6 +185,7 @@
        \input{Examples_reduction}
      %  User UDR  287
        \input{Examples_udr}
+       \input{Examples_scan}
        \input{Examples_copyin}
        \input{Examples_copyprivate}
        \input{Examples_cpp_reference}

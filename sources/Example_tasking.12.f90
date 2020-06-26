@@ -3,6 +3,7 @@
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	rt-error
+! @@version:    omp_3.1
 subroutine foo()
   integer :: x
   x = 2

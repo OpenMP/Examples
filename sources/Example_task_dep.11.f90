@@ -1,9 +1,9 @@
 ! @@name:	task_dep.11f90
 ! @@type:	F-free
-! @@compilable:	yes, omp_5.0
+! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
-
+! @@version:    omp_5.0
 subroutine set_an_element(e, val)
     implicit none
     integer :: e, val
@@ -29,7 +29,7 @@ subroutine parallel_computation(n)
     !$omp single
         do i=1, n
             !$omp task depend(out: v(i))
-                 all set_an_element(v(i), i)
+                 call set_an_element(v(i), i)
             !$omp end task
         enddo
 
