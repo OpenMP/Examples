@@ -18,7 +18,7 @@ int main()
    float s=2.0;
 
 omp_memspace_handle_t  xy_memspace = omp_default_mem_space;
-omp_alloctrait_t       xy_traits[1]={omp_atk_alignment, 64};
+omp_alloctrait_t       xy_traits[1]={OMP_ATK_ALIGNMENT, 64};
 omp_allocator_handle_t xy_alloc    = omp_init_allocator(xy_memspace,1,xy_traits);
 
 
