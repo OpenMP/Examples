@@ -1,0 +1,6 @@
+# Book settings
+
+title: OpenMP Application Programming Interface Examples
+logo: logo.png
+execute:
+  execute_notebooks: "off"
