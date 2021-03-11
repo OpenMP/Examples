@@ -1,0 +1,6 @@
+jupyter-book
+matplotlib
+numpy
+pandas
+sklearn
+jupyter-native-kernel
