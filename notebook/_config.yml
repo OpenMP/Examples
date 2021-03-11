@@ -1,6 +1,26 @@
 # Book settings
+# Learn more at https://jupyterbook.org/customize/config.html
 
 title: OpenMP Application Programming Interface Examples
+author: The OpenMP Community
 logo: logo.png
+
+# No re-execution of notebooks on each build.
+# See https://jupyterbook.org/content/execute.html
 execute:
-  execute_notebooks: "off"
+  execute_notebooks: no
+
+launch_buttons:
+  notebook_interface: "jupyterlab"
+
+# Information about where the book exists on the web
+repository:
+  url: https://github.com/passlab/Examples  # Online location of your book
+  path_to_book: notebook  # Optional path to your book, relative to the repository root
+  branch: main  # Which branch of the repository should be used when creating links (optional)
+
+# Add GitHub buttons to your book
+# See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
+html:
+  use_issues_button: true
+  use_repository_button: true
