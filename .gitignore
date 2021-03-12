@@ -130,3 +130,13 @@ dmypy.json
 
 # Jupyter Book build files
 _build/
+
+# Binder temporary files
+.bash_logout
+.bashrc
+.config/
+.jupyter-server-log.txt
+.jupyter/
+.local/
+.npm/
+.profile
