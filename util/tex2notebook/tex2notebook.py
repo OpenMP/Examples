@@ -235,6 +235,9 @@ def replace_code_mark(Str):
 # grab text of code
 def get_text(Str):
     codes = ''
+    lan = 'C'
+    if '.f' in Str:
+        lan = 'Fortran'
     f = open(Str)
     #f = open("tests.txt")
     line = f.readline()
@@ -259,7 +262,13 @@ def get_text(Str):
         line = f.readline()
     f.close()
     
-    return '\\n",\n' + \
+# add command line args (c code only for now Mar 2021)
+    if lan == 'C':
+        com = '//%compiler: clang\\n",\n "//%cflags: -fopenmp\\n",\n "\\n",\n'
+    else:
+        com = '\\n",\n'
+    
+    return com + \
            codes   + \
            '    "\\n'
 
