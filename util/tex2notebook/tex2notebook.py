@@ -4,6 +4,7 @@
 import re
 import os
 import sys
+import argparse
 
 # languageSet is the code blocks in the end of the .ipynb file to show the setting of kernels
 # Since all the OpenMP example source files are either C and Fortran. The correct setting should be
@@ -52,7 +53,7 @@ E2 = '"\n   ]\n  }\n'
 # mainly changing some .tex symbols to .ipynb symbols, or simple get rid of them
     
 # folder to store the contents
-contents_folder = 'contents'
+contents_folder = '../../notebook/contents/'
 
 # ilegal symbols
 def replace_underscore(Str):
@@ -228,7 +229,7 @@ def replace_href(Str):
 
 # cancel code marks
 def replace_code_mark(Str):
-    Str = re.sub('../sources/Example_', '', Str)
+    Str = re.sub('../../sources/Example_', '', Str)
     return Str
 
 # grab text of code
@@ -333,23 +334,23 @@ def replace_example(Str):
 
 # cancel the version number [0-9.0-9]
     Str = re.sub(r'\[\d\.\d\]', '', Str)
-    if (flg == "-use-load"):
-        return '%load ../sources/Example_' + Str
+    if (flg == 1):
+        return '//%load ../../sources/Example_' + Str
     else:
-        return get_text('../sources/Example_'+Str)
+        return get_text('../../sources/Example_'+Str)
     
-# parse user inputs: %load or not
+# parse user inputs: //%load or not
 def gen_name(Str):
-    if (flg == "-use-load"):
-        return '%load ../sources/Example_' + Str
+    if (flg == 1):
+        return '//%load ../../sources/Example_' + Str
     else:
-        return get_text('../sources/Example_'+Str)
+        return get_text('../../sources/Example_'+Str)
 
 # set the first line of _toc.yml file
 begin = '- file: intro\n'
 
 # abstract the contents from main.tex
-fileName = '../openmp-examples.tex'
+fileName = '../../openmp-examples.tex'
 
 def replace_dots(Str):
     if ('.' in Str):
@@ -389,15 +390,19 @@ def insert_sections(Str, pre, post):
         return Str
 
 
-# get a list of .text file that will be processed to generate notebook. 
-# The .tex files are located in parent folder
-path = '../'
+# inputs, .tex files
+path = '../../'
 dir = os.listdir(path)
+
 # receving inputs
-if len(sys.argv) == 2:
-    flg = sys.argv[1]
+parser = argparse.ArgumentParser()
+parser.add_argument("-useLoad", action='store_true', help = "Use //%load magic of Native kernel")
+args = parser.parse_args()
+
+if args.useLoad:
+    flg = 1
 else:
-    flg = "";
+    flg = 0
 
 mylists = []
 for i in dir:
@@ -413,11 +418,11 @@ CodeList = ['cex', 'cne', 'cpp', 'fex', 'fne', 'ffr', 'cfr']
 for FileName in mylists:
 #   print(FileName)
     FileLen = len(FileName)
-    input = '../' + FileName
+    input = path + FileName
     if not os.path.exists(contents_folder):
         os.makedirs(contents_folder)
 
-    output = contents_folder + '/' + FileName[:(FileLen - 4)] + '.ipynb'
+    output = contents_folder + FileName[:(FileLen - 4)] + '.ipynb'
     testfile = 'TEST' + FileName
 
     with open(input, 'r') as f:
@@ -505,7 +510,7 @@ os.remove(contents_folder + "/openmp-example.ipynb")
 # Generate _toc.yml
 # open main.tex file to get target lines
 f = open(fileName)
-g = open("_toc_inter.yml", 'w')
+g = open("../../notebook/_toc_inter.yml", 'w')
 g.write(begin)
 line = f.readline()
 while line:
@@ -523,8 +528,8 @@ f.close()
 # open the _toc.yml file to insert "sections"
 pre = 2
 post = 2
-f = open("_toc_inter.yml")
-g = open("_toc.yml", 'w')
+f = open("../../notebook/_toc_inter.yml")
+g = open("../../notebook/_toc.yml", 'w')
 line = f.readline()
 while line:
     pre = line.count(' ')
@@ -541,4 +546,4 @@ while line:
 
 f.close()
 g.close()
-os.remove("_toc_inter.yml")
+os.remove("../../notebook/_toc_inter.yml")
