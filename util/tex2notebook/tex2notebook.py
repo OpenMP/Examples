@@ -374,8 +374,8 @@ def check_content(Str):
         return ''
 
 # at mean time, the \input{} should be replaced by -file
-def replace_input(Str, contents_folder):
-    Str = re.sub(r'\ \ \ \ \\input\{', '- file: ' + contents_folder, Str)
+def replace_input(Str):
+    Str = re.sub(r'\ \ \ \ \\input\{', '- file: contents/', Str)
     Str = re.sub(r'\}', '', Str)
     #print(Str)
     return Str
@@ -538,7 +538,7 @@ while line:
     line = replace_comments(line)
     line = check_content(line)
     line = replace_dots(line)
-    line = replace_input(line, contents_folder)
+    line = replace_input(line)
     g.write(line)
     
     line = f.readline()
@@ -549,7 +549,7 @@ f.close()
 # open the _toc.yml file to insert "sections"
 pre = 2
 post = 2
-f = open( yml_folder + "_toc_inter.yml")
+f = open(yml_folder + "_toc_inter.yml")
 g = open(yml_folder + "_toc.yml", 'w')
 line = f.readline()
 while line:
