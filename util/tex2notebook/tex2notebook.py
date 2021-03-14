@@ -51,9 +51,6 @@ E2 = '"\n   ]\n  }\n'
 
 # Do some changes to the .tex files
 # mainly changing some .tex symbols to .ipynb symbols, or simple get rid of them
-    
-# folder to store the contents
-contents_folder = '../../notebook/contents/'
 
 # ilegal symbols
 def replace_underscore(Str):
@@ -355,12 +352,6 @@ def gen_name(Str):
     else:
         return get_text('../../sources/Example_'+Str)
 
-# set the first line of _toc.yml file
-begin = '- file: intro\n'
-
-# abstract the contents from main.tex
-fileName = '../../openmp-examples.tex'
-
 def replace_dots(Str):
     if ('.' in Str):
         return ''
@@ -383,8 +374,8 @@ def check_content(Str):
         return ''
 
 # at mean time, the \input{} should be replaced by -file
-def replace_input(Str):
-    Str = re.sub(r'\ \ \ \ \\input\{', '- file: ' + contents_folder + '/', Str)
+def replace_input(Str, contents_folder):
+    Str = re.sub(r'\ \ \ \ \\input\{', '- file: ' + contents_folder, Str)
     Str = re.sub(r'\}', '', Str)
     #print(Str)
     return Str
@@ -398,20 +389,35 @@ def insert_sections(Str, pre, post):
     else:
         return Str
 
-
-# inputs, .tex files
+# default inputs, .tex files
 path = '../../'
 dir = os.listdir(path)
+# default outputs, folder to store the contents
+contents_folder = '../../notebook'# /contents should be the next level path for .ipynb files as the inputs of jupyter book
 
 # receving inputs
 parser = argparse.ArgumentParser()
 parser.add_argument("-useLoad", action='store_true', help = "Use //%load magic of Native kernel")
+parser.add_argument("-i", help = "Path for .tex input files, if not specified, default path will be used")
+parser.add_argument("-o", help = "path for .ipynb output files, if not specified, default path will be used")
 args = parser.parse_args()
 
 if args.useLoad:
     flg = 1
 else:
     flg = 0
+
+if args.i:
+    path = args.i
+    
+if args.o:
+    contents_folder = args.o
+
+yml_folder = contents_folder + '/'
+contents_folder = contents_folder + '/contents/'
+#print(path)
+#print(contents_folder)
+#print(yml_folder)
 
 mylists = []
 for i in dir:
@@ -512,21 +518,27 @@ for FileName in mylists:
 f.close()
 
 # Title page and table-of-content *.tex files that are properly translated. 
-os.remove(contents_folder + "/openmp-examples.ipynb")
-os.remove(contents_folder + "/Title_Page.ipynb")
-os.remove(contents_folder + "/openmp-example.ipynb")
+os.remove(contents_folder + "openmp-examples.ipynb")
+os.remove(contents_folder + "Title_Page.ipynb")
+os.remove(contents_folder + "openmp-example.ipynb")
+
+
+# set the first line of _toc.yml file
+begin = '- file: intro\n'
+# abstract the contents from main.tex
+fileName = path + 'openmp-examples.tex'
 
 # Generate _toc.yml
 # open main.tex file to get target lines
 f = open(fileName)
-g = open("../../notebook/_toc_inter.yml", 'w')
+g = open(yml_folder +"_toc_inter.yml", 'w')
 g.write(begin)
 line = f.readline()
 while line:
     line = replace_comments(line)
     line = check_content(line)
     line = replace_dots(line)
-    line = replace_input(line)
+    line = replace_input(line, contents_folder)
     g.write(line)
     
     line = f.readline()
@@ -537,8 +549,8 @@ f.close()
 # open the _toc.yml file to insert "sections"
 pre = 2
 post = 2
-f = open("../../notebook/_toc_inter.yml")
-g = open("../../notebook/_toc.yml", 'w')
+f = open( yml_folder + "_toc_inter.yml")
+g = open(yml_folder + "_toc.yml", 'w')
 line = f.readline()
 while line:
     pre = line.count(' ')
@@ -555,4 +567,4 @@ while line:
 
 f.close()
 g.close()
-os.remove("../../notebook/_toc_inter.yml")
+os.remove(yml_folder + "_toc_inter.yml")
