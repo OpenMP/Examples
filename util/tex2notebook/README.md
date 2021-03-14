@@ -1,9 +1,9 @@
 ## Python Script for OpenMP Application Programming Interface Examples-version 5.0.1-June 2020
 The tex2notebook.py script generates Jupyter Notebooks from the tex files of the OpenMP document and thus build a Jupyter Book. 
 
-### Pre-requests
+### Prerequisite
 ```
-python3.6/3.8
+Python 3.6+
 Jupyter-notebook/Jupyter-lab
 Jupyter-Book
 Web browser
@@ -11,32 +11,33 @@ Web browser
 
 ### Build Jupyter Book
 ```
-$ cd examples-internal-main
-$ cd notebook
-$ mkdir contents
+cd util/tex2notebook
 ```
 
-There are 2 choices for users, considering whether the users want the content of the source code file to be included in Jupyter notebook cells or use the `%load` magic.
+There are 2 choices for users, considering whether the users want the content of the source code file to be included in Jupyter notebook cells or use the `//%load` magic.
 
 ```
-$ python tex2notebook.py
+python tex2notebook.py
 ```
 
 This is default choice, and the content of code are copied to the cells directly.
 
 ```
-$ python tex2notebook.py -use-load
+python tex2notebook.py -useLoad
 ```
-The `-use-load` flag is for using `%load` magic with the file name in the code cell so users can click to load the file content into the cell. 
+Furthermore, users may specify the location of input `.tex` files, and output `.ipynb` files along with `_toc.yml` file by using `-i <path to inputfile>` and `-o <path to output file>`.
+If they are not specified, default paths are used.
+The `-useLoad` flag is for using `//%load` magic with the file name in the code cell so users can click to load the file content into the cell. 
 Plus, for both choices, filename, code language version, and OpenMP version is shown in the comments of corresponding code pieces.
 
 ```
-$ jb build --path-output ../docs .
+cd ../../notebook
+jb build --path-output ../docs .
 ```
 This is used for building Jupyter Book
 
 ```
-$ rm -rf ./contents ./_build _toc.yml
+rm -rf ./contents ../docs _toc.yml
 ```
 This is used to clean all the generated materials.
 
@@ -53,21 +54,32 @@ This is used to clean all the generated materials.
    -- requirement.txt
    -- intro.md
    -- logo.jpg
-   -- PythonScript
-   -- Makefile
-   -- README.md
 -- source/           <= C/C++ and Fortran codes
    -- *.c
    -- *.cpp
    -- *.f
    -- *.f90
+-- util
+   -- tex2notebook
+      -- Python Script
+      -- Makefile
+      -- README.md
 -- *.tex             <= TeX files 
 ```
 
-### Other Details 
+### Other Details
+We have a `Makefile` for user to build Jupyter Notebooks and toc file.
+Not only for generating Jupyter Notebooks, a `notebook` target is provided to check whether the generated Jupyter Notebooks are valid.
+
+```
+make notebook
+```
+It trys to build Jyputer Book in a temporary folder from the generated notebooks.
+If there are no warnings, the generated notebooks replace the previous version in `/notebook`, otherwise users are notified to run the python script manually and review the warnings.
+
 All the notebooks will be generated under the `contents` folder. The title page is replaced by the welcome page and TOC page are transformed to `_toc.yml` for Jyputer Book. The TOC file is mainly come from `openmp-examples.tex` which is the backbone of the whole book.
 
-Each tex file is processed by the script which generates a single Jupyter notebook file. The textual content of the tex file is converted to markdown-formatted content enclosed in a notebook cell. A reference to a program source file (example source code in the example document) that appears in the tex file is converted to a cell that uses Jupyter `%load` magic, e.g. `%load ../sources/Example_parallel.1.c` such that running the cell causes loading the content of the file and then replacing the cell with the content. `%load` recognizes both absolute path and related path. Now the default one is `../sources/Example_*`.
+Each tex file is processed by the script which generates a single Jupyter notebook file. The textual content of the tex file is converted to markdown-formatted content enclosed in a notebook cell. A reference to a program source file (example source code in the example document) that appears in the tex file is converted to a cell that uses Jupyter `//%load` magic, e.g. `//%load ../sources/Example_parallel.1.c` such that running the cell causes loading the content of the file and then replacing the cell with the content. `//%load` recognizes both absolute path and related path. Now the default one is `../sources/Example_*`.
 
 Since all the OpenMP example source files are either C/C++ and Fortran. The correct setting for the notebook kernel
 should be a kernel that can recognize C/C++ and Fortran.
