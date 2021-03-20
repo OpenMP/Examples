@@ -1,5 +1,4 @@
 - file: intro
-- file: contents/Title_Page
 - file: contents/Foreword_Chapt
 - file: contents/Introduction_Chapt
 - file: contents/Examples_Chapt
@@ -96,6 +95,8 @@
    - file: contents/Examples_copyin
    - file: contents/Examples_copyprivate
    - file: contents/Examples_cpp_reference
+     sections:
+        - file: contents/Examples_associate  
 - file: contents/Chap_memory_model
   sections:
    - file: contents/Examples_mem_model
