@@ -5,12 +5,7 @@ on:
   push:
     branches:
     - main
-    # If your git repository has the Jupyter Book within some-subfolder next to
-    # unrelated files, you can make this run only if a file within that specific
-    # folder has been modified.
-    #
-    # paths:
-    # - some-subfolder/**
+
 
 # This job installs dependencies, build the book, and pushes it to `gh-pages`
 jobs:
@@ -28,6 +23,21 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r ./notebook/requirements.txt
+
+    - name: Regenerate notebooks
+      run: |
+        rm -rf notebook/contents notebook/_toc.yml
+        cd util/tex2notebook
+        python tex2notebook.py
+        cd -
+
+    - name: Commit the latest notebooks
+      uses: EndBug/add-and-commit@v7
+      with:
+        author_name: github-actions
+        author_email: 41898282+github-actions[bot]@users.noreply.github.com
+        message: 'Regenerate notebooks by GitHub Actions'
+        add: 'notebook'
 
     # Build the book
     - name: Build the book
