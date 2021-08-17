@@ -1,0 +1,33 @@
+\pagebreak
+\section{Fortran \code{ASSOCIATE} Construct}
+\fortranspecificstart
+\label{sec:associate}
+
+The following is an invalid example of specifying an associate name on a data-sharing attribute 
+clause. The constraint in the Data Sharing Attribute Rules section in the OpenMP 
+4.0 API Specifications states that an associate name preserves the association 
+with the selector established at the \code{ASSOCIATE} statement. The associate 
+name \plc{b} is associated with the shared variable \plc{a}. With the predetermined data-sharing 
+attribute rule, the associate name \plc{b} is not allowed to be specified on the \code{private} 
+clause.
+
+\fnexample[4.0]{associate}{1}
+
+In next example, within the \code{parallel} construct, the association name \plc{thread\_id} 
+is associated with the private copy of \plc{i}. The print statement should output the 
+unique thread number.
+
+\fnexample[4.0]{associate}{2}
+
+The following example illustrates the effect of specifying a selector name on a data-sharing 
+attribute clause. The associate name \plc{u} is associated with \plc{v} and the variable \plc{v} 
+is specified on the \code{private} clause of the \code{parallel} construct. 
+The construct association is established prior to the \code{parallel} region. 
+The association between \plc{u} and the original \plc{v} is retained (see the Data Sharing 
+Attribute Rules section in the OpenMP 4.0 API Specifications). Inside the \code{parallel} 
+region, \plc{v} has the value of -1 and \plc{u} has the value of the original \plc{v}.
+
+\pagebreak
+\ffreenexample[4.0]{associate}{3}
+\fortranspecificend
+

@@ -1,5 +1,4 @@
-\pagebreak
-\chapter{Data Environment}
+\cchapter{Data Environment}{data_environment}
 \label{chap:data_environment}
 The OpenMP \plc{data environment} contains data attributes of variables and
 objects.  Many constructs (such as \code{parallel}, \code{simd}, \code{task}) 
@@ -73,3 +72,22 @@ it has been referenced (+1 on entry and -1 on exited) in nested (structured)
 map regions and/or accumulative (unstructured) mappings, determines the operation.
 Details of the \code{map} clause and reference count operation are specified 
 in the \plc{map Clause} subsection of the OpenMP Specifications document.
+
+
+%===== Examples Sections =====
+\input{data_environment/threadprivate}
+\input{data_environment/default_none}
+\input{data_environment/private}
+\input{data_environment/fort_loopvar}
+\input{data_environment/fort_sp_common}
+\input{data_environment/fort_sa_private}
+\input{data_environment/carrays_fpriv}
+\input{data_environment/lastprivate}
+\input{data_environment/reduction}
+\input{data_environment/udr}
+\input{data_environment/scan}
+\input{data_environment/copyin}
+\input{data_environment/copyprivate}
+\input{data_environment/cpp_reference}
+\input{data_environment/associate}
+

@@ -1,0 +1,19 @@
+\cchapter{OMPT Interface}{ompt_interface}
+\label{chap:ompt_interface}
+OMPT defines mechanisms and an API for interfacing with tools in the OpenMP program.
+
+The OMPT API provides the following functionality:
+\begin{itemize}
+  \addtolength{\itemindent}{1cm}
+  \item  examines the state associated with an OpenMP thread
+  \item  interprets the call stack of an OpenMP thread
+  \item  receives notification about OpenMP events
+  \item  traces activity on OpenMP target devices
+  \item  assesses implementation-dependent details
+  \item  controls a tool from an OpenMP application
+\end{itemize}
+
+The following sections will illustrate basic mechanisms and operations of the OMPT API.
+
+
+\input{ompt_interface/ompt_start}

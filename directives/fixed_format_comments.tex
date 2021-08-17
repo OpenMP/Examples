@@ -1,0 +1,17 @@
+%\pagebreak
+\section{Fortran Comments (Fixed Source Form)}
+\label{sec:fortran_fixed_format_comments}
+
+OpenMP directives in Fortran codes with fixed source form are specified as comments with one of the
+\code{!\$omp}, \code{c\$omp}, and \code{*\$omp} sentinels, followed by a
+directive name, and required and optional clauses.  The sentinel must begin in column 1.
+
+In the example below the first directive (DIR 1) specifies the %parallel work-sharing 
+\code{parallel}~\code{do} combined directive, with a \code{num\_threads} clause, and a comment.
+The second directive (DIR 2) shows the same directive split
+across two lines. The next nested directives (DIR 3 and 4) show the previous combined directive as
+two separate directives. 
+Here, an \code{end} directive (\code{end}~\code{parallel}) must be specified to demarcate the range (region)
+of the \code{parallel} directive.
+
+\fexample{directive_syntax_F_fixed_comment}{1}

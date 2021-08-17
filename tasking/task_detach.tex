@@ -1,0 +1,60 @@
+\pagebreak
+\section{Task Detachment}
+\label{sec:task_detachment}
+
+% if used, then generated task must be completed.
+% No definition of a detachable task
+
+The \code{detach} clause on a \code{task} construct provides a mechanism for an asynchronous
+routine to be called within a task block, and for the routine's
+callback to signal completion to the OpenMP runtime, through an 
+event fulfillment, triggered by a call to the \code{omp\_fulfill\_event} routine.
+When a \code{detach} clause is used on a task construct,
+completion of the \emph{detachable} task occurs when the task's structured
+block is completed AND an \plc{allow-completion} event is
+fulfilled by a call to the \code{omp\_fulfill\_event} 
+routine with the \plc{event-handle} argument.
+
+The first example illustrates the basic components used in a detachable task.
+The second example is a program that executes asynchronous IO, and illustrates 
+methods that are also inherent in asynchronous messaging within MPI and asynchronous commands in 
+streams within GPU codes.
+Interfaces to asynchronous operations found in IO, MPI and GPU parallel computing platforms
+and their programming models are not standardized. 
+
+-------------------------
+
+The first example creates a detachable task
+that executes the asynchronous \plc{async\_work} routine,
+passing the \plc{omp\_fulfill\_event} function and the (firstprivate) event handle
+to the function. Here, the \code{omp\_fulfill\_event} function is
+the ``callback'' function to be executed at the end of the \plc{async\_work} function's
+asynchronous operations,
+with the associated data, \plc{event}. 
+
+\cexample[5.0]{task_detach}{1}
+
+\ffreeexample[5.0]{task_detach}{1}
+\clearpage
+
+%ASYNCHRONOUS IO
+
+In the following example, text data is written asynchronously to the file \plc{async\_data},
+using POSIX asynchronous IO (aio). An aio ``control block'', \plc{cb}, is set up to
+send a signal when IO is complete, and the \plc{sigaction} function registers
+the signal action, a callback to \plc{callback\_aioSigHandler}.
+
+The first task (TASK1) starts the asynchronous IO and runs as a detachable task.
+The second and third tasks (TASK2 and TASK3) perform synchronous IO to stdout with print statements.
+The difference between the two types of tasks is that the thread for TASK1 is freed for 
+other execution within the parallel region, while the threads for TASK2 and TASK3 wait
+on the (synchronous) IO to complete, and cannot perform other work while the 
+operating system is performing the synchronous IO. 
+The \code{if} clause ensures that the detachable task is launched 
+and the call to the \splc{aio_write} function returns
+before TASK2 and TASK3 are generated (while the async IO occurs in the ``background'' and eventually
+executes the callback function).  The barrier at the end of the parallel region ensures that the
+detachable task has completed.
+
+\cexample[5.0]{task_detach}{2}
+

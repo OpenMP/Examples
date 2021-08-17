@@ -1,0 +1,28 @@
+%\pagebreak
+\section{Fortran Comments (Free Source Form)}
+\label{sec:fortran_free_format_comments}
+
+OpenMP directives in Fortran codes with free source form are specified as comments
+that use the \code{!\$omp} sentinel, followed by the
+directive name, and required and optional clauses.  Lines are continued with an ending ampersand (\code{\&}),
+and the continued line begins with \code{!\$omp} or \code{!\$omp\&}. Comments may appear on the
+same line as the directive.  Directives are case insensitive.
+
+In the example below the first directive (DIR 1) specifies the %parallel work-sharing 
+\code{parallel}~\code{do} combined directive, with a \code{num\_threads} clause, and a comment.
+The second directive (DIR 2) shows the same directive split across two lines. 
+The next nested directives (DIR 3 and 4) show the previous combined directive as
+two separate directives. 
+Here, an \code{end} directive (\code{end}~\code{parallel}) must be specified to demarcate the range (region)
+of the \code{parallel} directive. 
+
+\ffreeexample{directive_syntax_F_free_comment}{1}
+
+As of OpenMP 5.1, \code{block} and \code{end}~\code{block} statements can be used to designate 
+a structured block for an OpenMP region, and any paired OpenMP \code{end} directive becomes optional,
+as shown in the next example.  Note, the variables \plc{i} and \plc{thrd\_no} are declared within the 
+block structure and are hence private.
+It was necessary to explicitly declare the \plc{i} variable, due to the \code{implicit none} statement; 
+it could have also been declared outside the structured block.
+
+\ffreeexample[5.1]{directive_syntax_F_block}{1}

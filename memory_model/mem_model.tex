@@ -1,0 +1,54 @@
+
+\pagebreak
+\section{OpenMP Memory Model}
+\label{sec:mem_model}
+
+The following examples illustrate two major concerns for concurrent thread
+execution: ordering of thread execution and memory accesses that may or may not
+lead to race conditions.
+
+In the following example, at Print 1, the value of \code{xval} could be either 2
+or 5, depending on the timing of the threads. The \code{atomic} directives are
+necessary for the accesses to \code{x} by threads 1 and 2 to avoid a data race.
+If the atomic write completes before the atomic read, thread 1 is guaranteed to
+see 5 in \code{xval}. Otherwise, thread 1 is guaranteed to see 2 in \code{xval}.
+
+The barrier after Print 1 contains implicit flushes on all threads, as well as
+a thread synchronization, so the programmer is guaranteed that the value 5 will
+be printed by both Print 2 and Print 3. Since neither Print 2 or Print 3 are modifying
+\code{x}, they may concurrently access \code{x} without requiring \code{atomic}
+directives to avoid a data race.
+
+\cexample[3.1]{mem_model}{1}
+
+\ffreeexample[3.1]{mem_model}{1}
+
+\pagebreak
+The following example demonstrates why synchronization is difficult to perform
+correctly through variables. The write to \code{flag} on thread 0 and the read
+from \code{flag} in the loop on thread 1 must be atomic to avoid a data race.
+When thread 1 breaks out of the loop, \code{flag} will have the value of 1.
+However, \code{data} will still be undefined at the first print statement. Only
+after the flush of both \code{flag} and \code{data} after the first print
+statement will \code{data} have the well-defined value of 42.
+
+\cexample[3.1]{mem_model}{2}
+
+\fexample[3.1]{mem_model}{2}
+
+\pagebreak
+The next example demonstrates why synchronization is difficult to perform
+correctly through variables. As in the preceding example, the updates to
+\code{flag} and the reading of \code{flag} in the loops on threads 1 and 2 are
+performed atomically to avoid data races on \code{flag}. However, the code still
+contains data race due to the incorrect use of ``flush with a list'' after the
+assignment to \code{data1} on thread 1. By not including \code{flag} in the
+flush-set of that \code{flush} directive, the assignment can be reordered with
+respect to the subsequent atomic update to \code{flag}. Consequentially,
+\code{data1} is undefined at the print statement on thread 2.
+
+\cexample[3.1]{mem_model}{3}
+
+\fexample[3.1]{mem_model}{3}
+
+

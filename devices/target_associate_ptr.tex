@@ -1,0 +1,36 @@
+\newpage
+\section{Device and Host Memory Association}
+\label{sec:target_associate_ptr}
+
+The association of device memory with host memory
+can be established by calling the \scode{omp_target_associate_ptr} 
+API routine as part of the mapping.
+The following example shows the use of this routine
+to associate device memory of size \splc{CS}, 
+allocated by the \scode{omp_target_alloc} routine and
+pointed to by the device pointer \splc{dev_ptr}, 
+with a chunk of the host array \splc{arr} starting at index \splc{ioff}.
+In Fortran, the intrinsic function \scode{c_loc} is called
+to obtain the corresponding C pointer (\splc{h_ptr}) of \splc{arr(ioff)} 
+for use in the call to the API routine.
+
+Since the reference count of the resulting mapping is infinite,
+it is necessary to use the \scode{target}~\scode{update} directive (or
+the \scode{always} modifier in a \scode{map} clause) to accomplish a
+data transfer between host and device.
+The explicit mapping of the array section \splc{arr[ioff:CS]} 
+(or \splc{arr(ioff:ioff+CS-1)} in Fortran) on the \scode{target}
+construct ensures that the allocated and associated device memory is used 
+when referencing the array \splc{arr} in the \scode{target} region.
+The device pointer \splc{dev_ptr} cannot be accessed directly 
+after a call to the \scode{omp_target_associate_ptr} routine.
+
+After the \scode{target} region, the device pointer is disassociated from
+the current chunk of the host memory by calling the \scode{omp_target_disassociate_ptr} routine before working on the next chunk.
+The device memory is freed by calling the \scode{omp_target_free}
+routine at the end.
+
+\cexample[4.5]{target_associate_ptr}{1}
+
+\ffreeexample[5.1]{target_associate_ptr}{1}
+

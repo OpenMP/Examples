@@ -1,0 +1,61 @@
+\pagebreak
+\section{Fortran Allocatable Array Mapping}
+\label{sec:fort_allocatable_array_mapping}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The following examples illustrate the use of Fortran allocatable arrays in \code{target} regions.
+
+In the first example,  allocatable variables (\plc{a} and \plc{b}) are first allocated
+on the host, and then mapped onto a device in the Target 1 and 2 sections, respectively.
+For \plc{a} the map is implicit and for \plc{b} an explicit map is used.
+Both are mapped with the default \code{tofrom} map type.
+The user-level behavior is similar to non-allocatable arrays.
+However, the mapping operations include creation of the allocatable variable,
+creation of the allocated storage, setting the allocation status to allocated,
+and making sure the allocatable variable references the storage.
+
+In Target 3 and 4 sections, allocatable variables are mapped in two
+different ways before they are allocated on the host and subsequently used on the device.
+In one case, a \code{target}~\code{data} construct creates an enclosing region for
+the allocatable variable to persist, and in the other case a
+\code{declare}~\code{target} directive maps the allocation variable for all device executions.
+In both cases the new array storage is mapped \code{tofrom} with the \code{always} modifier.
+An explicit map is used here with an \code{always} modifier to ensure that the allocatable
+variable status is updated on the device.
+
+Note: OpenMP 5.1 specifies that an \code{always} map modifier guarantees the
+allocation status update for an existing allocatable variable on the device.
+In OpenMP 6.0, this restriction may be relaxed to also guarantee updates
+without the \code{always} modifier.
+
+In Target 3 and 4 sections, the behavior of an allocatable variable is very
+much like a Fortran pointer, in which a pointer can be mapped to a device with an associated
+or disassociated status, and associated storage can be mapped and attached as needed.
+For allocatable variables, the update of the allocation status to allocated (allowing
+reference to allocated storage) on the device, is similar to pointer attachment.
+
+
+\ffreeexample[5.1]{target_fort_allocatable_map}{1}
+
+Once an allocatable variable have been allocated on the host,
+its allocation status may not be changed in a \code{target} region, either
+explicitly or implicitly. The following example illustrates typical
+operations on allocatable variables that violate this restriction.
+Note, an assignment that reshapes or reassigns (causing a deallocation
+and allocation) in a \code{target} region is not compliant.
+
+\ffreeexample[5.1]{target_fort_allocatable_map}{2}
+
+The next example illustrates a corner case of this restriction (allocatable status
+change in a \code{target} region).
+Two allocatable arrays are passed to a subroutine within a \code{target}
+region. The dummy-variable arrays are declared allocatable.
+Also, the \plc{ain} variable has the \plc{intent(in)} attribute, and \plc{bout}
+has the \plc{intent(out)} attribute. 
+For the dummy argument with the attributes \plc{allocatable} and \plc{intent(out)}, 
+the compiler will deallocate the associated actual argument when the subroutine is invoked. 
+(However, the allocation on procedure entry can be avoided by specifying the intent 
+as \plc{intent(inout)}, making the intended use conforming.)
+
+\ffreeexample[5.1]{target_fort_allocatable_map}{3}

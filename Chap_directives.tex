@@ -1,0 +1,45 @@
+\cchapter{OpenMP Directive Syntax}{directives}
+\label{chap:directive_syntax}
+
+OpenMP \emph{directives} use base-language mechanisms to specify OpenMP program behavior.
+In C code, the directives are formed exclusively with pragmas, whereas in C++
+code, directives are formed from either pragmas or attributes.
+Fortran directives are formed with comments in free form and fixed form sources (codes).
+All of these mechanism allow the compilation to ignore the OpenMP directives if
+OpenMP is not supported or enabled.
+
+
+The OpenMP directive is a combination of the base-language mechanism and a \plc{directive-specification},
+as shown below. The \plc{directive-specification} consists
+of the \plc{directive-name} which may seldomly have arguments, 
+followed by optional \plc{clauses}. Full details of the syntax can be found in the OpenMP Specification.
+Illustrations of the syntax is given in the examples.
+
+The formats for combining a base-language mechanism and a \plc{directive-specification} are:
+
+C/C++ pragmas
+\begin{indentedcodelist}
+\code{\#pragma omp} \plc{directive-specification}
+\end{indentedcodelist}
+
+C++ attributes
+\begin{indentedcodelist}
+\code{[[omp :: directive(} \plc{directive-specification} \code{)]]}
+\code{[[using omp : directive(} \plc{directive-specification} \code{)]]}
+\end{indentedcodelist}
+
+Fortran comments
+\begin{indentedcodelist}
+\code{!\$omp} \plc{directive-specification}
+\end{indentedcodelist}
+
+where \code{c\$omp} and \code{*\$omp} may be used in Fortran fixed form sources.
+
+
+%===== Examples Sections =====
+\input{directives/pragmas}
+\input{directives/attributes}
+\input{directives/fixed_format_comments}
+\input{directives/free_format_comments}
+
+

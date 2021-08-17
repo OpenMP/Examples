@@ -1,0 +1,359 @@
+\pagebreak
+
+\section{Reduction}
+\label{sec:reduction}
+
+This section covers ways to perform reductions in parallel, task, taskloop, and SIMD regions.
+
+\subsection{\code{reduction} Clause}
+\label{subsec:reduction}
+
+The following example demonstrates the \code{reduction} clause; note that some 
+reductions can be expressed in the loop in several ways, as shown for the \code{max} 
+and \code{min} reductions below:
+
+\cexample[3.1]{reduction}{1}
+
+\pagebreak
+
+\ffreeexample{reduction}{1}
+
+A common implementation of the preceding example is to treat it as if it had been 
+written as follows:
+
+\cexample{reduction}{2}
+
+\fortranspecificstart
+\ffreenexample{reduction}{2}
+
+The following program is non-conforming because the reduction is on the 
+\emph{intrinsic procedure name} \code{MAX} but that name has been redefined to be the variable 
+named \code{MAX}.
+
+\ffreenexample{reduction}{3}
+% blue line floater at top of this page for "Fortran, cont."
+\begin{figure}[t!]
+\linewitharrows{-1}{dashed}{Fortran (cont.)}{8em}
+\end{figure}
+
+The following conforming program performs the reduction using the 
+\emph{intrinsic procedure name} \code{MAX} even though the intrinsic \code{MAX} has been renamed 
+to \code{REN}.
+
+\ffreenexample{reduction}{4}
+
+The following conforming program performs the reduction using 
+\plc{intrinsic procedure name} \code{MAX} even though the intrinsic \code{MAX} has been renamed 
+to \code{MIN}.
+
+\ffreenexample{reduction}{5}
+\fortranspecificend
+
+%\pagebreak
+The following example is non-conforming because the initialization (\code{a = 
+0}) of the original list item \code{a} is not synchronized with the update of 
+\code{a} as a result of the reduction computation in the \code{for} loop. Therefore, 
+the example may print an incorrect value for \code{a}.
+
+To avoid this problem, the initialization of the original list item \code{a} 
+should complete before any update of \code{a} as a result of the \code{reduction} 
+clause. This can be achieved by adding an explicit barrier after the assignment 
+\code{a = 0}, or by enclosing the assignment \code{a = 0} in a \code{single} 
+directive (which has an implied barrier), or by initializing \code{a} before 
+the start of the \code{parallel} region.
+
+\cexample[5.1]{reduction}{6}
+
+\fexample[5.1]{reduction}{6}[1]
+
+The following example demonstrates the reduction of array \plc{a}.  In C/C++ this is illustrated by the explicit use of an array section \plc{a[0:N]} in the \code{reduction} clause.  The corresponding Fortran example uses array syntax supported in the base language.  As of the OpenMP 4.5 specification the explicit use of array section in the \code{reduction} clause in Fortran is not permitted.  But this oversight has been fixed in the OpenMP 5.0 specification.
+
+
+\cexample[4.5]{reduction}{7}
+
+\ffreeexample{reduction}{7}
+
+\subsection{Task Reduction}
+\label{subsec:task_reduction}
+
+In OpenMP 5.0 the \code{task\_reduction} clause was created for the \code{taskgroup} construct, 
+to allow reductions among explicit tasks that have an \code{in\_reduction} clause.
+
+In the \plc{task\_reduction.1} example below a reduction is performed as the algorithm
+traverses a linked list. The reduction statement is assigned to be an explicit task using
+a \code{task} construct and is specified to be a reduction participant with 
+the \code{in\_reduction} clause.
+A \code{taskgroup} construct encloses the tasks participating in the reduction, and
+specifies, with the \code{task\_reduction} clause, that the taskgroup has tasks participating
+in a reduction.  After the \code{taskgroup} region the original variable will contain 
+the final value of the reduction.
+
+Note: The \plc{res} variable is private in the \plc{linked\_list\_sum} routine
+and is not required to be shared (as in the case of a \code{parallel} construct
+reduction).
+
+
+\cexample[5.0]{task_reduction}{1}
+
+\ffreeexample[5.0]{task_reduction}{1}
+
+In OpenMP 5.0 the \code{task} \plc{reduction-modifier} for the \code{reduction} clause was
+introduced to provide a means of performing reductions among implicit and explicit tasks.
+
+The \code{reduction} clause of a \code{parallel} or worksharing construct may
+specify the \code{task} \plc{reduction-modifier} to include explicit task reductions
+within their region, provided the reduction operators (\plc{reduction-identifiers})
+and variables (\plc{list items}) of the participating tasks match those of the
+implicit tasks.
+
+There are 2 reduction use cases (identified by USE CASE \#) in the \plc{task\_reduction.2} example below.  
+
+In USE CASE 1 a \code{task} modifier in the \code{reduction} clause 
+of the \code{parallel} construct is used to include the reductions of any 
+participating tasks, those with an \code{in\_reduction} clause and matching 
+\plc{reduction-identifiers} (\code{+}) and list items (\code{x}).  
+
+Note, a \code{taskgroup} construct (with a \code{task\_reduction} clause) in not
+necessary to scope the explicit task reduction (as seen in the example above). 
+Hence, even without the implicit task reduction statement (without the C \code{x++\;}  
+and Fortran \code{x=x+1} statements), the \code{task} \plc{reduction-modifier} 
+in a \code{reduction} clause of the \code{parallel} construct
+can be used to avoid having to create a \code{taskgroup} construct 
+(and its \code{task\_reduction} clause) around the task generating structure.
+
+In USE CASE 2 tasks participating in the reduction are within a
+worksharing region (a parallel worksharing-loop construct).
+Here, too, no \code{taskgroup} is required, and the \plc{reduction-identifier} (\code{+})
+and list item (variable \code{x}) match as required.
+
+
+\cexample[5.0]{task_reduction}{2}
+
+\ffreeexample[5.0]{task_reduction}{2}
+
+
+\subsection{Reduction on Combined Target Constructs}
+\label{subsec:target_reduction}
+
+When a \code{reduction} clause appears on a combined construct that combines 
+a \code{target} construct with another construct, there is an implicit map 
+of the list items with a \code{tofrom} map type for the \code{target} construct. 
+Otherwise, the list items (if they are scalar variables) would be 
+treated as firstprivate by default in the \code{target} construct, which 
+is unlikely to provide the intended behavior since the result of the
+reduction that is in the firstprivate variable would be discarded 
+at the end of the \code{target} region.
+
+In the following example, the use of the \code{reduction} clause on \code{sum1}
+or \code{sum2} should, by default, result in an implicit \code{tofrom} map for
+that variable. So long as neither \code{sum1} nor \code{sum2} were already
+present on the device, the mapping behavior ensures the value for
+\code{sum1} computed in the first \code{target} construct is used in the
+second \code{target} construct.
+
+\cexample[5.0]{target_reduction}{1}
+
+\ffreeexample[5.0]{target_reduction}{1}
+%\clearpage
+
+In next example,  the variables \code{sum1} and \code{sum2} remain on the
+device for the duration of the \code{target}~\code{data} region so that it is
+their device copies that are updated by the reductions. Note the significance
+of mapping \code{sum1} on the second \code{target} construct; otherwise, it
+would be treated by default as firstprivate and the result computed for
+\code{sum1} in the prior \code{target} region may not be used. Alternatively, a
+\code{target}~\code{update} construct could be used between the two
+\code{target} constructs to update the host version of \code{sum1} with the
+value that is in the corresponding device version after the completion of the
+first construct.
+
+\cexample[5.0]{target_reduction}{2}
+
+\ffreeexample[5.0]{target_reduction}{2}
+
+
+\subsection{Task Reduction with Target Constructs}
+\label{subsec:target_task_reduction}
+
+The following examples illustrate how task reductions can apply to target tasks
+that result from a \code{target} construct with the \code{in\_reduction}
+clause. Here, the \code{in\_reduction} clause specifies that the target task
+participates in the task reduction defined in the scope of the enclosing
+\code{taskgroup} construct. Partial results from all tasks participating in the
+task reduction will be combined (in some order) into the original variable
+listed in the \code{task\_reduction} clause before exiting the \code{taskgroup}
+region. 
+
+\cexample[5.1]{target_task_reduction}{1}
+
+\ffreeexample[5.1]{target_task_reduction}{1}[1]
+
+In the next pair of examples, the task reduction is defined by a
+\code{reduction} clause with the \code{task} modifier, rather than a
+\code{task\_reduction} clause on a \code{taskgroup} construct. Again, the
+partial results from the participating tasks will be combined in some order
+into the original reduction variable, \code{sum}.
+
+\cexample[5.0]{target_task_reduction}{2a}
+
+\ffreeexample[5.0]{target_task_reduction}{2a}
+
+Next, the \code{task} modifier is again used to define a task reduction over
+participating tasks. This time, the participating tasks are a target task
+resulting from a \code{target} construct with the \code{in\_reduction} clause,
+and the implicit task (executing on the primary thread) that calls
+\code{host\_compute}. As before, the partial results from these paricipating
+tasks are combined in some order into the original reduction variable.
+
+\cexample[5.1]{target_task_reduction}{2b}
+
+\ffreeexample[5.1]{target_task_reduction}{2b}[1]
+
+
+\subsection{Taskloop Reduction}
+\label{subsec:taskloop_reduction}
+
+In the OpenMP 5.0 Specification the \code{taskloop} construct
+was extended to include the reductions.
+
+The following two examples show how to implement a reduction over an array
+using taskloop reduction in two different ways.
+In the first
+example we apply the \code{reduction} clause to the \code{taskloop} construct. As it was
+explained above in the task reduction examples, a reduction over tasks is
+divided in two components: the scope of the reduction, which is defined by a
+\code{taskgroup} region, and the tasks that participate in the reduction. In this
+example, the \code{reduction} clause defines both semantics. First, it specifies that
+the implicit \code{taskgroup} region associated with the \code{taskloop} construct is the scope of the
+reduction, and second, it defines all tasks created by the \code{taskloop} construct as
+participants of the reduction. About the first property, it is important to note
+that if we add the \code{nogroup} clause to the \code{taskloop} construct the code will be
+nonconforming, basically because we have a set of tasks that participate in a
+reduction that has not been defined.
+
+\cexample[5.0]{taskloop_reduction}{1}
+\ffreeexample[5.0]{taskloop_reduction}{1}
+
+%In the second example, we are computing exactly the same
+%value but we do it in a very different way. The first thing that we do in the
+%\plc{array\_sum} function is to create a \code{taskgroup} region that defines the scope of a
+%new reduction using the \code{task\_reduction} clause.
+%After that, we specify that a task and also the tasks generated
+%by a taskloop will participate in that reduction using the \code{in\_reduction} clause
+%on the \code{task} and \code{taskloop} constructs, respectively. Note that
+%we also added the \code{nogroup} clause to the \code{taskloop} construct. This is allowed
+%because what we are expressing with the \code{in\_reduction} clause is different
+%from what we were expressing with the \code{reduction} clause. In one case we specify
+%that the generated tasks will participate in a previously declared reduction
+%(\code{in\_reduction} clause) whereas in the other case we specify that we want to
+%create a new reduction and also that all tasks generated by the taskloop will
+%participate on it.
+
+The second example computes exactly the same value as in the preceding\plc{taskloop\_reduction.1} code section,
+but in a very different way.
+First, in the \plc{array\_sum} function a \code{taskgroup} region is created 
+that defines the scope of a new reduction using the \code{task\_reduction} clause.
+After that, a task and also the tasks generated by a taskloop participate in 
+that reduction by using the \code{in\_reduction} clause on the \code{task}
+and \code{taskloop} constructs, respectively. 
+Note that the \code{nogroup} clause was added to the \code{taskloop} construct.
+This is allowed because what is expressed with the \code{in\_reduction} clause
+is different from what is expressed with the \code{reduction} clause.
+In one case the generated tasks are specified to participate in a previously 
+declared reduction (\code{in\_reduction} clause) whereas in the other case
+creation of a new reduction is specified and also that all tasks generated 
+by the taskloop will participate on it.
+
+\cexample[5.0]{taskloop_reduction}{2}
+\ffreeexample[5.0]{taskloop_reduction}{2}
+%\clearpage
+
+In the OpenMP 5.0 Specification, \code{reduction} clauses for the
+\code{taskloop}~\code{ simd} construct were also added. 
+
+The examples below compare reductions for the \code{taskloop} and the \code{taskloop}~\code{simd} constructs.
+These examples illustrate the use of \code{reduction} clauses within 
+"stand-alone" \code{taskloop} constructs, and the use of \code{in\_reduction} clauses for tasks of taskloops to participate
+with other reductions within the scope of a parallel region.
+
+\textbf{taskloop reductions:}
+
+In the \plc{taskloop reductions} section of the example below, 
+\plc{taskloop 1} uses the \code{reduction} clause 
+in a \code{taskloop} construct for a sum reduction, accumulated in \plc{asum}. 
+The behavior is as though a \code{taskgroup} construct encloses the 
+taskloop region with a \code{task\_reduction} clause, and each taskloop
+task has an \code{in\_reduction} clause with the specifications 
+of the \code{reduction} clause.
+At the end of the taskloop region \plc{asum} contains the result of the reduction.
+
+The next taskloop, \plc{taskloop 2}, illustrates the use of the 
+\code{in\_reduction} clause to participate in a previously defined
+reduction scope of a \code{parallel} construct.
+
+The task reductions of \plc{task 2} and \plc{taskloop 2} are combined
+across the \code{taskloop} construct and the single \code{task} construct, as specified
+in the \code{reduction(task,}~\code{+:asum)} clause of the \code{parallel} construct.
+At the end of the parallel region \plc{asum} contains the combined result of all reductions.
+
+\textbf{taskloop simd reductions:}
+
+Reductions for the \code{taskloop}~\code{simd} construct are shown in the second half of the code.
+Since each component construct, \code{taskloop} and \code{simd}, 
+can accept a reduction-type clause, the \code{taskloop}~\code{simd} construct
+is a composite construct, and the specific application of the reduction clause is defined
+within the \code{taskloop}~\code{simd} construct section of the OpenMP 5.0 Specification.
+The code below illustrates use cases for these reductions.
+
+In the \plc{taskloop simd reduction} section of the example below,
+\plc{taskloop simd 3} uses the \code{reduction} clause 
+in a \code{taskloop}~\code{simd} construct for a sum reduction within a loop.
+For this case a \code{reduction} clause is used, as one would use 
+for a \code{simd} construct.
+The SIMD reductions of each task are combined, and the results of these tasks are further 
+combined just as in the \code{taskloop} construct with the \code{reduction} clause for \plc{taskloop 1}.
+At the end of the taskloop region \plc{asum} contains the combined result of all reductions.
+
+If a \code{taskloop}~\code{simd} construct is to participate in a previously defined 
+reduction scope, the reduction participation should be specified with
+a \code{in\_reduction} clause, as shown in the \code{parallel} region enclosing
+\plc{task 4} and \plc{taskloop simd 4} code sections.  
+
+Here the \code{taskloop}~\code{simd} construct's 
+\code{in\_reduction} clause specifies participation of the construct's tasks as 
+a task reduction within the scope of the parallel region.  
+That is, the results of each task of the \code{taskloop} construct component 
+contribute to the reduction in a broader level, just as in \plc{parallel reduction a} code section above.
+Also, each \code{simd}-component construct
+occurs as if it has a \code{reduction} clause, and the
+SIMD results of each task are combined as though to form a single result for
+each task (that participates in the \code{in\_reduction} clause).
+At the end of the parallel region \plc{asum} contains the combined result of all reductions.
+
+%Just as in \plc{parallel reduction a} the
+%\code{taskloop simd} construct reduction results are combined 
+%with the \code{task} construct reduction results
+%as specified by the \code{in\_reduction} clause of the \code{task} construct
+%and the \plc{task} reduction-modifier of the \code{reduction} clause of 
+%the \code{parallel} construct.
+%At the end of the parallel region \plc{asum} contains the combined result of all reductions.
+
+
+\cexample[5.1]{taskloop_simd_reduction}{1}
+
+\ffreeexample[5.1]{taskloop_simd_reduction}{1}[1]
+
+
+\subsection{Reduction with the \code{scope} Construct}
+\label{subsec:reduction_scope}
+
+The following example illustrates the use of the \code{scope} construct 
+to perform a reduction in a \code{parallel} region. The case is useful for 
+producing a reduction and accessing reduction variables inside a \code{parallel} region 
+without using a worksharing-loop construct.
+
+\cppexample[5.1]{scope_reduction}{1}
+\clearpage
+
+\ffreeexample[5.1]{scope_reduction}{1}
+

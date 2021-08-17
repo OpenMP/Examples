@@ -1,5 +1,4 @@
-\pagebreak
-\chapter{Parallel Execution}
+\cchapter{Parallel Execution}{parallel_execution}
 \label{chap:parallel_execution}
 
 A single thread, the \plc{initial thread}, begins sequential execution of 
@@ -10,7 +9,7 @@ A \code{parallel} construct encloses code,
 forming a parallel region.  An \plc{initial thread} encountering a \code{parallel} 
 region forks (creates) a team of threads at the beginning of the 
 \code{parallel} region, and joins them (removes from execution) at the 
-end of the region.  The initial thread becomes the master thread of the team in a 
+end of the region.  The initial thread becomes the primary thread of the team in a 
 \code{parallel} region with a \plc{thread} number equal to zero, the other 
 threads are numbered from 1 to number of threads minus 1. 
 A team may be comprised of just a single thread.
@@ -19,9 +18,9 @@ Each thread of a team is assigned an implicit task consisting of code within the
 parallel region. The task that creates a parallel region is suspended while the
 tasks of the team are executed.  A thread is tied to its task; that is,
 only the thread assigned to the task can execute that task.  After completion 
-of the \code{parallel} region, the master thread resumes execution of the generating task.  
+of the \code{parallel} region, the primary thread resumes execution of the generating task.  
 
-%After the \code{parallel} region the master thread becomes the initial 
+%After the \code{parallel} region the primary thread becomes the initial 
 %thread again, and continues to execute the \plc{sequential part}.  
 
 Any task within a \code{parallel} region is allowed to encounter another
@@ -43,7 +42,8 @@ defined. When dynamic adjustment is on and the number of threads is specified,
 the number of threads becomes an upper limit for the number of threads to be
 provided by the OpenMP runtime.
 
-\pagebreak
+%\pagebreak
+\bigskip
 WORKSHARING CONSTRUCTS
 
 A worksharing construct distributes the execution of the associated region
@@ -96,9 +96,33 @@ region with a single structure block (section of code). Statements in the
 by threads of the team.  
 
 \bigskip
-MASTER CONSTRUCT
+MASKED CONSTRUCT
 
-The \code{master} construct is not a worksharing construct.  The master region is
-is executed only by the master thread. There is no implicit barrier (and flush) 
-at the end of the \code{master} region; hence the other threads of the team continue
-execution beyond code statements beyond the \code{master} region.
+The \code{masked} construct is not a worksharing construct.  The \code{masked} region is
+executed only by the primary thread. There is no implicit barrier (and flush) 
+at the end of the \code{masked} region; hence the other threads of the team continue
+execution beyond code statements beyond the \code{masked} region.
+The \code{master} contruct, which has been deprecated in OpenMP 5.1, has identical semantics
+to the \code{masked} contruct with no \code{filter} clause.
+
+
+%===== Examples Sections =====
+\input{parallel_execution/ploop}
+\input{parallel_execution/parallel}
+\input{parallel_execution/host_teams}
+\input{parallel_execution/nthrs_nesting}
+\input{parallel_execution/nthrs_dynamic}
+\input{parallel_execution/fort_do}
+\input{parallel_execution/nowait}
+\input{parallel_execution/collapse}
+\input{parallel_execution/linear_in_loop}
+\input{parallel_execution/psections}
+\input{parallel_execution/fpriv_sections}
+\input{parallel_execution/single}
+\input{parallel_execution/workshare}
+\input{parallel_execution/masked}
+\input{parallel_execution/loop}
+\input{parallel_execution/pra_iterator}
+\input{parallel_execution/set_dynamic_nthrs}
+\input{parallel_execution/get_nthrs}
+

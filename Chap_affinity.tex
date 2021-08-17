@@ -1,5 +1,4 @@
-\pagebreak
-\chapter{OpenMP Affinity}
+\cchapter{OpenMP Affinity}{affinity}
 \label{chap:openmp_affinity}
 
 OpenMP Affinity consists of a \code{proc\_bind} policy (thread affinity policy) and a specification of
@@ -53,21 +52,21 @@ variables for the MPI library.  %Forked threads within an MPI process
 %which sets \code{OMP\_PLACES} specifically for the MPI process. 
 
 Threads of a team are positioned onto places in a compact manner, a 
-scattered distribution, or onto the master's place, by setting the 
+scattered distribution, or onto the primary thread's place, by setting the 
 \code{OMP\_PROC\_BIND} environment variable or the \code{proc\_bind} clause  to 
-\plc{close}, \plc{spread}, or \plc{master}, respectively.  When 
+\code{close}, \code{spread}, or \code{primary} (\code{master} has been deprecated), respectively.  When 
 \code{OMP\_PROC\_BIND} is set to FALSE no binding is enforced; and 
 when the value is TRUE, the binding is implementation defined to 
 a set of places in the \code{OMP\_PLACES} variable or to places 
 defined by the implementation if the \code{OMP\_PLACES} variable 
-is not set.
+is not set. 
 
 The \code{OMP\_PLACES} variable can also be set to an abstract name 
-(\plc{threads}, \plc{cores}, \plc{sockets}) to specify that a place is
+(\code{threads}, \code{cores}, \code{sockets}) to specify that a place is
 either a single hardware thread, a core, or a socket, respectively. 
 This description of the \code{OMP\_PLACES} is most useful when the 
 number of threads is equal to the number of hardware thread, cores
-or sockets.  It can also be used with a \plc{close} or \plc{spread} 
+or sockets.  It can also be used with a \code{close} or \code{spread} 
 distribution policy when the equality doesn't hold.
 
 
@@ -116,3 +115,11 @@ distribution policy when the equality doesn't hold.
 %     thread #     0  * * * *   _ _ _ _   _ _  _  _   #mask for thread 0
 %     thread #     0  _ _ _ _   * * * *   _ _  _  _   #mask for thread 1
 %     thread #     0  _ _ _ _   _ _ _ _   * *  *  *   #mask for thread 2
+
+
+%===== Examples Sections =====
+\input{affinity/affinity}
+\input{affinity/task_affinity}
+\input{affinity/affinity_display}
+\input{affinity/affinity_query}
+

@@ -1,7 +1,7 @@
 # Makefile for the OpenMP Examples document in LaTex format. 
-# For more information, see the master document, openmp-examples.tex.
+# For more information, see the main document, openmp-examples.tex.
 
-version=5.0.1
+version=5.1
 default: openmp-examples.pdf
 diff: openmp-diff-abridged.pdf
 
@@ -9,13 +9,16 @@ diff: openmp-diff-abridged.pdf
 CHAPTERS=Title_Page.tex \
 	Foreword_Chapt.tex \
 	Introduction_Chapt.tex \
-	Examples_*.tex \
-	History.tex
+	Examples_Chapt.tex \
+	Deprecated_Features_Chapt.tex \
+	Chap_*.tex \
+	History.tex \
+	*/*.tex
 
-SOURCES=sources/*.c \
-	sources/*.cpp \
-	sources/*.f90 \
-	sources/*.f 
+SOURCES=*/sources/*.c \
+	*/sources/*.cpp \
+	*/sources/*.f90 \
+	*/sources/*.f 
 
 INTERMEDIATE_FILES=openmp-examples.pdf \
 		openmp-examples.toc \
@@ -49,11 +52,11 @@ endif
 ifdef DIFF_FROM
     VC_DIFF_FROM := -r ${DIFF_FROM}
 else
-    VC_DIFF_FROM := -r master
+    VC_DIFF_FROM := -r work_5.1
 endif
 
 DIFF_TO:=HEAD
-DIFF_FROM:=master
+DIFF_FROM:=work_5.1
 DIFF_TYPE:=UNDERLINE
 
 COMMON_DIFF_OPTS:=--math-markup=whole  \
@@ -66,6 +69,10 @@ VC_DIFF_MINIMAL_OPTS:= --only-changes --force
 
 %.tmpdir: $(wildcard *.sty) $(wildcard *.png) $(wildcard *.aux) openmp-examples.pdf
 	mkdir -p $@/sources
+	for i in affinity devices loop_transformations parallel_execution SIMD tasking \
+		 data_environment memory_model program_control synchronization \
+		 directives ompt_interface;  do \
+	  mkdir -p $@/$$i; ln -sf "$$PWD"/$$i/sources $@/$$i/sources; done
 	mkdir -p $@/figs
 	cp -f $^ "$@/"
 	cp -f sources/* "$@/sources"

@@ -1,0 +1,44 @@
+\pagebreak
+\section{Cancellation Constructs}
+\label{sec:cancellation}
+
+The following example shows how the \code{cancel} directive can be used to terminate 
+an OpenMP region. Although the \code{cancel} construct terminates the OpenMP 
+worksharing region, programmers must still track the exception through the pointer 
+ex and issue a cancellation for the \code{parallel} region if an exception has 
+been raised. The primary thread checks the exception pointer to make sure that the 
+exception is properly handled in the sequential part. If cancellation of the \code{parallel} 
+region has been requested, some threads might have executed \code{phase\_1()}. 
+However, it is guaranteed that none of the threads executed \code{phase\_2()}.
+
+\cppexample[4.0]{cancellation}{1}
+
+
+The following example illustrates the use of the \code{cancel} construct in error 
+handling. If there is an error condition from the \code{allocate} statement, 
+the cancellation is activated. The encountering thread sets the shared variable 
+\code{err} and other threads of the binding thread set proceed to the end of 
+the worksharing construct after the cancellation has been activated. 
+
+\ffreeexample[4.0]{cancellation}{1}
+
+\clearpage
+
+The following example shows how to cancel a parallel search on a binary tree as 
+soon as the search value has been detected. The code creates a task to descend 
+into the child nodes of the current tree node. If the search value has been found, 
+the code remembers the tree node with the found value through an \code{atomic} 
+write to the result variable and then cancels execution of all search tasks. The 
+function \code{search\_tree\_parallel} groups all search tasks into a single 
+task group to control the effect of the \code{cancel taskgroup} directive. The 
+\plc{level} argument is used to create undeferred tasks after the first ten 
+levels of the tree.
+
+\cexample[5.1]{cancellation}{2}
+
+
+The following is the equivalent parallel search example in Fortran.
+
+\ffreeexample[5.1]{cancellation}{2}[1]
+
+

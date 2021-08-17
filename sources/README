@@ -1,0 +1,35 @@
+The source codes for examples in each chapter are in the sources directory
+under the corresponding chapter directory:
+
+../SIMD/sources
+../affinity/sources
+../data_environment/sources
+../devices/sources
+../loop_transformations/sources
+../memory_model/sources
+../parallel_execution/sources
+../program_control/sources
+../synchronization/sources
+../tasking/sources
+
+This directory contains the test_codes script that performs
+a quick compilation test of all example codes (default).  The
+test results are stored in the test_codes.log file.  The script 
+tries to automatically detect a compiler. Set the comp_c, comp_cc 
+and comp_f variables if that doesn't work.  
+
+          The test script (test_codes) is 
+
+    ***** for reference purpose only and is NOT intended to validate *****
+
+          OpenMP compliance of a compiler.
+
+July 31 2021 Changes
+* Automatic compiler determination (no need to specify comp_c, etc.)
+* Automatic version (DATE/NUMBER) determination
+* Automatic Backdown (replacement) for deprecation if compiler is not 5.1/5.0
+  (replacements: masked->master,primary->master, *lock_hint*->*lock_sync*)
+* Automatic -c compiler flag for "linkable=no" metadata
+* Utilities file, test_utils, created for clean coding
+* Command line now takes file name argument (just file name, not path)
+* sourceme file: puts test_codes in PATH, creates tc alias, defines OMP_BASE_DI

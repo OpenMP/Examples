@@ -1,5 +1,4 @@
-\pagebreak
-\chapter{Memory Model}
+\cchapter{Memory Model}{memory_model}
 \label{chap:memory_model}
 
 OpenMP provides a shared-memory model that allows all threads on a given
@@ -129,3 +128,10 @@ section of the OpenMP Specifications document.
 % in \plc{atomic Construct} subsection of the OpenMP Specifications document).
 
 % Examples 1-3 show the difficulty of synchronizing threads through \code{flush} and \code{atomic} directives.
+
+
+%===== Examples Sections =====
+\input{memory_model/mem_model}
+\input{memory_model/allocators}
+\input{memory_model/fort_race}
+

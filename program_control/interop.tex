@@ -1,0 +1,28 @@
+\pagebreak
+\section{\code{interop} Construct}
+\label{sec:interop}
+
+The \scode{interop} construct allows OpenMP to interoperate with foreign runtime environments.
+In the example below, asynchronous cuda memory copies and a \splc{cublasDaxpy} routine are executed 
+in a cuda stream. Also, an asynchronous target task execution (having a \scode{nowait} clause) 
+and two explicit tasks are executed through OpenMP directives.  Scheduling dependences (synchronization) are
+imposed on the foreign stream and the OpenMP tasks through \scode{depend} clauses. 
+
+First, an interop object, \splc{obj}, is initialized for synchronization by including the
+\scode{targetsync} \splc{interop-type} in the interop \scode{init} clause 
+(\scode{init(}~\scode{targetsync,obj}~\scode{)}).  
+The object provides access to the foreign runtime.
+The \scode{depend} clause provides a dependence behavior
+for foreign tasks associated with a valid object.
+
+Next, the \scode{omp_get_interop_int} routine is used to extract the foreign 
+runtime id (\scode{omp_ipr_fr_id}), and a test in the next statement ensures 
+that the cuda runtime (\scode{omp_ifr_cuda}) is available.
+
+Within the block for executing the \splc{cublasDaxpy} routine, a stream is acquired 
+with the \scode{omp_get_interop_ptr} routine, which returns a cuda stream (\splc{s}).
+The stream is included in the cublas handle, and used directly in the asynchronous memory
+routines.  The following \scode{interop} construct, with the \scode{destroy} clause, 
+ensures that the foreign tasks have completed.
+
+\cexample[5.1]{interop}{1}

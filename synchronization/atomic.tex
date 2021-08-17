@@ -1,0 +1,44 @@
+\pagebreak
+\section{\code{atomic} Construct}
+\label{sec:atomic}
+
+The following example avoids race conditions (simultaneous updates of an element 
+of \plc{x} by multiple threads) by using the \code{atomic} construct .
+
+The advantage of using the \code{atomic} construct in this example is that it 
+allows updates of two different elements of \plc{x} to occur in parallel. If 
+a \code{critical} construct were used instead, then all updates to elements of 
+\plc{x} would be executed serially (though not in any guaranteed order).
+
+Note that the \code{atomic} directive applies only to the statement immediately 
+following it. As a result, elements of \plc{y} are not updated atomically in 
+this example.
+
+\cexample[3.1]{atomic}{1}
+
+\fexample[3.1]{atomic}{1}
+
+The following example illustrates the \code{read} and \code{write}  clauses 
+for the \code{atomic} directive. These clauses ensure that the given variable 
+is read or written, respectively, as a whole. Otherwise, some other thread might 
+read or write part of the variable while the current thread was reading or writing 
+another part of the variable. Note that most hardware provides atomic reads and 
+writes for some set of properly aligned variables of specific sizes, but not necessarily 
+for all the variable types supported by the OpenMP API.
+
+\cexample[3.1]{atomic}{2}
+
+\fexample[3.1]{atomic}{2}
+
+The following example illustrates the \code{capture} clause for the \code{atomic} 
+directive. In this case the value of a variable is captured, and then the variable 
+is incremented. These operations occur atomically. This particular example could 
+be implemented using the fetch-and-add instruction available on many kinds of hardware. 
+The example also shows a way to implement a spin lock using the \code{capture} 
+ and \code{read} clauses.
+
+\cexample[3.1]{atomic}{3}
+
+\fexample[3.1]{atomic}{3}
+
+

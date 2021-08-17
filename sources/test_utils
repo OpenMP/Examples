@@ -1,0 +1,102 @@
+
+VDATES=(         202011      201811      201511      201307      201107      200805 )
+VNUM2DATE=( [51]=202011 [50]=201811 [45]=201511 [40]=201307 [31]=201107 [30]=200805 )
+VDATE2NUM=( [202011]=51 [201811]=50 [201511]=45 [201307]=40 [201107]=31 [200805]=30 )
+
+get_compiler_version_date(){
+  # Uses CC and omp_flag (compiler options) to get the VER_DATE (e.g. 200805) from compiler
+  [[ ! -z $TEST_DEBUG ]] && echo -e "\n -> INSIDE get_compiler_version_date:"
+
+  cat <<'  EOF' >version.c
+    #include <omp.h>
+    #include <stdio.h>
+    int main(){ printf("%d\n", _OPENMP);}
+  EOF
+  VER_DATE=$( $comp_c $omp_flag version.c; ./a.out; rm -f version.c a.out )
+  VER_NUM=${VDATE2NUM[$VER_DATE]}
+  [[ ! -z $TEST_DEBUG ]] && echo "    Finished, FOUND VER_DATE=$VER_DATE ($VER_NUM)"
+}
+
+get_compiler_version_number(){
+  # Uses VER_DATE (e.g. 200805) to determine not_available VER_NUMs, NA_VER_NUMS (4.g. 30)
+  [[ ! -z $TEST_DEBUG ]] && echo -e "\n -> INSIDE get_compiler_version_number:"
+ 
+  for i in $(seq 0 $(( ${#VDATES[@]} - 1 )) ) ; do
+    if [[ "${VDATES[$i]}" -gt "$VER_DATE" ]]; then
+       #echo "HERE $i $VER_DATE ${VDATES[$i]}"
+        NA_VER_NUMS+=( ${VDATE2NUM[ ${VDATES[$i]} ]} )
+        [[ ! -z $TEST_DEBUG ]] && echo "    FOUND: ${VDATES[$i]} <= $VER_DATE, Compiler earlier than $NA_VER_NUMS."
+    fi
+  done
+
+  [[ ! -z $TEST_DEBUG ]] && echo -e "    Finished, using Compiler $VER_DATE (${VDATE2NUM[$VER_DATE]}).\n"
+}
+
+
+get_compiler_commands_and_omp_flag(){
+  # Determine compiler and return compiler commands 
+ 
+  local found=""
+
+  [[ ! -z $TEST_DEBUG ]] && echo -e "\n -> INSIDE get_compiler_commands_and_omp_flag:"
+
+  comp_c="" comp_cpp="" comp_f="" fixed_flags="" fpp_flag="" omp_flag=""
+
+  #Force
+  [[ "$COMP" == 'GNU'   ]] && comp_c=gcc   comp_cpp=g++     comp_f=gfortran fixed_flag="-ffixed-form" fpp_flag="-cpp"         omp_flag="-fopenmp"
+  [[ "$COMP" == 'IBM'   ]] && comp_c=xlc_r comp_cpp="xlC_r" comp_f=xlf90_r  fixed_flag="-qfixed"      fpp_flag="-qpreprocess" omp_flag="-qsmp"
+  [[ "$COMP" == 'INTEL' ]] && comp_c=icc   comp_cpp=icpc    comp_f=ifort    fixed_flag="-fixed"       fpp_flag="-fpp"         omp_flag="-qopenmp"
+  [[ "$COMP" == 'AMD'   ]] && comp_c=clang comp_cpp=clang++ comp_f=flang    fixed_flag="-Mfixed"      fpp_flag="-cpp"         omp_flag="-fopenmp"
+  [[ "$COMP" == 'CRAY'  ]] && comp_c=cc    comp_cpp=CC      comp_f=ftn      fixed_flag="-f fixed"     fpp_flag="-e F"         omp_flag="-homp"
+  #use reasonable names instead of AOCC(AMD), CCE(CRAY),...
+ 
+  [[ ! -z $comp_c ]] && echo " Using $COMP compiler system as provided in the COMP environment variable"
+
+  if [[ -z $comp_c ]]; then
+ 
+    command -v gcc   -v &> /dev/null
+    [[ $? == 0 ]] && comp_c=gcc   comp_cpp=g++     comp_f=gfortran fixed_flag="-ffixed-form" fpp_flag="-cpp"         omp_flag="-fopenmp"  found+=" GNU"
+  
+    command -v flang -v &> /dev/null
+    [[ $? == 0 ]] && comp_c=clang comp_cpp=clang++ comp_f=flang    fixed_flag="-Mfixed"      fpp_flag="-cpp"         omp_flag="-fopenmp"  found+=" CLANG"
+
+    command -v ftn    -v &> /dev/null
+    [[ $? == 0 ]] && comp_c=cc    comp_cpp=CC      comp_f=ftn      fixed_flag="-f fixed"     fpp_flag="-e F"         omp_flag="-homp"     found+=" CRAY"
+  
+    command -v icc   -v &> /dev/null
+    [[ $? == 0 ]] && comp_c=icc   comp_cpp=icpc    comp_f=ifort    fixed_flag="-fixed"       fpp_flag="-fpp"         omp_flag="-qopenmp"  found+=" INTEL"
+
+    command -v xlc   -v &> /dev/null
+    [[ $? == 0 ]] && comp_c=xlc_r comp_cpp="xlC_r" comp_f=xlf90_r  fixed_flag="-qfixed"      fpp_flag="-qpreprocess" omp_flag="-qsmp"     found+=" IBM"
+  
+    [[ ! -z $comp_c ]] && printf "  Detected compilers: $found  If multiple compilers, will use last found.\n"
+ 
+  fi
+
+  if [[ -z $comp_c ]]; then
+    echo " >>> Auto detection of GNU, CLANG, CRAY, INTEL, and IBM SYSTEM compilers failed".
+    echo "                    (flang is used to detect CLANG compiler, SYSTEM must have Fortran compiler.)"
+    echo " >>> REQUIREMENT: Must set compiler info (comp_xxx variables,...) in test_codes:"
+    echo "          **         comp_c, comp_cpp, comp_f, fixed_flag, fpp_flag and omp_flag"
+    echo "          or      set COMP env. var. to one of: GNU, CLANG, CRAY, INTEL, or IBM."
+    echo "                  See COMP array in test_utils comp_xxx values."
+    exit 1
+  fi
+
+  
+  command -v lspu &> /dev/null
+  if [[ $? == 0 ]]; then
+    #                                              # AMD           HPE INTEL        IBM
+    ARCH=$(lscpu | grep Architecture)              # x86_64            x86_64       ppc64le
+    [[ ! -z $TEST_DEBUG ]] && echo "    lscpu FOUND Architecture: $ARCH"
+    
+    #                                              # AMD           HPE INTEL        IBM
+     VENID=$(lscpu | grep -i "Vendor ID:")         # AuthenticAMD      GenuineIntel NA 
+    [[ ! -z $TEST_DEBUG ]] && echo "    lscpu FOUND Vendor ID: $VENID"
+  fi
+
+
+  [[ ! -z $TEST_DEBUG ]] && echo "    Finished, FOUND CC: $comp_c  CXX: $comp_cpp  F90: $comp_f"
+  [[ ! -z $TEST_DEBUG ]] && echo "    Finished, FOUND omp_flag: $omp_flag   Fortran flags: Fixedform=$fixed_flag  Preprocess=$fpp_flag"
+}
+
