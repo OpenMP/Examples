@@ -1,4 +1,6 @@
 clang
+gfortran
+gcc
 g++
 libomp-dev
 vim
