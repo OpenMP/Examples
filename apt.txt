@@ -1,6 +1,6 @@
 clang
-gfortran
-gcc
 g++
+gcc
+gfortran
 libomp-dev
 vim

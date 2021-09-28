@@ -1,4 +1,6 @@
-- file: intro
+format: jb-article
+root: intro
+sections:
 - file: contents/Foreword_Chapt
 - file: contents/Introduction_Chapt
 - file: contents/Examples_Chapt

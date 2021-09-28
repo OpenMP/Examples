@@ -1,6 +1,6 @@
 jupyter-book
+jupyter-native-kernel
 matplotlib
 numpy
 pandas
 sklearn
-jupyter-native-kernel

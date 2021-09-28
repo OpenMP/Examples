@@ -662,7 +662,9 @@ os.remove(contents_folder + "openmp-examples.ipynb")
 # Generate _toc.yml #
 #####################
 ## _toc.yml file begins
-begin = '- file: intro\n'
+begin = 'format: jb-article\n'
+begin += 'root: intro\n'
+begin += 'sections:\n'
 ## TOC
 fileName = path + 'openmp-examples.tex'
 ## open main.tex file to get target lines
