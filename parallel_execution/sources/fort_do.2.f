@@ -1,4 +1,4 @@
-! @@name:	fort_do.2f
+! @@name:	fort_do.2
 ! @@type:	F-fixed
 ! @@compilable:	no
 ! @@linkable:	no

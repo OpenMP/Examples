@@ -1,4 +1,4 @@
-! @@name:	fort_sa_private.4f
+! @@name:	fort_sa_private.4
 ! @@type:	F-fixed
 ! @@compilable:	maybe
 ! @@linkable:	maybe

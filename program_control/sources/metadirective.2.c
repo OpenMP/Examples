@@ -1,12 +1,11 @@
 /*
-* @@name: metadirective.2c
+* @@name: metadirective.2
 * @@type: C
 * @@compilable: yes
 * @@linkable: no
 * @@expect: success
-* @@version: omp_5.0
+* @@version: omp_5.2
 */
-
 #define N 100
 #include <stdio.h>
 #include <omp.h>
@@ -21,11 +20,13 @@ int main()                    //Driver
    {
       #pragma omp target device(idev)
       #pragma omp metadirective \
-               when( implementation={vendor(nvidia)}, device={arch("kepler")}: \
-                     teams num_teams(512) thread_limit(32) )                   \
-               when( implementation={vendor(amd)},    device={arch("fiji"  )}: \
-                     teams num_teams(512) thread_limit(64) )                   \
-               default(                                                        \
+               when( implementation={vendor(nvidia)},            \
+                                       device={arch("kepler")}:  \
+                     teams num_teams(512) thread_limit(32) )     \
+               when( implementation={vendor(amd)},               \
+                                       device={arch("fiji"  )}:  \
+                     teams num_teams(512) thread_limit(64) )     \
+               otherwise(                                        \
                      teams)
       #pragma omp distribute parallel for
       for (i=0; i<N; i++) work_on_chunk(idev,i);

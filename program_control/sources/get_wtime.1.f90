@@ -1,4 +1,4 @@
-! @@name:	get_wtime.1f
+! @@name:	get_wtime.1
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	yes

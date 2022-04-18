@@ -1,4 +1,4 @@
-! @@name:	target.6f90
+! @@name:	target.6
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

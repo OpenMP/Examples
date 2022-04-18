@@ -1,4 +1,4 @@
-! @@name:	workshare.6f
+! @@name:	workshare.6
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	no

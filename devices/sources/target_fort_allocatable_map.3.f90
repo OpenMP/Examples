@@ -1,4 +1,4 @@
-! @@name:       fort_allocatable_map.3f90
+! @@name:       target_fort_allocatable_map.3
 ! @@type:       F-free
 ! @@compilable: yes
 ! @@linkable:   no
@@ -9,7 +9,7 @@ contains
   subroutine foo(ain,bout)
     implicit none
     integer, allocatable, intent( in) :: ain(:)
-    integer, allocatable, intent(out) :: bout(:) !"out" causes de/reallocate
+    integer, allocatable, intent(out) :: bout(:) !"out" causes de/realloc
     !$omp declare target
     bout = ain
   end subroutine
@@ -27,7 +27,8 @@ program  main
 
   !$omp target
 
-  call foo(a,b) !ERROR: b deallocation/reallocation not allowed in target region
+  call foo(a,b) !ERROR: b deallocation/reallocation not allowed
+                !  in target region
 
   !$omp end target
 

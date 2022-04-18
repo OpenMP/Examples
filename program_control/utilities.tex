@@ -6,6 +6,10 @@ This section contains examples of utility routines and features.
 %---------------------------
 \subsection{Timing Routines}
 \label{subsec:get_wtime}
+\index{routines!omp_get_wtime@\scode{omp_get_wtime}}
+\index{omp_get_wtime routine@\scode{omp_get_wtime} routine}
+\index{routines!omp_get_wtick@\scode{omp_get_wtick}}
+\index{omp_get_wtick routine@\scode{omp_get_wtick} routine}
 
 The \scode{omp_get_wtime} routine can be used to measure the elapsed wall
 clock time (in seconds) of code execution in a program.
@@ -21,6 +25,12 @@ the \scode{omp_get_wtick} routine. The following example shows a use case.
 %---------------------------
 \subsection{Environment Display}
 \label{subsec:display_env}
+\index{environment display!OMP_DISPLAY_ENV@\scode{OMP_DISPLAY_ENV}}
+\index{environment variables!OMP_DISPLAY_ENV@\scode{OMP_DISPLAY_ENV}}
+\index{OMP_DISPLAY_ENV@\scode{OMP_DISPLAY_ENV}}
+\index{environment display!omp_display_env routine@\scode{omp_display_env} routine}
+\index{routines!omp_display_env@\scode{omp_display_env}}
+\index{omp_display_env routine@\scode{omp_display_env} routine}
 
 The OpenMP version number and the values of ICVs associated with the relevant
 environment variables can be displayed at runtime by setting 
@@ -50,7 +60,6 @@ setting the \scode{OMP_DISPLAY_ENV} to \code{TRUE} or \code{VERBOSE}.
 \ffreeexample[5.1]{display_env}{1}
 \clearpage
 
-\emph{Note}: 
 A sample output from the execution of the code might look like:
 {\small\begin{verbatim}
  OPENMP DISPLAY ENVIRONMENT BEGIN
@@ -81,6 +90,14 @@ A sample output from the execution of the code might look like:
 %---------------------------
 \subsection{\code{error} Directive}
 \label{subsec:error}
+\index{directives!error@\code{error}}
+\index{error directive@\code{error} directive}
+\index{error directive@\code{error} directive!at clause@\code{at} clause}
+\index{clauses!at@\code{at}}
+\index{at clause@\code{at} clause}
+\index{error directive@\code{error} directive!severity clause@\code{severity} clause}
+\index{clauses!severity@\code{severity}}
+\index{severity clause@\code{severity} clause}
 
 The \code{error} directive provides a consistent method for C, C++, and Fortran to emit a \plc{fatal} or
 \plc{warning} message at \plc{compilation} or \plc{execution} time, as determined by a \code{severity} 
@@ -90,7 +107,7 @@ and \code{severity(fatal)} were specified.
 
 The C, C++, and Fortran examples below show all the cases for reporting messages.
 
-\cexample[5.1]{error}{1}
-\ffreeexample[5.1]{error}{1}
+\cexample[5.2]{error}{1}
+\ffreeexample[5.2]{error}{1}
 
 

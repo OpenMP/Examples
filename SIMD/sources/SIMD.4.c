@@ -1,5 +1,5 @@
 /*
-* @@name:	SIMD.4c
+* @@name:	SIMD.4
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

@@ -1,4 +1,4 @@
-! @@name:	associate.1f
+! @@name:	associate.1
 ! @@type:	F-fixed
 ! @@compilable:	no
 ! @@linkable:	no

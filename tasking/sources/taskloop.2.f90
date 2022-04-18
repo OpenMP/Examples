@@ -1,4 +1,4 @@
-! @@name:   taskloop.2f
+! @@name:   taskloop.2
 ! @@type:   F-free
 ! @@compilable: yes
 ! @@linkable:   no

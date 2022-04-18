@@ -1,14 +1,15 @@
 /*
-* @@name:	async_target.1c
+* @@name:	async_target.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
-* @@version:	omp_4.0
+* @@version:	omp_5.1
 */
-#pragma omp declare target
+#pragma omp begin declare target
 float F(float);
 #pragma omp end declare target
+
 #define N 1000000000
 #define CHUNKSZ 1000000
 void init(float *, int);

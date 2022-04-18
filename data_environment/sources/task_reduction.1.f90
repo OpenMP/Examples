@@ -1,4 +1,4 @@
-! @@name:       task_reduction.1f90
+! @@name:       task_reduction.1
 ! @@type:       F-free
 ! @@compilable: yes
 ! @@linkable:   yes

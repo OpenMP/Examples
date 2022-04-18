@@ -1,5 +1,5 @@
 /*
-* @@name:	teams.1c
+* @@name:	teams.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no
@@ -12,7 +12,7 @@ float dotprod(float B[], float C[], int N)
 {
    float sum0 = 0.0;
    float sum1 = 0.0;
-   #pragma omp target map(to: B[:N], C[:N]) map(tofrom: sum0, sum1) 
+   #pragma omp target map(to: B[:N], C[:N]) map(tofrom: sum0, sum1)
    #pragma omp teams num_teams(2)
    {
       int i;
@@ -34,6 +34,7 @@ float dotprod(float B[], float C[], int N)
    return sum0 + sum1;
 }
 
-/* Note:  The variables sum0,sum1 are now mapped with tofrom, for correct 
-   execution with 4.5 (and pre-4.5) compliant compilers. See Devices Intro. 
+/* Note:  The variables sum0,sum1 are now mapped with tofrom, for
+          correct execution with 4.5 (and pre-4.5) compliant compilers.
+          See Devices Intro.
  */

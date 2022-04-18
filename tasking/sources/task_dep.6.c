@@ -1,5 +1,5 @@
 /*
-* @@name: task_depend.6.c
+* @@name: task_dep.6
 * @@type: C
 * @@compilable: yes
 * @@linkable: yes

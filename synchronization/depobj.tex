@@ -1,6 +1,11 @@
 \pagebreak
 \section{\code{depobj} Construct}
 \label{sec:depobj}
+\index{constructs!depobj@\code{depobj}}
+\index{depobj construct@\code{depobj} construct}
+\index{depobj construct@\code{depobj} construct!depend clause@\code{depend} clause}
+\index{depend clause@\code{depend} clause}
+\index{clauses!depend@\code{depend}}
 
 The stand-alone \code{depobj} construct provides a mechanism 
 to create a \plc{depend object} that expresses a dependence to be 
@@ -12,6 +17,12 @@ and it is stored in the depend object.
 The depend object is represented by a variable of type \code{omp\_depend\_t} 
 in C/C++ (by a scalar variable of integer kind \code{omp\_depend\_kind} in Fortran).
 
+\index{depobj construct@\code{depobj} construct!update clause@\code{update} clause}
+\index{update clause@\code{update} clause}
+\index{clauses!update@\code{update}}
+\index{depobj construct@\code{depobj} construct!destroy clause@\code{destroy} clause}
+\index{destroy clause@\code{destroy} clause}
+\index{clauses!destroy@\code{destroy}}
 In the example below the stand-alone \code{depobj} construct uses the 
 \code{depend}, \code{update} and \code{destroy} clauses to 
 \plc{initialize}, \plc{update} and \plc{uninitialize}
@@ -44,6 +55,6 @@ effectively destroying the depend object.
 After an object has been uninitialized it can be initialized again
 with a new dependence type \emph{and} a new variable.
 
-\cexample[5.0]{depobj}{1}
+\cexample[5.2]{depobj}{1}
 
-\ffreeexample[5.0]{depobj}{1}
+\ffreeexample[5.2]{depobj}{1}

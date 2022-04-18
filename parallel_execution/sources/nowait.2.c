@@ -1,5 +1,5 @@
 /*
-* @@name:	nowait.2c
+* @@name:	nowait.2
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

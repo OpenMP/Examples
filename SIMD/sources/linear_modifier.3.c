@@ -1,16 +1,16 @@
 /*
-* @@name:	linear_modifier.3c
+* @@name:	linear_modifier.3
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes
 * @@expect:	success
-* @@version:	omp_4.5
+* @@version:	omp_5.2
 */
 #include <stdio.h>
 
 #define N 128
 
-#pragma omp declare simd simdlen(4) uniform(x, y) linear(val(i):1)
+#pragma omp declare simd simdlen(4) uniform(x, y) linear(i:val,step(1))
 double func(double x[], double y[], int i)
 {
    return (x[i] + y[i]);

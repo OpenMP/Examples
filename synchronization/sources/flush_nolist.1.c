@@ -1,5 +1,5 @@
 /*
-* @@name:	flush_nolist.1c
+* @@name:	flush_nolist.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes

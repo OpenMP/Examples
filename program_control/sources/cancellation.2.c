@@ -1,15 +1,11 @@
 /*
-* @@name:	cancellation.2c
+* @@name:	cancellation.2
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
 * @@version:	omp_5.1
 */
-#if _OPENMP  < 202011
-#define masked master
-#endif
-
 #include <stddef.h>
 
 typedef struct binary_tree_s {

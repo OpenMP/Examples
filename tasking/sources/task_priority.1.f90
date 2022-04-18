@@ -1,4 +1,4 @@
-! @@name:	task_priority.1f
+! @@name:	task_priority.1
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

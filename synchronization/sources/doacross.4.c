@@ -1,11 +1,12 @@
 /*
-* @@name:	doacross.4c
+* @@name:	doacross.4
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
-* @@version:	omp_4.5
+* @@version:	omp_5.2
 */
+
 double foo(int i, int j);
 
 void work( int N, int M, double **A, double **B, double **C )
@@ -19,11 +20,11 @@ void work( int N, int M, double **A, double **B, double **C )
     for (j = 1; j < M-1; j++)
     {
       A[i][j] = foo(i, j);
-  #pragma omp ordered depend(source)
+  #pragma omp ordered doacross(source:)
 
       B[i][j] = alpha * A[i][j];
 
-  #pragma omp ordered depend(sink: i-1,j) depend(sink: i,j-1)
+  #pragma omp ordered doacross(sink: i-1,j) doacross(sink: i,j-1)
       C[i][j] = 0.2 * (A[i-1][j] + A[i+1][j] +
                 A[i][j-1] + A[i][j+1] + A[i][j]);
     }

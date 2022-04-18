@@ -102,8 +102,8 @@ The \code{masked} construct is not a worksharing construct.  The \code{masked} r
 executed only by the primary thread. There is no implicit barrier (and flush) 
 at the end of the \code{masked} region; hence the other threads of the team continue
 execution beyond code statements beyond the \code{masked} region.
-The \code{master} contruct, which has been deprecated in OpenMP 5.1, has identical semantics
-to the \code{masked} contruct with no \code{filter} clause.
+The \code{master} construct, which has been deprecated in OpenMP 5.1, has identical semantics
+to the \code{masked} construct with no \code{filter} clause.
 
 
 %===== Examples Sections =====

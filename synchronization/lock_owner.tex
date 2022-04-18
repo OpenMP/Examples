@@ -1,6 +1,8 @@
 \subsection{Ownership of Locks}
 \label{subsec:lock_owner}
 
+\index{routines!omp_unset_lock@\scode{omp_unset_lock}}
+\index{omp_unset_lock routine@\scode{omp_unset_lock} routine}
 Ownership of locks has changed since OpenMP 2.5. In OpenMP 2.5, locks are owned 
 by threads; so a lock released by the \code{omp\_unset\_lock} routine must be 
 owned by the same thread executing the routine.  Beginning with OpenMP 3.0, locks are owned 
@@ -17,6 +19,6 @@ acquires the lock.
 
 \cexample[5.1]{lock_owner}{1}
 
-\fexample[5.1]{lock_owner}{1}[1]
+\fexample[5.1]{lock_owner}{1}
 
 

@@ -1,4 +1,4 @@
-! @@name: affinity_display.3.f90
+! @@name: affinity_display.3
 ! @@type: F-free
 ! @@compilable: yes
 ! @@linkable: yes

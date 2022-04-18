@@ -1,5 +1,5 @@
 /*
-* @@name:       target_struct_map.2c
+* @@name:       target_struct_map.2
 * @@type:       C
 * @@compilable: yes
 * @@linkable:   yes

@@ -1,4 +1,4 @@
-! @@name:	nowait.2f
+! @@name:	nowait.2
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

@@ -1,0 +1,281 @@
+\cchapter{Feature Deprecations and Updates in Examples}{deprecated_features}
+\label{chap:deprecated_features}
+\label{sec:deprecated_features}
+\index{deprecated features}
+
+Deprecation of features began in OpenMP 5.0. 
+Examples that use a deprecated feature have been updated with an equivalent 
+replacement feature.  
+
+Table~\ref{tab:Deprecated Features} summarizes deprecated features and 
+their replacements in each version.  Affected examples are updated 
+accordingly and listed in Section~\ref{sec:Updated Examples}.
+
+\nolinenumbers
+\renewcommand{\arraystretch}{1.4}
+\tablefirsthead{%
+\hline
+\textbf{Version} & \textbf{Deprecated Feature} & \textbf{Replacement}\\
+\hline\\[-3.5ex]
+}
+\tablehead{%
+\multicolumn{2}{l}{\small\slshape table continued from previous page}\\
+\hline
+\textbf{Version} & \textbf{Deprecated Feature} & \textbf{Replacement}\\
+\hline\\[-3ex]
+}
+\tabletail{%
+\hline\\[-4ex]
+\multicolumn{2}{l}{\small\slshape table continued on next page}\\
+}
+\tablelasttail{\hline\\[-2ex]}
+\tablecaption{Deprecated Features and Their Replacements\label{tab:Deprecated Features}}
+\begin{supertabular}{p{0.4in} p{2.3in} p{2.2in}}
+5.2 & \scode{default} clause on metadirectives 
+    & \scode{otherwise} clause \\
+5.2 & delimited \scode{declare}~\scode{target} directive for C/C++ 
+    & \scode{begin}~\scode{declare}~\scode{target} directive \\
+5.2 & \scode{to} clause on \scode{declare}~\scode{target} directive 
+    & \scode{enter} clause \\
+5.2 & non-argument \scode{destroy} clause on \scode{depobj} construct 
+    & \scode{destroy(}\plc{argument}\code{)} \\
+5.2 & \scode{allocate} construct for Fortran \scode{ALLOCATE} statements 
+    & \scode{allocators} construct \\
+5.2 & \scode{depend} clause on \scode{ordered} construct 
+    & \scode{doacross} clause \\
+5.2 & \scode{linear(}\plc{modifier(list): linear-step}\code{)} clause 
+    & \scode{linear(}\plc{list:}~\scode{step(}\plc{linear-step}\scode{)}\plc{, modifier}\scode{)} clause \\
+\hline
+5.1 & \scode{master} construct 
+    & \scode{masked} construct \\
+5.1 & \scode{master} affinity policy 
+    & \scode{primary} affinity policy \\
+\hline
+5.0 & \scode{omp_lock_hint_*} constants 
+    & \scode{omp_sync_hint_*} constants \\[2pt]
+\end{supertabular}
+
+\linenumbers
+These replacements appear in examples that illustrate, otherwise, earlier features.
+When using a compiler that is compliant with a version prior to 
+the indicated version, the earlier form of an example for a previous
+version is listed as a reference.
+
+\newpage
+\section{Updated Examples for Different Versions}
+\label{sec:Updated Examples}
+
+The following tables list the updated examples for different versions as 
+a result of feature deprecation. The \emph{Earlier Version} column of 
+the tables shows the version tag of the earlier version. It also shows
+the prior name of an example when it has been renamed.
+
+Table~\ref{tab:Updated Examples 5.2} lists the updated examples for OpenMP 5.2
+in the Examples Document Version
+\href{https://github.com/OpenMP/Examples/tree/v5.2}{5.2}.
+The \emph{Earlier Version} column of the table lists the earlier version
+tags of the examples that can be found in 
+the Examples Document Version 
+\href{https://github.com/OpenMP/Examples/tree/v5.1}{5.1}.
+
+\index{clauses!default@\code{default}}
+\index{clauses!otherwise@\code{otherwise}}
+\index{clauses!to@\code{to}}
+\index{clauses!enter@\code{enter}}
+\index{clauses!depend@\code{depend}}
+\index{clauses!doacross@\code{doacross}}
+\index{clauses!linear@\code{linear}}
+\index{clauses!destroy@\code{destroy}}
+\index{default clause@\code{default} clause}
+\index{otherwise clause@\code{otherwise} clause}
+\index{to clause@\code{to} clause}
+\index{enter clause@\code{enter} clause}
+\index{depend clause@\code{depend} clause}
+\index{doacross clause@\code{doacross} clause}
+\index{linear clause@\code{linear} clause}
+\index{destroy clause@\code{destroy} clause}
+\index{directives!begin declare target@\code{begin}~\code{declare}~\code{target}}
+\index{begin declare target directive@\code{begin}~\code{declare}~\code{target} directive}
+\index{allocate construct@\code{allocate} construct}
+\index{allocators construct@\code{allocators} construct}
+
+\nolinenumbers
+\renewcommand{\arraystretch}{1.0}
+\tablefirsthead{%
+\hline\\[-2ex]
+\textbf{Example Name} & \textbf{Earlier Version} & \textbf{Feature Updated}
+\\[2pt]
+\hline\\[-2ex]
+}
+\tablehead{%
+\multicolumn{2}{l}{\small\slshape table continued from previous page}\\[2pt]
+\hline\\[-2ex]
+\textbf{Example Name} & \textbf{Earlier Version} & \textbf{Feature Updated}\\[2pt]
+\hline\\[-2ex]
+}
+\tabletail{%
+\hline\\[-2.5ex]
+\multicolumn{2}{l}{\small\slshape table continued on next page}\\
+}
+\tablelasttail{\hline\\[-1ex]}
+\tablecaption{Updated Examples for Version 5.2\label{tab:Updated Examples 5.2}}
+\begin{supertabular}{p{1.7in} p{1.2in} p{2.1in}}
+  \hexentry{error.1}[f90]{5.1} & 
+    \scode{default} clause on metadirectives \\
+  \hexentry{metadirective.1}[f90]{5.0} & 
+    replaced with \scode{otherwise} clause \\
+  \hexentry{metadirective.2}[f90]{5.0} & \\
+  \hexentry{metadirective.3}[f90]{5.0} & \\
+  \hexentry{metadirective.4}[f90]{5.1} & \\
+  \hexentry{target_ptr_map.4}{5.1} & \\
+  \hexentry{target_ptr_map.5}[f90]{5.1} & \\[2pt]
+\hline\\[-2ex]
+  \hexentry[f90]{array_shaping.1}{5.0} &
+    \scode{to} clause on \scode{declare} \scode{target} \\
+  \hexentry{target_reverse_offload.7}{5.0} &
+    directive replaced with \scode{enter} clause \\
+  \hexentry{target_task_reduction.1}[f90]{5.1} & \\
+  \hexentry{target_task_reduction.2a}[f90]{5.0} & \\
+  \hexentry{target_task_reduction.2b}[f90]{5.1} &\\[2pt]
+\hline\\[-2ex]
+  \hexentry{array_shaping.1}{5.0} & 
+    delimited \scode{declare}~\scode{target} \\
+  \hexentry{async_target.1}{4.0} & 
+    directive replaced with \\
+  \hexentry{async_target.2}{4.0} & 
+    \scode{begin}~\scode{declare}~\scode{target} \\
+  \hexentry{declare_target.1}{4.0} & 
+    directive for C/C++ \\
+  \hexentry[cpp]{declare_target.2c}{4.0} & \\
+  \hexentry{declare_target.3}{4.0} & \\
+  \hexentry{declare_target.4}{4.0} & \\
+  \hexentry{declare_target.5}{4.0} & \\
+  \hexentry{declare_target.6}{4.0} & \\
+  \hexentry{declare_variant.1}{5.0} & \\
+  \hexentry{device.1}{4.0} & \\
+  \hexentry{metadirective.3}{5.0} & \\
+  \hexentry{target_ptr_map.2}{5.0} & \\
+  \hexentry{target_ptr_map.3a}{5.0} & \\
+  \hexentry{target_ptr_map.3b}{5.0} & \\
+  \hexentry{target_struct_map.1}{5.0} & \\
+  \hexentry[cpp]{target_struct_map.2}{5.0} & \\
+  \hexentry{target_struct_map.3}{5.0} & \\
+  \hexentry{target_struct_map.4}{5.0} & \\[2pt]
+\hline\\[-2ex]
+  \hexentry{doacross.1}[f90]{4.5} &
+    \scode{depend} clause on \scode{ordered} \\
+  \hexentry{doacross.2}[f90]{4.5} &
+    construct replaced with \scode{doacross} \\
+  \hexentry{doacross.3}[f90]{4.5} &
+    clause \\
+  \hexentry{doacross.4}[f90]{4.5} & \\[2pt]
+\hline\\[-2ex]
+  \hexentry[cpp]{linear_modifier.1}[f90]{4.5} &
+    modifier syntax change for \scode{linear} \\
+  \hexentry[cpp]{linear_modifier.2}[f90]{4.5} &
+    clause on \scode{declare}~\scode{simd} directive \\
+  \hexentry{linear_modifier.3}[f90]{4.5} & \\[2pt]
+\hline\\[-2ex]
+  \hexentry[f90]{allocators.1}{5.0} &
+    \scode{allocate} construct replaced with \scode{allocators} construct
+    for Fortran allocate statements \\[2pt]
+\hline\\[-2ex]
+  \hexentry{depobj.1}[f90]{5.0} &
+    argument added to \scode{destroy} clause on \scode{depobj} 
+    construct \\[2pt]
+\end{supertabular}
+
+\linenumbers
+Table~\ref{tab:Updated Examples 5.1} lists the updated examples for OpenMP 5.1
+in the Examples Document Version
+\href{https://github.com/OpenMP/Examples/tree/v5.1}{5.1}.
+The \emph{Earlier Version} column of the table lists the earlier version
+tags and prior names of the examples that can be found in 
+the Examples Document Version 
+\href{https://github.com/OpenMP/Examples/tree/v5.0.1}{5.0.1}.
+
+\index{affinity!master policy@\code{master} policy}
+\index{affinity!primary policy@\code{primary} policy}
+\index{constructs!master@\code{master}}
+\index{constructs!masked@\code{masked}}
+\index{master construct@\code{master} construct}
+\index{masked construct@\code{masked} construct}
+
+\nolinenumbers
+\renewcommand{\arraystretch}{1.0}
+\tablefirsthead{%
+\hline\\[-2ex]
+\textbf{Example Name} & \textbf{Earlier Version} & \textbf{Feature Updated}
+\\[2pt]
+\hline\\[-2ex]
+}
+\tablehead{%
+\multicolumn{2}{l}{\small\slshape table continued from previous page}\\[2pt]
+\hline\\[-2ex]
+\textbf{Example Name} & \textbf{Earlier Version} & \textbf{Feature Updated}\\[2pt]
+\hline\\[-2ex]
+}
+\tabletail{%
+\hline\\[-2.5ex]
+\multicolumn{2}{l}{\small\slshape table continued on next page}\\
+}
+\tablelasttail{\hline\\[-1ex]}
+\tablecaption{Updated Examples for Version 5.1\label{tab:Updated Examples 5.1}}
+\begin{supertabular}{p{1.8in} p{1.4in} p{1.8in}}
+  \hexentry{affinity.5}[f]{4.0} &
+    \scode{master} affinity policy replaced with \scode{primary} policy \\[2pt]
+\hline\\[-2ex]
+  \hexentry{async_target.3}[f90]{5.0} & 
+    \scode{master} construct replaced \\
+  \hexentry{cancellation.2}[f90]{4.0} & 
+    with \scode{masked} construct \\
+  \hexentry{copyprivate.2}[f]{3.0} & \\
+  \hexentry[f]{fort_sa_private.5}{3.0} & \\
+  \hexentry{lock_owner.1}[f]{3.0} & \\
+  \hexmentry{masked.1}[f]{3.0}{master.1} & \\
+  \hexmentry{parallel_masked_taskloop.1}[f90]{5.0}{parallel_master_taskloop.1} &\\
+  \hexentry{reduction.6}[f]{3.0} & \\
+  \hexentry{target_task_reduction.1}[f90]{5.0} & \\
+  \hexentry{target_task_reduction.2b}[f90]{5.0} & \\
+  \hexentry{taskloop_simd_reduction.1}[f90]{5.0} & \\
+  \hexentry{task_detach.1}[f90]{5.0} & \\[2pt]
+\end{supertabular}
+
+\linenumbers
+Table~\ref{tab:Updated Examples 5.0} lists the updated examples for OpenMP 5.0
+in the Examples Document Version
+\href{https://github.com/OpenMP/Examples/tree/v5.1}{5.1}.
+The \emph{Earlier Version} column of the table lists the earlier version
+tags of the examples that can be found in 
+the Examples Document Version 
+\href{https://github.com/OpenMP/Examples/tree/v5.0.1}{5.0.1}.
+
+\nolinenumbers
+\renewcommand{\arraystretch}{1.0}
+\tablefirsthead{%
+\hline\\[-2ex]
+\textbf{Example Name} & \textbf{Earlier Version} & \textbf{Feature Updated}
+\\[2pt]
+\hline\\[-2ex]
+}
+\tablehead{%
+\multicolumn{2}{l}{\small\slshape table continued from previous page}\\[2pt]
+\hline\\[-2ex]
+\textbf{Example Name} & \textbf{Earlier Version} & \textbf{Feature Updated}\\[2pt]
+\hline\\[-2ex]
+}
+\tabletail{%
+\hline\\[-2.5ex]
+\multicolumn{2}{l}{\small\slshape table continued on next page}\\
+}
+\tablelasttail{\hline\\[-1ex]}
+\tablecaption{Updated Examples for Version 5.0\label{tab:Updated Examples 5.0}}
+\begin{supertabular}{p{1.6in} p{1.3in} p{2.1in}}
+ \hexentry{critical.2}[f]{4.5} &
+   \scode{omp_lock_hint_*} constants \\
+ \hexentry[cpp]{init_lock_with_hint.1}[f]{4.5} &
+   replaced with \scode{omp_sync_hint_*} constants \\[2pt]
+\end{supertabular}
+
+\linenumbers
+

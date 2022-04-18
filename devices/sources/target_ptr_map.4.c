@@ -1,10 +1,10 @@
 /*
-* @@name:       target_ptr_map_4.c
+* @@name:       target_ptr_map.4
 * @@type:       C
 * @@compilable: yes
 * @@linkable:   no
 * @@expect:     success
-* @@version:	omp_5.1
+* @@version:	omp_5.2
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,7 +24,7 @@ int main()
 
    #pragma omp metadirective \
       when(user={condition(accessible)}: target firstprivate(ptr) ) \
-      default(                           target map(ptr[:n])      )
+      otherwise(                         target map(ptr[:n])      )
    {
       do_work(ptr, n);
    } 

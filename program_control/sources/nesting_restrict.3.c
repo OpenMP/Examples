@@ -1,5 +1,5 @@
 /*
-* @@name:	nesting_restrict.3c
+* @@name:	nesting_restrict.3
 * @@type:	C
 * @@compilable:	no
 * @@linkable:	no

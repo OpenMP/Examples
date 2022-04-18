@@ -1,5 +1,5 @@
 /*
-* @@name:       task_detach.1c
+* @@name:       task_detach.1
 * @@type:       C
 * @@compilable: yes
 * @@linkable:   no

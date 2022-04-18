@@ -1,5 +1,5 @@
 /*
-* @@name:	target_data.5c
+* @@name:	target_data.5
 * @@type:	C++
 * @@compilable:	yes
 * @@linkable:	no

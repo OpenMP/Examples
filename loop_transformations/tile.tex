@@ -1,6 +1,11 @@
 %\pagebreak
 \section{\code{tile} Construct}
 \label{sec:tile}
+\index{constructs!tile@\code{tile}}
+\index{tile construct@\code{tile} construct}
+\index{tile construct@\code{tile} construct!sizes clause@\code{sizes} clause}
+\index{sizes clause@\code{sizes} clause}
+\index{clauses!sizes@\code{sizes}}
 
 In the following example a \code{tile} construct transforms two nested loops
 within the \texttt{func1} function into four nested loops.
@@ -21,7 +26,7 @@ construct is applied after the transform.
 
 In the following Fortran code the inner loop traverses rows 
 and the outer loop traverses the columns of a 128x100 (row x column) matrix.  
-The  \code{sizes(5,16)} clause of the code{tile} construct specifies 
+The  \code{sizes(5,16)} clause of the \code{tile} construct specifies 
 a 5x16 blocking, applied to the outer (column) and inner (row) loops.
 The worksharing-loop construct before the \code{tile}
 construct is applied after the transform.

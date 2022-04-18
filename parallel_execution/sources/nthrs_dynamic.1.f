@@ -1,4 +1,4 @@
-! @@name:	nthrs_dynamic.1f
+! @@name:	nthrs_dynamic.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	yes

@@ -1,5 +1,5 @@
 /*
-* @@name: target_mapper_map.1c
+* @@name: target_mapper.1
 * @@type: C
 * @@compilable: yes
 * @@linkable: no

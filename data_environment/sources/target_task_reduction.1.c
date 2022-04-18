@@ -1,17 +1,14 @@
 /*
-* @@name: target_task_reduction.1.c
+* @@name: target_task_reduction.1
 * @@type: C
 * @@compilable: yes
 * @@linkable: yes
 * @@expect: success
-* @@version: omp_5.1
+* @@version: omp_5.2
 */
-#if _OPENMP  < 202011
-#define masked master
-#endif
 
 #include <stdio.h>
-#pragma omp declare target to(device_compute)
+#pragma omp declare target enter(device_compute)
 void device_compute(int *);
 void host_compute(int *);
 int main()

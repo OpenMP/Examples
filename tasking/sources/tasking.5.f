@@ -1,4 +1,4 @@
-! @@name:	tasking.5f
+! @@name:	tasking.5
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	no

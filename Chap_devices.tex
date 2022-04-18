@@ -15,7 +15,7 @@ data to the device storage.
 
 The constructs that explicitly
 create storage, transfer data, and free storage on the device
-are catagorized as structured and unstructured. The
+are categorized as structured and unstructured. The
 \code{target} \code{data} construct is structured. It creates
 a data region around \code{target} constructs, and is
 convenient for providing persistent data throughout multiple
@@ -33,14 +33,14 @@ the device, and controls on the storage duration.
 There is an important change in the OpenMP 4.5 specification
 that alters the data model for scalar variables and C/C++ pointer variables.
 The default behavior for scalar variables and C/C++ pointer variables
-in an 4.5 compliant code is \code{firstprivate}. Example
+in a 4.5 compliant code is \code{firstprivate}. Example
 codes that have been updated to reflect this new behavior are
 annotated with a description that describes changes required
 for correct execution. Often it is a simple matter of mapping
 the variable as \code{tofrom} to obtain the intended 4.0 behavior.
 
 In OpenMP version 4.5 the mechanism for target
-execution is specified as occuring through a \plc{target task}. 
+execution is specified as occurring through a \plc{target task}. 
 When the \code{target} construct is encountered a new 
 \plc{target task} is generated. The \plc{target task} 
 completes after the \code{target} region has executed and all data 
@@ -59,13 +59,14 @@ clause introduced in OpenMP 4.5.
 \input{devices/target_structure_mapping}
 \input{devices/target_fort_allocatable_array_mapping}
 \input{devices/array_sections}
+\input{devices/C++_virtual_functions}
 \input{devices/array_shaping}
 \input{devices/target_mapper}
 \input{devices/target_data}
 \input{devices/target_unstructured_data}
 \input{devices/target_update}
-\input{devices/target_associate_ptr}
 \input{devices/declare_target}
+\input{devices/lambda_expressions}
 \input{devices/teams}
 \input{devices/async_target_depend}
 \input{devices/async_target_with_tasks}

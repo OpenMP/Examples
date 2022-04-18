@@ -1,4 +1,4 @@
-! @@name:	fort_sp_common.5f
+! @@name:	fort_sp_common.5
 ! @@type:	F-fixed
 ! @@compilable:	no
 ! @@linkable:	no

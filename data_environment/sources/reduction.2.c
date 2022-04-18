@@ -1,5 +1,5 @@
 /*
-* @@name:	reduction.2c
+* @@name:	reduction.2
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

@@ -1,4 +1,4 @@
-! @@name:	fpriv_sections.1f
+! @@name:	fpriv_sections.1
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	yes

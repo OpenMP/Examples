@@ -1,4 +1,4 @@
-! @@name:       unroll.4.f
+! @@name:       unroll.4
 ! @@type:       F-free
 ! @@compilable: yes
 ! @@linkable:   no

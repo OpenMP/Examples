@@ -1,5 +1,5 @@
 /*
-* @@name:       task_priority.1c
+* @@name:       task_priority.1
 * @@type:       C
 * @@compilable: yes
 * @@linkable:   no

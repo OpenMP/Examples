@@ -1,0 +1,38 @@
+\pagebreak
+\section{C++ Virtual Functions}
+\label{sec:virtual_functions}
+
+\index{mapping!virtual functions, C++}
+
+The 5.2 OpenMP Specification clarified restrictions on the use 
+of polymorphic classes and virtual functions when used within 
+\scode{target} regions.  The following example identifies 
+problem cases in which the restrictions are not followed
+(for Unified Shared Memory, as prescribed by the \scode{requires}
+directive).
+
+The first section illustrates the restriction
+that when mapping an object for the first time, 
+the static and dynamic types must match.
+
+For the first target region the behavior of the implicit map of \splc{ar} 
+is not specified-- its static type (A) doesn't match its dynamic type (D).  
+Hence access to the virtual functions is undefined.
+However, the second target region can access \splc{D::vf()} 
+since the object to which \splc{ap} points is not mapped and 
+therefore the restriction does not apply.
+
+The second section illustrates the restriction:
+
+\emph{"Invoking a virtual member function of an object on a device other than the device on which the
+object was constructed results in unspecified behavior, unless the object is accessible and was
+constructed on the host device."}
+
+An instantiation of a polymorphic class (\splc{A}) occurs in the 
+\scode{target} region, and access of its virtual function
+is incorrectly attempted on the host (another device).
+However, once the object is deleted on
+the target device and instantiated on the host, access within
+the next \scode{target} region is permitted.
+
+\cppexample[5.2]{virtual_functions}{1}

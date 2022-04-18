@@ -1,4 +1,4 @@
-! @@name:	reduction.3f
+! @@name:	reduction.3
 ! @@type:	F-free
 ! @@compilable:	no
 ! @@linkable:	no

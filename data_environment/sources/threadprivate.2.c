@@ -1,5 +1,5 @@
 /*
-* @@name:	threadprivate.2c
+* @@name:	threadprivate.2
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

@@ -1,5 +1,5 @@
 /*
-* @@name:       task_detach.2c
+* @@name:       task_detach.2
 * @@type:       C
 * @@compilable: yes
 * @@linkable:   yes
@@ -17,10 +17,11 @@
 
 #include    <omp.h>
 
-#define IO_SIGNAL SIGUSR1           // Signal used to notify I/O completion
+#define IO_SIGNAL SIGUSR1        // Signal used to notify I/O completion
 
-                                    // Handler for I/O completion signal
-static void callback_aioSigHandler(int sig, siginfo_t *si, void *ucontext) {
+                                 // Handler for I/O completion signal
+static void callback_aioSigHandler(int sig, siginfo_t *si,
+                                   void *ucontext) {
    if (si->si_code == SI_ASYNCIO){
       printf( "OUT: I/O completion signal received.\n");
       omp_fulfill_event( (omp_event_handle_t)(si->si_value.sival_ptr) );
@@ -30,8 +31,9 @@ static void callback_aioSigHandler(int sig, siginfo_t *si, void *ucontext) {
 void work(int i){ printf("OUT: Executing work(%d)\n", i);}
 
 int main() {
-    // Write "Written Asynchronously." to file data, using POSIX asynchronous IO
-    // Error checking not included for clarity and simplicity.
+   // Write "Written Asynchronously." to file data, using POSIX
+   // asynchronous IO. Error checking not included for clarity
+   // and simplicity.
 
    char      data[] = "Written Asynchronously.";
 
@@ -57,26 +59,27 @@ int main() {
    sa.sa_sigaction = callback_aioSigHandler;   //callback
    sigaction(IO_SIGNAL, &sa, NULL);
 
-  #pragma omp parallel num_threads(2)
-  #pragma omp masked 
-  {
+   #pragma omp parallel num_threads(2)
+   #pragma omp masked 
+   {
   
-    #pragma omp task detach(event) if(0)               // TASK1
-    {
-       cb.aio_sigevent.sigev_value.sival_ptr = (void *) event;
-       aio_write(&cb);
-    }
+      #pragma omp task detach(event) if(0)               // TASK1
+      {
+         cb.aio_sigevent.sigev_value.sival_ptr = (void *) event;
+         aio_write(&cb);
+      }
        
-    #pragma omp task                                   // TASK2
-       work(1);
-    #pragma omp task                                   // TASK3
-       work(2);
+      #pragma omp task                                   // TASK2
+         work(1);
+      #pragma omp task                                   // TASK3
+         work(2);
 
-  } // Parallel region barrier ensures completion of detachable task.
+   } // Parallel region barrier ensures completion of detachable task.
 
-  // Making sure the aio operation completed.
-  // With OpenMP detachable task the condition will always be false:
-  while(aio_error(&cb) == EINPROGRESS){printf(" INPROGRESS\n");} //Safeguard
+   // Making sure the aio operation completed.
+   // With OpenMP detachable task the condition will always be false:
+   while(aio_error(&cb) == EINPROGRESS) {
+   printf(" INPROGRESS\n");} //Safeguard
 
    close(fd);
    return 0;

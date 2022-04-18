@@ -1,5 +1,5 @@
 /*
-* @@name: affinity_display.3.c
+* @@name: affinity_display.3
 * @@type: C
 * @@compilable: yes
 * @@linkable: yes
@@ -25,9 +25,9 @@ int main(void){
    char **buffer;
 
 
-// CODE SEGMENT 1         AFFINITY FORMAT
+   // CODE SEGMENT 1         AFFINITY FORMAT
 
-//                        Get and Display Default Affinity Format
+   // Get and Display Default Affinity Format
 
    nchars = omp_get_affinity_format(default_format,(size_t)FORMAT_STORE);
    printf("Default Affinity Format is: %s\n",default_format);
@@ -37,44 +37,49 @@ int main(void){
       printf("         FORMAT_STORE to %d.\n", nchars+1);
    }
 
-//                        Set Affinity Format
+   // Set Affinity Format
 
    omp_set_affinity_format(my_format);
    printf("Affinity Format set to: %s\n",my_format);
 
 
-// CODE SEGMENT 2         CAPTURE AFFINITY 
+   // CODE SEGMENT 2         CAPTURE AFFINITY
 
-//                        Set up buffer for affinity of n threads
+   // Set up buffer for affinity of n threads
 
    n = omp_get_num_procs();
    buffer = (char **)malloc( sizeof(char *) * n );
-   for(i=0;i<n;i++){ buffer[i]=(char *)malloc( sizeof(char) * BUFFER_STORE); }
+   for(i=0;i<n;i++){
+      buffer[i]=(char *)malloc( sizeof(char) * BUFFER_STORE);
+   }
 
-//                        Capture Affinity using Affinity Format set above.
-//                        Use max reduction to check size of buffer areas
+   // Capture Affinity using Affinity Format set above.
+   // Use max reduction to check size of buffer areas
    max_req_store = 0;
-   #pragma omp parallel private(thrd_num,nchars) reduction(max:max_req_store)
+   #pragma omp parallel private(thrd_num,nchars) \
+                        reduction(max:max_req_store)
    {
-      if(omp_get_num_threads()>n) exit(1); //safety: don't exceed # of buffers
+      //safety: don't exceed # of buffers
+      if(omp_get_num_threads()>n) exit(1);
 
       thrd_num=omp_get_thread_num();
-      nchars=omp_capture_affinity(buffer[thrd_num],(size_t)BUFFER_STORE,NULL);
+      nchars=omp_capture_affinity(buffer[thrd_num],
+                                  (size_t)BUFFER_STORE,NULL);
       if(nchars > max_req_store) max_req_store=nchars;
 
       // ...
    }
 
-   for(i=0;i<n;i++){ 
-      printf("thrd_num= %d, affinity: %s\n", i,buffer[i]); 
+   for(i=0;i<n;i++){
+      printf("thrd_num= %d, affinity: %s\n", i,buffer[i]);
    }
-         // For 4 threads with OMP_PLACES='{0,1},{2,3},{4,5},{6,7}'
-         // Format    host=%20H thrd_num=%0.4n binds_to=%A
+      // For 4 threads with OMP_PLACES='{0,1},{2,3},{4,5},{6,7}'
+      // Format    host=%20H thrd_num=%0.4n binds_to=%A
 
-         // affinity: host=hpc.cn567            thrd_num=0000 binds_to=0,1
-         // affinity: host=hpc.cn567            thrd_num=0001 binds_to=2,3
-         // affinity: host=hpc.cn567            thrd_num=0002 binds_to=4,5
-         // affinity: host=hpc.cn567            thrd_num=0003 binds_to=6,7
+      // affinity: host=hpc.cn567            thrd_num=0000 binds_to=0,1
+      // affinity: host=hpc.cn567            thrd_num=0001 binds_to=2,3
+      // affinity: host=hpc.cn567            thrd_num=0002 binds_to=4,5
+      // affinity: host=hpc.cn567            thrd_num=0003 binds_to=6,7
 
 
    if(max_req_store>=BUFFER_STORE){

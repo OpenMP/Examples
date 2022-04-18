@@ -1,5 +1,5 @@
 /*
-* @@name:	init_lock.1c
+* @@name:	init_lock.1
 * @@type:	C++
 * @@compilable:	yes
 * @@linkable:	no

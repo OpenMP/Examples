@@ -1,5 +1,5 @@
 /*
-* @@name:       scan.1.c
+* @@name:       scan.1
 * @@type:       C
 * @@compilable: yes
 * @@linkable:   yes

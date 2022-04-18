@@ -1,5 +1,5 @@
 /*
-* @@name:	icv.1c
+* @@name:	icv.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes

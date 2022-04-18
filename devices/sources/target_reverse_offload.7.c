@@ -1,10 +1,10 @@
 /*
-* @@name:	target_reverse_offload.1c
+* @@name:	target_reverse_offload.7
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes
 * @@expect:	success
-* @@version:	omp_5.0
+* @@version:	omp_5.2
 */
 
 #include <stdio.h>
@@ -23,7 +23,7 @@ void error_handler(int wrong_value, int index)
 //                 Expecting: A[i ]=i
 
 }
-#pragma omp declare target device_type(host) to(error_handler)
+#pragma omp declare target device_type(host) enter(error_handler)
  
 int main()
 {

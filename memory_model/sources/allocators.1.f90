@@ -1,30 +1,29 @@
-! @@name: allocators.1f90
+! @@name: allocators.1
 ! @@type: F-free
 ! @@compilable: yes
 ! @@linkable: yes
 ! @@expect: success
-! @@version: omp_5.0
-
+! @@version: omp_5.2
 program main
  use omp_lib
 
- integer, parameter :: N=1000, align=64
+ integer, parameter :: N=1000
  real, allocatable  :: x(:),y(:)
  real               :: s = 2.0e0
  integer            :: i 
 
  integer(omp_memspace_handle_kind ) :: xy_memspace = omp_default_mem_space
  type(   omp_alloctrait           ) :: xy_traits(1) = &
-                                          [omp_alloctrait(omp_atk_alignment,64)]
+                                    [omp_alloctrait(omp_atk_alignment,64)]
  integer(omp_allocator_handle_kind) :: xy_alloc
 
    xy_alloc   =    omp_init_allocator(   xy_memspace, 1, xy_traits)
 
-   !$omp allocate(x,y) allocator(xy_alloc) 
+   !$omp allocators allocate(allocator(xy_alloc): x, y) 
    allocate(x(N),y(N))
                          !! loc is non-standard, but found everywhere
                          !! remove these lines if not available
-   if(modulo(loc(x),align) /= 0 .and. modulo(loc(y),align) /=0 ) then
+   if(modulo(loc(x),64) /= 0 .and. modulo(loc(y),64) /=0 ) then
       print*,"ERROR: x|y not 64-byte aligned"; stop
    endif
 

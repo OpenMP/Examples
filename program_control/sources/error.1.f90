@@ -1,17 +1,16 @@
-! @@name:       error.1f
+! @@name:       error.1
 ! @@type:       F-free
 ! @@compilable: yes
 ! @@linkable:   yes
 ! @@expect:     success
-! @@version:    omp_5.1
-
+! @@version:    omp_5.2
 program main
 use omp_lib
 
 !$omp  metadirective  &
-!$omp&     when( implementation={vendor(gnu)}: nothing  ) &
-!$omp&     default( error at(compilation) severity(fatal) &
-!$omp&              message( "GNU compiler required." ) )
+!$omp&     when( implementation={vendor(gnu)}: nothing    ) &
+!$omp&     otherwise( error at(compilation) severity(fatal) &
+!$omp&                message( "GNU compiler required." ) )
 
 
 if( omp_get_num_procs() < 3 ) then

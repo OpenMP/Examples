@@ -1,5 +1,5 @@
 /*
-* @@name:	target.4c
+* @@name:	async_target.4
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

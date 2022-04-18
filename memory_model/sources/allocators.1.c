@@ -1,5 +1,5 @@
 /*
-* @@name: allocators.1c
+* @@name: allocators.1
 * @@type: C
 * @@compilable: yes
 * @@linkable: yes
@@ -17,9 +17,10 @@ int main()
    float  *x, *y;
    float s=2.0;
 
-omp_memspace_handle_t  xy_memspace = omp_default_mem_space;
-omp_alloctrait_t       xy_traits[1]={omp_atk_alignment, 64};
-omp_allocator_handle_t xy_alloc    = omp_init_allocator(xy_memspace,1,xy_traits);
+   omp_memspace_handle_t  xy_memspace = omp_default_mem_space;
+   omp_alloctrait_t       xy_traits[1]= {omp_atk_alignment, 64};
+   omp_allocator_handle_t xy_alloc    = 
+                           omp_init_allocator(xy_memspace,1,xy_traits);
 
 
    x=(float *)omp_alloc(N*sizeof(float), xy_alloc); 
@@ -37,8 +38,8 @@ omp_allocator_handle_t xy_alloc    = omp_init_allocator(xy_memspace,1,xy_traits)
       for(int i=0; i<N; i++) y[i] = s*x[i] + y[i];
     }
 
-
-   printf("y[0],y[N-1]: %5.0f %5.0f\n",y[0],y[N-1]); //output: y...   3  3000
+   printf("y[0],y[N-1]: %5.0f %5.0f\n",y[0],y[N-1]);
+   // output y[0],y[N-1]: 3 3000
 
    omp_free(x, xy_alloc);
    omp_free(y, xy_alloc);

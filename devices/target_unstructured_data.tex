@@ -3,6 +3,10 @@
 \section{\code{target} \code{enter} \code{data} and \code{target} \code{exit} \code{data} Constructs}
 \label{sec:target_enter_exit_data}
 %\section{Simple target enter data and target exit data Constructs}
+\index{constructs!target enter data@\code{target} \code{enter} \code{data}}
+\index{constructs!target exit data@\code{target} \code{exit} \code{data}}
+\index{target enter data construct@\code{target} \code{enter} \code{data} construct}
+\index{target exit data construct@\code{target} \code{exit} \code{data} construct}
 
 The structured data construct (\code{target}~\code{data}) provides persistent data on a
 device for subsequent \code{target} constructs as shown in the 
@@ -13,6 +17,10 @@ The unstructured data constructs allow the creation and deletion of data on
 the device at any appropriate point within the host code, as shown below 
 with the \code{target}~\code{enter}~\code{data} and \code{target}~\code{exit}~\code{data} constructs.
 
+\index{map clause@\code{map} clause!alloc map-type@\code{alloc} map-type}
+\index{map clause@\code{map} clause!delete map-type@\code{delete} map-type}
+\index{alloc map-type@\code{alloc} map-type}
+\index{delete map-type@\code{delete} map-type}
 The following C++ code creates/deletes a vector in a constructor/destructor 
 of a class. The constructor creates a vector with \code{target}~\code{enter}~\code{data}
 and uses an \code{alloc} modifier in the \code{map} clause to avoid copying values

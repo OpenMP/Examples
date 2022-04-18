@@ -1,4 +1,4 @@
-! @@name:       loop.2f90
+! @@name:       loop.1
 ! @@type:       F-free
 ! @@compilable: yes
 ! @@linkable:   yes

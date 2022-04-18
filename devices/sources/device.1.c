@@ -1,18 +1,18 @@
 /*
-* @@name:	device.1c
+* @@name:	device.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
-* @@version:	omp_4.0
+* @@version:	omp_5.1
 */
 #include <stdio.h>
 #include <omp.h>
 
-#pragma omp declare target
-void vec_mult(float *p, float *v1, float *v2, int N);
-extern float *p, *v1, *v2;
-extern int N;
+#pragma omp begin declare target
+   void vec_mult(float *p, float *v1, float *v2, int N);
+   extern float *p, *v1, *v2;
+   extern int N;
 #pragma omp end declare target
 
 extern void init_vars(float *, float *, int);

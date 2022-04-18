@@ -1,4 +1,4 @@
-! @@name:       affinity.6f
+! @@name:       affinity.6
 ! @@type:       F-free
 ! @@compilable: yes
 ! @@linkable:   no

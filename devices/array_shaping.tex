@@ -1,5 +1,15 @@
 \section{Array Shaping}
 \label{sec:array-shaping}
+\index{array shaping!in motion-clause@in \plc{motion-clause}}
+\index{constructs!target update@\code{target}~\code{update}}
+\index{target update construct@\code{target}~\code{update} construct!to clause@\code{to} clause}
+\index{target update construct@\code{target}~\code{update} construct!from clause@\code{from} clause}
+
+\index{directives!declare target@\code{declare}~\code{target}}
+\index{declare target directive@\code{declare}~\code{target} directive}
+
+\index{directives!begin declare target@\code{begin}~\code{declare}~\code{target}}
+\index{begin declare target directive@\code{begin}~\code{declare}~\code{target} directive}
 
 \ccppspecificstart
 A pointer variable can be shaped to a multi-dimensional array to facilitate
@@ -23,8 +33,9 @@ Note the use of additional parentheses
 around the shape-operator and $a$ to ensure the correct precedence 
 over array-section operations.
 
-\cnexample[5.0]{array_shaping}{1}
+\cnexample[5.1]{array_shaping}{1}
 \ccppspecificend
+\clearpage
 
 The shape operator is not defined for Fortran.  Explicit array shaping
 of procedure arguments can be used instead to achieve a similar goal.
@@ -32,4 +43,4 @@ Below is the Fortran-equivalent of the above example that illustrates
 the support of transferring two rows of noncontiguous boundary
 data in the \code{target}~\code{update} directive.
  
-\ffreeexample[5.0]{array_shaping}{1}
+\ffreeexample[5.2]{array_shaping}{1}

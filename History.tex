@@ -2,6 +2,72 @@
 \label{chap:history}
 
 %=====================================
+\section{Changes from 5.1 to 5.2}
+\label{sec:history_51_to_52}
+
+\begin{itemize}
+\item General changes:
+\begin{itemize}
+\item Included a description of the semantics for OpenMP directive syntax
+ (see \specref{chap:directive_syntax})
+\item Reorganized the Introduction Chapter and moved the Feature 
+Deprecation Chapter to Appendix~\ref{chap:deprecated_features}
+\item Included a list of examples that were updated for feature deprecation
+and replacement in each version (see Appendix~\ref{sec:Updated Examples})
+\item Added Index entries
+\end{itemize}
+
+\item Updated the examples for feature deprecation and replacement in OpenMP 5.2.
+See Table~\ref{tab:Deprecated Features} and 
+Table~\ref{tab:Updated Examples 5.2} for details.
+
+\item Added the following examples for the 5.2 features:
+\begin{itemize}
+  \item Mapping class objects with virtual functions
+     (\specref{sec:virtual_functions})
+  \item \scode{allocators} construct for Fortran \code{allocate} statement
+     (\specref{sec:allocators})
+  \item Behavior of reallocation of variables through OpenMP allocator in
+     Fortran (\specref{sec:allocators})
+\end{itemize}
+
+\item Added the following examples for the 5.1 features:
+\begin{itemize}
+  \item Clarification of optional \code{end} directive for strictly structured 
+      block in Fortran (\specref{sec:fortran_free_format_comments})
+  \item \scode{filter} clause on \scode{masked} construct (\specref{sec:masked})
+  \item \scode{omp_all_memory} reserved locator for specifying task dependences
+      (\specref{subsec:depend_undefer_task})
+  \item Behavior of Fortran allocatable variables in \code{target} regions
+      (\specref{sec:fort_allocatable_array_mapping})
+  \item Device memory routines in Fortran
+      (\specref{subsec:target_mem_and_device_ptrs})
+  \item Partial tiles from \scode{tile} construct
+      (\specref{sec:incomplete_tiles})
+  \item Fortran associate names and selectors in \code{target} region
+      (\specref{sec:associate_target})
+  \item \scode{allocate} directive for variable declarations and 
+      \scode{allocate} clause on \scode{task} constructs
+      (\specref{sec:allocators})
+  \item Controlling concurrency and reproducibility with \code{order} clause
+      (\specref{sec:reproducible_modifier})
+\end{itemize}
+
+\item Added other examples:
+\begin{itemize}
+  \item Using lambda expressions with \scode{target} constructs
+     (\specref{sec:lambda_expressions})
+  \item Target memory and device pointer routines
+     (\specref{subsec:target_mem_and_device_ptrs})
+  \item Examples to illustrate the ordering properties of 
+     the \plc{flush} operation (\specref{sec:mem_model})
+  \item User selector in the \code{metadirective} directive
+     (\specref{sec:metadirective})
+\end{itemize}
+
+\end{itemize}
+
+%=====================================
 \section{Changes from 5.0.1 to 5.1}
 \label{sec:history_501_to_51}
 

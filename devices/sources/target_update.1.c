@@ -1,9 +1,8 @@
 /*
-* @@name:	target_update.1c
+* @@name:	target_update.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no
-* @@expect:	success
 * @@expect:	success
 * @@version:	omp_4.0
 */

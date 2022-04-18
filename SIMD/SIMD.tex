@@ -2,6 +2,8 @@
 \section{\code{simd} and \code{declare} \code{simd} Directives}
 \label{sec:SIMD}
 
+\index{constructs!simd@\code{simd}}
+\index{simd construct@\code{simd} construct}
 The following example illustrates the basic use of the \code{simd} construct 
 to assure the compiler that the loop can be vectorized.
 
@@ -10,6 +12,12 @@ to assure the compiler that the loop can be vectorized.
 \ffreeexample[4.0]{SIMD}{1}
  
 
+\index{directives!declare simd@\code{declare}~\code{simd}}
+\index{declare simd directive@\code{declare}~\code{simd} directive}
+\index{clauses!uniform@\code{uniform}}
+\index{uniform clause@\code{uniform} clause}
+\index{clauses!linear@\code{linear}}
+\index{linear clause@\code{linear} clause}
 When a function can be inlined within a loop the compiler has an opportunity to 
 vectorize the loop. By guaranteeing SIMD behavior of a function's operations, 
 characterizing the arguments of the function and privatizing temporary 
@@ -43,6 +51,11 @@ variable.
 \ffreeexample[4.0]{SIMD}{2}
 
 %\pagebreak
+\index{clauses!private@\code{private}}
+\index{private clause@\code{private} clause}
+\index{clauses!reduction@\code{reduction}}
+\index{reduction clause@\code{reduction} clause}
+\index{reductions!reduction clause@\code{reduction} clause}
 A thread that encounters a SIMD construct executes a vectorized code of the 
 iterations. Similar to the concerns of a worksharing loop a loop vectorized 
 with a SIMD construct must assure that temporary and reduction variables are 
@@ -56,6 +69,8 @@ construct.
 
 
 %\pagebreak
+\index{clauses!safelen@\code{safelen}}
+\index{safelen clause@\code{safelen} clause}
 A \code{safelen(N)} clause in a \code{simd} construct assures the compiler that 
 there are no loop-carried dependencies for vectors of size \plc{N} or below. If 
 the \code{safelen} clause is not specified, then the default safelen value is 
@@ -71,6 +86,8 @@ than 16, the behavior is undefined.
 \ffreeexample[4.0]{SIMD}{4}
 
 %\pagebreak
+\index{clauses!collapse@\code{collapse}}
+\index{collapse clause@\code{collapse} clause}
 The following SIMD construct instructs the compiler to collapse the \plc{i} and 
 \plc{j} loops into a single SIMD loop in which SIMD chunks are executed by 
 threads of the team. Within the workshared loop chunks of a thread, the SIMD 
@@ -84,6 +101,10 @@ chunks are executed in the lanes of the vector units.
 %%% section
 \section{\code{inbranch} and \code{notinbranch} Clauses}
 \label{sec:SIMD_branch}
+\index{clauses!inbranch@\code{inbranch}}
+\index{inbranch clause@\code{inbranch} clause}
+\index{clauses!notinbranch@\code{notinbranch}}
+\index{notinbranch clause@\code{notinbranch} clause}
 
 The following examples illustrate the use of the \code{declare} \code{simd} 
 directive with the \code{inbranch} and \code{notinbranch} clauses. The 
@@ -114,6 +135,7 @@ version of the \plc{fib()} function.
 \pagebreak
 \section{Loop-Carried Lexical Forward Dependence}
 \label{sec:SIMD_forward_dep}
+\index{dependences!loop-carried lexical forward}
 
 
  The following example tests the restriction on an SIMD loop with the loop-carried lexical forward-dependence. This dependence must be preserved for the correct execution of SIMD loops.

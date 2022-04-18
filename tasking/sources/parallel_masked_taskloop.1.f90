@@ -1,14 +1,9 @@
-! @@name:       parallel_masked_taskloop.1.f
+! @@name:       parallel_masked_taskloop.1
 ! @@type:       F-free
 ! @@compilable: yes
-! @@requires:   preprocessing
 ! @@linkable:   yes
 ! @@expect:     success
 ! @@version:    omp_5.1
-#if _OPENMP  < 202011
-#define masked master
-#endif
-
 program main
 
    integer, parameter :: N=100

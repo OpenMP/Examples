@@ -1,4 +1,4 @@
-! @@name:	copyin.1f
+! @@name:	copyin.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	no

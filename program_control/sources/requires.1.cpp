@@ -1,5 +1,5 @@
 /*
-* @@name:       requires.1cpp
+* @@name:       requires.1
 * @@type:       C++
 * @@compilable: yes
 * @@linkable:   yes

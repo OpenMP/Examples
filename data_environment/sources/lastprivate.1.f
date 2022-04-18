@@ -1,4 +1,4 @@
-! @@name:	lastprivate.1f
+! @@name:	lastprivate.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	no

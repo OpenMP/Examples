@@ -1,9 +1,16 @@
 \pagebreak
 \section{Task Dependences}
 \label{sec:task_depend}
+\index{dependences!task dependences}
 
 \subsection{Flow Dependence}
 \label{subsec:task_flow_depend}
+\index{task dependences!flow dependence}
+\index{task construct@\code{task} construct!depend clause@\code{depend} clause}
+\index{task construct@\code{task} construct}
+\index{constructs!task@\code{task}}
+\index{depend clause@\code{depend} clause}
+\index{clauses!depend@\code{depend}}
 
 This example shows a simple flow dependence using a \code{depend} 
 clause on the \code{task} construct.
@@ -19,6 +26,7 @@ would have a race condition.
 
 \subsection{Anti-dependence}
 \label{subsec:task_anti_depend}
+\index{task dependences!anti dependence}
 
 This example shows an anti-dependence using the \code{depend} 
 clause on the \code{task} construct.
@@ -34,6 +42,7 @@ race condition.
 
 \subsection{Output Dependence}
 \label{subsec:task_out_depend}
+\index{task dependences!output dependence}
 
 This example shows an output dependence using the \code{depend} 
 clause on the \code{task} construct.
@@ -50,6 +59,7 @@ race condition.
 \pagebreak
 \subsection{Concurrent Execution with Dependences}
 \label{subsec:task_concurrent_depend}
+\index{task dependences!concurrent execution with}
 
 In this example we show potentially concurrent execution of tasks using multiple 
 flow dependences expressed using the \code{depend} clause on the \code{task} 
@@ -59,7 +69,7 @@ construct.
 
 \ffreeexample[4.0]{task_dep}{4}
 
-The last two tasks are dependent on the first task. However there is no dependence 
+The last two tasks are dependent on the first task. However, there is no dependence 
 between the last two tasks, which may execute in any order (or concurrently if 
 more than one thread is available). Thus, the possible outputs are \texttt{"}x 
 + 1 = 3. x + 2 = 4. \texttt{"} and \texttt{"}x + 2 = 4. x + 1 = 3. \texttt{"}. 
@@ -68,6 +78,7 @@ in any order and the program would have a race condition.
 
 \subsection{Matrix multiplication}
 \label{subsec:task_matrix_mult}
+\index{task dependences!matrix multiplication}
 
 This example shows a task-based blocked matrix multiplication. Matrices are of 
 NxN elements, and the multiplication is implemented using blocks of BSxBS elements.
@@ -78,6 +89,12 @@ NxN elements, and the multiplication is implemented using blocks of BSxBS elemen
 
 \subsection{\code{taskwait} with Dependences}
 \label{subsec:taskwait_depend}
+\index{task dependences!taskwait construct with@\code{taskwait} construct with}
+\index{taskwait construct@\code{taskwait} construct}
+\index{constructs!taskwait@\code{taskwait}}
+\index{taskwait construct@\code{taskwait} construct!depend clause@\code{depend} clause}
+\index{depend clause@\code{depend} clause}
+\index{clauses!depend@\code{depend}}
 
 In this subsection three examples illustrate how the
 \code{depend} clause can be applied to a \code{taskwait} construct to make the
@@ -156,6 +173,7 @@ taskwait does not produce race conditions on variables accessed by non-completed
 \pagebreak
 \subsection{Mutually Exclusive Execution with Dependences}
 \label{subsec:task_dep_mutexinoutset}
+\index{task dependences!mutually exclusive execution}
 
 In this example we show a series of tasks, including mutually exclusive
 tasks, expressing dependences using the \code{depend} clause on the
@@ -183,6 +201,9 @@ scheduling \code{longTaskBC} before \code{shortTaskAC}.
 
 \subsection{Multidependences Using Iterators}
 \label{subsec:depend_iterator}
+\index{task dependences!using iterators}
+\index{depend clause@\code{depend} clause!iterator modifier@\code{iterator} modifier}
+\index{iterator modifier@\code{iterator} modifier}
 
 The following example uses an iterator to define a dynamic number of
 dependences.
@@ -207,7 +228,7 @@ must indicate identical storage locations or disjoint storage locations".
 In this case each of the loop tasks use a single disjoint (different storage)
 element in their \code{depend} clause; however,
 the array-section storage area prescribed in the commented directive is neither
-identical nor disjoint to the storage prescibed by the elements of the
+identical nor disjoint to the storage prescribed by the elements of the
 loop tasks.  The iterator overcomes this restriction by effectively
 creating n disjoint storage areas.
 
@@ -217,6 +238,7 @@ creating n disjoint storage areas.
 
 \subsection{Dependence for Undeferred Tasks}
 \label{subsec:depend_undefer_task}
+\index{task dependences!undeferred tasks}
 
 In the following example, we show that even if a task is undeferred as specified
 by an \code{if} clause that evaluates to \plc{false}, task dependences are
@@ -227,7 +249,7 @@ the first task is completed before the second task.
 
 The second explicit task has an \code{if} clause that evaluates to \plc{false}.
 This means that the execution of the generating task (the implicit task of
-the \code{single} region) must be suspended until the second explict task
+the \code{single} region) must be suspended until the second explicit task
 is completed.
 But, because of the dependence, the first explicit task must complete first,
 then the second explicit task can execute and complete, and only then 
@@ -239,3 +261,16 @@ Thus, the program will always print "\texttt{x = 2}".
 
 \ffreeexample[4.0]{task_dep}{12}
 
+
+In OpenMP 5.1 the \scode{omp_all_memory} \splc{reserved locator} was introduced
+to specify storage of all objects in memory. In the following example,
+it is used in Task 4 as a convenient way to specify that the locator
+(list item) denotes the storage of all objects (locations) in memory, and 
+will therefore match the \splc{a} and \splc{d} locators of Task 2, Task 3 and Task 6.
+The dependences guarantee the ordered execution of Tasks 2 and 3 before 4, and
+Task 4 before Task 6.
+Since there are no dependences imposed on Task 1 and Task 5, they can be
+scheduled to execute at any time, with no ordering.
+
+\cexample[5.1]{task_dep}{13}
+\ffreeexample[5.1]{task_dep}{13}

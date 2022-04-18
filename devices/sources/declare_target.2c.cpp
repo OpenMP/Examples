@@ -4,7 +4,7 @@
 * @@compilable:	no
 * @@linkable:	no
 * @@expect:	failure
-* @@version:	omp_4.0
+* @@version:	omp_5.2
 */
 struct typeX
 {
@@ -16,10 +16,12 @@ class typeY
   public:
    int foo() { return a^0x01;}
 };
-#pragma omp declare target
-struct typeX varX;  // ok
-class typeY varY; // ok if varY.foo() not called on target device
+
+#pragma omp begin declare target
+  struct typeX varX;  // ok
+  class typeY varY; // ok if varY.foo() not called on target device
 #pragma omp end declare target
+
 void foo()
 {
    #pragma omp target

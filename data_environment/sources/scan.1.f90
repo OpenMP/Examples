@@ -1,4 +1,4 @@
-! @@name:       scan.1.f
+! @@name:       scan.1
 ! @@type:       F-free
 ! @@compilable: yes
 ! @@linkable:   yes

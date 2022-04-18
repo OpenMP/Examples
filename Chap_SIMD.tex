@@ -31,7 +31,7 @@ execution within loops that contain the function and have a \code{simd}
 directive.  Clauses provide argument specifications (\code{linear},
 \code{uniform}, and \code{aligned}), a requested vector length 
 (\code{simdlen}), and designate whether the function is always/never 
-called conditionally in a loop (\code{branch}/\code{inbranch}). 
+called conditionally in a loop (\code{notinbranch}/\code{inbranch}). 
 The latter is for optimizing performance.
 
 Also, the \code{simd} construct has been combined with the worksharing loop 

@@ -1,17 +1,20 @@
 /*
-* @@name:	declare_target.3c
+* @@name:	declare_target.3
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
-* @@version:	omp_4.0
+* @@version:	omp_5.1
 */
 #define N 1000
-#pragma omp declare target
+
+#pragma omp begin declare target
 float p[N], v1[N], v2[N];
 #pragma omp end declare target
+
 extern void init(float *, float *, int);
 extern void output(float *, int);
+
 void vec_mult()
 {
    int i;

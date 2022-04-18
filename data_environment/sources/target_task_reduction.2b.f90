@@ -1,18 +1,14 @@
-! @@name:	target_task_reduction.2b.f90
+! @@name:	target_task_reduction.2b
 ! @@type:	F-free
 ! @@compilable:	yes
-! @@requires:	preprocessing
 ! @@linkable:	yes
 ! @@expect:	success
-! @@version:	omp_5.1
-#if _OPENMP  < 202011
-#define masked master
-#endif
+! @@version:	omp_5.2
 
 program target_task_reduction_ex2b
    interface
       subroutine device_compute(res)
-      !$omp declare target to(device_compute)
+      !$omp declare target enter(device_compute)
         integer :: res
       end subroutine device_compute
       subroutine host_compute(res)

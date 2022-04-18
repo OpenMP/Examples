@@ -1,4 +1,4 @@
-! @@name:	target.4f
+! @@name:	target.4
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

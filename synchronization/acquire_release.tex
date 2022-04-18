@@ -18,6 +18,20 @@
 
 %%%%%%%%%%%%%%%%%%
 
+\index{flushes!acquire}
+\index{flushes!release}
+\index{clauses!memory ordering clauses}
+\index{memory ordering clauses!acquire@\code{acquire}}
+\index{acquire clause@\code{acquire} clause}
+\index{memory ordering clauses!release@\code{release}}
+\index{release clause@\code{release} clause}
+\index{memory ordering clauses!acq_rel@\scode{acq_rel}}
+\index{acq_rel clause@\scode{acq_rel} clause}
+\index{flush construct@\code{flush} construct}
+\index{atomic construct@\code{atomic} construct}
+\index{clauses!acquire@\code{acquire}}
+\index{clauses!release@\code{release}}
+\index{clauses!acq_rel@\scode{acq_rel}}
 As explained in the Memory Model chapter of this document, a flush operation
 may be an \emph{acquire flush} and/or a \emph{release flush}, and OpenMP 5.0
 defines acquire/release semantics in terms of these fundamental flush
@@ -45,6 +59,9 @@ acquire flush and release flush, respectively.
 
 %%%%%%%%%%%%%%%%%%
 
+\index{constructs!critical@\code{critical}}
+\index{critical construct@\code{critical} construct}
+\index{flushes!implicit}
 The first example illustrates how the release and acquire flushes implied by a
 \code{critical} region guarantee a value written by the first thread is visible
 to a read of the value on the second thread. Thread 0 writes to \plc{x} and
@@ -56,8 +73,8 @@ consistent with the program order of the thread.  Meanwhile, thread 1 executes a
 \plc{x}; again, the execution of the \code{critical} regions happen before the
 read from \plc{x} based on the program order of the thread. The \code{critical}
 regions executed by the two threads execute in a serial manner, with a
-pair-wise synchronization from the exit of one \code{critical} region to the
-entry to the next \code{critical} region.  These pair-wise synchronizations
+pairwise synchronization from the exit of one \code{critical} region to the
+entry to the next \code{critical} region.  These pairwise synchronizations
 result from the implicit release flushes that occur on exit from
 \code{critical} regions and the implicit acquire flushes that occur on entry to
 \code{critical} regions; hence, the execution of each \code{critical} region in
@@ -70,6 +87,18 @@ by thread 0 and the read from \plc{x} by thread 1, and so thread 1 must see that
 \cexample[5.0]{acquire_release}{1}
 \ffreeexample[5.0]{acquire_release}{1}
 
+\index{constructs!atomic@\code{atomic}}
+\index{atomic construct@\code{atomic} construct}
+\index{atomic construct@\code{atomic} construct!write clause@\code{write} clause}
+\index{atomic construct@\code{atomic} construct!read clause@\code{read} clause}
+\index{atomic construct@\code{atomic} construct!memory ordering clauses}
+\index{write clause@\code{write} clause}
+\index{read clause@\code{read} clause}
+\index{clauses!write@\code{write}}
+\index{clauses!read@\code{read}}
+\index{memory ordering clauses!seq_cst@\scode{seq_cst}}
+\index{seq_cst clause@\scode{seq_cst} clause}
+\index{clauses!seq_cst@\scode{seq_cst}}
 In the second example, the \code{critical} constructs are exchanged with
 \code{atomic} constructs that have \textit{explicit} memory ordering specified. When the
 atomic read operation on thread 1 reads a non-zero value from \plc{y}, this
@@ -81,6 +110,9 @@ assignment to \plc{x} on thread 0 happens before the read of \plc{x} on thread
 \ffreeexample[5.0]{acquire_release}{2}
 
 \pagebreak
+\index{constructs!atomic@\code{atomic}}
+\index{atomic construct@\code{atomic} construct!relaxed atomic operations}
+\index{flush construct@\code{flush} construct}
 In the third example, \code{atomic} constructs that specify relaxed atomic
 operations are used with explicit \code{flush} directives to enforce memory
 ordering between the two threads. The explicit \code{flush} directive on thread

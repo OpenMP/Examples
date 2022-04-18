@@ -1,5 +1,5 @@
 /*
-* @@name:	critical.1c
+* @@name:	critical.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

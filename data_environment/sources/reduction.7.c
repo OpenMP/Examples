@@ -1,5 +1,5 @@
 /*
-* @@name:	reduction.7c
+* @@name:	reduction.7
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

@@ -1,5 +1,5 @@
 /*
-* @@name:	doacross.1c
+* @@name:	doacross.5
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

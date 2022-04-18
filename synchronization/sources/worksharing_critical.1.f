@@ -1,4 +1,4 @@
-! @@name:	worksharing_critical.1f
+! @@name:	worksharing_critical.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	no

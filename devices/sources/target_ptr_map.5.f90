@@ -1,9 +1,9 @@
-! @@name:       target_ptr_map_5.f90
+! @@name:       target_ptr_map.5
 ! @@type:       F-free
 ! @@compilable: yes
 ! @@linkable:   no
 ! @@expect:     success
-! @@version:    omp_5.1
+! @@version:    omp_5.2
 program main
    use omp_lib
 
@@ -33,7 +33,7 @@ program main
 
    !$omp  begin metadirective                              &
    !$omp&       when(user={condition(accessible)}: target) &
-   !$omp&       default( target map(mapper(deep_copy),tofrom:s) )
+   !$omp&       otherwise( target map(mapper(deep_copy),tofrom:s) )
 
       call do_work(s, n)
 

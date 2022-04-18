@@ -1,4 +1,4 @@
-! @@name:	target_update.2f
+! @@name:	target_update.2
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

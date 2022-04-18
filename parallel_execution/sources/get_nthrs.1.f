@@ -1,4 +1,4 @@
-! @@name:	get_nthrs.1f
+! @@name:	get_nthrs.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	no

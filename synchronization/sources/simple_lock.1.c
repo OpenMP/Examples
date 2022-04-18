@@ -1,5 +1,5 @@
 /*
-* @@name:	simple_lock.1c
+* @@name:	simple_lock.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes

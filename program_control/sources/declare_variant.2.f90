@@ -1,4 +1,4 @@
-! @@name: declare_variant.2f90
+! @@name: declare_variant.2
 ! @@type: F-free
 ! @@compilable: yes
 ! @@linkable: yes

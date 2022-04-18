@@ -1,5 +1,5 @@
 /*
-* @@name:	linear_in_loop.1c
+* @@name:	linear_in_loop.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes

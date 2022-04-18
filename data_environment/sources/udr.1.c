@@ -1,5 +1,5 @@
 /*
-* @@name:	udr.1.c
+* @@name:	udr.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

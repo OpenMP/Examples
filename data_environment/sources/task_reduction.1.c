@@ -1,5 +1,5 @@
 /*
-* @@name:       task_reduction.1c
+* @@name:       task_reduction.1
 * @@type:       C
 * @@compilable: yes
 * @@linkable:   yes

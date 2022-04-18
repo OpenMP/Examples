@@ -1,4 +1,4 @@
-! @@name:	ordered.1f
+! @@name:	ordered.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	yes

@@ -4,6 +4,8 @@
 
 \subsection{Simple \code{target} \code{data} Construct}
 \label{subsec:target_data_simple}
+\index{constructs!target data@\code{target}~\code{data}}
+\index{target data construct@\code{target}~\code{data} construct}
 
 This example shows how the \code{target} \code{data} construct maps variables 
 to a device data environment. The \code{target} \code{data} construct creates 
@@ -50,6 +52,10 @@ once by the \code{target} \code{data} construct.
 
 \ffreeexample[4.0]{target_data}{2}
 
+\index{target data construct@\code{target}~\code{data} construct!map clause@\code{map} clause}
+\index{target construct@\code{target} construct!map clause@\code{map} clause}
+\index{target construct@\code{target} construct!implicit mapping}
+\index{map clause@\code{map} clause!tofrom map-type@\code{tofrom} map-type}
 In the following example, the array \plc{Q} is mapped once at the enclosing 
 \code{target}~\code{data} region instead of at each \code{target} construct. 
 In OpenMP 4.0, a scalar variable is implicitly mapped with the \code{tofrom} map-type.
@@ -69,6 +75,7 @@ maps variables to a device data environment. The \code{target} \code{data}
 construct's device data environment encloses the \code{target} construct's device 
 data environment in the function \code{vec\_mult()}.
 
+\index{map clause@\code{map} clause!alloc map-type@\code{alloc} map-type}
 When the type of the variable appearing in an array section is pointer, the pointer 
 variable and the storage location of the corresponding array section are mapped 
 to the device data environment. The pointer variable is treated as if it had appeared 
@@ -126,6 +133,9 @@ data environment.
 
 \subsection{\code{target} \code{data} Construct with \code{if} Clause}
 \label{subsec:target_data_if}
+\index{target data construct@\code{target}~\code{data} construct!if clause@\code{if} clause}
+\index{clauses!if@\code{if}}
+\index{if clause@\code{if} clause}
 
 The following two examples show how the \code{target} \code{data} construct 
 maps variables to a device data environment.

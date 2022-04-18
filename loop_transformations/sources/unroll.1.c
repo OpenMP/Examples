@@ -1,5 +1,5 @@
 /*
-* @@name:	unroll.1c
+* @@name:	unroll.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

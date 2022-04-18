@@ -1,4 +1,4 @@
-! @@name: affinity_display.2.f90
+! @@name: affinity_display.2
 ! @@type: F-free
 ! @@compilable: yes
 ! @@linkable: yes
@@ -20,22 +20,26 @@ program affinity_display
     ! OMP_NUM_THREADS=2,4
     ! OMP_PLACES="{0,2,4,6},{1,3,5,7}"  #2 sockets; even/odd proc-ids
     ! OMP_AFFINITY_FORMAT=\
-    !     "nest_level= %L, parent_thrd_num= %a, thrd_num= %n, thrd_affinity= %A"
+    !"nest_level= %L, parent_thrd_num= %a, thrd_num= %n, thrd_affinity= %A"
 
    !$omp parallel num_threads(n_sockets) private(socket_num)
 
      socket_num = omp_get_place_num()
 
      if(socket_num==0) then
-       write(*,'("LEVEL 1 AFFINITIES 1 thread/socket ",i0," sockets")')n_sockets
+       write(*,'("LEVEL 1 AFFINITIES 1 thread/socket ",i0," sockets")') &
+             n_sockets
      endif
 
-     call omp_display_affinity(null)  !not needed if OMP_DISPLAY_AFFINITY=TRUE
+     call omp_display_affinity(null)  ! not needed
+                                      ! if OMP_DISPLAY_AFFINITY=TRUE
 
        ! OUTPUT:
        ! LEVEL 1 AFFINITIES 1 thread/socket, 2 sockets:
-       ! nest_level= 1, parent_thrd_num= 0, thrd_num= 0, thrd_affinity= 0,2,4,6
-       ! nest_level= 1, parent_thrd_num= 0, thrd_num= 1, thrd_affinity= 1,3,5,7
+       ! nest_level= 1, parent_thrd_num= 0, thrd_num= 0, &
+       !   thrd_affinity= 0,2,4,6
+       ! nest_level= 1, parent_thrd_num= 0, thrd_num= 1, &
+       !   thrd_affinity= 1,3,5,7
 
      call socket_work(socket_num, n_thrds_on_socket)
 
@@ -56,7 +60,8 @@ subroutine socket_work(socket_num, n_thrds)
             n_thrds,socket_num
       endif
   
-      call omp_display_affinity(null);  !not needed if OMP_DISPLAY_AFFINITY=TRUE
+      call omp_display_affinity(null)  ! not needed
+                                       ! if OMP_DISPLAY_AFFINITY=TRUE
   
       ! OUTPUT:
       ! LEVEL 2 AFFINITIES, 4 threads on socket 0

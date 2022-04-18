@@ -1,5 +1,5 @@
 /*
-* @@name:	taskgroup.1c
+* @@name:	taskgroup.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes

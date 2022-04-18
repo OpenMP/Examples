@@ -1,5 +1,5 @@
 /*
-* @@name:	standalone.1c
+* @@name:	standalone.1
 * @@type:	C
 * @@compilable:	no
 * @@linkable:	no

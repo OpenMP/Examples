@@ -41,7 +41,7 @@ program target_associate
     !$omp target update to(arr(ioff:ioff+CS-1)) device(dev)
 
     ! Explicit mapping of arr to make sure that we use the allocated 
-    ! and associated memory.
+    ! and associated memory.  No host-device data update here.
     !$omp target map(tofrom: arr(ioff:ioff+CS-1)) device(dev)
       do i = 0, CS-1
         arr(i+ioff) = arr(i+ioff) + 1

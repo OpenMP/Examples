@@ -7,6 +7,9 @@ This section covers ways to perform reductions in parallel, task, taskloop, and 
 
 \subsection{\code{reduction} Clause}
 \label{subsec:reduction}
+\index{clauses!reduction@\code{reduction}}
+\index{reduction clause@\code{reduction} clause}
+\index{reductions!reduction clause@\code{reduction} clause}
 
 The following example demonstrates the \code{reduction} clause; note that some 
 reductions can be expressed in the loop in several ways, as shown for the \code{max} 
@@ -64,7 +67,7 @@ the start of the \code{parallel} region.
 
 \cexample[5.1]{reduction}{6}
 
-\fexample[5.1]{reduction}{6}[1]
+\fexample[5.1]{reduction}{6}
 
 The following example demonstrates the reduction of array \plc{a}.  In C/C++ this is illustrated by the explicit use of an array section \plc{a[0:N]} in the \code{reduction} clause.  The corresponding Fortran example uses array syntax supported in the base language.  As of the OpenMP 4.5 specification the explicit use of array section in the \code{reduction} clause in Fortran is not permitted.  But this oversight has been fixed in the OpenMP 5.0 specification.
 
@@ -75,6 +78,12 @@ The following example demonstrates the reduction of array \plc{a}.  In C/C++ thi
 
 \subsection{Task Reduction}
 \label{subsec:task_reduction}
+\index{clauses!task_reduction@\scode{task_reduction}}
+\index{task_reduction clause@\scode{task_reduction} clause}
+\index{reductions!task_reduction clause@\scode{task_reduction} clause}
+\index{clauses!in_reduction@\scode{in_reduction}}
+\index{in_reduction clause@\scode{in_reduction} clause}
+\index{reductions!in_reduction clause@\scode{in_reduction} clause}
 
 In OpenMP 5.0 the \code{task\_reduction} clause was created for the \code{taskgroup} construct, 
 to allow reductions among explicit tasks that have an \code{in\_reduction} clause.
@@ -97,6 +106,8 @@ reduction).
 
 \ffreeexample[5.0]{task_reduction}{1}
 
+\index{reduction clause@\code{reduction} clause!task modifier@\code{task} modifier}
+\index{task modifier@\code{task} modifier}
 In OpenMP 5.0 the \code{task} \plc{reduction-modifier} for the \code{reduction} clause was
 introduced to provide a means of performing reductions among implicit and explicit tasks.
 
@@ -134,6 +145,9 @@ and list item (variable \code{x}) match as required.
 
 \subsection{Reduction on Combined Target Constructs}
 \label{subsec:target_reduction}
+\index{reduction clause@\code{reduction} clause!on target construct@on \code{target} construct}
+\index{constructs!target@\code{target}}
+\index{target construct@\code{target} construct}
 
 When a \code{reduction} clause appears on a combined construct that combines 
 a \code{target} construct with another construct, there is an implicit map 
@@ -174,6 +188,12 @@ first construct.
 
 \subsection{Task Reduction with Target Constructs}
 \label{subsec:target_task_reduction}
+\index{in_reduction clause@\scode{in_reduction} clause}
+\index{constructs!target@\code{target}}
+\index{target construct@\code{target} construct}
+
+\index{clauses!enter@\code{enter}}
+\index{enter clause@\code{enter} clause}
 
 The following examples illustrate how task reductions can apply to target tasks
 that result from a \code{target} construct with the \code{in\_reduction}
@@ -184,34 +204,43 @@ task reduction will be combined (in some order) into the original variable
 listed in the \code{task\_reduction} clause before exiting the \code{taskgroup}
 region. 
 
-\cexample[5.1]{target_task_reduction}{1}
+\cexample[5.2]{target_task_reduction}{1}
 
-\ffreeexample[5.1]{target_task_reduction}{1}[1]
+\ffreeexample[5.2]{target_task_reduction}{1}
+\clearpage
 
+\index{reduction clause@\code{reduction} clause!task modifier@\code{task} modifier}
+\index{task modifier@\code{task} modifier}
 In the next pair of examples, the task reduction is defined by a
 \code{reduction} clause with the \code{task} modifier, rather than a
 \code{task\_reduction} clause on a \code{taskgroup} construct. Again, the
 partial results from the participating tasks will be combined in some order
 into the original reduction variable, \code{sum}.
 
-\cexample[5.0]{target_task_reduction}{2a}
+\cexample[5.2]{target_task_reduction}{2a}
 
-\ffreeexample[5.0]{target_task_reduction}{2a}
+\ffreeexample[5.2]{target_task_reduction}{2a}
 
+\index{in_reduction clause@\scode{in_reduction} clause!with target construct@with \code{target} construct}
+\index{constructs!target@\code{target}}
+\index{target construct@\code{target} construct}
 Next, the \code{task} modifier is again used to define a task reduction over
 participating tasks. This time, the participating tasks are a target task
 resulting from a \code{target} construct with the \code{in\_reduction} clause,
 and the implicit task (executing on the primary thread) that calls
-\code{host\_compute}. As before, the partial results from these paricipating
+\code{host\_compute}. As before, the partial results from these participating
 tasks are combined in some order into the original reduction variable.
 
-\cexample[5.1]{target_task_reduction}{2b}
+\cexample[5.2]{target_task_reduction}{2b}
 
-\ffreeexample[5.1]{target_task_reduction}{2b}[1]
+\ffreeexample[5.2]{target_task_reduction}{2b}
 
 
 \subsection{Taskloop Reduction}
 \label{subsec:taskloop_reduction}
+\index{reduction clause@\code{reduction} clause!on taskloop construct@on \code{taskloop} construct}
+\index{constructs!taskloop@\code{taskloop}}
+\index{taskloop construct@\code{taskloop} construct}
 
 In the OpenMP 5.0 Specification the \code{taskloop} construct
 was extended to include the reductions.
@@ -249,7 +278,7 @@ reduction that has not been defined.
 %create a new reduction and also that all tasks generated by the taskloop will
 %participate on it.
 
-The second example computes exactly the same value as in the preceding\plc{taskloop\_reduction.1} code section,
+The second example computes exactly the same value as in the preceding \plc{taskloop\_reduction.1} code section,
 but in a very different way.
 First, in the \plc{array\_sum} function a \code{taskgroup} region is created 
 that defines the scope of a new reduction using the \code{task\_reduction} clause.
@@ -261,7 +290,7 @@ This is allowed because what is expressed with the \code{in\_reduction} clause
 is different from what is expressed with the \code{reduction} clause.
 In one case the generated tasks are specified to participate in a previously 
 declared reduction (\code{in\_reduction} clause) whereas in the other case
-creation of a new reduction is specified and also that all tasks generated 
+creation of a new reduction is specified and also all tasks generated 
 by the taskloop will participate on it.
 
 \cexample[5.0]{taskloop_reduction}{2}
@@ -271,6 +300,9 @@ by the taskloop will participate on it.
 In the OpenMP 5.0 Specification, \code{reduction} clauses for the
 \code{taskloop}~\code{ simd} construct were also added. 
 
+\index{reduction clause@\code{reduction} clause!on taskloop simd construct@on \code{taskloop}~\code{simd} construct}
+\index{combined constructs!taskloop simd@\code{taskloop}~\code{simd}}
+\index{taskloop simd construct@\code{taskloop}~\code{simd} construct}
 The examples below compare reductions for the \code{taskloop} and the \code{taskloop}~\code{simd} constructs.
 These examples illustrate the use of \code{reduction} clauses within 
 "stand-alone" \code{taskloop} constructs, and the use of \code{in\_reduction} clauses for tasks of taskloops to participate
@@ -341,11 +373,14 @@ At the end of the parallel region \plc{asum} contains the combined result of all
 
 \cexample[5.1]{taskloop_simd_reduction}{1}
 
-\ffreeexample[5.1]{taskloop_simd_reduction}{1}[1]
+\ffreeexample[5.1]{taskloop_simd_reduction}{1}
 
 
 \subsection{Reduction with the \code{scope} Construct}
 \label{subsec:reduction_scope}
+\index{reduction clause@\code{reduction} clause!on scope construct@on \code{scope} construct}
+\index{constructs!scope@\code{scope}}
+\index{scope construct@\code{scope} construct}
 
 The following example illustrates the use of the \code{scope} construct 
 to perform a reduction in a \code{parallel} region. The case is useful for 

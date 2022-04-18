@@ -1,5 +1,5 @@
 /*
-* @@name:	single.1c
+* @@name:	single.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

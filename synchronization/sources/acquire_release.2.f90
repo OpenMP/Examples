@@ -1,4 +1,4 @@
-! @@name: acquire_release.2.f90
+! @@name: acquire_release.2
 ! @@type: F-free
 ! @@compilable: yes
 ! @@linkable: yes

@@ -1,10 +1,10 @@
 /*
-* @@name:       target_struct_map.1c
+* @@name:       target_struct_map.1
 * @@type:       C
 * @@compilable: yes
 * @@linkable:   yes
 * @@expect:     success
-* @@version:	omp_5.0
+* @@version:	omp_5.1
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,7 +19,7 @@ struct foo {
   float *p;
 };
 
-#pragma omp declare target
+#pragma omp begin declare target
 void saxpyfun(struct foo *S)
 {
   int i;

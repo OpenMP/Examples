@@ -1,4 +1,4 @@
-! @@name:	SIMD.3f
+! @@name:	SIMD.3
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

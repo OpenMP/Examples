@@ -1,4 +1,4 @@
-! @@name:	psections.1f
+! @@name:	psections.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	no

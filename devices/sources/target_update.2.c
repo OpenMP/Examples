@@ -1,5 +1,5 @@
 /*
-* @@name:	target_update.2c
+* @@name:	target_update.2
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

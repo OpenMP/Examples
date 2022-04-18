@@ -1,5 +1,5 @@
 /*
-* @@name:	affinity.2c
+* @@name:	affinity.2
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

@@ -1,5 +1,5 @@
 /*
-* @@name:	barrier_regions.1c
+* @@name:	barrier_regions.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes

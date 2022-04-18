@@ -1,5 +1,5 @@
 /*
-* @@name:	pra_iterator.1c
+* @@name:	pra_iterator.1
 * @@type:	C++
 * @@compilable:	yes
 * @@linkable:	no

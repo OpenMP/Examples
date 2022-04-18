@@ -1,7 +1,7 @@
 /*
-* @@name        declare_target.2b
+* @@name:       declare_target.2b_main
 * @@type:       C++
-* @@compilable  yes
+* @@compilable: yes
 * @@linkable:   no
 * @@expect:     failure
 * @@version:    omp_5.1

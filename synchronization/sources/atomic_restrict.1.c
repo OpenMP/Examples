@@ -1,5 +1,5 @@
 /*
-* @@name:	atomic_restrict.1c
+* @@name:	atomic_restrict.1
 * @@type:	C
 * @@compilable:	maybe
 * @@linkable:	no

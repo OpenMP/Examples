@@ -1,6 +1,9 @@
 \pagebreak
 \section{Pointer Mapping}
 \label{sec:pointer_mapping}
+\index{mapping!pointer}
+\index{mapping!pointer attachment}
+\index{pointer attachment}
 
 Pointers that contain host addresses require that those addresses are translated to device addresses for them to be useful in the context of a device data environment. Broadly speaking, there are two scenarios where this is important.
 
@@ -55,13 +58,16 @@ Since \plc{ptr3} is private, the value to which it is assigned in the
 
 \cexample[5.0]{target_ptr_map}{1}
 
+\index{directives!begin declare target@\code{begin}~\code{declare}~\code{target}}
+\index{begin declare target directive@\code{begin}~\code{declare}~\code{target} directive}
+
 In the following example the global pointer \plc{p} appears in a
-\code{declare}~\code{target} directive.  Hence, the pointer \plc{p} will 
+declare target directive.  Hence, the pointer \plc{p} will 
 persist on the device throughout executions in all \code{target} regions.
 
 The pointer is also used in an array section of a \code{map} clause on 
-a \code{target} construct.  When storage associated with 
-a \code{declare}~\code{target} pointer
+a \code{target} construct.  When the pointer of storage associated with 
+a declare target directive
 is mapped, as for the array section \plc{p[:N]} in the
 \code{target} construct, the array section on the device is \emph{attached}
 to the device pointer \plc{p} on entry to the construct, and
@@ -72,7 +78,10 @@ pointer on the device is \emph{attached}.)
 % For globals with declare target is there such a things a
 % original and corresponding?
 
-\cexample[5.0]{target_ptr_map}{2}
+\cexample[5.1]{target_ptr_map}{2}
+
+\index{directives!begin declare target@\code{begin}~\code{declare}~\code{target}}
+\index{begin declare target directive@\code{begin}~\code{declare}~\code{target} directive}
 
 The following two examples illustrate subtle differences in pointer attachment
 to device address because of the order of data mapping.
@@ -82,7 +91,7 @@ the global pointer \plc{p1} points to array \plc{x} and \plc{p2} points to
 array \plc{y} on the host.
 The array section \plc{x[:N]} is mapped by the \code{target}~\code{enter}~\code{data} directive while array \plc{y} is mapped
 on the \code{target} construct. 
-Since the \code{declare}~\code{target} directive is applied to the declaration
+Since the \code{begin}~\code{declare}~\code{target} directive is applied to the declaration
 of \plc{p1}, \plc{p1} is a treated like a mapped variable on the \code{target}
 construct and references to \plc{p1} inside the construct will be to the
 corresponding \plc{p1} that exists on the device.  However, the corresponding
@@ -91,12 +100,12 @@ attachment for \plc{p1} would require that (1) \plc{p1} (or an lvalue
 expression that refers to the same storage as \plc{p1}) appears as a base
 pointer to a list item in a \code{map} clause, and (2) the construct that has
 the \code{map} clause causes the list item to transition from \emph{not mapped}
-to \emph{mapped}. The conditions are clearly not satisifed for this example.
+to \emph{mapped}. The conditions are clearly not satisfied for this example.
 
 The problem for \plc{p2} in this example is also subtle. It will be privatized
 inside the \code{target} construct, with a runtime check for whether the memory
 to which it is pointing has corresponding memory that is accessible on the
-device. If this check is successful then the \plc{p2} inside the construct
+device. If this check is successful, then the \plc{p2} inside the construct
 would be appropriately initialized to point to that corresponding memory.
 Unfortunately, despite there being an implicit map of the array \plc{y} (to
 which \plc{p2} is pointing) on the construct, the order of this map relative to
@@ -106,7 +115,7 @@ the initialization of \plc{p2} is unspecified. Therefore, the initial value of
 Thus, referencing values via either \plc{p1} or \plc{p2} inside
 the \code{target} region would be invalid.
 
-\cexample[5.0]{target_ptr_map}{3a}
+\cexample[5.1]{target_ptr_map}{3a}
 
 In example \plc{target\_ptr\_map.3b} the mapping orders for arrays \plc{x}
 and \plc{y} were rearranged to allow proper pointer attachments.
@@ -116,9 +125,11 @@ Pointer \plc{p2} is assigned the device address of the previously mapped
  array \plc{y}.
 Referencing values via either \plc{p1} or \plc{p2} inside the \code{target} region is now valid.
 
-\cexample[5.0]{target_ptr_map}{3b}
-\clearpage
+\cexample[5.1]{target_ptr_map}{3b}
+%\clearpage
 
+\index{routines!omp_target_is_accessible@\scode{omp_target_is_accessible}}
+\index{omp_target_is_accessible routine@\scode{omp_target_is_accessible} routine}
 In the following example, storage allocated on the host is not mapped in a \code{target}
 region if it is determined that the host memory is accessible from the device.
 On platforms that support host memory access from a target device, 
@@ -143,12 +154,13 @@ program, \plc{ptr} will be NULL-initialized in the \code{target} region.
 In the next version of the OpenMP Specification, a false presence check without 
 the \code{firstprivate} clause will cause the pointer to retain its original value. 
 
-\cexample[5.1]{target_ptr_map}{4}
+\cexample[5.2]{target_ptr_map}{4}
 
+\index{mapping!deep copy}
 Similar to the previous example, the \code{omp\_target\_is\_accessible} routine is used to
 discover if a deep copy is required for the platform.  Here, the \plc{deep\_copy} map,
 defined in the \code{declare}~\code{mapper} directive, is used if the host storage referenced by 
 \plc{s.ptr} (or \plc{s\%ptr} in Fortran) is not accessible from the device.
 
-\cexample[5.1]{target_ptr_map}{5}
-\ffreeexample[5.1]{target_ptr_map}{5}
+\cexample[5.2]{target_ptr_map}{5}
+\ffreeexample[5.2]{target_ptr_map}{5}

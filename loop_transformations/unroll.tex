@@ -1,6 +1,14 @@
 \pagebreak
 \section{\code{unroll} Construct}
 \label{sec:unroll}
+\index{constructs!unroll@\code{unroll}}
+\index{unroll construct@\code{unroll} construct}
+\index{unroll construct@\code{unroll} construct!full clause@\code{full} clause}
+\index{full clause@\code{full} clause}
+\index{clauses!full@\code{full}}
+\index{unroll construct@\code{unroll} construct!partial clause@\code{partial} clause}
+\index{partial clause@\code{partial} clause}
+\index{clauses!partial@\code{partial}}
 
 The \code{unroll} construct is a loop transformation that increases the 
 number of loop blocks in a loop, while reducing the number of iterations.
@@ -25,7 +33,7 @@ When no clause is used, it is up to the implementation (compiler)
 to decide if and how the loop is to be unrolled.  
 The iteration count can have a run time value.  
 In the second function, the \code{unroll} construct uses a \code{full} clause
-to completely unroll the loop.  A compile-time constant is required for the interation count.
+to completely unroll the loop.  A compile-time constant is required for the iteration count.
 The statements in the third function (\plc{unroll\_full\_equivalent}) illustrates
 equivalent code for the full unrolling in the second function.
 
@@ -47,7 +55,7 @@ The equivalent ``hand unrolled'' loop code is presented in the
 If the \plc{unroll-factor} is omitted, as in the \plc{unroll3\_partial\_nofactor} 
 function, the implementation may optimally select a factor from 1 
 (no unrolling) to the iteration count (full unrolling).  
-In the latter case the construct generates a loop with a single iterations.
+In the latter case the construct generates a loop with a single iteration.
 
 \cexample[5.1]{unroll}{3}
 \ffreeexample[5.1]{unroll}{3}
@@ -57,8 +65,8 @@ iterations that should not produce executions must be conditionally
 protected from execution. In this example, the first function
 unrolls a loop that has a variable iteraction count. Since the \code{unroll}
 construct uses a \code{partial(}~\plc{4}~\code{)} clause, the compiler will need to
-create code that can account for cases when the interation count is not a
-multiple of 4. A brute-force, simple-to-understand appoach for implementing 
+create code that can account for cases when the iteration count is not a
+multiple of 4. A brute-force, simple-to-understand approach for implementing 
 the conditionals is shown in the \plc{unroll\_partial\_remainder\_option1} function.
 
 The remaining two functions show more optimal algorithms the compiler 

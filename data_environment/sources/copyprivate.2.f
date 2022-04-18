@@ -1,14 +1,9 @@
-! @@name:	copyprivate.2f
+! @@name:	copyprivate.2
 ! @@type:	F-fixed
 ! @@compilable:	yes
-! @@requires:	preprocessing
 ! @@linkable:	no
 ! @@expect:	success
 ! @@version:    omp_5.1
-#if _OPENMP  < 202011
-#define MASKED MASTER
-#endif
-
         REAL FUNCTION READ_NEXT()
         REAL, POINTER :: TMP
 

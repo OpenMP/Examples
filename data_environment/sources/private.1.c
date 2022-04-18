@@ -1,5 +1,5 @@
 /*
-* @@name:	private.1c
+* @@name:	private.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes

@@ -1,5 +1,5 @@
 /*
-* @@name:	display_env.1.c
+* @@name:	display_env.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes

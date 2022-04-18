@@ -1,5 +1,5 @@
 /*
-* @@name:	nthrs_nesting.1c
+* @@name:	nthrs_nesting.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes

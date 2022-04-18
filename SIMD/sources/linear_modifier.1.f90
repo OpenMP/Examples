@@ -1,16 +1,16 @@
-! @@name:	linear_modifier.1.f90
+! @@name:	linear_modifier.1
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	yes
 ! @@expect:	success
-! @@version:	omp_4.5
+! @@version:	omp_5.2
 module m
    integer, parameter :: NN = 1023
    integer :: a(NN)
 
  contains
    subroutine add_one2(p)
-   !$omp declare simd(add_one2) linear(ref(p)) simdlen(8)
+   !$omp declare simd(add_one2) linear(p: ref) simdlen(8)
    implicit none
    integer :: p
 

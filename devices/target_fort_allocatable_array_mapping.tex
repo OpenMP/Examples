@@ -1,6 +1,7 @@
 \pagebreak
 \section{Fortran Allocatable Array Mapping}
 \label{sec:fort_allocatable_array_mapping}
+\index{mapping!allocatable array, Fortran}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -38,12 +39,14 @@ reference to allocated storage) on the device, is similar to pointer attachment.
 
 \ffreeexample[5.1]{target_fort_allocatable_map}{1}
 
-Once an allocatable variable have been allocated on the host,
+Once an allocatable variable has been allocated on the host,
 its allocation status may not be changed in a \code{target} region, either
 explicitly or implicitly. The following example illustrates typical
 operations on allocatable variables that violate this restriction.
 Note, an assignment that reshapes or reassigns (causing a deallocation
-and allocation) in a \code{target} region is not compliant.
+and allocation) in a \code{target} region is not conforming.
+Also, an initial intrinsic assignment of an allocatable variable 
+requires deallocation before the \scode{target} region ends.
 
 \ffreeexample[5.1]{target_fort_allocatable_map}{2}
 

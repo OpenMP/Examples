@@ -1,10 +1,10 @@
 /*
-* @@name:       error.1c
+* @@name:       error.1
 * @@type:       C
 * @@compilable: yes
 * @@linkable:   yes
 * @@expect:     success
-* @@version:    omp_5.1
+* @@version:    omp_5.2
 */
 #include <stdio.h>
 #include   <omp.h>
@@ -12,8 +12,8 @@
 int main(){
 
 #pragma omp metadirective \
-            when( implementation={vendor(gnu)}: nothing ) \
-            default(error at(compilation) severity(fatal) \
+            when(implementation={vendor(gnu)}: nothing )   \
+            otherwise(error at(compilation) severity(fatal) \
                     message("GNU compiler required."))
 
   if( omp_get_num_procs() < 3 ){

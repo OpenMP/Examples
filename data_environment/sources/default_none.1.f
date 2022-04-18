@@ -1,4 +1,4 @@
-! @@name:	default_none.1f
+! @@name:	default_none.1
 ! @@type:	F-fixed
 ! @@compilable:	no
 ! @@linkable:	no

@@ -1,4 +1,4 @@
-! @@name:	SIMD.1f
+! @@name:	SIMD.1
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

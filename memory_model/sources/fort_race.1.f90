@@ -1,4 +1,4 @@
-! @@name:	fort_race.1f
+! @@name:	fort_race.1
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

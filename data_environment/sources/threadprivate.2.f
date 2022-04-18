@@ -1,4 +1,4 @@
-! @@name:	threadprivate.2f
+! @@name:	threadprivate.2
 ! @@type:	F-fixed
 ! @@compilable:	no
 ! @@linkable:	no

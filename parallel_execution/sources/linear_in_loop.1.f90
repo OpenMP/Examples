@@ -1,4 +1,4 @@
-! @@name:	linear_in_loop.1f
+! @@name:	linear_in_loop.1
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	yes

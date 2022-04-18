@@ -1,16 +1,15 @@
 /*
-* @@name        declare_target.2a
+* @@name:       declare_target.2a
 * @@type:       C++
-* @@compilable  yes
+* @@compilable: yes
 * @@linkable:   yes
 * @@expect:     success
 * @@version:    omp_5.1
 */
-
 #include <iostream>
 using namespace std;
 
-  #pragma omp begin declare target // declare target -- class and function
+  #pragma omp begin declare target // declare target--class and function
   class XOR1
   {
       int a;
@@ -21,8 +20,7 @@ using namespace std;
   int XOR1::foo() { return a^0x01;}
   #pragma omp end declare target
 
-
-  #pragma omp begin declare target // declare target -- class, not function
+  #pragma omp begin declare target // declare target--class, not function
   class XOR2
   {
       int a;
@@ -34,8 +32,7 @@ using namespace std;
 
   int XOR2::foo() { return a^0x01;} 
 
-
-  class XOR3                // declare target -- neither class nor function 
+  class XOR3                // declare target--neither class nor function 
   {
       int a;
     public:
@@ -43,7 +40,6 @@ using namespace std;
       int foo();
   };
   int XOR3::foo() { return a^0x01;}
-
 
 int main (){
 

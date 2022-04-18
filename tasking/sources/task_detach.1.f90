@@ -1,4 +1,4 @@
-! @@name:	task_detach.1f90
+! @@name:	task_detach.1
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

@@ -1,4 +1,4 @@
-! @@name:	parallel.1f
+! @@name:	parallel.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	yes

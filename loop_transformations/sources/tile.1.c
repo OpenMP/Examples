@@ -1,5 +1,5 @@
 /*
-* @@name:       tile.1c
+* @@name:       tile.1
 * @@type:       C
 * @@compilable: yes
 * @@linkable:   no

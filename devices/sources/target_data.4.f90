@@ -1,10 +1,9 @@
-! @@name:	target_data.4f
+! @@name:	target_data.4
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
 ! @@version:    omp_4.0
-
 module mults
 contains
 subroutine foo(p0,v1,v2,N)

@@ -1,5 +1,5 @@
 /*
-* @@name:	mem_model.1c
+* @@name:	mem_model.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes

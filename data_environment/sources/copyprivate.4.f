@@ -1,4 +1,4 @@
-! @@name:	copyprivate.4f
+! @@name:	copyprivate.4
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	no

@@ -1,5 +1,5 @@
 /*
-* @@name:       target_defaultmap.1.c
+* @@name:       target_defaultmap.1
 * @@type:       C
 * @@compilable: yes
 * @@linkable:   yes
@@ -27,23 +27,23 @@ int main(){
    S.s=0; S.A[0]=0; S.A[1]=0;
     
 // Target Region 1
-                   // Uses defaultmap to set scalars, aggregates & pointers 
-                   // to normal defaults.  
+                   // Uses defaultmap to set scalars, aggregates & 
+                   // pointers to normal defaults.  
     #pragma omp target \
-            defaultmap(firstprivate: scalar)     //could also be default \
-            defaultmap(tofrom:       aggregate)  //could also be default \
-            defaultmap(default:      pointer)    //must be default       \
+            defaultmap(firstprivate: scalar)   //could also be default \
+            defaultmap(tofrom:       aggregate)//could also be default \
+            defaultmap(default:      pointer)  //must be default       \
             map(ptr2m[:N])
     {
-        s       = 3;               // SCALAR firstprivate, value not returned
+        s       = 3;            //SCALAR firstprivate, value not returned
  
-        A[0]    = 3;  A[1] = 3;    // AGGREGATE array, default map tofrom
+        A[0]    = 3;  A[1] = 3; //AGGREGATE array, default map tofrom
  
-                                    // AGGREGATE structure, default tofrom
+                                //AGGREGATE structure, default tofrom
         S.s     = 2;
         S.A[0]  = 2;  S.A[1] = 2;
 
-        ptr = &A[0];                // POINTER is private
+        ptr = &A[0];            //POINTER is private
         ptr[0] = 2;   ptr[1] = 2;
 
     }
@@ -60,17 +60,18 @@ int main(){
         S.s   +=5;
         S.A[0]+=5; S.A[1]+=5; 
     }
-    if(s==7 && A[0]==7 && S.s==7 && S.A[0]==7) printf(" PASSED 2 of 4\n");
+    if(s==7 && A[0]==7 && S.s==7 && S.A[0]==7)
+        printf(" PASSED 2 of 4\n");
    
   
 // Target Region 3
-                  // defaultmap & explicit map with variables in same category
+            // defaultmap & explicit map with variables in same category
     s1=s2=s3=1;
     #pragma  omp defaultmap(tofrom: scalar) map(firstprivate: s1,s2) 
     {
-        s1 += 5;           // firstprivate (s1 value not returned to host)
-        s2 += 5;           // firstprivate (s2 value not returned to host)
-        s3 += s1 + s2;     // mapped as tofrom
+        s1 += 5;         // firstprivate (s1 value not returned to host)
+        s2 += 5;         // firstprivate (s2 value not returned to host)
+        s3 += s1 + s2;   // mapped as tofrom
     }
     if(s1==1 && s2==1 && s3==13 ) printf(" PASSED 3 of 4\n");
  
@@ -80,7 +81,8 @@ int main(){
     S.A[0]=0; S.A[1]=0;
 
     // arrays and structure are firstprivate, and scalars are from
-    #pragma omp target defaultmap(firstprivate: aggregate) map(from: s1, s2)
+    #pragma omp target defaultmap(firstprivate: aggregate) \
+                       map(from: s1, s2)
     {
 
         A[0]+=1; S.A[0]+=1; //Aggregate changes not returned to host

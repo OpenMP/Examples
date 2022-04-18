@@ -1,14 +1,9 @@
-! @@name:	async_target.3f
+! @@name:	async_target.3
 ! @@type:	F-free
 ! @@compilable:	yes
-! @@requires:	preprocessing
 ! @@linkable:	no
 ! @@expect:	success
 ! @@version:	omp_5.1
-#if _OPENMP  < 202011
-#define masked master
-#endif
-
 program concurrent_async
    use omp_lib
    integer,parameter :: n=1000000  !!n must be even

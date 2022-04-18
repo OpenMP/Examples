@@ -1,4 +1,4 @@
-! @@name:	affinity_query.1f
+! @@name:	affinity_query.1
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

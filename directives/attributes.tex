@@ -1,5 +1,7 @@
 \section{C++ Attributes}
 \label{sec:attributes}
+\index{directive syntax!attribute, C++}
+\index{attribute syntax, C++}
 
 OpenMP directives for C++ can also be specified with 
 %the implementation-defined 
@@ -16,7 +18,7 @@ is applied two different ways in attribute form, as shown in the ATTR 1 and ATTR
 In ATTR 1 the attribute syntax is used with the \code{omp ::} namespace form.
 In ATTR 2 the attribute syntax is used with the \code{using omp :} namespace form.
 
-Next, parallization is attempted by applying directives using two different syntaxes.
+Next, parallelization is attempted by applying directives using two different syntaxes.
 For ATTR 3 and PRAG 4, the loop parallelization will fail to compile because multiple directives that
 apply to the same statement must all use either the attribute syntax or the pragma syntax.
 The lines have been commented out and labeled INVALID.

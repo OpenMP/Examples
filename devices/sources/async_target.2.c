@@ -1,16 +1,18 @@
 /*
-* @@name:	async_target.2c
+* @@name:	async_target.2
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
-* @@version:	omp_4.0
+* @@version:	omp_5.1
 */
 #include <stdlib.h>
 #include <omp.h>
-#pragma omp declare target
+
+#pragma omp begin declare target
 extern void init(float *, float *, int);
 #pragma omp end declare target
+
 extern void foo();
 extern void output(float *, int);
 void vec_mult(float *p, int N, int dev)

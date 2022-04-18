@@ -1,4 +1,4 @@
-! @@name:	collapse.4f
+! @@name:	collapse.4
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

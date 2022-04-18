@@ -1,4 +1,4 @@
-! @@name:	ploop.1f
+! @@name:	ploop.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	no

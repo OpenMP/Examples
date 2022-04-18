@@ -1,5 +1,5 @@
 /*
-* @@name:	parallel.1c
+* @@name:	parallel.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes

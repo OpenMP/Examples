@@ -1,5 +1,5 @@
 /*
-* @@name:	atomic.1c
+* @@name:	atomic.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes

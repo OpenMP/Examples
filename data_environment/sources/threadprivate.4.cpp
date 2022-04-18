@@ -1,5 +1,5 @@
 /*
-* @@name:	threadprivate.4c
+* @@name:	threadprivate.4
 * @@type:	C++
 * @@compilable:	no
 * @@linkable:	no

@@ -1,4 +1,4 @@
-! @@name:	cancellation.1f
+! @@name:	cancellation.1
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

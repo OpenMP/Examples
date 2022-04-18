@@ -1,4 +1,4 @@
-! @@name:	fort_loopvar.1f
+! @@name:	fort_loopvar.1
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

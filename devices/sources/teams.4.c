@@ -1,5 +1,5 @@
 /*
-* @@name:	teams.4c
+* @@name:	teams.4
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no
@@ -21,5 +21,6 @@ float dotprod(float B[], float C[])
 }
 
 /* Note:  The variable sum is now mapped with tofrom, for correct 
-   execution with 4.5 (and pre-4.5) compliant compilers. See Devices Intro. 
+          execution with 4.5 (and pre-4.5) compliant compilers.
+          See Devices Intro. 
  */

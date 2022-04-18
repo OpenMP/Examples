@@ -1,5 +1,5 @@
 /*
-* @@name:	target_data.3c
+* @@name:	target_data.3
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no
@@ -32,6 +32,7 @@ void gramSchmidt(float Q[][COLS], const int rows)
     }
 }
 
-/* Note:  The variable tmp is now mapped with tofrom, for correct 
-   execution with 4.5 (and pre-4.5) compliant compilers. See Devices Intro. 
+/* Note:  The variable tmp is now mapped with tofrom, for correct
+          execution with 4.5 (and pre-4.5) compliant compilers.
+          See Devices Intro.
  */

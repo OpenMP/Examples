@@ -1,5 +1,5 @@
 /*
-* @@name:	scope_reduction.1c
+* @@name:	scope_reduction.1
 * @@type:	C++
 * @@compilable:	yes
 * @@linkable:	no

@@ -1,4 +1,4 @@
-! @@name: target_reduction.2.f90
+! @@name: target_reduction.2
 ! @@type: F-free
 ! @@compilable: yes
 ! @@linkable: yes

@@ -1,15 +1,11 @@
 /*
-* @@name:	parallel_masked_taskloop.1c
+* @@name:	parallel_masked_taskloop.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes
 * @@expect:	success
 * @@version:	omp_5.1
 */
-#if _OPENMP  < 202011
-#define masked master
-#endif
-
 #include <stdio.h>
 #define N 100
 
@@ -29,7 +25,6 @@ int main()
 
    #pragma omp parallel masked taskloop simd // taskloop 3
    for(i=0;i<N;i++){ c[i] = a[i] + b[i]; } 
-
 
    printf(" %d %d\n",c[0],c[N-1]);  // 0 and 495
 }

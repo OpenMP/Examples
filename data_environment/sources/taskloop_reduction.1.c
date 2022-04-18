@@ -1,5 +1,5 @@
 /*
-* @@name:       taskloop_reduction.1.c
+* @@name:       taskloop_reduction.1
 * @@type:       C
 * @@compilable: yes
 * @@linkable:   yes

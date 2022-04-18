@@ -1,6 +1,6 @@
-! @@name:       task_reduction.2.f90
+! @@name:       task_reduction.2
 ! @@type:       F-free
-! @@compilable: yes, omp_5.0
+! @@compilable: yes
 ! @@linkable:   yes
 ! @@expect:     success
 ! @@version:    omp_5.0

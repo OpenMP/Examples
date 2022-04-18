@@ -1,5 +1,5 @@
 /*
-* @@name:	masked.1c
+* @@name:	masked.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no
@@ -17,7 +17,7 @@ void masked_example( float* x, float* xold, int n, float tol )
   c = 0;
   #pragma omp parallel
   {
-    do{
+    do {
       #pragma omp for private(i)
       for( i = 1; i < n-1; ++i ){
         xold[i] = x[i];
@@ -33,11 +33,18 @@ void masked_example( float* x, float* xold, int n, float tol )
         error = y - x[i];
         if( error > tol || error < -tol ) ++toobig;
       }
-      #pragma omp masked
+      #pragma omp masked          // primary thread (thread 0)
       {
         ++c;
         printf( "iteration %d, toobig=%d\n", c, toobig );
       }
-    }while( toobig > 0 );
+    } while( toobig > 0 );
+    #pragma omp barrier
+    #pragma omp masked filter(1)  // thread 1
+    {
+      // The printf statement will not be executed
+      // if the number of threads is less than 2.
+      printf( "total number of iterations = %d\n", c );
+    }
   }
 }

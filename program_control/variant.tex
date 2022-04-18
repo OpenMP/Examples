@@ -1,6 +1,17 @@
 \pagebreak
 \section{\code{declare}~\code{variant} Directive}
 \label{sec:declare_variant}
+\index{directives!declare variant@\code{declare}~\code{variant}}
+\index{declare variant directive@\code{declare}~\code{variant} directive}
+\index{declare variant directive@\code{declare}~\code{variant} directive!match clause@\code{match} clause}
+\index{clauses!match@\code{match}}
+\index{match clause@\code{match} clause}
+
+\index{directives!declare target@\code{declare}~\code{target}}
+\index{declare target directive@\code{declare}~\code{target} directive}
+
+\index{directives!begin declare target@\code{begin}~\code{declare}~\code{target}}
+\index{begin declare target directive@\code{begin}~\code{declare}~\code{target} directive}
 
 %A \code{declare variant} directive specifies that the following function is an alternate function, 
 %a \plc{function variant}, to be used in place of the specified \plc{base function} 
@@ -30,7 +41,7 @@ are defined for the first two regions by using \plc{parallel} and \plc{target} s
 the \plc{construct} trait set) in a \code{match} clause.  The \plc{p\_vxv()} function variant includes
 a \code{for} construct (\code{do} construct for Fortran) for the \code{parallel} region, 
 while \plc{t\_vxv()} includes a \code{distribute}~\code{simd} construct for the \code{target} region.
-The \plc{t\_vxv()} function is explicitly compiled for the device using a \code{declare}~\code{target} directive.
+The \plc{t\_vxv()} function is explicitly compiled for the device using a declare target directive.
 
 Since the two \code{declare}~\code{variant} directives have no selectors that match traits for the context
 of the base function call in the sequential part of the program, the base \plc{vxv()} function is used there, 
@@ -46,7 +57,7 @@ the purpose of a function variant is to produce the same results by a different 
 %\code{teams distribute simd} in the variant function would produce non conforming code.
 
 %\pagebreak
-\cexample[5.0]{declare_variant}{1}
+\cexample[5.1]{declare_variant}{1}
 
 \ffreeexample[5.0]{declare_variant}{1}
 

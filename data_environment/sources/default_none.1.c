@@ -1,5 +1,5 @@
 /*
-* @@name:	default_none.1c
+* @@name:	default_none.1
 * @@type:	C
 * @@compilable:	no
 * @@linkable:	no

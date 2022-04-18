@@ -1,5 +1,5 @@
 /*
-* @@name:	cpp_reference.1c
+* @@name:	cpp_reference.1
 * @@type:	C++
 * @@compilable:	yes
 * @@linkable:	no

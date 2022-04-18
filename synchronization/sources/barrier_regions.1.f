@@ -1,4 +1,4 @@
-! @@name:	barrier_regions.1f
+! @@name:	barrier_regions.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	yes

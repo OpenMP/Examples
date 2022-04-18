@@ -1,5 +1,5 @@
 /*
-* @@name: acquire_release.2.c
+* @@name: acquire_release.2
 * @@type: C
 * @@compilable: yes
 * @@linkable: yes

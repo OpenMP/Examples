@@ -1,4 +1,4 @@
-! @@name:	affinity.2f
+! @@name:	affinity.2
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

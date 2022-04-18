@@ -1,4 +1,4 @@
-! @@name:	device.1f
+! @@name:	device.1
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	yes

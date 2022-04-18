@@ -1,13 +1,11 @@
 /*
-* @@name:	target_data.4c
+* @@name:	target_data.4
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
 * @@version:	omp_4.0
 */
-
-
 void vec_mult(float*, float*, float*, int);
 
 extern void init(float*, float*, int);
@@ -27,7 +25,6 @@ void foo(float *p0, float *v1, float *v2, int N)
 }
 
 
-
 void vec_mult(float *p1, float *v3, float *v4, int N)
 {
    int i;
@@ -38,4 +35,3 @@ void vec_mult(float *p1, float *v3, float *v4, int N)
      p1[i] = v3[i] * v4[i];
    }
 }
-

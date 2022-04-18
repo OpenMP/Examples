@@ -1,5 +1,5 @@
 /*
-* @@name:	udr.5.cpp
+* @@name:	udr.5
 * @@type:	C++
 * @@compilable:	no
 * @@linkable:	no

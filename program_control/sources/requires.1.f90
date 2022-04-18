@@ -1,4 +1,4 @@
-! @@name:       requires.1f90
+! @@name:       requires.1
 ! @@type:       F-free
 ! @@compilable: yes
 ! @@linkable:   yes

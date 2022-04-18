@@ -1,5 +1,5 @@
 /*
-* @@name:	array_sections.4c
+* @@name:	array_sections.4
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

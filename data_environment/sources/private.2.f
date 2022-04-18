@@ -1,4 +1,4 @@
-! @@name:	private.2f
+! @@name:	private.2
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	no

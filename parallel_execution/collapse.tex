@@ -1,6 +1,8 @@
 \pagebreak
 \section{\code{collapse} Clause}
 \label{sec:collapse}
+\index{clauses!collapse@\code{collapse}}
+\index{collapse clause@\code{collapse} clause}
 
 In the following example, the \code{k} and \code{j} loops are associated with 
 the loop construct. So the iterations of the \code{k} and \code{j} loops are 
@@ -37,6 +39,10 @@ This example prints: \code{2 3}.
 
 \fexample[3.0]{collapse}{2}
 
+\index{clauses!collapse@\code{collapse}}
+\index{collapse clause@\code{collapse} clause}
+\index{clauses!ordered@\code{ordered}}
+\index{ordered clause@\code{ordered} clause}
 The next example illustrates the interaction of the \code{collapse} and \code{ordered} 
  clauses.
 
@@ -44,7 +50,7 @@ In the example, the loop construct has both a \code{collapse} clause and an \cod
 clause. The \code{collapse} clause causes the iterations of the \code{k} and 
 \code{j} loops to be collapsed into one loop with a larger iteration space, and 
 that loop is divided among the threads in the current team. An \code{ordered} 
-clause is added to the loop construct, because an ordered region binds to the loop 
+clause is added to the loop construct because an ordered region binds to the loop 
 region arising from the loop construct.
 
 According to Section 2.12.8 of the OpenMP 4.0 specification, 
@@ -77,6 +83,7 @@ The code prints
 \clearpage
 
 
+\index{non-rectangular loop nest}
 The following example illustrates the collapse of a non-rectangular loop nest,
 a new feature in OpenMP 5.0. In a loop nest, a non-rectangular loop has a
 loop bound that references the iteration variable of an enclosing loop.

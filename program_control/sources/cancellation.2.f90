@@ -1,14 +1,9 @@
-! @@name:	cancellation.2f
+! @@name:	cancellation.2
 ! @@type:	F-free
 ! @@compilable:	yes
-! @@requires:	preprocessing
 ! @@linkable:	no
 ! @@expect:	success
 ! @@version:	omp_5.1
-#if _OPENMP  < 202011
-#define masked master
-#endif
-
 module parallel_search
   type binary_tree
     integer :: value
@@ -21,7 +16,8 @@ contains
     type(binary_tree), intent(in), pointer :: tree
     integer, intent(in) :: value, level
     type(binary_tree), pointer :: found
-    type(binary_tree), pointer :: found_left => NULL(), found_right => NULL()
+    type(binary_tree), pointer :: found_left => NULL(), &
+                                  found_right => NULL()
 
     if (associated(tree)) then
       if (tree%value .eq. value) then

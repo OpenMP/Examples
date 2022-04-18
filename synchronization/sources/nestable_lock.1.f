@@ -1,4 +1,4 @@
-! @@name:	nestable_lock.1f
+! @@name:	nestable_lock.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	no

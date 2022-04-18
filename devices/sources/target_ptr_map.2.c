@@ -1,19 +1,19 @@
 /*
-* @@name:       target_ptr_map.2c
+* @@name:       target_ptr_map.2
 * @@type:       C
 * @@compilable: yes
 * @@linkable:   yes
 * @@expect:     success
-* @@version:	omp_5.0
+* @@version:	omp_5.1
 */
 #include <stdio.h>
 #include <stdlib.h>
 #define N 100
 
-#pragma omp declare target
-int *p;
-extern void use_arg_p(int *p, int n);
-extern void use_global_p(     int n);
+#pragma omp begin declare target
+  int *p;
+  extern void use_arg_p(int *p, int n);
+  extern void use_global_p(     int n);
 #pragma omp end declare target
 
 int main()
@@ -35,7 +35,8 @@ int main()
   return 0;
 }
 
-//#pragma omp declare target (optional here because of prototype spec)
+// A #pragma omp begin declare target is optional here
+// because of prototype spec
 void use_arg_p(int *q, int n)
 {
   int i;
@@ -48,6 +49,8 @@ void use_global_p(int n)
   int i;
   for (i=0; i<n; i++)
     p[i] += i;   // valid since p is in declare target and called from
-                 // inside target region where p was attached to valid memory
+                 // inside target region where p was attached to
+                 // valid memory
 }
-//#pragma omp end declare target (optional here because of prototype spec)
+// A #pragma omp end declare target is optional here
+// because of prototype spec

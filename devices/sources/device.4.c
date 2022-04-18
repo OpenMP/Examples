@@ -1,5 +1,5 @@
 /*
-* @@name:	device.6c
+* @@name:	device.4
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

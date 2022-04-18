@@ -1,13 +1,13 @@
 /*
-* @@name: target_task_reduction.2.c
+* @@name: target_task_reduction.2a
 * @@type: C
 * @@compilable: yes
 * @@linkable: yes
 * @@expect: success
-* @@version: omp_5.0
+* @@version: omp_5.2
 */
 #include <stdio.h>
-#pragma omp declare target to(device_compute)
+#pragma omp declare target enter(device_compute)
 extern void device_compute(int *);
 extern void host_compute(int *);
 int main()

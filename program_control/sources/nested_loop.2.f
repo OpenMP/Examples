@@ -1,4 +1,4 @@
-! @@name:	nested_loop.2f
+! @@name:	nested_loop.2
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	no

@@ -1,9 +1,10 @@
-! @@name:	doacross.1f
+! @@name:	doacross.1
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no
 ! @@expect:	success
-! @@version:    omp_4.5
+! @@version:    omp_5.2
+
 subroutine work( N, A, B, C )
   integer :: N, i
   real, dimension(N) :: A, B, C
@@ -13,9 +14,9 @@ subroutine work( N, A, B, C )
   do i=2, N
     A(i) = foo(i)
 
-  !$omp ordered depend(sink: i-1)
+  !$omp ordered doacross(sink: i-1)
     B(i) = bar(A(i), B(i-1))
-  !$omp ordered depend(source)
+  !$omp ordered doacross(source: omp_cur_iteration)
 
     C(i) = baz(B(i))
   end do

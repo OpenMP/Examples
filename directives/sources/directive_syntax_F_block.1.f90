@@ -1,4 +1,4 @@
-! @@name:       directive_syntax_F_block.f90
+! @@name:       directive_syntax_F_block.1
 ! @@type:       F-free
 ! @@compilable: yes
 ! @@linkable:   yes

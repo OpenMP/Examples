@@ -22,7 +22,7 @@ Data-sharing attributes of variables can be classified as being \plc{predetermin
 Certain variables and objects have predetermined attributes.  
 A commonly found case is the loop iteration variable in associated loops 
 of a \code{for} or \code{do} construct. It has a private data-sharing attribute.
-Variables with predetermined data-sharing attributes can not be listed in a data-sharing clause; but there are some
+Variables with predetermined data-sharing attributes cannot be listed in a data-sharing clause; but there are some
 exceptions (mainly concerning loop iteration variables).
 
 Variables with explicitly determined data-sharing attributes are those that are
@@ -50,7 +50,7 @@ The common \plc{list items} are arrays, array sections, scalars, pointers, and
 structure elements (members). 
 
 Procedures and global variables have predetermined data mapping if they appear
-within the list or block of a \code{declare target} directive. Also, a C/C++ pointer
+within the list or block of a \code{declare}~\code{target} directive. Also, a C/C++ pointer
 is mapped as a zero-length array section, as is a C++ variable that is a reference to a pointer.
 % Waiting for response from Eric on this.
 

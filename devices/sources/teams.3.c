@@ -1,5 +1,5 @@
 /*
-* @@name:	teams.3c
+* @@name:	teams.3
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no
@@ -19,6 +19,7 @@ float dotprod(float B[], float C[], int N)
 }
 
 /* Note:  The variable sum is now mapped with tofrom from the defaultmap
-   clause on the combined target teams construct, for correct 
-   execution with 4.5 (and pre-4.5) compliant compilers. See Devices Intro. 
+          clause on the combined target teams construct, for correct
+          execution with 4.5 (and pre-4.5) compliant compilers.
+          See Devices Intro. 
  */

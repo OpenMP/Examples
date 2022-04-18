@@ -1,4 +1,4 @@
-! @@name:	declare_target.2f
+! @@name:	declare_target.2
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	yes

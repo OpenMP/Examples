@@ -1,15 +1,11 @@
 /*
-* @@name:	affinity.5c
+* @@name:	affinity.5
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
 * @@version:	omp_5.1
 */
-#if _OPENMP  < 202011
-#define primary master
-#endif
-
 void work();
 int main()
 {

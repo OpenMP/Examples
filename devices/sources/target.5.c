@@ -1,5 +1,5 @@
 /*
-* @@name:	target.5c
+* @@name:	target.5
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

@@ -1,5 +1,5 @@
 /*
-* @@name:	copyin.1c
+* @@name:	copyin.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

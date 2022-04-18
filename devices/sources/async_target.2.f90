@@ -1,4 +1,4 @@
-! @@name:	async_target.2f
+! @@name:	async_target.2
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

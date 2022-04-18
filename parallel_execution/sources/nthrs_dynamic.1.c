@@ -1,5 +1,5 @@
 /*
-* @@name:	nthrs_dynamic.1c
+* @@name:	nthrs_dynamic.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes

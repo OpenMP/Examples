@@ -1,6 +1,8 @@
 \pagebreak
 \section{\code{taskgroup} Construct}
 \label{sec:taskgroup}
+\index{constructs!taskgroup@\code{taskgroup}}
+\index{taskgroup construct@\code{taskgroup} construct}
 
 In this example, tasks are grouped and synchronized using the \code{taskgroup} 
 construct.
@@ -10,7 +12,7 @@ call) is created in the \code{parallel} region, and later a parallel tree traver
 is started (the task executing the root of the recursive \code{compute\_tree()} 
 calls). While synchronizing tasks at the end of each tree traversal, using the 
 \code{taskgroup} construct ensures that the formerly started background task 
-does not participate in the synchronization, and is left free to execute in parallel. 
+does not participate in the synchronization and is left free to execute in parallel. 
 This is opposed to the behavior of the \code{taskwait} construct, which would 
 include the background tasks in the synchronization.
 

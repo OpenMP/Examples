@@ -1,7 +1,7 @@
 /*
-* @@name:       task_reduction.2.c
+* @@name:       task_reduction.2
 * @@type:       C
-* @@compilable: yes, omp_5.0
+* @@compilable: yes
 * @@linkable:   yes
 * @@expect:     success
 * @@version:	omp_5.0

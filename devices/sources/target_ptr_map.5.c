@@ -1,10 +1,10 @@
 /*
-* @@name:       target_ptr_map_5.c
+* @@name:       target_ptr_map.5
 * @@type:       C
 * @@compilable: yes
 * @@linkable:   no
 * @@expect:     success
-* @@version:	omp_5.1
+* @@version:	omp_5.2
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,11 +26,12 @@ int main()
    T s = { 0, buf_size };   
    const int dev = omp_get_default_device();
    s.ptr = (int *)malloc(buf_size);
-   const int accessible = omp_target_is_accessible(s.ptr, s.buf_size, dev);
+   const int accessible =
+      omp_target_is_accessible(s.ptr, s.buf_size, dev);
 
    #pragma omp metadirective \
       when(user={condition(accessible)}: target) \
-      default( target map(mapper(deep_copy),tofrom:s) )
+      otherwise(target map(mapper(deep_copy),tofrom:s) )
    {
       do_work(s.ptr, n);
    } 

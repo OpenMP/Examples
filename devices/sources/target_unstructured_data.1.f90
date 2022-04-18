@@ -1,4 +1,4 @@
-! @@name:        target-unstructured-data.1.f
+! @@name:        target_unstructured_data.1
 ! @@type:        F-free
 ! @@compilable:  yes
 ! @@linkable:    no

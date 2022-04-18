@@ -1,5 +1,5 @@
 /*
-* @@name:	copyprivate.1c
+* @@name:	copyprivate.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

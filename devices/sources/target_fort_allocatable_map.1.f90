@@ -1,4 +1,4 @@
-! @@name:       fort_allocatable_map.1f90
+! @@name:       target_fort_allocatable_map.1
 ! @@type:       F-free
 ! @@compilable: yes
 ! @@linkable:   yes

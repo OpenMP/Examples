@@ -1,4 +1,4 @@
-! @@name:	simple_lock.1f
+! @@name:	simple_lock.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	yes

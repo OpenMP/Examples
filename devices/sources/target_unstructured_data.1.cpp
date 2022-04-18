@@ -1,5 +1,5 @@
 /*
-* @@name:        target-unstructured-data.1.cpp
+* @@name:        target_unstructured_data.1
 * @@type:        C++
 * @@compilable:  yes
 * @@linkable:    no

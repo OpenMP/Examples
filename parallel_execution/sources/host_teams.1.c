@@ -1,5 +1,5 @@
 /*
-* @@name: host_teams.2.c
+* @@name: host_teams.1
 * @@type: C
 * @@compilable: yes
 * @@linkable: yes 
@@ -17,6 +17,8 @@ int main(){
    float   sp_x[N], sp_y[N], sp_a=0.0001e0;
    double  dp_x[N], dp_y[N], dp_a=0.0001e0;
 
+   max_thrds = omp_get_num_procs()/nteams_required;
+
    // Create 2 teams, each team works in a different precision
    #pragma omp teams num_teams(nteams_required) \
                      thread_limit(max_thrds)  private(tm_id)
@@ -28,7 +30,7 @@ int main(){
         exit(0); 
       }
 
-      if(tm_id == 0)    // Do Single Precision Work (SAXPY) with this team
+      if(tm_id == 0)  // Do Single Precision Work (SAXPY) with this team
       {
          #pragma omp parallel 
          {
@@ -40,7 +42,7 @@ int main(){
          }
       }
 
-      if(tm_id == 1)    // Do Double Precision Work (DAXPY) with this team
+      if(tm_id == 1)  // Do Double Precision Work (DAXPY) with this team
       {
          #pragma omp parallel 
          {

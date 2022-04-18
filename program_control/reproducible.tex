@@ -1,0 +1,62 @@
+\pagebreak
+\section{Controlling Concurrency and Reproducibility with 
+the \code{order} Clause}
+\label{sec:reproducible_modifier}
+
+\index{clauses!order(concurrent)@\code{order(concurrent)}}
+\index{order(concurrent) clause@\code{order(concurrent)} clause}
+
+The \code{order} clause is used for controlling the parallel execution of 
+loop iterations for one or more loops that are associated with a directive. 
+It is specified with a clause argument and optional modifier. 
+The only supported argument, introduced in OpenMP 5.0, is the keyword 
+\code{concurrent} which indicates that the loop iterations may execute 
+concurrently, including iterations in the same chunk per the loop schedule. 
+Because of the relaxed execution permitted with an \code{order(concurrent)} 
+clause, codes must not assume that any cross-iteration data dependences 
+would be preserved or that any two iterations may execute on the same thread.
+
+The following example in this section demonstrates the use of 
+the \code{order(concurrent)} clause, without any modifiers, for controlling 
+the parallel execution of loop iterations.
+The \code{order(concurrent)} clause cannot be used for the second and third 
+\code{parallel}~\code{for}/\code{do} constructs because of either having 
+data dependences or accessing threadprivate variables.
+
+\cexample[5.0]{reproducible}{1}
+
+\ffreeexample[5.0]{reproducible}{1}
+
+\index{order(concurrent) clause@\code{order(concurrent)} clause!reproducible modifier@\code{reproducible} modifier}
+\index{order(concurrent) clause@\code{order(concurrent)} clause!unconstrained modifier@\code{unconstrained} modifier}
+Modifiers to the \code{order} clause, introduced in OpenMP 5.1, may be 
+specified to control the reproducibility of the loop schedule for 
+the associated loop(s). A reproducible loop schedule will consistently 
+yield the same mapping of iterations to threads (or SIMD lanes) if the 
+directive name, loop schedule, iteration space, and binding region remain 
+the same. The \code{reproducible} modifier indicates the loop schedule must 
+be reproducible, while the \code{unconstrained} modifier indicates that 
+the loop schedule is not reproducible.
+If a modifier is not specified, then the \code{order} clause does not affect 
+the reproducibility of the loop schedule.
+
+The next example demonstrates the use of the \code{order(concurrent)} clause 
+with modifiers for additionally controlling the reproducibility of a loop's 
+schedule.
+The two worksharing-loop constructs in the first \code{parallel} construct
+specify that the loops have reproducible schedules, thus memory effects from iteration \plc{i} from the first loop will be observable to iteration \plc{i}
+in the second loop. 
+In the second \code{parallel} construct, the \code{order} clause does not 
+control reproducibility for the loop schedules. However, since both loops 
+specify the same static schedules, the schedules are reproducible and the 
+data dependences between the loops are preserved by the execution.
+In the third \code{parallel} construct, the \code{order} clause indicates 
+that the loops are not reproducible, overriding the default reproducibility
+prescribed by the specified static schedule. Consequentially, 
+the \code{nowait} clause on the first worksharing-loop construct should not 
+be used to ensure that the data dependences are preserved by the execution.
+
+\cexample[5.1]{reproducible}{2}
+
+\ffreeexample[5.1]{reproducible}{2}
+

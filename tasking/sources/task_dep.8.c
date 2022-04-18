@@ -1,5 +1,5 @@
 /*
-* @@name: task_depend.8.c
+* @@name: task_dep.8
 * @@type: C
 * @@compilable: yes
 * @@linkable: yes

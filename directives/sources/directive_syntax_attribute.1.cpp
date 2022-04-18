@@ -1,5 +1,5 @@
 /*
-* @@name:       directive_syntax_attribute.1.cpp
+* @@name:       directive_syntax_attribute.1
 * @@type:       C++
 * @@compilable: yes
 * @@linkable:   yes
@@ -15,11 +15,11 @@
 #pragma omp declare simd linear(i) simdlen(8)
 double P(int i){ return (double)i * (double)i; }
 
-[[ omp :: directive( declare simd linear(i) simdlen(4) ) ]]
-[[ omp :: directive( declare simd linear(i) simdlen(8) ) ]]
+[[omp::directive(declare simd linear(i) simdlen(4))]]
+[[omp::directive(declare simd linear(i) simdlen(8))]]
 double Q(int i){ return (double)i * (double)i; }
 
-int main(){
+int main() {
 
     #pragma omp parallel for num_threads(NT)                 // PRAG 1
     for(int i=0; i<NT; i++) printf("thrd no %d\n",thrd_no());
@@ -29,11 +29,11 @@ int main(){
     for(int i=0; i<NT; i++) printf("thrd no %d\n",thrd_no());
 
                                                              // ATTR 1
-    [[ omp :: directive( parallel for num_threads(NT) ) ]]
+    [[omp::directive( parallel for num_threads(NT))]]
     for(int i=0; i<NT; i++) printf("thrd no %d\n",thrd_no());
 
                                                              // ATTR 2
-    [[ using omp : directive( parallel for num_threads(NT)) ) ]]
+    [[using omp : directive( parallel for num_threads(NT))]]
     for(int i=0; i<NT; i++) printf("thrd no %d\n",thrd_no());
 
  // INVALID-- attribute and non-attribute on same statement
@@ -48,7 +48,7 @@ int main(){
  // for(int i=0; i<NT; i++) printf("thrd no %d\n",thrd_no());
 
                                                              // ATTR 6
-    [[omp:: sequence(directive(parallel num_threads(NT)),directive(for))]]
+    [[omp::sequence(directive(parallel num_threads(NT)),directive(for))]]
     for(int i=0; i<NT; i++) printf("thrd no %d\n",thrd_no());
 
     double tmp=0.0f;

@@ -1,5 +1,5 @@
 /*
-* @@name:       ompt_start.1.c
+* @@name:       ompt_start.1
 * @@type:       C
 * @@compilable: yes
 * @@linkable:   yes

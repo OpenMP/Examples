@@ -1,4 +1,4 @@
-! @@name:	masked.1f
+! @@name:	masked.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	no
@@ -28,10 +28,16 @@
               ERROR = Y-X(I)
               IF( ERROR > TOL .OR. ERROR < -TOL ) TOOBIG = TOOBIG+1
             ENDDO
-!$OMP     MASKED
+!$OMP     MASKED            ! primary thread (thread 0)
             C = C + 1
             PRINT *, 'Iteration ', C, 'TOOBIG=', TOOBIG
 !$OMP     END MASKED
         ENDDO
+!$OMP   BARRIER
+!$OMP   MASKED FILTER(1)    ! thread 1
+          ! The print statement will not be executed
+          ! if the number of threads is less than 2.
+          PRINT *, 'Total number of iterations =', C
+!$OMP   END MASKED
 !$OMP END PARALLEL
       END SUBROUTINE MASKED_EXAMPLE

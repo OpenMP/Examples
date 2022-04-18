@@ -1,4 +1,4 @@
-! @@name:	flush_nolist.1f
+! @@name:	flush_nolist.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	yes

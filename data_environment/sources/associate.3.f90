@@ -1,4 +1,4 @@
-! @@name:	associate.3f
+! @@name:	associate.3
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	yes

@@ -1,5 +1,5 @@
 /*
-* @@name:   taskloop.2c
+* @@name:   taskloop.2
 * @@type:   C
 * @@compilable: yes
 * @@linkable:   no

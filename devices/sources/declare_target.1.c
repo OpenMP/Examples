@@ -1,14 +1,15 @@
 /*
-* @@name:	declare_target.1c
+* @@name:	declare_target.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
-* @@version:	omp_4.0
+* @@version:	omp_5.1
 */
-#pragma omp declare target
+#pragma omp begin declare target
 extern void fib(int N);
 #pragma omp end declare target
+
 #define THRESHOLD 1000000
 void fib_wrapper(int n)
 {

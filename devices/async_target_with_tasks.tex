@@ -1,5 +1,13 @@
 \subsection{Asynchronous \code{target} with Tasks}
 \label{subsec:async_target_with_tasks}
+\index{target construct@\code{target} construct}
+\index{task construct@\code{task} construct}
+
+\index{directives!declare target@\code{declare}~\code{target}}
+\index{declare target directive@\code{declare}~\code{target} directive}
+
+\index{directives!begin declare target@\code{begin}~\code{declare}~\code{target}}
+\index{begin declare target directive@\code{begin}~\code{declare}~\code{target} directive}
 
 The following example shows how the \code{task} and \code{target} constructs 
 are used to execute multiple \code{target} regions asynchronously. The task that 
@@ -9,9 +17,11 @@ scheduling point while waiting for the execution of the \code{target} region
 to complete, allowing the thread to switch back to the execution of the encountering 
 task or one of the previously generated explicit tasks.
 
-\cexample[4.0]{async_target}{1}
+\cexample[5.1]{async_target}{1}
 
 \pagebreak
+\index{directives!declare target@\code{declare}~\code{target}}
+\index{declare target directive@\code{declare}~\code{target} directive}
 The Fortran version has an interface block that contains the \code{declare} \code{target}. 
 An identical statement exists in the function declaration (not shown here).
 
@@ -22,7 +32,7 @@ are used to execute multiple \code{target} regions asynchronously. The task depe
 ensures that the storage is allocated and initialized on the device before it is 
 accessed.
 
-\cexample[4.0]{async_target}{2}
+\cexample[5.1]{async_target}{2}
 
 The Fortran example below is similar to the C version above. Instead of pointers, though, it uses
 the convenience of Fortran allocatable arrays on the device. In order to preserve the arrays 
@@ -39,6 +49,9 @@ At the end of the first \code{target} region, the arrays \plc{v1} and \plc{v2} a
 for access in the second \code{target} region. At the end of the second \code{target} region, the data 
 in array \plc{p} is copied back, the arrays \plc{v1} and \plc{v2} are not.
 
+\index{task construct@\code{task} construct!depend clause@\code{depend} clause}
+\index{clauses!depend@\code{depend}}
+\index{depend clause@\code{depend} clause}
 A \code{depend} clause is used in the \code{task} directive to provide a wait at the beginning of the second 
 \code{target} region, to insure that there is no race condition with \plc{v1} and \plc{v2} in the two tasks.
 It would be noncompliant to use \plc{v1} and/or \plc{v2} in lieu of \plc{N} in the \code{depend} clauses, 

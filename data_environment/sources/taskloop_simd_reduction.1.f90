@@ -1,14 +1,9 @@
-! @@name:	taskloop_simd_reduction.1f90
+! @@name:	taskloop_simd_reduction.1
 ! @@type:	F-free
 ! @@compilable:	yes
-! @@requires:	preprocessing
 ! @@linkable:	no
 ! @@expect:	success
 ! @@version:	omp_5.1
-#if _OPENMP  < 202011
-#define masked master
-#endif
-
 program main
 
   use omp_lib
@@ -20,21 +15,21 @@ program main
 !! taskloop reductions
 
   !$omp parallel masked
-  !$omp taskloop reduction(+:asum)                     !! taskloop 1
+  !$omp taskloop reduction(+:asum)                  !! taskloop 1
     do i=1,N;  asum = asum + a(i);  enddo
   !$omp end taskloop
   !$omp end parallel masked
 
 
-  !$omp parallel reduction(task, +:asum)               !! parallel reduction a
+  !$omp parallel reduction(task, +:asum)            !! parallel reduction a
 
      !$omp masked
-     !$omp task            in_reduction(+:asum)        !! task 2
+     !$omp task            in_reduction(+:asum)     !! task 2
        do i=1,N;  asum = asum + a(i);  enddo
      !$omp end task
      !$omp end masked
 
-     !$omp masked taskloop in_reduction(+:asum)        !! taskloop 2
+     !$omp masked taskloop in_reduction(+:asum)     !! taskloop 2
        do i=1,N;  asum = asum + a(i);  enddo
      !$omp end masked taskloop
 
@@ -43,21 +38,21 @@ program main
 !! taskloop simd reductions
 
   !$omp parallel masked
-  !$omp taskloop simd reduction(+:asum)                !! taskloop simd 3
+  !$omp taskloop simd reduction(+:asum)             !! taskloop simd 3
     do i=1,N;  asum = asum + a(i);  enddo
   !$omp end taskloop simd
   !$omp end parallel masked
 
 
-  !$omp parallel reduction(task, +:asum)               !! parallel reduction b
+  !$omp parallel reduction(task, +:asum)            !! parallel reduction b
 
     !$omp masked
-    !$omp task                 in_reduction(+:asum)    !! task 4
+    !$omp task                 in_reduction(+:asum) !! task 4
        do i=1,N;  asum = asum + a(i);  enddo
     !$omp end task
     !$omp end masked
 
-    !$omp masked taskloop simd in_reduction(+:asum)    !! taskloop simd 4
+    !$omp masked taskloop simd in_reduction(+:asum) !! taskloop simd 4
        do i=1,N;  asum = asum + a(i);  enddo
     !$omp end masked taskloop simd
 

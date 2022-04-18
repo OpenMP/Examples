@@ -1,5 +1,5 @@
 /*
-* @@name:	ordered.3c
+* @@name:	ordered.3
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

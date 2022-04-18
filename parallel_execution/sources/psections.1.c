@@ -1,5 +1,5 @@
 /*
-* @@name:	psections.1c
+* @@name:	psections.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

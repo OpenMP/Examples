@@ -1,4 +1,4 @@
-! @@name:       target_mapper.2.f90
+! @@name:       target_mapper.2
 ! @@type:       F-free
 ! @@compilable: yes
 ! @@linkable:   no
@@ -42,7 +42,7 @@ program main
     call dzmat_init(b,is,ie)
   !$omp end target
 
-  !omp taskwait
+  !$omp taskwait
 
   call host_add(a,b,c)
 

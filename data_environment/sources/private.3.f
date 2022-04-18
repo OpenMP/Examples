@@ -1,4 +1,4 @@
-! @@name:	private.3f
+! @@name:	private.3
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	no

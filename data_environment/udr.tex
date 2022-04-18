@@ -1,5 +1,18 @@
 \subsection{User-Defined Reduction}
 \label{subsec:UDR}
+\index{reductions!user-defined}
+\index{reductions!declare reduction directive@\code{declare}~\code{reduction} directive}
+\index{declare reduction directive@\code{declare}~\code{reduction} directive}
+\index{directives!declare reduction@\code{declare}~\code{reduction}}
+\index{declare reduction directive@\code{declare}~\code{reduction} directive!initializer clause@\code{initializer} clause}
+\index{declare reduction directive@\code{declare}~\code{reduction} directive!combiner}
+\index{declare reduction directive@\code{declare}~\code{reduction} directive!OpenMP variable identifiers}
+\index{OpenMP variable identifiers!omp_in@\scode{omp_in}}
+\index{OpenMP variable identifiers!omp_out@\scode{omp_out}}
+\index{OpenMP variable identifiers!omp_priv@\scode{omp_priv}}
+\index{combiner}
+\index{clauses!initializer@\code{initializer}}
+\index{initializer clause@\code{initializer} clause}
 
 The \code{declare}~\code{reduction} directive can be used to specify 
 user-defined reductions (UDR) for user data types.
@@ -49,6 +62,7 @@ a type structure constructor \plc{point($\ldots$)}.
 \ffreeexample[4.0]{udr}{2}
 
 
+\index{OpenMP variable identifiers!omp_orig@\scode{omp_orig}}
 The following example shows the use of special variables in arguments for combiner (\code{omp\_in} and \code{omp\_out}) and initializer (\code{omp\_priv} and \code{omp\_orig}) routines.  This example returns the maximum value of an array and the corresponding index value. The \code{declare}~\code{reduction} directive specifies a user-defined reduction operation \plc{maxloc} for data type \plc{struct} \plc{mx\_s}. The function \plc{mx\_combine} is the combiner and the function \plc{mx\_init} is the initializer.
 
 \cexample[4.0]{udr}{3}

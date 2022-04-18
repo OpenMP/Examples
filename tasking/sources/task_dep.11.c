@@ -1,5 +1,5 @@
 /*
-* @@name:       task_dep.11c
+* @@name:       task_dep.11
 * @@type:       C
 * @@compilable: yes
 * @@linkable:   no
@@ -31,9 +31,9 @@ void parallel_computation(int n) {
             set_an_element(&v[i], i);
 
         #pragma omp task depend(iterator(it = 0:n), in: v[it])
-     // #pragma omp task depend(in: v[0:n]) Violates Array section restriction.
+     // The following violates array-section restriction:
+     // #pragma omp task depend(in: v[0:n]) 
         print_all_elements(v, n);
-
     }
 }
 

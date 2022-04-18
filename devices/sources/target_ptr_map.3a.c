@@ -1,15 +1,15 @@
 /*
-* @@name:       target_ptr_map.3a.c
+* @@name:       target_ptr_map.3a
 * @@type:       C
 * @@compilable: yes
 * @@linkable:   no
 * @@expect:     failure
-* @@version:	omp_5.0
+* @@version:	omp_5.1
 */
 #define N 100
 
 int x[N], y[N];
-#pragma omp declare target
+#pragma omp begin declare target
 int *p1;
 #pragma omp end declare target
 int *p2;

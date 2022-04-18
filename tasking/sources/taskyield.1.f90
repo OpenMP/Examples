@@ -1,4 +1,4 @@
-! @@name:	taskyield.1f
+! @@name:	taskyield.1
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

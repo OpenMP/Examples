@@ -1,5 +1,5 @@
 /*
-* @@name:	get_wtime.1c
+* @@name:	get_wtime.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes

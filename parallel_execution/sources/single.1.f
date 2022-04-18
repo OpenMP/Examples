@@ -1,4 +1,4 @@
-! @@name:	single.1f
+! @@name:	single.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	yes

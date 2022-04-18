@@ -1,6 +1,8 @@
 %\pagebreak
 \section{Fortran Comments (Free Source Form)}
 \label{sec:fortran_free_format_comments}
+\index{directive syntax!free form, Fortran}
+\index{free form syntax, Fortran}
 
 OpenMP directives in Fortran codes with free source form are specified as comments
 that use the \code{!\$omp} sentinel, followed by the
@@ -17,6 +19,7 @@ Here, an \code{end} directive (\code{end}~\code{parallel}) must be specified to 
 of the \code{parallel} directive. 
 
 \ffreeexample{directive_syntax_F_free_comment}{1}
+\clearpage
 
 As of OpenMP 5.1, \code{block} and \code{end}~\code{block} statements can be used to designate 
 a structured block for an OpenMP region, and any paired OpenMP \code{end} directive becomes optional,
@@ -26,3 +29,23 @@ It was necessary to explicitly declare the \plc{i} variable, due to the \code{im
 it could have also been declared outside the structured block.
 
 \ffreeexample[5.1]{directive_syntax_F_block}{1}
+
+A Fortran BLOCK construct may eliminate the need for a paired \scode{end} directive for an OpenMP construct, 
+as illustrated in the following example.
+
+The first \code{parallel} construct is specified with an OpenMP loosely structured block 
+(where the first executable construct is not a Fortran 2008 BLOCK construct). 
+A paired \scode{end} directive must end the OpenMP construct.
+The second \code{parallel} construct is specified with an OpenMP strictly structured block 
+(consists only of a single Fortran BLOCK construct). 
+The paired \scode{end} directive is optional in this case, and is not used here.
+
+The next two \code{parallel} directives form an enclosing outer \code{parallel} construct 
+and a nested inner \code{parallel} construct. The first \code{end}~\code{parallel} directive
+that subsequently appears terminates the inner \code{parallel} construct, 
+because a paired \scode{end} directive immediately following a BLOCK construct that is 
+a strictly structured block of an OpenMP construct is treated as the terminating end directive 
+of that construct. 
+The next \code{end}~\code{parallel} directive is required to terminate the outer \code{parallel} construct.
+
+\ffreeexample[5.1]{directive_syntax_F_block}{2}

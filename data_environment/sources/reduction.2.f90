@@ -1,4 +1,4 @@
-! @@name:	reduction.2f
+! @@name:	reduction.2
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

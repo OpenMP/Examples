@@ -1,14 +1,9 @@
-! @@name:	critical.1f
+! @@name:	critical.2
 ! @@type:	F-fixed
 ! @@compilable:	yes
-! @@requires:	preprocessing
 ! @@linkable:	no
 ! @@expect:	success
-! @@version:	omp_4.5
-#if _OPENMP  < 201811
-#define OMP_SYNC_HINT_CONTENDED   OMP_LOCK_HINT_CONTENDED
-#endif
-
+! @@version:	omp_5.0
       SUBROUTINE CRITICAL_EXAMPLE(X, Y)
         USE OMP_LIB        ! or INCLUDE "omp_lib.h"
         

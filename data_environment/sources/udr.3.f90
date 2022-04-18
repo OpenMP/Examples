@@ -1,4 +1,4 @@
-! @@name:	udr.3.f90
+! @@name:	udr.3
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	yes

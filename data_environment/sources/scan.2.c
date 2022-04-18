@@ -1,5 +1,5 @@
 /*
-* @@name:       scan.2.c
+* @@name:       scan.2
 * @@type:       C
 * @@compilable: yes
 * @@linkable:   yes
@@ -18,7 +18,8 @@ int main(void)
    for (int k = 0; k < N; k++)
       a[k] = k + 1;
 
-   // a[k] is not included in the computation of producing results in b[k]
+   // a[k] is not included in the computation of producing
+   // results in b[k]
    #pragma omp parallel for simd reduction(inscan,+: x)
    for (int k = 0; k < N; k++) {
       b[k] = x;

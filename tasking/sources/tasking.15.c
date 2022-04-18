@@ -1,5 +1,5 @@
 /*
-* @@name:	tasking.15c
+* @@name:	tasking.15
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes

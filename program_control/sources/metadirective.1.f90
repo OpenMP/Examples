@@ -1,10 +1,9 @@
-! @@name: metadirective.2f90
+! @@name: metadirective.1
 ! @@type: F-free
 ! @@compilable: yes
 ! @@linkable: yes
 ! @@expect: success
-! @@version: omp_5.0
-
+! @@version: omp_5.2
 program main
    integer, parameter :: N= 100
    integer ::  v1(N), v2(N), v3(N);
@@ -13,8 +12,8 @@ program main
 
    !$omp  target map(to:v1,v2) map(from:v3) device(0)
    !$omp  metadirective &
-   !$omp&     when(   device={arch("nvptx")}: teams loop) &
-   !$omp&     default(                     parallel loop)
+   !$omp&     when(     device={arch("nvptx")}: teams loop) &
+   !$omp&     otherwise(                     parallel loop)
      do i= 1,N; v3(i) = v1(i) * v2(i); enddo
    !$omp  end target
 

@@ -1,4 +1,4 @@
-! @@name:	taskgroup.1f
+! @@name:	taskgroup.1
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	yes

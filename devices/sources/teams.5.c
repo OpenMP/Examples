@@ -1,5 +1,5 @@
 /*
-* @@name:	teams.5c
+* @@name:	teams.5
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

@@ -1,19 +1,20 @@
-! @@name: array_shaping.1.f90
+! @@name: array_shaping.1
 ! @@type: F-free
 ! @@compilable: yes
 ! @@linkable: no
 ! @@expect: success
-! @@version: omp_5.0
+! @@version: omp_5.2
+
 module m
    interface
       subroutine do_work(a, nx, ny)
-         !$omp declare target to(do_work)
+         !$omp declare target enter(do_work)
          integer, intent(in) :: nx, ny
          double precision a(0:nx+1,ny)
       end subroutine do_work
 
       subroutine other_work(a, nx, ny)
-         !$omp declare target to(other_work)
+         !$omp declare target enter(other_work)
          integer, intent(in) :: nx, ny
          double precision a(0:nx+1,ny)
       end subroutine other_work

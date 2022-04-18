@@ -1,4 +1,4 @@
-! @@name:	affinity.3f
+! @@name:	affinity.3
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	no

@@ -1,14 +1,9 @@
-! @@name:	lock_owner.1f
+! @@name:	lock_owner.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
-! @@requires:	preprocessing
 ! @@linkable:	yes
 ! @@expect:	success
 ! @@version:    omp_5.1
-#if _OPENMP  < 202011
-#define masked master
-#endif
-
         program lock
         use omp_lib
         integer :: x

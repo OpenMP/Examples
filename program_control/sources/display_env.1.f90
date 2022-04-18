@@ -1,4 +1,4 @@
-! @@name:	display_env.1.f90
+! @@name:	display_env.1
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	yes

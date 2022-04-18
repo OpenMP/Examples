@@ -1,13 +1,14 @@
-! @@name: target_task_reduction.2.f90
+! @@name: target_task_reduction.2a
 ! @@type: F-free
 ! @@compilable: yes
 ! @@linkable: yes
 ! @@expect: success
-! @@version: omp_5.0
+! @@version: omp_5.2
+
 program target_task_reduction_ex2
    interface
       subroutine device_compute(res)
-      !$omp declare target to(device_compute)
+      !$omp declare target enter(device_compute)
         integer :: res
       end subroutine device_compute
       subroutine host_compute(res)

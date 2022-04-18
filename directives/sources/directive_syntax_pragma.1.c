@@ -1,5 +1,5 @@
 /*
-* @@name:       directive_syntax_pragma.1.c
+* @@name:       directive_syntax_pragma.1
 * @@type:       C
 * @@compilable: yes
 * @@linkable:   yes

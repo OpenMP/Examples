@@ -1,4 +1,4 @@
-! @@name:       directive_syntax_F_free_comment.1.f90
+! @@name:       directive_syntax_F_free_comment.1
 ! @@type:       F-free
 ! @@compilable: yes
 ! @@linkable:   yes

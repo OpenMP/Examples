@@ -1,5 +1,14 @@
 \section{Affinity Display}
 \label{sec:affinity_display}
+\index{affinity display!OMP_DISPLAY_AFFINITY@\scode{OMP_DISPLAY_AFFINITY}}
+\index{environment variables!OMP_DISPLAY_AFFINITY@\scode{OMP_DISPLAY_AFFINITY}}
+\index{OMP_DISPLAY_AFFINITY@\scode{OMP_DISPLAY_AFFINITY}}
+\index{affinity display!OMP_AFFINITY_FORMAT@\scode{OMP_AFFINITY_FORMAT}}
+\index{environment variables!OMP_AFFINITY_FORMAT@\scode{OMP_AFFINITY_FORMAT}}
+\index{OMP_AFFINITY_FORMAT@\scode{OMP_AFFINITY_FORMAT}}
+\index{affinity display!omp_display_affinity routine@\scode{omp_display_affinity} routine}
+\index{routines!omp_display_affinity@\scode{omp_display_affinity}}
+\index{omp_display_affinity routine@\scode{omp_display_affinity} routine}
 
 The following examples illustrate ways to display thread affinity.
 Automatic display of affinity can be invoked by setting
@@ -49,6 +58,8 @@ where the numbers correspond to core ids for the system. Note, \code{OMP\_DISPLA
 set and is \code{FALSE} by default.  This example shows how to use API routines to
 perform affinity display operations.
 
+\index{environment variables!OMP_PLACES@\scode{OMP_PLACES}}
+\index{OMP_PLACES@\scode{OMP_PLACES}}
 For each of the two first-level threads the \code{OMP\_PLACES} variable specifies
 a place with all the core-ids of the socket (\{0,2,4,6\} for one thread and \{1,3,5,7\} for the other).
 (As is sometimes the case in 2-socket systems, one socket may consist
@@ -62,8 +73,14 @@ the affinities for the threads on each socket are printed according to this form
 
 \ffreeexample[5.0]{affinity_display}{2}
 
+\index{affinity display!omp_get_affinity_format routine@\scode{omp_get_affinity_format} routine}
+\index{routines!omp_get_affinity_format@\scode{omp_get_affinity_format}}
+\index{omp_get_affinity_format routine@\scode{omp_get_affinity_format} routine}
+\index{affinity display!omp_set_affinity_format routine@\scode{omp_set_affinity_format} routine}
+\index{routines!omp_set_affinity_format@\scode{omp_set_affinity_format}}
+\index{omp_set_affinity_format routine@\scode{omp_set_affinity_format} routine}
 The next example illustrates more details about affinity formatting.
-First, the \code{omp\_get\_affininity\_format()} API routine is used to 
+First, the \code{omp\_get\_affinity\_format()} API routine is used to 
 obtain the default format. The code checks to make sure the storage 
 provides enough space to hold the format.  
 Next, the \code{omp\_set\_affinity\_format()} API routine sets a user-defined 
@@ -83,6 +100,9 @@ and the "0" indicates that any unused space is to be prefixed with zeros
 %The period (\plc{.}) indicates right justified and \plc{0} leading zeros.  
 %All other text in the format is just user narrative.
 
+\index{affinity display!omp_capture_affinity routine@\scode{omp_capture_affinity} routine}
+\index{routines!omp_capture_affinity@\scode{omp_capture_affinity}}
+\index{omp_capture_affinity routine@\scode{omp_capture_affinity} routine}
 Within the parallel region the affinity for each thread is captured by 
 \code{omp\_capture\_affinity()} into a buffer array with elements indexed 
 by the thread number (\plc{thrd\_num}).
@@ -98,6 +118,7 @@ The maximum value for the number of characters (\plc{nchars}) returned by
 clause and the \plc{if(nchars >= max\_req\_store) max\_req\_store=nchars} statement. 
 It is used to report possible truncation (if \plc{max\_req\_store} > \plc{buffer\_store}).
 
+\newpage
 \cexample[5.0]{affinity_display}{3}
 
 \ffreeexample[5.0]{affinity_display}{3}

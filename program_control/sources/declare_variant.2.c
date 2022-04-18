@@ -1,5 +1,5 @@
 /*
-* @@name: declare_variant.2c
+* @@name: declare_variant.2
 * @@type: C
 * @@compilable: yes
 * @@linkable: no
@@ -13,20 +13,20 @@ void avx512_saxpy(int, float, float *, float *);
 
 #pragma omp declare variant( avx512_saxpy ) \
                       match( device={isa("core-avx512")} )
-void base_saxpy(int n, float s, float *x, float *y)    // base function
+void base_saxpy(int n, float s, float *x, float *y)   // base function
 {
    #pragma omp parallel for
    for(int i=0; i<n; i++) y[i] = s*x[i] + y[i];
 }
 
-void avx512_saxpy(int n, float s, float *x, float *y)    //function variant
+void avx512_saxpy(int n, float s, float *x, float *y) //function variant
 {
-                                     //assume 64-byte alignment for AVX-512
+   //assume 64-byte alignment for AVX-512
    #pragma omp parallel for simd simdlen(16) aligned(x,y:64)
    for(int i=0; i<n; i++) y[i] = s*x[i] + y[i];
 }
 
-// Above may be in another file scope.                  
+// Above may be in another file scope.
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,7 +45,8 @@ int main()
 
    base_saxpy(N,s,x,y);
 
-   printf("y[0],y[N-1]: %5.0f %5.0f\n",y[0],y[N-1]); //output: y...   3  3000
+   printf("y[0],y[N-1]: %5.0f %5.0f\n",y[0],y[N-1]);
+   //output: y[0],y[N-1]: 3  3000
 
    return 0;
 }

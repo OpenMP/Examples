@@ -1,11 +1,9 @@
-! @@name: target_offload_control.1f90
+! @@name: target_offload_control.1
 ! @@type: F-free
 ! @@compilable: yes
 ! @@linkable: yes
 ! @@expect: success
 ! @@version: omp_5.0
-
-
 module offload_policy
   implicit none
   integer, parameter :: LEN_POLICY=10
@@ -43,38 +41,42 @@ program policy_test
   policy = get_offload_policy() !!Get OMP_TARGET_OFFLOAD value
 
   if (OPENMP_VERSION < 201811) then
-     print*,"Warning: OMP_TARGET_OFFLOAD NOT supported by VER.",OPENMP_VERSION
+     print*,"Warning: OMP_TARGET_OFFLOAD NOT supported by VER.", &
+            OPENMP_VERSION
      print*,"         If OMP_TARGET_OFFLOAD is set, it will be ignored."
   endif
 
-     !Set target device number to an unavailable device to test offload policy.
+     ! Set target device number to an unavailable device
+     ! to test offload policy.
   device_num = omp_get_num_devices() + 1
 
-                      !!Report OMP_TARGET_OFFOAD value
+                      !! Report OMP_TARGET_OFFOAD value
   select CASE (policy)
      case("MANDATORY")
-                     print*,"Policy:  MANDATORY-Terminate if dev. not avail."
+          print*,"Policy:  MANDATORY-Terminate if dev. not avail."
      case("DISABLED")
-                     print*,"Policy:  DISABLED-(if supported) Only on Host."
+          print*,"Policy:  DISABLED-(if supported) Only on Host."
      case("DEFAULT")
-                     print*,"Policy:  DEFAULT On host if device not avail."
+          print*,"Policy:  DEFAULT On host if device not avail."
      case("NOTSET")
-                     print*,"         OMP_TARGET_OFFLOAD is not set."
+          print*,"         OMP_TARGET_OFFLOAD is not set."
      case DEFAULT
-                     print*,"         OMP_TARGET_OFFLOAD has unknown value."
-                     print*,"         UPPER CASE VALUE=",policy
+          print*,"         OMP_TARGET_OFFLOAD has unknown value."
+          print*,"         UPPER CASE VALUE=",policy
   end select
 
 
   on_init_dev = .FALSE.
-                                      !! device# out of range--not supported
+                      !! device# out of range--not supported
   !$omp target  device(device_num) map(tofrom: on_init_dev)
      on_init_dev=omp_is_initial_device()
   !$omp end target
 
   if (policy=="MANDATORY" .and. OPENMP_VERSION>=201811) then
-     print*,"OMP ERROR: OpenMP 5.0 implementation ignored MANDATORY policy."
-     print*,"           Termination should have occurred at target directive."
+     print*,"OMP ERROR: ", &
+            "OpenMP 5.0 implementation ignored MANDATORY policy."
+     print*,"           Termination should have occurred", &
+            " at target directive."
   endif
 
   print*, "Target executed on init dev (T|F): ", on_init_dev

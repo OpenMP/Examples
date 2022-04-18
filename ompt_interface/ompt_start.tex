@@ -5,6 +5,10 @@
 There are three steps an OpenMP implementation takes to activate a tool.
 This section explains how the tool and an OpenMP implementation interact to accomplish tool activation.
 
+\index{OMPT interface!activating}
+\index{OMPT interface!ompt_start_tool routine@\scode{ompt_start_tool} routine}
+\index{routines!ompt_start_tool@\scode{ompt_start_tool}}
+\index{ompt_start_tool routine@\scode{ompt_start_tool} routine}
 Step 1. \emph{Determine Whether to Initialize}
 \begin{adjustwidth}{2.5em}{0pt}
 A tool is activated by the OMPT interface when it returns a non-NULL pointer to an \code{ompt\_start\_tool\_result\_t} structure on a call to \code{ompt\_start\_tool} by the OpenMP implementation.
@@ -13,7 +17,7 @@ There are three ways that a tool can provide a definition of \code{ompt\_start\_
 (2) Introducing a dynamically linked library that includes the tool's definition of
 \code{ompt\_start\_tool} into the application's address space.
 (3) Providing the name of a dynamically linked library appropriate for the architecture
-and operating system used by the application in the \code{tool-libraries-var} ICV.
+and operating system used by the application in the \plc{tool-libraries-var} ICV.
 \end{adjustwidth}
 
 Step 2. \emph{Initializing a First-Party tool}
@@ -24,6 +28,9 @@ the tool initializer specified in this structure prior to the occurrence of any 
 \end{adjustwidth}
 
 
+\index{OMPT interface!ompt_set_callback routine@\scode{ompt_set_callback} routine}
+\index{routines!ompt_set_callback@\scode{ompt_set_callback}}
+\index{ompt_set_callback routine@\scode{ompt_set_callback} routine}
 Step 3. \emph{Monitoring Activity on the Host}
 \begin{adjustwidth}{2.5em}{0pt}
 To monitor execution of an OpenMP program on the host device, a tool's initializer
@@ -37,7 +44,7 @@ as \code{ompt\_set\_callback}, which has the following possible return codes: \h
  \code{ompt\_set\_sometimes\_paired},
  \code{ompt\_set\_always}.
 
-If the \code{ompt\_set\_callback} runtime entry point is called outside a tool’s initializer,
+If the \code{ompt\_set\_callback} runtime entry point is called outside a tool's initializer,
 registration of supported callbacks may fail with a return code of \code{ompt\_set\_error}.
 All callbacks registered with \code{ompt\_set\_callback} or returned by \code{ompt\_get\_callback}
 use the dummy type signature \code{ompt\_callback\_t}. While this is a compromise, it is

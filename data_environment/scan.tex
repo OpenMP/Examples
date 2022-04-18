@@ -1,6 +1,10 @@
 \pagebreak
 \section{\code{scan} Directive}
 \label{sec:scan}
+\index{directives!scan@\code{scan}}
+\index{scan directive@\code{scan} directive}
+\index{reduction clause@\code{reduction} clause!inscan modifier@\code{inscan} modifier}
+\index{inscan modifier@\code{inscan} modifier}
 
 The following examples illustrate how to parallelize a loop that saves 
 the \emph{prefix sum} of a reduction. This is accomplished by using 
@@ -9,6 +13,12 @@ variable of the scan, and specifying with a \code{scan} directive whether
 the storage statement includes or excludes the scan input of the present 
 iteration (\texttt{k}).
 
+\index{scan directive@\code{scan} directive!inclusive clause@\code{inclusive} clause}
+\index{scan directive@\code{scan} directive!exclusive clause@\code{exclusive} clause}
+\index{clauses!inclusive@\code{inclusive}}
+\index{inclusive clause@\code{inclusive} clause}
+\index{clauses!exclusive@\code{exclusive}}
+\index{exclusive clause@\code{exclusive} clause}
 Basically, the \code{inscan} modifier connects a loop and/or SIMD reduction to 
 the scan operation, and a \code{scan} construct with an \code{inclusive} or 
 \code{exclusive} clause specifies whether the ``scan phase'' (lexical block 

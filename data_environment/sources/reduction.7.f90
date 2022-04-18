@@ -1,4 +1,4 @@
-! @@name:	reduction.7f
+! @@name:	reduction.7
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

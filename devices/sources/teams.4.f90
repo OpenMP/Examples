@@ -1,4 +1,4 @@
-! @@name:	teams.4f
+! @@name:	teams.4
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

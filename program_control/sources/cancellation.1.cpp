@@ -1,5 +1,5 @@
 /*
-* @@name:	cancellation.1c
+* @@name:	cancellation.1
 * @@type:	C++
 * @@compilable:	yes
 * @@linkable:	no
@@ -30,11 +30,11 @@ void example() {
                 // still must remember exception for later handling
 #pragma omp atomic write
                 ex = e;
-				// cancel worksharing construct
+		// cancel worksharing construct
 #pragma omp cancel for
             }
         }
-   // if an exception has been raised, cancel parallel region
+        // if an exception has been raised, cancel parallel region
         if (ex) {
 #pragma omp cancel parallel
         }
@@ -42,7 +42,8 @@ void example() {
 #pragma omp barrier
         phase_2();
     }
-    // continue here if an exception has been thrown in the worksharing loop
+    // continue here if an exception has been thrown in
+    // the worksharing loop
     if (ex) {
         // handle exception stored in ex
     }

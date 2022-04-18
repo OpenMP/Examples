@@ -5,8 +5,10 @@ under the corresponding chapter directory:
 ../affinity/sources
 ../data_environment/sources
 ../devices/sources
+../directives/sources
 ../loop_transformations/sources
 ../memory_model/sources
+../ompt_interface/sources
 ../parallel_execution/sources
 ../program_control/sources
 ../synchronization/sources

@@ -1,5 +1,5 @@
 /*
-* @@name: target_mapper_map.2.c
+* @@name: target_mapper.2
 * @@type: C
 * @@compilable: yes
 * @@linkable: no
@@ -23,9 +23,10 @@
   #pragma omp declare mapper(bottom_id: dzmat_t v) \
                       map(v.r_m[N/2:N/2][0:N],     \
                           v.i_m[N/2:N/2][0:N]      )
-
-void dzmat_init(dzmat_t *z, int is, int ie, int n);         //initialization
-void host_add(  dzmat_t *a, dzmat_t *b, dzmat_t *c, int n); //matrix add: c=a+b
+//initialization
+void dzmat_init(dzmat_t *z, int is, int ie, int n);
+//matrix add: c=a+b
+void host_add(  dzmat_t *a, dzmat_t *b, dzmat_t *c, int n);
 
 
 int main()
@@ -48,7 +49,7 @@ int main()
     dzmat_init(&a,is,ie,N);
     dzmat_init(&b,is,ie,N);
   }
- 
+
   #pragma omp taskwait
 
   host_add(&a,&b,&c,N);

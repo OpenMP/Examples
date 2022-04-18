@@ -1,19 +1,24 @@
 \pagebreak
 \section{\code{proc\_bind} Clause}
 \label{sec:affinity}
+\index{affinity!proc_bind clause@\scode{proc_bind} clause}
+\index{clauses!proc_bind@\scode{proc_bind}}
+\index{proc_bind clause@\scode{proc_bind} clause}
 
 The following examples demonstrate how to use the \code{proc\_bind} clause to 
 control the thread binding for a team of threads in a \code{parallel} region. 
-The machine architecture is depicted in the figure below. It consists of two sockets, 
+The machine architecture is depicted in Figure~\ref{fig:mach_arch}. It consists of two sockets, 
 each equipped with a quad-core processor and configured to execute two hardware 
 threads simultaneously on each core. These examples assume a contiguous core numbering 
 starting from 0, such that the hardware threads 0,1 form the first physical core.
 
 \ifpdf
-%\begin{figure}[htbp]
-\centerline{\includegraphics[width=3.8in,keepaspectratio=true]%
+\begin{figure}[htb]
+\centerline{\includegraphics[width=3.0in,keepaspectratio=true]%
 {figs/proc_bind_fig.pdf}}
-%\end{figure}
+\caption{A machine architecture with two quad-core processors}
+\label{fig:mach_arch}
+\end{figure}
 \fi
 
 The following equivalent place list declarations consist of eight places (which 
@@ -27,6 +32,8 @@ or
 
 \subsection{Spread Affinity Policy}
 \label{subsec:affinity_spread}
+\index{affinity!spread policy@\code{spread} policy}
+\index{spread policy@\code{spread} policy}
 
 
 The following example shows the result of the \code{spread} affinity policy on 
@@ -124,6 +131,8 @@ and distribution of the place partition would be as follows:
 
 \subsection{Close Affinity Policy}
 \label{subsec:affinity_close}
+\index{affinity!close policy@\code{close} policy}
+\index{close policy@\code{close} policy}
 
 The following example shows the result of the \code{close} affinity policy on 
 the partition list when the number of threads is less than or equal to the number 
@@ -220,6 +229,8 @@ and distribution of the place partition would be as follows:
 
 \subsection{Primary Affinity Policy}
 \label{subsec:affinity_primary}
+\index{affinity!primary policy@\code{primary} policy}
+\index{primary policy@\code{primary} policy}
 
 The following example shows the result of the \code{primary} affinity policy on 
 the partition list for the machine architecture depicted above. The place partition 
@@ -227,7 +238,7 @@ is not changed by the primary policy.
 
 \cexample[4.0]{affinity}{5}
 
-\fexample[4.0]{affinity}{5}[1]
+\fexample[4.0]{affinity}{5}
 \clearpage
 
 It is unspecified on which place the primary thread is initially started. If the 

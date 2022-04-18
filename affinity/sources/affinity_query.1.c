@@ -1,5 +1,5 @@
 /*
-* @@name:	affinity_query.1c
+* @@name:	affinity_query.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

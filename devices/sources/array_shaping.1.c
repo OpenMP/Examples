@@ -1,14 +1,14 @@
 /*
-* @@name: array_shaping.1.c
+* @@name: array_shaping.1
 * @@type: C
 * @@compilable: yes
 * @@linkable: no
 * @@expect: success
-* @@version: omp_5.0
+* @@version: omp_5.1
 */
-#pragma omp declare target
-int do_work(double *a, int nx, int ny);
-int other_work(double *a, int nx, int ny);
+#pragma omp begin declare target
+  int do_work(double *a, int nx, int ny);
+  int other_work(double *a, int nx, int ny);
 #pragma omp end declare target
 
 void exch_data(double *a, int nx, int ny);

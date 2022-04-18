@@ -1,4 +1,4 @@
-! @@name: host_teams.2.f90
+! @@name: host_teams.1
 ! @@type: F-free
 ! @@compilable: yes
 ! @@linkable: yes
@@ -12,10 +12,11 @@ program main
    real              :: sp_x(N), sp_y(N), sp_a=0.0001e0
    double precision  :: dp_x(N), dp_y(N), dp_a=0.0001d0
 
-   max_thrds  = omp_get_num_procs()/nteams_required
+   max_thrds = omp_get_num_procs()/nteams_required
  
    !! Create 2 teams, each team works in a different precision
-   !$omp teams num_teams(nteams_required) thread_limit(max_thrds) private(tm_id)
+   !$omp teams num_teams(nteams_required) thread_limit(max_thrds) \
+               private(tm_id)
 
       tm_id = omp_get_team_num()
 
@@ -23,7 +24,8 @@ program main
          stop "error: Insufficient teams on host, 2 required."
       endif
 
-      if(tm_id == 0) then    !! Do Single Precision Work (SAXPY) with this team
+      !! Do Single Precision Work (SAXPY) with this team
+      if(tm_id == 0) then
 
          !$omp parallel 
             !$omp do         !! init
@@ -40,7 +42,8 @@ program main
 
       endif
 
-      if(tm_id == 1) then    !! Do Double Precision Work (DAXPY) with this team
+      !! Do Double Precision Work (DAXPY) with this team
+      if(tm_id == 1) then
 
          !$omp parallel 
             !$omp do         !! init
@@ -58,8 +61,10 @@ program main
       endif
    !$omp end teams
 
-   write(*,'( "i=",i4," sp|dp= ", e15.7, d25.16  )') N, sp_x(N), dp_x(N)
-   write(*,'( "i=",i4," sp|dp= ", e15.7, d25.16  )') N/2, sp_x(N/2), dp_x(N/2)
+   write(*,'( "i=",i4," sp|dp= ", e15.7, d25.16  )') &
+            N, sp_x(N), dp_x(N)
+   write(*,'( "i=",i4," sp|dp= ", e15.7, d25.16  )') &
+            N/2, sp_x(N/2), dp_x(N/2)
             !! i=1000 sp|dp=   0.1000000E+04   0.1000000010000000D+04
             !! i= 500 sp|dp=   0.5000000E+03   0.5000000050000000D+03
 end program

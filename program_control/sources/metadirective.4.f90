@@ -1,10 +1,9 @@
-! @@name: metadirective.4f90
+! @@name: metadirective.4
 ! @@type: F-free
 ! @@compilable: yes
 ! @@linkable: yes
 ! @@expect: success
-! @@version: omp_5.1
-
+! @@version: omp_5.2
 subroutine foo(a, n, use_gpu)
    integer :: n, a(n)
    logical :: use_gpu
@@ -15,10 +14,11 @@ subroutine foo(a, n, use_gpu)
    !$omp&            when(user={condition(use_gpu)}:           &
    !$omp&                 target teams distribute parallel for &
    !$omp&                 private(b) map(from:a(1:n)) )        &
-   !$omp&            default(parallel do)
+   !$omp&            otherwise(                                &
+   !$omp&                 parallel do)
    do i = 1,n; a(i)=i; if(i==n) b=1; end do
 
-   if(b==0) print *, "PASSED 1 of 3"  ! bc b is firstprivate for  gpu run 
+   if(b==0) print *, "PASSED 1 of 3"  ! bc b is firstprivate for gpu run 
 end subroutine
 
 subroutine bar (a, n, run_parallel, unbalanced)
@@ -33,14 +33,14 @@ subroutine bar (a, n, run_parallel, unbalanced)
        print *,"PASSED 2 of 3"
 
     !$omp metadirective &
-    !$omp&  when(construct={parallel}, &
-    !$omp&       user={condition(unbalanced)}:for schedule(guided) private(b)) &
-    !$omp&  when(construct={parallel}        :for schedule(static)) 
+    !$omp&  when(construct={parallel}, user={condition(unbalanced)}: &
+    !$omp&         for schedule(guided) private(b)) &
+    !$omp&  when(construct={parallel}: for schedule(static))
     do i = 1,n; a(i)=i; if(i==n) b=1; end do
 
    !$omp end metadirective 
 
-   if(b==0) print *, "PASSED 3 of 3"   !!if guided b=0, because b is private
+   if(b==0) print *, "PASSED 3 of 3"   !!if guided, b=0 since b is private
 end subroutine
 
 program meta
@@ -48,10 +48,10 @@ program meta
    integer, parameter :: N=100
    integer :: p(N)
    integer :: env_stat
-                      !! App normally sets these, dependent on input parameters
+                !! App normally sets these, dependent on input parameters
    logical ::  use_gpu=.true., run_parallel=.true., unbalanced=.true.
 
-                      !! Testing: set Env Var MK_FAIL to anything to fail tests
+                !! Testing: set Env Var MK_FAIL to anything to fail tests
    call get_environment_variable('MK_FAIL',status=env_stat)
    if(env_stat /= 1) then                ! status =1 when not set! 
       use_gpu=.false.; run_parallel=.false.; unbalanced=.false.

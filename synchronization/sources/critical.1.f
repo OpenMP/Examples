@@ -1,4 +1,4 @@
-! @@name:	critical.1f
+! @@name:	critical.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	no

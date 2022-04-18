@@ -1,4 +1,4 @@
-! @@name:	nthrs_nesting.1f
+! @@name:	nthrs_nesting.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	yes

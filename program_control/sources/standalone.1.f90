@@ -1,4 +1,4 @@
-! @@name:	standalone.1f
+! @@name:	standalone.1
 ! @@type:	F-free
 ! @@compilable:	no
 ! @@linkable:	no

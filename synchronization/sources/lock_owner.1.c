@@ -1,15 +1,11 @@
 /*
-* @@name:	lock_owner.1c
+* @@name:	lock_owner.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes
 * @@expect:	success
 * @@version:    omp_5.1
 */
-#if _OPENMP  < 202011
-#define masked master
-#endif
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <omp.h>

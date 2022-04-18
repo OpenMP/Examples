@@ -1,15 +1,11 @@
 /*
-* @@name:	copyprivate.2c
+* @@name:	copyprivate.2
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
 * @@version:    omp_5.1
 */
-#if _OPENMP  < 202011
-#define masked master
-#endif
-
 #include <stdio.h>
 #include <stdlib.h>
 

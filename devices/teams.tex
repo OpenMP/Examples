@@ -5,6 +5,18 @@
 \subsection{\code{target} and \code{teams} Constructs with \code{omp\_get\_num\_teams}\\
 and \code{omp\_get\_team\_num} Routines}
 \label{subsec:teams_api}
+\index{constructs!target@\code{target}}
+\index{target construct@\code{target} construct}
+\index{constructs!teams@\code{teams}}
+\index{teams construct@\code{teams} construct}
+\index{combined constructs!target teams@\code{target}~\code{teams}}
+\index{teams construct@\code{teams} construct!num_teams clause@\scode{num_teams} clause}
+\index{clauses!num_teams@\scode{num_teams}}
+\index{num_teams clause@\scode{num_teams} clause}
+\index{routines!omp_get_num_teams@\scode{omp_get_num_teams}}
+\index{routines!omp_get_team_num@\scode{omp_get_team_num}}
+\index{omp_get_num_teams routine@\scode{omp_get_num_teams} routine}
+\index{omp_get_team_num routine@\scode{omp_get_team_num} routine}
 
 The following example shows how the \code{target} and \code{teams} constructs 
 are used to create a league of thread teams that execute a region. The \code{teams} 
@@ -22,6 +34,8 @@ example manually distributes a loop across two teams.
 
 \subsection{\code{target}, \code{teams}, and \code{distribute} Constructs}
 \label{subsec:teams_distribute}
+\index{constructs!distribute@\code{distribute}}
+\index{distribute construct@\code{distribute} construct}
 
 The following example shows how the \code{target}, \code{teams}, and \code{distribute} 
 constructs are used to execute a loop nest in a \code{target} region. The \code{teams} 
@@ -38,6 +52,7 @@ When a team's primary thread encounters the parallel loop construct before the i
 loop, the other threads in its team are activated. The team executes the \code{parallel} 
 region and then workshares the execution of the loop.
 
+\index{reduction clause@\code{reduction} clause!on teams construct@on \code{teams} construct}
 Each primary thread executing the \code{teams} region has a private copy of the 
 variable \plc{sum} that is created by the \code{reduction} clause on the \code{teams} construct. 
 The primary thread and all threads in its team have a private copy of the variable 
@@ -48,6 +63,7 @@ each primary thread's private copy of \plc{sum} is reduced into the final \plc{s
 implicitly mapped into the \code{target} region.
 
 \cexample[4.0]{teams}{2}
+\clearpage
 
 \ffreeexample[4.0]{teams}{2}
 
@@ -69,6 +85,12 @@ primary threads of each team and then across the threads of each team.
 \subsection{\code{target} \code{teams} and Distribute Parallel Loop 
 Constructs with Scheduling Clauses}
 \label{subsec:teams_distribute_parallel_schedule}
+\index{distribute construct@\code{distribute} construct!dist_schedule clause@\scode{dist_schedule} clause}
+\index{clauses!dist_schedule@\scode{dist_schedule}}
+\index{dist_schedule clause@\scode{dist_schedule} clause}
+\index{worksharing-loop constructs!schedule clause@\code{schedule} clause}
+\index{clauses!schedule@\code{schedule}}
+\index{schedule clause@\code{schedule} clause}
 
 The following example shows how the \code{target} \code{teams} and distribute 
 parallel loop constructs are used to execute a \code{target} region. The \code{teams} 

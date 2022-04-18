@@ -1,4 +1,4 @@
-! @@name:	atomic.3f
+! @@name:	atomic.3
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	no
@@ -8,8 +8,8 @@
        integer:: fetch_and_add
        integer, intent(inout) :: p
 
-! Atomically read the value of p and then increment it. The previous value is
-! returned. This can be used to implement a simple lock as shown below.
+! Atomically read the value of p and then increment it. The previous value
+! is returned. This can be used to implement a simple lock as shown below.
 !$omp atomic capture
        fetch_and_add = p
        p = p + 1

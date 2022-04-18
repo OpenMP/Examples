@@ -1,13 +1,13 @@
-! @@name:	linear_modifier.3f
+! @@name:	linear_modifier.3
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	yes
 ! @@expect:	success
-! @@version:	omp_4.5
+! @@version:	omp_5.2
 module func_mod
 contains
    real(8) function func(x, y, i)
-!$omp declare simd(func) simdlen(4) uniform(x, y) linear(val(i):1)
+!$omp declare simd(func) simdlen(4) uniform(x, y) linear(i:val,step(1))
       implicit none
       real(8), intent(in) :: x(*), y(*)
       integer, intent(in) :: i

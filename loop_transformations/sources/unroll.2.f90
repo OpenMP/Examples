@@ -1,4 +1,4 @@
-! @@name:       unroll.2.f
+! @@name:       unroll.2
 ! @@type:       F-free
 ! @@compilable: yes
 ! @@linkable:   no
@@ -10,7 +10,7 @@ subroutine illegal_2a(A)
    integer :: i
 
    !$omp do
-   !$omp unroll full  !! ERROR: Full unrolling does not leave a loop.
+   !$omp unroll full  !! ERROR: No loop left after full unrolling
    do i = 1,12
       A(i) = 0.0d0
    end do
@@ -21,8 +21,9 @@ subroutine illegal_2b(A)
    double precision :: A(*)
    integer :: i
 
-   !! Loop might be fully unrolled* (or a partially unrolled loop replacement)
-   !! *Hence, no canonical do-loop will exist, resulting in non-compliant code.
+   !! Loop might be fully unrolled (or a partially unrolled loop 
+   !! replacement).  Hence, no canonical do-loop will exist, 
+   !! resulting in non-compliant code.
    !! Implementations may suggest to adding a "partial" clause.
 
    !$omp do           !!        Requires a canonical loop
@@ -37,7 +38,7 @@ subroutine illegal_2c(n, A)
    integer          :: i,n
    double precision :: A(*)
 
-   !$omp unroll full  !! Full unroll requires constant iteration count.
+   !$omp unroll full  !! Full unroll requires constant iteration count
    do i = 1,n
       A(i) = 0.0d0
    end do

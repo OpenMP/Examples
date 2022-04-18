@@ -1,10 +1,10 @@
 /*
-* @@name:       target_ptr_map.4.c
+* @@name:       target_struct_map.4
 * @@type:       C
 * @@compilable: yes
 * @@linkable:   yes
 * @@expect:     success
-* @@version:	omp_5.0
+* @@version:	omp_5.1
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,7 +19,7 @@ struct foo {
   float *p;
 };
 
-#pragma omp declare target
+#pragma omp begin declare target
 void saxpyfun(struct foo *S)
 {
   int i;
@@ -41,8 +41,9 @@ int main()
   for(i=0; i<N; i++) S1.p[i] = i;
 
   // The target data construct results in pointer attachment for S1.p.
-  // Explicitly mapping S1.p, S1.a, and S1.b rather than S1 avoids mapping the
-  // entire structure (including members buffera, bufferb, and x).
+  // Explicitly mapping S1.p, S1.a, and S1.b rather than S1 avoids
+  // mapping the entire structure (including members buffera, bufferb,
+  // and x).
   #pragma omp target data map(S1.p[:N],S1.p,S1.a,S1.b)
   #pragma omp target //implicit map of S1
   saxpyfun(&S1);
@@ -68,8 +69,9 @@ int main()
   for(i=0; i<N; i++) S3.p[i] = i;
 
   // The target construct results in pointer attachment for S3.p.
-  // Note that S3.p is implicitly mapped due to the implicit map of S3 (but
-  // corresponding storage is NOT created for members buffera, bufferb, and x).
+  // Note that S3.p is implicitly mapped due to the implicit map of S3
+  // (but corresponding storage is NOT created for members buffera,
+  // bufferb, and x).
   #pragma omp target map(S3.p[:N], S3.a, S3.b)  // implicit map of S3
   saxpyfun(&S3);
 

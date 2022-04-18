@@ -1,4 +1,4 @@
-! @@name:	nesting_restrict.2f
+! @@name:	nesting_restrict.2
 ! @@type:	F-fixed
 ! @@compilable:	maybe
 ! @@linkable:	no

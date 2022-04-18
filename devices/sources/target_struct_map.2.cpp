@@ -1,10 +1,10 @@
 /*
-* @@name:       target_struct_map.2cpp
+* @@name:       target_struct_map.2
 * @@type:       C++
 * @@compilable: yes
 * @@linkable:   yes
 * @@expect:     success
-* @@version:	omp_5.0
+* @@version:	omp_5.1
 */
 #include <cstdio>
 #include <cstdlib>
@@ -21,7 +21,7 @@ class SAXPY {
    void saxpyfun(float *p);
 };
 
-#pragma omp declare target
+#pragma omp begin declare target
 void SAXPY::saxpyfun(float *q)
 {
   for(int i=0; i<N; i++)

@@ -1,4 +1,4 @@
-! @@name:	cond_comp.1f
+! @@name:	cond_comp.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	yes

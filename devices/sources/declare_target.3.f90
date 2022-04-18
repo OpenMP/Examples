@@ -1,4 +1,4 @@
-! @@name:	declare_target.3f
+! @@name:	declare_target.3
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

@@ -1,4 +1,4 @@
-! @@name:	target_data.1f
+! @@name:	target_data.1
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

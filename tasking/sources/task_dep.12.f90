@@ -1,4 +1,4 @@
-! @@name:	task_dep.12f
+! @@name:	task_dep.12
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	yes

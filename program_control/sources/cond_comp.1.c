@@ -1,5 +1,5 @@
 /*
-* @@name:	cond_comp.1c
+* @@name:	cond_comp.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes

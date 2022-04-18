@@ -1,10 +1,10 @@
 /*
-* @@name:       depobj.1c
+* @@name:       depobj.1
 * @@type:       C
 * @@compilable: yes
 * @@linkable:   yes
 * @@expect:     success
-* @@version:    omp_5.0
+* @@version:    omp_5.2
 */
 
 #include <stdio.h>
@@ -36,8 +36,8 @@ int main(){
 
    driver(FALSE, a,b,N, &obj);  // no updating of a
 
-   #pragma omp depobj(obj) destroy  // obj is set to uninitilized state,
-                                    // resources are freed
+   #pragma omp depobj(obj) destroy(obj)  // obj is set to uninitialized
+                                         // state, resources are freed
    return 0;
 
 }
@@ -48,12 +48,11 @@ void driver(int update, float a[], float b[], int n, omp_depend_t *obj)
    #pragma omp single
    {
 
-     #pragma omp task depend(depobj: *obj) // Task 1, uses depend object
-       update_copy(update, a,b,n);       // update a or not, always copy a to b
- 
-     #pragma omp task depend(in: a[:n])    // Task 2, only read a 
-       checkpoint(a,n);
+      #pragma omp task depend(depobj: *obj) // Task 1, uses depend object
+         update_copy(update, a,b,n); // may update a, always copy a to b
 
+     #pragma omp task depend(in: a[:n])     // Task 2, only read a 
+         checkpoint(a,n);
    }
 }
 

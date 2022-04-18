@@ -1,10 +1,10 @@
 /*
-* @@name: declare_target.6.c
+* @@name: declare_target.6
 * @@type: C
 * @@compilable: yes
 * @@linkable: no
 * @@expect: success
-* @@version: omp_4.5
+* @@version: omp_5.1
 */
 #define N 100000000
 
@@ -18,7 +18,8 @@ void d_init(double *, double *, int);
 void s_output(float *, int);
 void d_output(double *, int);
 
-#pragma omp declare target
+#pragma omp begin declare target
+
 void s_vec_mult_accum()
 {
    int i;

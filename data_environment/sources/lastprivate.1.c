@@ -1,5 +1,5 @@
 /*
-* @@name:	lastprivate.1c
+* @@name:	lastprivate.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

@@ -1,5 +1,5 @@
 /*
-* @@name:	get_nthrs.2c
+* @@name:	get_nthrs.2
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

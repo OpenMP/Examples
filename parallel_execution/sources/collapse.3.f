@@ -1,4 +1,4 @@
-! @@name:	collapse.3f
+! @@name:	collapse.3
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	no

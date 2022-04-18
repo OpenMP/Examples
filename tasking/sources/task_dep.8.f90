@@ -1,4 +1,4 @@
-! @@name: task_depend.8.f90
+! @@name: task_dep.8
 ! @@type: F-free
 ! @@compilable: yes
 ! @@linkable: yes

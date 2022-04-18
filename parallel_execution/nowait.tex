@@ -1,6 +1,8 @@
 \pagebreak
 \section{\code{nowait} Clause}
 \label{sec:nowait}
+\index{clauses!nowait@\code{nowait}}
+\index{nowait clause@\code{nowait} clause}
 
 If there are multiple independent loops within a \code{parallel} region, you 
 can use the \code{nowait} clause to avoid the implied barrier at the end of the 
@@ -10,6 +12,8 @@ loop construct, as follows:
 
 \fexample{nowait}{1}
 
+\index{loop scheduling!static}
+\index{static scheduling}
 In the following example, static scheduling distributes the same logical iteration 
 numbers to the threads that execute the three loop regions. This allows the \code{nowait} 
 clause to be used, even though there is a data dependence between the loops. The 

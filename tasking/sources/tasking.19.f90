@@ -1,4 +1,4 @@
-! @@name:	tasking.19f
+! @@name:	tasking.19
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

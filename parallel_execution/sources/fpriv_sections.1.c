@@ -1,5 +1,5 @@
 /*
-* @@name:	fpriv_sections.1c
+* @@name:	fpriv_sections.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes

@@ -1,4 +1,4 @@
-! @@name: declare_target.6.f90
+! @@name: declare_target.6
 ! @@type: F-free
 ! @@compilable: yes
 ! @@linkable: no

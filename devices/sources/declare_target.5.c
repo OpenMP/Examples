@@ -1,15 +1,17 @@
 /*
-* @@name:	declare_target.5c
+* @@name:	declare_target.5
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
-* @@version:	omp_4.0
+* @@version:	omp_5.1
 */
 #define N 10000
 #define M 1024
-#pragma omp declare target
+
+#pragma omp begin declare target
 float Q[N][N];
+
 #pragma omp declare simd uniform(i) linear(k) notinbranch
 float P(const int i, const int k)
 {
@@ -35,5 +37,6 @@ float accum(void)
 }
 
 /* Note:  The variable tmp is now mapped with tofrom, for correct 
-   execution with 4.5 (and pre-4.5) compliant compilers. See Devices Intro. 
+          execution with 4.5 (and pre-4.5) compliant compilers.
+          See Devices Intro. 
  */

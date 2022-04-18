@@ -4,6 +4,9 @@
 
 \subsection{\code{target} Construct on \code{parallel} Construct}
 \label{subsec:target_parallel}
+\index{constructs!target@\code{target}}
+\index{target construct@\code{target} construct}
+\index{target construct@\code{target} construct!implicit mapping}
 
 This following example shows how the \code{target} construct offloads a code 
 region to a target device. The variables \plc{p}, \plc{v1}, \plc{v2}, and \plc{N} are implicitly mapped 
@@ -15,6 +18,9 @@ to the target device.
 
 \subsection{\code{target} Construct with \code{map} Clause}
 \label{subsec:target_map}
+\index{target construct@\code{target} construct!map clause@\code{map} clause}
+\index{clauses!map@\code{map}}
+\index{map clause@\code{map} clause}
 
 This following example shows how the \code{target} construct offloads a code 
 region to a target device. The variables \plc{p}, \plc{v1} and \plc{v2} are explicitly mapped to the 
@@ -27,6 +33,8 @@ the target device.
 
 \subsection{\code{map} Clause with \code{to}/\code{from} map-types}
 \label{subsec:target_map_tofrom}
+\index{map clause@\code{map} clause!to map-type@\code{to} map-type}
+\index{map clause@\code{map} clause!from map-type@\code{from} map-type}
 
 The following example shows how the \code{target} construct offloads a code region 
 to a target device. In the \code{map} clause, the \code{to} and \code{from} 
@@ -57,6 +65,7 @@ to the default behavior of an implicit mapping.
 
 \subsection{\code{map} Clause with Array Sections}
 \label{subsec:target_array_section}
+\index{map clause@\code{map} clause!array sections in}
 
 The following example shows how the \code{target} construct offloads a code region 
 to a target device. In the \code{map} clause, map-types are used to optimize 
@@ -84,6 +93,9 @@ for the lower bound for array section \plc{v2(:N)}.
 
 \subsection{\code{target} Construct with \code{if} Clause}
 \label{subsec:target_if}
+\index{target construct@\code{target} construct!if clause@\code{if} clause}
+\index{clauses!if@\code{if}}
+\index{if clause@\code{if} clause}
 
 The following example shows how the \code{target} construct offloads a code region 
 to a target device.
@@ -114,6 +126,24 @@ to the \code{parallel} component of the combined directive.
 
 \subsection{Target Reverse Offload}
 \label{subsec:target_reverse_offload}
+\index{target reverse offload!reverse_offload clause@\scode{reverse_offload} clause}
+\index{target reverse offload!requires directive@\code{requires} directive}
+\index{requires directive@\code{requires} directive!reverse_offload clause@\scode{reverse_offload} clause}
+\index{directives!requires@\code{requires}}
+\index{clauses!reverse_offload@\scode{reverse_offload}}
+\index{reverse_offload clause@\scode{reverse_offload} clause}
+\index{target construct@\code{target} construct!device clause@\code{device} clause}
+\index{clauses!device@\code{device}}
+\index{device clause@\code{device} clause!ancestor modifier@\code{ancestor} modifier}
+\index{ancestor modifier@\code{ancestor} modifier}
+\index{declare target directive@\code{declare}~\code{target} directive!device_type clause@\scode{device_type} clause}
+\index{clauses!device_type@\scode{device_type}}
+\index{device_type clause@\scode{device_type} clause}
+\index{clauses!enter@\code{enter}}
+\index{enter clause@\code{enter} clause}
+
+\index{directives!declare target@\code{declare}~\code{target}}
+\index{declare target directive@\code{declare}~\code{target} directive}
 
 Beginning with OpenMP 5.0, implementations are allowed to
 offload back to the host (reverse offload).
@@ -131,7 +161,7 @@ The \code{requires} directive (another 5.0 feature)
 uses the \code{reverse\_offload} clause to guarantee
 that the reverse offload is implemented.
 
-Note that the \code{declare target} directive uses the
+Note that the \code{declare}~\code{target} directive uses the
 \code{device\_type} clause (another 5.0 feature) to specify that
 the \plc{error\_handler} function is compiled to
 execute on the \plc{host} only. This ensures that no
@@ -140,6 +170,6 @@ function.  This feature may be necessary if the function
 exists in another compile unit.
 
 
-\cexample[5.0]{target_reverse_offload}{7}
+\cexample[5.2]{target_reverse_offload}{7}
 
 \ffreeexample[5.0]{target_reverse_offload}{7}

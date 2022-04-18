@@ -1,4 +1,4 @@
-! @@name:	mem_model.1f
+! @@name:	mem_model.1
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	yes

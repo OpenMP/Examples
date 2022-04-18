@@ -1,5 +1,5 @@
 /*
-* @@name:	teams.2c
+* @@name:	teams.2
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no
@@ -23,7 +23,7 @@ float dotprod(float B[], float C[], int N, int block_size,
            sum += B[i] * C[i];
     return sum;
 }
-
 /* Note:  The variable sum is now mapped with tofrom, for correct 
-   execution with 4.5 (and pre-4.5) compliant compilers. See Devices Intro. 
+   execution with 4.5 (and pre-4.5) compliant compilers. See
+   Devices Intro. 
  */

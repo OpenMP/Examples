@@ -1,4 +1,4 @@
-! @@name:	collapse.2f
+! @@name:	collapse.2
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	yes

@@ -1,5 +1,5 @@
 /*
-* @@name:	worksharing_critical.1c
+* @@name:	worksharing_critical.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

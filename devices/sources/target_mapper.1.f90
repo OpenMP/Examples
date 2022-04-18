@@ -1,4 +1,4 @@
-! @@name:       target_mapper.1.f90
+! @@name:       target_mapper.1
 ! @@type:       F-free
 ! @@compilable: yes
 ! @@linkable:   no

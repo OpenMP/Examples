@@ -1,5 +1,5 @@
 /*
-* @@name: affinity.1.c
+* @@name: affinity.6
 * @@type: C
 * @@compilable: yes
 * @@linkable: no

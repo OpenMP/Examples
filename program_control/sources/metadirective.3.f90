@@ -1,13 +1,13 @@
-! @@name: metadirective.3f90
+! @@name: metadirective.3
 ! @@type: F-free
 ! @@compilable: yes
 ! @@linkable: yes
 ! @@expect: success
-! @@version: omp_5.0
-
+! @@version: omp_5.2
 module params
    integer, parameter :: N=1000
-   DOUBLE PRECISION, PARAMETER::M_PI=4.0d0*DATAN(1.0d0) !3.1415926535897932_8
+   DOUBLE PRECISION, PARAMETER::M_PI=4.0d0*DATAN(1.0d0)
+                                     ! 3.1415926535897932_8
 end module
 
 
@@ -19,8 +19,8 @@ subroutine exp_pi_diff(d,    my_pi)
   !$omp declare target
 
   !$omp   metadirective &
-  !$omp&      when( construct={target}: distribute parallel do  )  &
-  !$omp&      default(                             parallel do simd)
+  !$omp&      when( construct={target}: distribute parallel do )  &
+  !$omp&      otherwise(                parallel do simd )
 
   do i = 1,size(d)
      d(i) = exp( (M_PI-my_pi)*i )

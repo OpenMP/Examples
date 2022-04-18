@@ -1,4 +1,4 @@
-! @@name:	nowait.1f
+! @@name:	nowait.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	no

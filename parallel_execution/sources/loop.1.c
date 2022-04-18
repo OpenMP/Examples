@@ -1,5 +1,5 @@
 /* 
-* @@name: loop.2c
+* @@name: loop.1
 * @@type: C
 * @@compilable: yes
 * @@linkable: yes

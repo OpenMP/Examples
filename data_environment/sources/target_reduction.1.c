@@ -1,5 +1,5 @@
 /*
-* @@name: target_reduction.1.c
+* @@name: target_reduction.1
 * @@type: C
 * @@compilable: yes
 * @@linkable: yes

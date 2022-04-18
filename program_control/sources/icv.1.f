@@ -1,4 +1,4 @@
-! @@name:	icv.1f
+! @@name:	icv.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	yes

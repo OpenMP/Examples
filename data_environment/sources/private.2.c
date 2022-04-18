@@ -1,5 +1,5 @@
 /*
-* @@name:	private.2c
+* @@name:	private.2
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

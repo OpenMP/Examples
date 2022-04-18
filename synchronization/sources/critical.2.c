@@ -1,15 +1,11 @@
 /*
-* @@name:	critical.1c
+* @@name:	critical.2
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
+* @@version:	omp_5.0
 */
-#if _OPENMP  < 201811
-#define omp_sync_hint_contended   omp_lock_hint_contended
-#define omp_sync_hint_speculative omp_lock_hint_speculative
-#endif
-
 #include <omp.h>
 
 int dequeue(float *a);

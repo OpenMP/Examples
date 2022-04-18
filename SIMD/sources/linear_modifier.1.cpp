@@ -1,17 +1,17 @@
 /*
-* @@name:	linear_modifier.1cpp
+* @@name:	linear_modifier.1
 * @@type:	C++
 * @@compilable:	yes
 * @@linkable:	yes
 * @@expect:	success
-* @@version:	omp_4.5
+* @@version:	omp_5.1
 */
 #include <stdio.h>
  
 #define NN 1023
 int a[NN];
 
-#pragma omp declare simd linear(ref(p)) simdlen(8)
+#pragma omp declare simd linear(p: ref) simdlen(8)
 void add_one2(int& p)
 {
    p += 1;

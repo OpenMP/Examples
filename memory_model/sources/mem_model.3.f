@@ -1,4 +1,4 @@
-! @@name:	mem_model.3f
+! @@name:	mem_model.3
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	yes

@@ -1,4 +1,4 @@
-! @@name:	taskloop_reduction.2.f90
+! @@name:	taskloop_reduction.2
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	yes

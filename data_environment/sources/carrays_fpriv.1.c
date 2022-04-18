@@ -1,5 +1,5 @@
 /*
-* @@name:	carrays_fpriv.1c
+* @@name:	carrays_fpriv.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes

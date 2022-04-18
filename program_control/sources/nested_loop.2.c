@@ -1,5 +1,5 @@
 /*
-* @@name:	nested_loop.2c
+* @@name:	nested_loop.2
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

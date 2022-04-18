@@ -29,7 +29,8 @@ int main() {
   for (int ioff = 0; ioff < N; ioff += CS) {
 
     // Associate device memory with one chunk of host memory
-    omp_target_associate_ptr(&arr[ioff], dev_ptr, sizeof(int) * CS, 0, dev);
+    omp_target_associate_ptr(&arr[ioff], dev_ptr,
+                             sizeof(int) * CS, 0, dev);
 
     printf("before: arr[%d]=%d\n", ioff, arr[ioff]);
 
@@ -37,7 +38,7 @@ int main() {
     #pragma omp target update to(arr[ioff:CS]) device(dev)
 
     // Explicit mapping of arr to make sure that we use the allocated 
-    // and associated memory.
+    // and associated memory.  No host-device data update here.
     #pragma omp target map(tofrom : arr[ioff:CS]) device(dev)
       for (int i = 0; i < CS; i++) {
         arr[i+ioff]++;

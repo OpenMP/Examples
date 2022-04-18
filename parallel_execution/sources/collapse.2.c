@@ -1,5 +1,5 @@
 /*
-* @@name:	collapse.2c
+* @@name:	collapse.2
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

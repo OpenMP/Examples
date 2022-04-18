@@ -54,25 +54,28 @@ For a brief revision history, see `Changes.log` in the repo.
    * Insert the code in the sources directory for each chapter, and include the following metadata:
    * Metadata Tags for example sources:
      ```
-       @@name:        <ename>.<seq-no>[c|cpp|f|f90]
+       @@name:        <ename>.<seq-no>
        @@type:        C|C++|F-fixed|F-free
+       @@requires:    preprocessing
        @@compilable:  yes|no|maybe
        @@linkable:    yes|no|maybe
-       @@expect:      success|failure|nothing|rt-error
+       @@expect:      success|compile-time-error|runtime-error|undefined-behavior
        @@version:     omp_<verno>
      ```
       * **name**
        is the name of an example
       * **type**
-       is the source code type, which can be translated into or from proper file extension (c,cpp,f,f90)
+       is the source code type, which can be translated into or from proper file extension (C:c,C++:cpp,F-fixed:f,F-free:f90)
+      * **requires**
+       any additional requirements, currently `preprocessing` for requiring preprocessing
       * **compilable**
        indicates whether the source code is compilable
       * **linkable**
        indicates whether the source code is linkable
       * **expect**
-       indicates some expected result for testing purpose "`success|failure|nothing`" applies 
-       to the result of code compilation "`rt-error`" is for a case where compilation may be
-       successful, but the code contains potential runtime issues (such as race condition).
+       indicates some expected result for testing purpose "`success|compile-time-error|ct-error`" applies 
+       to the result of code compilation; "`runtime-error|rt-error`" is for a case where compilation may be
+       successful, but the code contains potential runtime issues (such as race condition); `undefined-behavior` could result from a non-conforming code.
        Alternative would be to just use "`conforming`" or "`non-conforming`".
       * **version**
        indicates features for a specific OpenMP version, such as "`omp_5.0`"
@@ -94,23 +97,30 @@ For a brief revision history, see `Changes.log` in the repo.
 
 
 
-# LaTeX macros for examples
+## LaTeX macros for examples
 
+The following describes LaTeX macros defined specifically for examples.
 * Source code with language h-rules
+* Source code without language h-rules
+* Language h-rules
+* Other macros
+* See `openmp.sty` for more information
+
+### Source code with language h-rules
 ```
-   \cexample[<verno>]{<ename>}{<seq-no>}     % for C/C++ examples
-   \cppexample[<verno>]{<ename>}{<seq-no>}   % for C++ examples
-   \fexample[<verno>]{<ename>}{<seq-no>}     % for fixed-form Fortran examples
-   \ffreeexample[<verno>]{<ename>}{<seq-no>} % for free-form Fortran examples
+   \cexample[<verno>]{<ename>}{<seq-no>}[<s>]     % for C/C++ examples
+   \cppexample[<verno>]{<ename>}{<seq-no>}[<s>]   % for C++ examples
+   \fexample[<verno>]{<ename>}{<seq-no>}[<s>]     % for fixed-form Fortran examples
+   \ffreeexample[<verno>]{<ename>}{<seq-no>}[<s>] % for free-form Fortran examples
 ```
 
-* Source code without language h-rules
+### Source code without language h-rules
 ```
-   \cnexample[<verno>]{<ename>}{<seq-no>}
-   \cppnexample[<verno>]{<ename>}{<seq-no>}
-   \fnexample[<verno>]{<ename>}{<seq-no>}
-   \ffreenexample[<verno>]{<ename>}{<seq-no>}
-   \srcnexample[<verno>]{<ename>}{<seq-no>}{<ext>}
+   \cnexample[<verno>]{<ename>}{<seq-no>}[<s>]
+   \cppnexample[<verno>]{<ename>}{<seq-no>}[<s>]
+   \fnexample[<verno>]{<ename>}{<seq-no>}[<s>]
+   \ffreenexample[<verno>]{<ename>}{<seq-no>}[<s>]
+   \srcnexample[<verno>]{<ename>}{<seq-no>}{<ext>}[<s>]
 ```
 
    Optional `<verno>` can be supplied in a macro to include a specific OpenMP
@@ -123,7 +133,11 @@ For a brief revision history, see `Changes.log` in the repo.
    source code should not contain any `@@` metadata tags. The `ext` argument
    to this macro is the file extension (such as `h`, `hpp`, `inc`).
 
-* Language h-rules
+   The `<s>` option to each macro allows finer-control of any additional lines
+   to be skipped due to addition of new `@@` tags, such as `@@requires`.
+   The default value for `<s>` is 0.
+
+### Language h-rules
 ```
    \cspecificstart, \cspecificend
    \cppspecificstart, \cppspecificend
@@ -131,9 +145,11 @@ For a brief revision history, see `Changes.log` in the repo.
    \fortranspecificstart, \fortranspecificend
 ```
 
-* Chapter and section macros
+### Other macros
 ```
    \cchapter{<Chapter Name>}{<chap_directory>}
+   \hexentry[ext1]{<example_name>}[ext2]{<earlier_tag>}
+   \hexmentry[ext1]{<example_name>}[ext2]{<earlier_tag>}{<prior_name>}
 ```
 
 The `\cchapter` macro is used for starting a chapter with proper page spacing.
@@ -146,8 +162,15 @@ A previously-defined macro `\sinput{<section_file>}` to import a section
 file from `<chap_directory>` is no longer supported.  Please use
 `\input{<chap_directory>/<section_file>}` explicitly.
 
-* See `openmp.sty` for more information
+The two macros `\hexentry` and `\hexmentry` are defined for simplifying
+entries in the feature deprecation and update tables. Option `[ext1]` is
+the file extension with a default value of `c` and option `[ext2]` is 
+the file extension for the associated second file if present.
+`<earlier_tag>` is the version tag of the corresponding example
+in the earlier version. `\hexentry` assumes no name change for an example
+in different versions; `\hexmentry` can be used to specify a prior name
+if it is different.
 
-### License
+## License
 
 For copyright information, please see `omp_copyright.txt`.

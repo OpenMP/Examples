@@ -1,11 +1,14 @@
 \subsection{\code{nowait} Clause on \code{target} Construct}
 \label{subsec:target_nowait_clause}
+\index{target construct@\code{target} construct!nowait clause@\code{nowait} clause}
+\index{clauses!nowait@\code{nowait}}
+\index{nowait clause@\code{nowait} clause}
 
 The following example shows how to execute code asynchronously on a 
 device without an explicit task. The \code{nowait} clause on a \code{target} 
 construct allows the thread of the \plc{target task} to perform other
 work while waiting for the \code{target} region execution to complete. 
-Hence, the the \code{target} region can execute asynchronously on the 
+Hence, the \code{target} region can execute asynchronously on the 
 device (without requiring a host thread to idle while waiting for 
 the \plc{target task} execution to complete).
 
@@ -24,8 +27,8 @@ glossary entry in the OpenMP specification for details.
 The host loop scheduling is \code{dynamic}, to balance the host thread executions, since 
 one thread is being used for offload generation. In the situation where 
 little time is spent by the \plc{target task} in setting 
-up and tearing down the the target execution, \code{static} scheduling may be desired. 
+up and tearing down the target execution, \code{static} scheduling may be desired. 
 
 \cexample[5.1]{async_target}{3}
 
-\ffreeexample[5.1]{async_target}{3}[1]
+\ffreeexample[5.1]{async_target}{3}

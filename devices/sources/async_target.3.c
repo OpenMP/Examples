@@ -1,15 +1,11 @@
 /*
-* @@name:	async_target.3c
+* @@name:	async_target.3
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no
 * @@expect:	success
 * @@version:	omp_5.1
 */
-#if _OPENMP  < 202011
-#define masked master
-#endif
-
 #include <stdio.h>
 
 #define N 1000000      //N must be even

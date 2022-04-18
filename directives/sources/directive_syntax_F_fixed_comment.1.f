@@ -1,4 +1,4 @@
-! @@name:       directive_syntax_F_fixed.1.f
+! @@name:       directive_syntax_F_fixed_comment.1
 ! @@type:       F-fixed
 ! @@compilable: yes
 ! @@linkable:   yes
@@ -29,7 +29,6 @@ c$omp parallel do num_threads(NT) !comments allowed here   DIR 1
       end do
 *$omp end parallel
       end
-
 !     repeated 3 times, any order
 !     OUTPUT: thrd no  0
 !     OUTPUT: thrd no  1

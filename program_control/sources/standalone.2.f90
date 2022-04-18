@@ -1,4 +1,4 @@
-! @@name:	standalone.2f
+! @@name:	standalone.2
 ! @@type:	F-free
 ! @@compilable:	yes
 ! @@linkable:	no

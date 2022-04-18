@@ -1,9 +1,9 @@
-! @@name:       depobj.1f90
+! @@name:       depobj.1
 ! @@type:       F-free
 ! @@compilable: yes
 ! @@linkable:   yes
 ! @@expect:     success
-! @@version: omp_5.0
+! @@version: omp_5.2
 
 program main
     use omp_lib
@@ -23,8 +23,8 @@ program main
 
     call driver(.false., a,b,N, obj)  !! no updating
 
-    !$omp depobj(obj) destroy    !! obj is set to uninitilized state,
-                                 !! resources are freed
+    !$omp depobj(obj) destroy(obj)    !! obj is set to uninitialized
+                                      !! state, resources are freed
 
 end program
 
@@ -41,7 +41,8 @@ subroutine driver(update, a, b, n, obj)
      !$omp single
 
        !$omp task depend(depobj: obj)       !! Task 1, uses depend object
-         call update_copy(update, a,b,n)  !! update a or not, always copy a to b
+         call update_copy(update, a,b,n)
+              !! update a or not, always copy a to b
        !$omp end task
 
        !$omp task depend(in: a)             !! Task 2, only read a

@@ -1,4 +1,4 @@
-! @@name:	atomic.1f
+! @@name:	atomic.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
 ! @@linkable:	yes

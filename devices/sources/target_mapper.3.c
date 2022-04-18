@@ -1,5 +1,5 @@
 /*
-* @@name: target_mapper_map.3.c
+* @@name: target_mapper.3
 * @@type: C
 * @@compilable: yes
 * @@linkable: no

@@ -1,5 +1,5 @@
 /*
-* @@name:	nestable_lock.1c
+* @@name:	nestable_lock.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

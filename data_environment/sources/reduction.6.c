@@ -1,15 +1,11 @@
 /*
-* @@name:	reduction.6c
+* @@name:	reduction.6
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes
 * @@expect:	rt-error
 * @@version:    omp_5.1
 */
-#if _OPENMP  < 202011
-#define masked master
-#endif
-
 #include <stdio.h>
 
 int main (void)

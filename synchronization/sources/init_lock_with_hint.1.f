@@ -1,15 +1,9 @@
-! @@name:	init_lock.1f
+! @@name:	init_lock_with_hint.1
 ! @@type:	F-fixed
 ! @@compilable:	yes
-! @@requires:	preprocessing
 ! @@linkable:	no
 ! @@expect:	success
-! @@version:	omp_4.5
-#if _OPENMP  < 201811
-#define OMP_SYNC_HINT_CONTENDED   OMP_LOCK_HINT_CONTENDED
-#define OMP_SYNC_HINT_SPECULATIVE OMP_LOCK_HINT_SPECULATIVE
-#endif
-
+! @@version:	omp_5.0
       FUNCTION NEW_LOCKS()
         USE OMP_LIB        ! or INCLUDE "omp_lib.h"
         INTEGER(OMP_LOCK_KIND), DIMENSION(1000) :: NEW_LOCKS

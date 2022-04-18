@@ -1,5 +1,5 @@
 /*
-* @@name:	taskyield.1c
+* @@name:	taskyield.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

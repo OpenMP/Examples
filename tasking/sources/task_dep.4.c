@@ -1,5 +1,5 @@
 /*
-* @@name:	task_dep.4c
+* @@name:	task_dep.4
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	yes

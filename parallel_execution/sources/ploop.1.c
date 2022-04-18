@@ -1,5 +1,5 @@
 /*
-* @@name:	ploop.1c
+* @@name:	ploop.1
 * @@type:	C
 * @@compilable:	yes
 * @@linkable:	no

@@ -1,4 +1,4 @@
-! @@name:	array_sections.2f
+! @@name:	array_sections.2
 ! @@type:	F-free
 ! @@compilable:	no
 ! @@linkable:	no

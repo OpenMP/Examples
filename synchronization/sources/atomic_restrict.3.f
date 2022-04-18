@@ -1,4 +1,4 @@
-! @@name:	atomic_restrict.3f
+! @@name:	atomic_restrict.3
 ! @@type:	F-fixed
 ! @@compilable:	maybe
 ! @@linkable:	no
