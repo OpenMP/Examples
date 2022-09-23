@@ -1,5 +1,4 @@
-\pagebreak
-\chapter{Memory Model}
+\cchapter{Memory Model}{memory_model}
 \label{chap:memory_model}
 
 OpenMP provides a shared-memory model that allows all threads on a given
@@ -26,7 +25,7 @@ flush operation is characterized by its flush properties -- some combination of
 flushes, a \emph{flush-set}. 
 
 A \emph{strong} flush will force consistency between the temporary view and the
-memory for all variables in its \emph{flush-set}.  Furthermore all strong flushes in a
+memory for all variables in its \emph{flush-set}.  Furthermore, all strong flushes in a
 program that have intersecting flush-sets will execute in some total order, and
 within a thread strong flushes may not be reordered with respect to other
 memory operations on variables in its flush-set. \emph{Release} and
@@ -54,7 +53,7 @@ do not have a well-defined \emph{completion order}.  The existence of data
 races in OpenMP programs result in undefined behavior, and so they should
 generally be avoided for programs to be correct.  The completion order of
 accesses to a shared variable is guaranteed in OpenMP through a set of memory
-consistency rules that are described in the \plc{OpenMP Memory Consitency}
+consistency rules that are described in the \plc{OpenMP Memory Consistency}
 section of the OpenMP Specifications document.
 
 %This chapter also includes examples that exhibit non-sequentially consistent
@@ -129,3 +128,10 @@ section of the OpenMP Specifications document.
 % in \plc{atomic Construct} subsection of the OpenMP Specifications document).
 
 % Examples 1-3 show the difficulty of synchronizing threads through \code{flush} and \code{atomic} directives.
+
+
+%===== Examples Sections =====
+\input{memory_model/mem_model}
+\input{memory_model/allocators}
+\input{memory_model/fort_race}
+

@@ -1,0 +1,42 @@
+\pagebreak
+\section{Placement of \code{flush}, \code{barrier}, \code{taskwait} 
+and \code{taskyield} Directives}
+\label{sec:standalone}
+\index{standalone directive placement}
+\index{constructs!flush@\code{flush}}
+\index{constructs!barrier@\code{barrier}}
+\index{constructs!taskwait@\code{taskwait}}
+\index{constructs!taskyield@\code{taskyield}}
+\index{flush construct@\code{flush} construct}
+\index{barrier construct@\code{barrier} construct}
+\index{taskwait construct@\code{taskwait} construct}
+\index{taskyield construct@\code{taskyield} construct}
+
+The following example is non-conforming, because the \code{flush}, \code{barrier}, 
+\code{taskwait}, and \code{taskyield}  directives are stand-alone directives 
+and cannot be the immediate substatement of an \code{if} statement. 
+
+\cexample[3.1]{standalone}{1}
+
+\pagebreak
+The following example is non-conforming, because the \code{flush}, \code{barrier}, 
+\code{taskwait}, and \code{taskyield}  directives are stand-alone directives 
+and cannot be the action statement of an \code{if} statement or a labeled branch 
+target.
+
+\ffreeexample[3.1]{standalone}{1}
+
+The following version of the above example is conforming because the \code{flush}, 
+\code{barrier}, \code{taskwait}, and \code{taskyield} directives are enclosed 
+in a compound statement. 
+
+\cexample[3.1]{standalone}{2}
+
+\pagebreak
+The following example is conforming because the \code{flush}, \code{barrier}, 
+\code{taskwait}, and \code{taskyield} directives are enclosed in an \code{if} 
+construct or follow the labeled branch target.
+
+\ffreeexample[3.1]{standalone}{2}
+
+

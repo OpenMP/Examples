@@ -1,7 +1,6 @@
-
-\chapter*{Examples}
+\bchapter{Examples}
 \label{chap:examples}
-\addcontentsline{toc}{chapter}{\protect\numberline{}Examples}
+
 The following are examples of the OpenMP API directives, constructs, and routines.
 \ccppspecificstart
 A statement following a directive is compound only when necessary, and a 
@@ -12,15 +11,14 @@ Each example is labeled as \plc{ename.seqno.ext}, where \plc{ename} is
 the example name, \plc{seqno} is the sequence number in a section, and 
 \plc{ext} is the source file extension to indicate the code type and 
 source form.  \plc{ext} is one of the following:
-\begin{compactitem}
-\item \plc{c} -- C code,
-\item \plc{cpp} -- C++ code,
-\item \plc{f} -- Fortran code in fixed form, and
-\item \plc{f90} -- Fortran code in free form.
-\end{compactitem}
+\begin{description}[noitemsep,labelindent=5mm,widest=f90]
+\item[\plc{c}] -- \ C code,
+\item[\plc{cpp}] -- \ C++ code,
+\item[\plc{f}] -- \ Fortran code in fixed form, and
+\item[\plc{f90}] -- \ Fortran code in free form.
+\end{description}
 
 Some of the example labels may include version information 
 (\code{\small{}omp\_\plc{verno}}) to indicate features that are illustrated
 by an example for a specific OpenMP version, such as ``\plc{scan.1.c} 
 \;(\code{\small{}omp\_5.0}).''
-

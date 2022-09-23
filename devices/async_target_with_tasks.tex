@@ -1,0 +1,68 @@
+\subsection{Asynchronous \code{target} with Tasks}
+\label{subsec:async_target_with_tasks}
+\index{target construct@\code{target} construct}
+\index{task construct@\code{task} construct}
+
+\index{directives!declare target@\code{declare}~\code{target}}
+\index{declare target directive@\code{declare}~\code{target} directive}
+
+\index{directives!begin declare target@\code{begin}~\code{declare}~\code{target}}
+\index{begin declare target directive@\code{begin}~\code{declare}~\code{target} directive}
+
+The following example shows how the \code{task} and \code{target} constructs 
+are used to execute multiple \code{target} regions asynchronously. The task that 
+encounters the \code{task} construct generates an explicit task that contains 
+a \code{target} region. The thread executing the explicit task encounters a task 
+scheduling point while waiting for the execution of the \code{target} region 
+to complete, allowing the thread to switch back to the execution of the encountering 
+task or one of the previously generated explicit tasks.
+
+\cexample[5.1]{async_target}{1}
+
+\pagebreak
+\index{directives!declare target@\code{declare}~\code{target}}
+\index{declare target directive@\code{declare}~\code{target} directive}
+The Fortran version has an interface block that contains the \code{declare} \code{target}. 
+An identical statement exists in the function declaration (not shown here).
+
+\ffreeexample[4.0]{async_target}{1}
+
+The following example shows how the \code{task} and \code{target} constructs 
+are used to execute multiple \code{target} regions asynchronously. The task dependence 
+ensures that the storage is allocated and initialized on the device before it is 
+accessed.
+
+\cexample[5.1]{async_target}{2}
+
+The Fortran example below is similar to the C version above. Instead of pointers, though, it uses
+the convenience of Fortran allocatable arrays on the device. In order to preserve the arrays 
+allocated on the device across multiple \code{target} regions, a \code{target}~\code{data} region 
+is used in this case.
+
+If there is no shape specified for an allocatable array in a \code{map} clause, only the array descriptor
+(also called a dope vector) is mapped. That is, device space is created for the descriptor, and it
+is initially populated with host values. In this case, the \plc{v1} and \plc{v2} arrays will be in a
+non-associated state on the device. When space for \plc{v1} and \plc{v2} is allocated on the device
+in the first \code{target} region the addresses to the space will be included in their descriptors.
+
+At the end of the first \code{target} region, the arrays \plc{v1} and \plc{v2} are preserved on the device 
+for access in the second \code{target} region. At the end of the second \code{target} region, the data 
+in array \plc{p} is copied back, the arrays \plc{v1} and \plc{v2} are not.
+
+\index{task construct@\code{task} construct!depend clause@\code{depend} clause}
+\index{clauses!depend@\code{depend}}
+\index{depend clause@\code{depend} clause}
+A \code{depend} clause is used in the \code{task} directive to provide a wait at the beginning of the second 
+\code{target} region, to insure that there is no race condition with \plc{v1} and \plc{v2} in the two tasks.
+It would be noncompliant to use \plc{v1} and/or \plc{v2} in lieu of \plc{N} in the \code{depend} clauses, 
+because the use of non-allocated allocatable arrays as list items in a \code{depend} clause would 
+lead to unspecified behavior. 
+
+\noteheader{--} This example is not strictly compliant with the OpenMP 4.5 specification since the allocation status
+of allocatable arrays \plc{v1} and \plc{v2} is changed inside the \code{target} region, which is not allowed.
+(See the restrictions for the \code{map} clause in the \plc{Data-mapping Attribute Rules and Clauses} 
+section of the specification.)
+However, the intention is to relax the restrictions on mapping of allocatable variables in the next release
+of the specification so that the example will be compliant.
+
+\ffreeexample[4.0]{async_target}{2}

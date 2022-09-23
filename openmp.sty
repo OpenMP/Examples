@@ -1,5 +1,5 @@
 % This is openmp.sty, the preamble and style definitions for the OpenMP specification.
-% This is an include file. Please see the master file for more information.
+% This is an include file. Please see the main file for more information.
 %
 % When editing this file:
 %
@@ -108,18 +108,33 @@
 \usepackage{graphicx}
 \usepackage{framed}    % for making boxes with \begin{framed}
 \usepackage{tikz}      % for flow charts, diagrams, arrows
-
+\usepackage{subcaption} % For subfigure
+\usepackage{float}      % To fix location of figure: \begin{figure}[H] for no float
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Page formatting
-
-\usepackage[paperwidth=7.5in, paperheight=9in, 
-            top=0.75in, bottom=1.0in, left=1.4in, right=0.6in]{geometry}
-
+%
+% The PDF and book version need different margin spaces.  The bookbuild
+% macro is set by the build system (see Makefile) to determine whether
+% we are building the PDF or the print-on-demand book version of the spec.
+%
+\ifdefined\bookbuild
+  % we are building the book version of the spec, so we need to have a bit
+  % more margin for the publisher to print
+  \usepackage[paperwidth=8in, paperheight=10in,
+    top=1.25in, bottom=1.5in, left=1.65in, right=0.85in]{geometry}
+  \setlength{\oddsidemargin}{0.875in}
+  \setlength{\evensidemargin}{0.385in}
+\else
+  % we are building the PDF version of the spec, so we can use the default
+  % margins
+  \usepackage[paperwidth=7.5in, paperheight=9in,
+    top=0.75in, bottom=1.0in, left=1.4in, right=0.6in]{geometry}
+  \setlength{\oddsidemargin}{0.45in}
+  \setlength{\evensidemargin}{0.185in}
+\fi
 \usepackage{changepage}   % allows left/right-page margin readjustments
 
-\setlength{\oddsidemargin}{0.45in}
-\setlength{\evensidemargin}{0.185in}
 \raggedbottom
 
 
@@ -184,7 +199,7 @@
 \renewcommand{\headrulewidth}{0pt}
 
 % Left side on even pages:
-% This requires that \footerText be defined in the master document:
+% This requires that \footerText be defined in the main document:
 \fancyfoot[LE]{\bfseries \thepage \mdseries \hspace{2em} \footerText}
 \fancyhfoffset[E]{4em}
 
@@ -196,28 +211,38 @@
 % Section header format - we use four levels: \chapter \section \subsection \subsubsection.
 
 \usepackage{titlesec}     % format headers with \titleformat{}
+\usepackage{tocloft}
 
 % Format and spacing for chapter, section, subsection, and subsubsection headers:
 
 \setcounter{secnumdepth}{4}          % show numbers down to subsubsection level
 
-\titleformat{\chapter}[display]%
+\titleformat{\chapter}[hang]%
 {\normalfont\sffamily\upshape\Huge\bfseries\fontsize{20}{20}\selectfont}%
-{\normalfont\sffamily\scshape\large\bfseries \hspace{-0.7in} \MakeUppercase%
-    {\chaptertitlename} \thechapter}%
-{0.8in}{}[\vspace{2ex}\hrule]
-\titlespacing{\chapter}{0ex}{0em plus 1em minus 1em}{3em plus 1em minus 1em}[10em]
+{\thechapter}{0.5em}{}
+\titlespacing{\chapter}{0ex}{0em plus 1em minus 1em}{2em plus 1em minus 0em}[10em]
 
-\titleformat{\section}[hang]{\huge\bfseries\sffamily\fontsize{16}{16}\selectfont}{\thesection}{1.0em}{}
-\titlespacing{\section}{-5em}{5em plus 1em minus 1em}{1em plus 0.5em minus 0em}[10em]
+\titleformat{\section}[hang]{\huge\bfseries\sffamily\fontsize{16}{16}\selectfont}{\thesection}{0.5em}{}
+\titlespacing{\section}{0em}{3em plus 1em minus 1em}{1em plus 0.5em minus 0em}[10em]
 
-\titleformat{\subsection}[hang]{\LARGE\bfseries\sffamily\fontsize{14}{14}\selectfont}{\thesubsection}{1.0em}{}
-\titlespacing{\subsection}{-5em}{4em plus 1em minus 2.0em}{0.75em plus 0.5em minus 0em}[10em]
+\titleformat{\subsection}[hang]{\LARGE\bfseries\sffamily\fontsize{14}{14}\selectfont}{\thesubsection}{0.5em}{}
+\titlespacing{\subsection}{0em}{3em plus 1em minus 1em}{0.75em plus 0.5em minus 0em}[10em]
 
 \titleformat{\subsubsection}[hang]{\needspace{1\baselineskip}%
-\Large\bfseries\sffamily\fontsize{12}{12}\selectfont}{\thesubsubsection}{1.0em}{}
-\titlespacing{\subsubsection}{-5em}{3em plus 1em minus 1em}{0.5em plus 0.5em minus 0em}[10em]
+\Large\bfseries\sffamily\fontsize{12}{12}\selectfont}{\thesubsubsection}{0.5em}{}
+\titlespacing{\subsubsection}{0em}{3em plus 1em minus 1em}{0.5em plus 0.5em minus 0em}[10em]
 
+\setlength{\cftbeforetoctitleskip}{1.0ex}
+\setlength{\cftaftertoctitleskip}{3.0ex}
+\setlength{\cftbeforeloftitleskip}{1.0ex}
+\setlength{\cftafterloftitleskip}{3.0ex}
+\setlength{\cftbeforelottitleskip}{1.0ex}
+\setlength{\cftafterlottitleskip}{3.0ex}
+\renewcommand{\cftchapaftersnum}{}
+\makeatletter
+\renewcommand{\l@section}{\@dottedtocline{1}{1.5em}{2.6em}}
+\renewcommand{\l@subsection}{\@dottedtocline{2}{4.1em}{3.4em}}
+\makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Macros for minor headers: Summary, Syntax, Description, etc.
@@ -239,6 +264,21 @@
 \newcommand{\restrictions} {\littleheader{Restrictions}}
 \newcommand{\summary} {\littleheader{Summary}}
 \newcommand{\syntax} {\littleheader{Syntax}}
+
+\usepackage{scrlayer}
+\DeclareNewLayer[foreground,textarea,contents={
+\phantom{a}
+\emph{This page intentionally left blank}
+    }
+]{intentionally.text}
+\DeclareNewPageStyleByLayers{intentionally}{intentionally.text}
+\renewcommand{\cleardoublepage}{\cleardoubleoddpageusingstyle{intentionally}}
+\newcommand{\chapdirname}{}
+\newcommand{\cchapter}[2] {\cleardoublepage\chapter{#1}%
+   \renewcommand{\chapdirname}{#2}}
+\newcommand{\bchapter}[1] {\chapter*{#1}%
+   \addcontentsline{toc}{chapter}{\protect\numberline{}#1}}
+%\newcommand{\sinput}[1] {\input{\chapdirname/#1}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -264,11 +304,13 @@
 \usepackage{alltt}
 
 % This sets the default \code{} font to tt (monospace) and bold:
-\newcommand{\code}[1]{{\texttt{\textbf{#1}}}}
-\newcommand{\nspace}[1]{{\textrm{\textmd{ }}}}
+\newcommand\code[1]{\texttt{\textbf{#1}}}
+\newcommand\scode[1]{\protect\textbf{\protect\texttt{\protect\detokenize{#1}}}}
+\newcommand\nspace[1]{\textrm{\textmd{ }}}
 
 % This defines the \plc{} placeholder font to be tt normal slanted:
-\newcommand{\plc}[1] {{\textrm{\textmd{\itshape{#1}}}}}
+\newcommand\plc[1]{\textrm{\textmd{\itshape{#1}}}}
+\newcommand\splc[1]{\protect\textit{\protect\textrm{\protect\detokenize{#1}}}}
 
 % Environment for a paragraph of literal code, single-spaced, no outline, no indenting:
 \newenvironment{codepar}[1]
@@ -413,6 +455,11 @@
 
 \newcommand{\specref}[1]{Section~\ref{#1} on page~\pageref{#1}}
 
+% For caption for supertabular and figure, by yanyh15
+\captionsetup[table]{labelfont={sf,sc,bf},textfont=normalfont,singlelinecheck=off,labelformat=simple,labelsep=colon,aboveskip=00pt,belowskip=10pt}
+
+\captionsetup[figure]{labelfont={sf,sc,bf},textfont=normalfont,singlelinecheck=off,labelformat=simple,labelsep=colon}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Code example formatting for the Examples document
@@ -425,6 +472,7 @@
 
 \usepackage{color,fancyvrb}  % for \VerbatimInput
 \usepackage{toolbox}         % for \toolboxMakeSplit
+\usepackage{xargs}           % for optional args
 
 \renewcommand\theFancyVerbLine{\normalfont\footnotesize\sffamily S-\arabic{FancyVerbLine}}
 
@@ -437,7 +485,7 @@
 
 \newcommand{\escstr}[1]{\myreplace{_}{\_}{#1}}
 
-\def\exampleheader#1#2#3#4#5{%
+\newcommand{\exampleheader}[6]{%
    \ifthenelse{ \equal{#1}{} }{
       \def\cname{#2}
       \def\ename\cname
@@ -446,64 +494,81 @@
 % Use following line for old numbering
 %      \def\ename{\thechapter.#2.#3}
 % Use following for mneumonics
-      \def\ename{\escstr{#1}.#2.#3}
+      \def\ename{\escstr{#1}.\escstr{#2}.#3}
    }
    \newcount\cnt
    \cnt=#4
-   \ifthenelse{ \equal{#5}{} }{
+   \ifthenelse{ \equal{#5}{0} }{}{\global\advance\cnt by #5}
+
+   \ifthenelse{ \equal{#6}{} }{
       \def\vername{}
    }{
       \def\myver##1{\toolboxSplitAt{##1}{_}\lefttext\righttext
          \lefttext\toolboxIfElse{\ifx\righttext\undefined}%
          {\global\advance\cnt by 1}{\expandafter{\righttext}}}
-      \def\vername{\;\;(\code{\small{}omp\_\myver{#5}})}
+      \def\vername{\;\;(\code{\small{}omp\_\myver{#6}})}
    }
    \noindent
-   \textit{Example \ename}\vername
+   \hypertarget{ex:\cname}{\textit{Example \ename}}\vername
    \def\fcnt{\the\cnt}
    %\vspace*{-3mm}
    \code{\VerbatimInput[numbers=left,numbersep=5ex,firstnumber=1,firstline=\fcnt,fontsize=\small]%
-      {sources/Example_\cname}} 
+      {\chapdirname/sources/\cname}} 
 }
 
-\newcommand\cnexample[3][]{%
-   \exampleheader{#2}{#3}{c}{8}{#1}
+\newcommandx*\cnexample[4][1=,4=0]{%
+   \exampleheader{#2}{#3}{c}{8}{#4}{#1}
 }
 
-\newcommand\cppnexample[3][]{%
-   \exampleheader{#2}{#3}{cpp}{8}{#1}
+\newcommandx*\cppnexample[4][1=,4=0]{%
+   \exampleheader{#2}{#3}{cpp}{8}{#4}{#1}
 }
 
-\newcommand\fnexample[3][]{%
-   \exampleheader{#2}{#3}{f}{6}{#1}
+\newcommandx*\fnexample[4][1=,4=0]{%
+   \exampleheader{#2}{#3}{f}{6}{#4}{#1}
 }
 
-\newcommand\ffreenexample[3][]{%
-   \exampleheader{#2}{#3}{f90}{6}{#1}
+\newcommandx*\ffreenexample[4][1=,4=0]{%
+   \exampleheader{#2}{#3}{f90}{6}{#4}{#1}
 }
 
-\newcommand\cexample[3][]{%
+\newcommandx*\srcnexample[5][1=,5=0]{%
+   \exampleheader{#2}{#3}{#4}{0}{#5}{#1}
+}
+
+\newcommandx*\cexample[4][1=,4=0]{%
 \needspace{5\baselineskip}\ccppspecificstart
-\cnexample[#1]{#2}{#3}
+\cnexample[#1]{#2}{#3}[#4]
 \ccppspecificend
 }
 
-\newcommand\cppexample[3][]{%
+\newcommandx*\cppexample[4][1=,4=0]{%
 \needspace{5\baselineskip}\cppspecificstart
-\cppnexample[#1]{#2}{#3}
+\cppnexample[#1]{#2}{#3}[#4]
 \cppspecificend
 }
 
-\newcommand\fexample[3][]{%
+\newcommandx*\fexample[4][1=,4=0]{%
 \needspace{5\baselineskip}\fortranspecificstart
-\fnexample[#1]{#2}{#3}
+\fnexample[#1]{#2}{#3}[#4]
 \fortranspecificend
 }
 
-\newcommand\ffreeexample[3][]{%
+\newcommandx*\ffreeexample[4][1=,4=0]{%
 \needspace{5\baselineskip}\fortranspecificstart
-\ffreenexample[#1]{#2}{#3}
+\ffreenexample[#1]{#2}{#3}[#4]
 \fortranspecificend
+}
+
+\newcommandx*\hexentry[4][1=c,3=]{%
+  \hyperlink{ex:#2.#1}{\splc{#2.#1}}%
+    \ifthenelse{ \equal{#3}{} }{}{,~\hyperlink{ex:#2.#3}{\plc{#3}}}%
+    & #4%:~\splc{same name}
+}
+\newcommandx*\hexmentry[5][1=c,3=]{%
+  \hyperlink{ex:#2.#1}{\splc{#2.#1}}%
+    \ifthenelse{ \equal{#3}{} }{}{,~\hyperlink{ex:#2.#3}{\plc{#3}}}%
+    & #4:~\splc{#5.#1}\ifthenelse{ \equal{#3}{} }{}{,~\plc{#3}}
 }
 
 

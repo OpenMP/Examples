@@ -1,5 +1,4 @@
-\pagebreak
-\chapter{Synchronization}
+\cchapter{Synchronization}{synchronization}
 \label{chap:synchronization}
 
 The \code{barrier} construct is a stand-alone directive that requires all threads
@@ -37,7 +36,7 @@ of ordered regions while allowing code outside the region to run in parallel.
 
 Since OpenMP 4.5 the \code{ordered} construct can also be a stand-alone 
 directive that specifies cross-iteration dependences in a doacross loop nest.  
-The \code{depend} clause uses a \code{sink} \plc{dependence-type}, along with a 
+The \code{depend} clause uses a \code{sink} \plc{dependence-type}, along with an 
 iteration vector argument (vec) to indicate the iteration that satisfies the 
 dependence.  The \code{depend} clause with a \code{source}
 \plc{dependence-type} specifies dependence satisfaction.
@@ -79,3 +78,23 @@ Scheduling constraints on task execution can be prescribed by the \code{depend}
 clause to enforce dependence on previously generated tasks.
 More details on controlling task executions can be found in the \plc{Tasking} Chapter
 in the OpenMP Specifications document. %(DO REF. RIGHT.)
+
+
+%===== Examples Sections =====
+\input{synchronization/critical}
+\input{synchronization/worksharing_critical}
+\input{synchronization/barrier_regions}
+\input{synchronization/atomic}
+\input{synchronization/atomic_restrict}
+\input{synchronization/flush_nolist}
+\input{synchronization/acquire_release}
+\input{synchronization/ordered}
+\input{synchronization/depobj}
+\input{synchronization/doacross}
+\input{synchronization/locks}
+\input{synchronization/init_lock}
+\input{synchronization/init_lock_with_hint} 
+\input{synchronization/lock_owner}
+\input{synchronization/simple_lock}
+\input{synchronization/nestable_lock}
+

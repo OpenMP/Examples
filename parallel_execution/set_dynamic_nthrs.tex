@@ -1,0 +1,28 @@
+\pagebreak
+\section{\code{omp\_set\_dynamic} and \\
+\code{omp\_set\_num\_threads} Routines}
+\label{sec:set_dynamic_nthrs}
+\index{routines!omp_set_dynamic@\scode{omp_set_dynamic}}
+\index{omp_set_dynamic routine@\scode{omp_set_dynamic} routine}
+\index{routines!omp_set_num_threads@\scode{omp_set_num_threads}}
+\index{omp_set_num_threads routine@\scode{omp_set_num_threads} routine}
+
+Some programs rely on a fixed, prespecified number of threads to execute correctly. 
+Because the default setting for the dynamic adjustment of the number of threads 
+is implementation defined, such programs can choose to turn off the dynamic threads 
+capability and set the number of threads explicitly to ensure portability. The 
+following example shows how to do this using \code{omp\_set\_dynamic}, and \code{omp\_set\_num\_threads}.
+
+In this example, the program executes correctly only if it is executed by 16 threads. 
+If the implementation is not capable of supporting 16 threads, the behavior of 
+this example is implementation defined. Note that the number of threads executing 
+a \code{parallel} region remains constant during the region, regardless of the 
+dynamic threads setting. The dynamic threads mechanism determines the number of 
+threads to use at the start of the \code{parallel} region and keeps it constant 
+for the duration of the region.
+
+\cexample{set_dynamic_nthrs}{1}
+
+\fexample{set_dynamic_nthrs}{1}
+
+

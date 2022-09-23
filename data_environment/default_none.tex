@@ -1,0 +1,21 @@
+\pagebreak
+\section{\code{default(none)} Clause}
+\label{sec:default_none}
+\index{clauses!default(none)@\code{default(none)}}
+\index{default(none) clause@\code{default(none)} clause}
+
+The following example distinguishes the variables that are affected by the \code{default(none)} 
+clause from those that are not. 
+
+\ccppspecificstart
+Beginning with OpenMP 4.0, variables with \code{const}-qualified type and no mutable member 
+are no longer predetermined shared.  Thus, these variables (variable \plc{c} in the example) 
+need to be explicitly listed
+in data-sharing attribute clauses when the \code{default(none)} clause is specified.
+
+\cnexample{default_none}{1}
+\ccppspecificend
+
+\fexample{default_none}{1}
+
+

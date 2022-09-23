@@ -1,0 +1,39 @@
+\pagebreak
+\section{C/C++ Arrays in a \code{firstprivate} Clause}
+\ccppspecificstart
+\label{sec:carrays_fpriv}
+\index{clauses!firstprivate@\code{firstprivate}}
+\index{firstprivate clause@\code{firstprivate} clause!C/C++ arrays in}
+
+The following example illustrates the size and value of list items of array or 
+pointer type in a \code{firstprivate} clause . The size of new list items is 
+based on the type of the corresponding original list item, as determined by the 
+base language.
+
+In this example:
+
+\begin{compactitem}
+\item The type of \code{A} is array of two arrays of two ints.
+
+\item  The type of \code{B} is adjusted to pointer to array of \code{n} 
+ints, because it is a function parameter.
+
+\item  The type of \code{C} is adjusted to pointer to int, because 
+it is a function parameter.
+
+\item  The type of \code{D} is array of two arrays of two ints.
+
+\item  The type of \code{E} is array of \code{n} arrays of \code{n} 
+ints.
+\end{compactitem}
+
+Note that  \code{B} and \code{E} involve variable length array types.
+
+The new items of array type are initialized as if each integer element of the original 
+array is assigned to the corresponding element of the new array. Those of pointer 
+type are initialized as if by assignment from the original item to the new item.
+
+\cnexample{carrays_fpriv}{1}
+\ccppspecificend
+
+

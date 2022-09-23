@@ -1,5 +1,4 @@
-\pagebreak
-\chapter{SIMD}
+\cchapter{SIMD}{SIMD}
 \label{chap:simd}
 
 Single instruction, multiple data (SIMD) is a form of parallel execution 
@@ -12,7 +11,7 @@ Many processors have SIMD (vector) units that can perform simultaneously
 Loops without loop-carried backward dependency (or with dependency preserved using 
 ordered simd) are candidates for vectorization by the compiler for 
 execution with SIMD units. In addition, with state-of-the-art vectorization 
-technology and \code{declare simd} construct extensions for function vectorization
+technology and \code{declare simd} directive extensions for function vectorization
 in the OpenMP 4.5 specification, loops with function calls can be vectorized as well. 
 The basic idea is that a scalar function call in a loop can be replaced by a vector version 
 of the function, and the loop can be vectorized simultaneously by combining a loop 
@@ -32,7 +31,7 @@ execution within loops that contain the function and have a \code{simd}
 directive.  Clauses provide argument specifications (\code{linear},
 \code{uniform}, and \code{aligned}), a requested vector length 
 (\code{simdlen}), and designate whether the function is always/never 
-called conditionally in a loop (\code{branch}/\code{inbranch}). 
+called conditionally in a loop (\code{notinbranch}/\code{inbranch}). 
 The latter is for optimizing performance.
 
 Also, the \code{simd} construct has been combined with the worksharing loop 
@@ -44,5 +43,10 @@ execution in different SIMD units.
 %(a parallel loop sequentially followed by a \code{simd} construct,
 %or a combined construct such as \code{parallel do simd} or 
 %\code{parallel for simd}).
+
+
+%===== Examples Sections =====
+\input{SIMD/SIMD}
+\input{SIMD/linear_modifier}
 
 

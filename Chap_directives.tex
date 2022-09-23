@@ -1,0 +1,58 @@
+\cchapter{OpenMP Directive Syntax}{directives}
+\label{chap:directive_syntax}
+\index{directive syntax}
+
+OpenMP \emph{directives} use base-language mechanisms to specify OpenMP program behavior.
+In C code, the directives are formed exclusively with pragmas, whereas in C++
+code, directives are formed from either pragmas or attributes.
+Fortran directives are formed with comments in free form and fixed form sources (codes).
+All of these mechanisms allow the compilation to ignore the OpenMP directives if
+OpenMP is not supported or enabled.
+
+
+The OpenMP directive is a combination of the base-language mechanism and a \plc{directive-specification},
+as shown below. The \plc{directive-specification} consists
+of the \plc{directive-name} which may seldomly have arguments, 
+followed by optional \plc{clauses}. Full details of the syntax can be found in the OpenMP Specification.
+Illustrations of the syntax is given in the examples.
+
+The formats for combining a base-language mechanism and a \plc{directive-specification} are:
+
+C/C++ pragmas
+\begin{indentedcodelist}
+\code{\#pragma omp} \plc{directive-specification}
+\end{indentedcodelist}
+
+C++ attributes
+\begin{indentedcodelist}
+\code{[[omp :: directive(} \plc{directive-specification} \code{)]]}
+\code{[[using omp : directive(} \plc{directive-specification} \code{)]]}
+\end{indentedcodelist}
+
+Fortran comments
+\begin{indentedcodelist}
+\code{!\$omp} \plc{directive-specification}
+\end{indentedcodelist}
+
+where \code{c\$omp} and \code{*\$omp} may be used in Fortran fixed form sources.
+
+Most OpenMP directives accept clauses that alter the semantics of the directive in some way, 
+and some directives also accept parenthesized arguments that follow the directive name. 
+A clause may just be a keyword (e.g., \scode{untied}) or it may also accept argument lists 
+(e.g., \scode{shared(x,y,z)}) and/or optional modifiers (e.g., \scode{tofrom} in 
+\scode{map(tofrom:}~\scode{x,y,z)}).
+Clause modifiers may be "simple" or "complex" -- a complex modifier consists of a 
+keyword followed by one or more parameters, bracketed by parentheses, while a simple 
+modifier does not. An example of a complex modifier is the \scode{iterator} modifier, 
+as in \scode{map(iterator(i=0:n),}~\scode{tofrom:}~\scode{p[i])}, or the \scode{step} modifier, as in 
+\scode{linear(x:}~\scode{ref,}~\scode{step(4))}. 
+In the preceding examples, \scode{tofrom} and \scode{ref} are simple modifiers.
+
+
+%===== Examples Sections =====
+\input{directives/pragmas}
+\input{directives/attributes}
+\input{directives/fixed_format_comments}
+\input{directives/free_format_comments}
+
+

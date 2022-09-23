@@ -1,0 +1,87 @@
+\pagebreak
+\section{\code{unroll} Construct}
+\label{sec:unroll}
+\index{constructs!unroll@\code{unroll}}
+\index{unroll construct@\code{unroll} construct}
+\index{unroll construct@\code{unroll} construct!full clause@\code{full} clause}
+\index{full clause@\code{full} clause}
+\index{clauses!full@\code{full}}
+\index{unroll construct@\code{unroll} construct!partial clause@\code{partial} clause}
+\index{partial clause@\code{partial} clause}
+\index{clauses!partial@\code{partial}}
+
+The \code{unroll} construct is a loop transformation that increases the 
+number of loop blocks in a loop, while reducing the number of iterations.
+The \code{full} clause specifies that the loop is to be completely unrolled.  
+That is, a loop block for each iteration is created, and the loop is removed.
+A \code{partial} clause  with a \plc{unroll-factor} specifies that the number of 
+iterations will be reduced multiplicatively by the factor while the number of 
+blocks will be increased by the same factor.  
+Operationally, the loop is tiled by the factor, and the tiled loop is 
+fully expanded, resulting in a single loop with multiple blocks.
+
+Unrolling can reduce control-flow overhead and provide additional
+optimization opportunities for the compiler and the processor
+pipeline. Nevertheless, unrolling can increase the code size, and saturate
+the instruction cache. Hence, the trade-off may need to be assessed.
+Unrolling a loop does not change the code's semantics. Also, compilers
+may unroll loops without explicit directives, at various optimization levels.
+
+In the example below, the \code{unroll} construct is used without any clause, and then
+with a \code{full} clause, in the first two functions, respectively.
+When no clause is used, it is up to the implementation (compiler) 
+to decide if and how the loop is to be unrolled.  
+The iteration count can have a run time value.  
+In the second function, the \code{unroll} construct uses a \code{full} clause
+to completely unroll the loop.  A compile-time constant is required for the iteration count.
+The statements in the third function (\plc{unroll\_full\_equivalent}) illustrates
+equivalent code for the full unrolling in the second function.
+
+\cexample[5.1]{unroll}{1}
+\ffreeexample[5.1]{unroll}{1}
+
+
+The next example shows cases when it is incorrect to use full unrolling.
+
+\cexample[5.1]{unroll}{2}
+\ffreeexample[5.1]{unroll}{2}
+
+In many cases, when the iteration count is large and/or dynamic, it is
+reasonable to partially unroll a loop by including a \code{partial} clause.
+In the \plc{unroll3\_partial} function below, the \plc{unroll-factor} value
+of 4 is used to create a tile size of 4 that is unrolled to create 4 unrolled statements.
+The equivalent ``hand unrolled'' loop code is presented in the 
+\plc{unroll3\_partial\_equivalent} function.
+If the \plc{unroll-factor} is omitted, as in the \plc{unroll3\_partial\_nofactor} 
+function, the implementation may optimally select a factor from 1 
+(no unrolling) to the iteration count (full unrolling).  
+In the latter case the construct generates a loop with a single iteration.
+
+\cexample[5.1]{unroll}{3}
+\ffreeexample[5.1]{unroll}{3}
+
+When the iteration count is not a multiple of the \plc{unroll-factor},
+iterations that should not produce executions must be conditionally
+protected from execution. In this example, the first function
+unrolls a loop that has a variable iteraction count. Since the \code{unroll}
+construct uses a \code{partial(}~\plc{4}~\code{)} clause, the compiler will need to
+create code that can account for cases when the iteration count is not a
+multiple of 4. A brute-force, simple-to-understand approach for implementing 
+the conditionals is shown in the \plc{unroll\_partial\_remainder\_option1} function.
+
+The remaining two functions show more optimal algorithms the compiler 
+may select to implement the transformation.
+Optimal approaches may reduce the number of conditionals as shown in 
+\plc{unroll\_partial\_remainder\_option2}, and 
+may eliminate conditionals completely by peeling off a ``remainder'' 
+into a separate loop as in \plc{unroll\_partial\_remainder\_option3}. 
+
+Regardless of the optimization, implementations must ensure that the semantics
+remain the same, especially when additional directives are applied to
+the unrolled loop. For the case in the \plc{unroll\_partial\_remainder\_option3}
+function, the fission of the worksharing-loop construct may result in a different
+distribution of threads to the iterations. Since no reproducible scheduling
+is specified on the work-sharing construct, the worksharing-loop and unrolling are compliant.
+
+\cexample[5.1]{unroll}{4}
+\ffreeexample[5.1]{unroll}{4}

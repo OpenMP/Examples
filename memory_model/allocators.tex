@@ -1,0 +1,139 @@
+\pagebreak
+\section{Memory Allocators}
+\label{sec:allocators}
+
+\index{memory allocators!allocator traits}
+\index{memory allocators!memory space}
+\index{memory allocators!omp_alloc routine@\scode{omp_alloc} routine}
+\index{memory allocators!allocators directive@\scode{allocators} directive}
+
+\index{omp_alloc routine@\scode{omp_alloc} routine}
+\index{routines!omp_alloc@\scode{omp_alloc}}
+
+\index{directives!allocators@\code{allocators}}
+\index{allocators directive@\code{allocators} directive}
+\index{allocators directive@\code{allocators} directive!allocator clause@\code{allocator} clause}
+
+\index{clauses!allocator@\code{allocator}}
+\index{allocator clause@\code{allocator} clause}
+\index{omp_init_allocator routine@\scode{omp_init_allocator} routine}
+\index{routines!omp_init_allocator@\scode{omp_init_allocator}}
+
+OpenMP memory allocators can be used to allocate memory with
+specific allocator traits.  In the following example an OpenMP allocator is used to
+specify an alignment for arrays \plc{x} and \plc{y}. The
+general approach for attributing traits to variables allocated by
+OpenMP is to create or specify a pre-defined \plc{memory space}, create an
+array of \plc{traits}, and then form an \plc{allocator} from the
+memory space and trait.
+The allocator is then specified
+in an OpenMP allocation (using an API \plc{omp\_alloc()} function
+for C/C++ code and an \code{allocators} directive for Fortran code
+in the \splc{allocators.1} example).
+
+In the example below the \plc{xy\_memspace} variable is declared
+and assigned the default memory space (\plc{omp\_default\_mem\_space}).
+Next, an array for \plc{traits} is created. Since only one
+trait will be used, the array size is \plc{1}.
+A trait is a structure in C/C++ and a derived type in Fortran,
+containing 2 components: a key and a corresponding value (key-value pair).
+The trait key used here is \plc{omp\_atk\_alignment} (an enum for C/C++
+and a parameter for Fortran)
+and the trait value of 64 is specified in the \plc{xy\_traits} declaration.
+These declarations are followed by a call to the
+\plc{omp\_init\_allocator()} function to combine the memory
+space (\plc{xy\_memspace}) and the traits (\plc{xy\_traits})
+to form an allocator (\plc{xy\_alloc}).
+
+%In the C/C++ code the API  \plc{omp\_allocate()} function is used 
+%to allocate space, similar to \plc{malloc}, except that the allocator 
+%is specified as the second argument.  
+%In Fortran an API allocation function is not available. 
+%An \code{allocate} construct is used (with \plc{x} and \plc{y} 
+%listed as the variables to be allocated), along
+%with an \code{allocator} clause (specifying the \plc{xy\_alloc} as the allocator)
+%for the following Fortran \plc{allocate} statement.
+
+In the C/C++ code the API  \plc{omp\_allocate()} function is used
+to allocate space, similar to \plc{malloc}, except that the allocator
+is specified as the second argument.
+In Fortran an \code{allocators} directive is used to specify an allocator
+for the following Fortran \plc{allocate} statement.
+A variable list in the \scode{allocate} clause may be supplied if the allocator
+is to be applied to a subset of variables in the Fortran allocate
+statement.
+Here, the \plc{xy\_alloc} allocator is specified
+in the modifier of the \code{allocator} clause,
+and the set of all variables used in the \plc{allocate} statement is specified in the list.
+
+%"for a following Fortran allocation statement" (no using "immediately" here)
+% it looks like if you have a list, the allocation statement does not need
+% to follow immediately.(?)
+% spec5.0 157:19-20 The allocate directive must appear in the same scope as
+% the declarations of each of its list items and must follow all such declarations.
+
+%\pagebreak
+
+\cexample[5.0]{allocators}{1}
+\ffreeexample[5.2]{allocators}{1}
+
+
+When using the \scode{allocators} construct with optional clauses in Fortran code, 
+users should be aware of the behavior of a reallocation.
+
+In the following example, the \splc{a} variable is allocated with 64-byte
+alignment through the \scode{align} clause of the \scode{allocators} construct.
+%The alignment of the newly allocated object, \splc{a}, in the (reallocation)
+%assignment \splc{a = b} may not be the same as before.  
+The alignment of the newly allocated object, \splc{a}, in the (reallocation)
+assignment \splc{a = b} will not be reallocated with the 64-byte alignment, but
+with the 32-byte alignment prescribed by the trait of the \splc{my_alloctr} 
+allocator. It is best to avoid this problem by constructing and using an
+allocator (not the \scode{align} clause) with the required alignment in 
+the \scode{allocators} construct.
+Note that in the subsequent
+deallocation of \splc{a} the deallocation must precede the destruction
+of the allocator used in the allocation of \splc{a}.
+
+\ffreeexample[5.2]{allocators}{2}
+
+When creating and using an \scode{allocators} construct within a Fortran procedure
+for allocating storage (and subsequently freeing the allocator storage with an 
+\scode{omp_destroy_allocator} construct), users should be aware of the necessity
+of using an explicit Fortran deallocation instead of relying on auto-deallocation.
+
+In the following example, a user-defined allocator is used in the allocation
+of the \splc{c} variable, and then the allocator is destroyed.
+Auto-deallocation at the end of the \splc{broken_auto_deallocation} procedure
+will fail without the allocator, hence an explicit deallocation should be used 
+(before the \scode{omp_destroy_allocator} construct).
+Note that an allocator may be specified directly in the \scode{allocate} clause
+without using the \scode{allocator} complex modifier, so long as no other modifier 
+is specified in the clause.
+
+\ffreeexample[5.2]{allocators}{3}
+
+\index{directives!allocate@\code{allocate}}
+\index{allocate directive@\code{allocate} directive}
+\index{allocate directive@\code{allocate} directive!allocator clause@\code{allocator} clause}
+
+The \scode{allocate} directive is a convenient way to apply an OpenMP 
+allocator to the allocation of declared variables.
+
+This example illustrates the allocation of specific types of storage in a program 
+for use in libraries, privatized variables, and with offloading.
+
+Two groups of variables, \{\plc{v1, v2}\} and \{\plc{v3, v4}\}, are used with the \scode{allocate} 
+directive, and the \{\plc{v5, v6}\} pair is used with the \scode{allocate} clause. 
+Here we explicitly use predefined allocators \scode{omp_high_bw_mem_alloc} and \scode{omp_default_mem_alloc}
+with the \scode{allocate} directive in CASE 1. Similar effects are achieved for private variables of a task
+by using the \scode{allocate} clause, as shown in CASE 2.  
+
+Note, when the \scode{allocate} directive does not specify an \scode{allocator} clause, an
+implementation-defined default, stored in the \splc{def-allocator-var} ICV, is used
+(not illustrated here).
+Users can set and get the default allocator with the \scode{omp_set_default_allocator}
+and \scode{omp_get_default_allocator} API routines. 
+
+\cexample[5.1]{allocators}{4}
+\ffreeexample[5.1]{allocators}{4}

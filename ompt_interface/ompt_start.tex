@@ -1,0 +1,76 @@
+\pagebreak
+\section{OMPT Start}
+\label{sec:ompt_start}
+
+There are three steps an OpenMP implementation takes to activate a tool.
+This section explains how the tool and an OpenMP implementation interact to accomplish tool activation.
+
+\index{OMPT interface!activating}
+\index{OMPT interface!ompt_start_tool routine@\scode{ompt_start_tool} routine}
+\index{routines!ompt_start_tool@\scode{ompt_start_tool}}
+\index{ompt_start_tool routine@\scode{ompt_start_tool} routine}
+Step 1. \emph{Determine Whether to Initialize}
+\begin{adjustwidth}{2.5em}{0pt}
+A tool is activated by the OMPT interface when it returns a non-NULL pointer to an \code{ompt\_start\_tool\_result\_t} structure on a call to \code{ompt\_start\_tool} by the OpenMP implementation.
+There are three ways that a tool can provide a definition of \code{ompt\_start\_tool} to an OpenMP implementation:
+(1) Statically linking the tool's definition of \code{ompt\_start\_tool} into an OpenMP application.
+(2) Introducing a dynamically linked library that includes the tool's definition of
+\code{ompt\_start\_tool} into the application's address space.
+(3) Providing the name of a dynamically linked library appropriate for the architecture
+and operating system used by the application in the \plc{tool-libraries-var} ICV.
+\end{adjustwidth}
+
+Step 2. \emph{Initializing a First-Party tool}
+\begin{adjustwidth}{2.5em}{0pt}
+If a tool-provided implementation of \code{ompt\_start\_tool} returns a non-NULL pointer
+to an \code{ompt\_start\_tool\_result\_t} structure, the OpenMP implementation will invoke
+the tool initializer specified in this structure prior to the occurrence of any OpenMP event.
+\end{adjustwidth}
+
+
+\index{OMPT interface!ompt_set_callback routine@\scode{ompt_set_callback} routine}
+\index{routines!ompt_set_callback@\scode{ompt_set_callback}}
+\index{ompt_set_callback routine@\scode{ompt_set_callback} routine}
+Step 3. \emph{Monitoring Activity on the Host}
+\begin{adjustwidth}{2.5em}{0pt}
+To monitor execution of an OpenMP program on the host device, a tool's initializer
+must register to receive notification of events that occur as an OpenMP program executes.
+A tool can register callbacks for OpenMP events using the runtime entry point known
+as \code{ompt\_set\_callback}, which has the following possible return codes: \hfill \break
+ \code{ompt\_set\_error},
+ \code{ompt\_set\_never},
+ \code{ompt\_set\_impossible},
+ \code{ompt\_set\_sometimes},
+ \code{ompt\_set\_sometimes\_paired},
+ \code{ompt\_set\_always}.
+
+If the \code{ompt\_set\_callback} runtime entry point is called outside a tool's initializer,
+registration of supported callbacks may fail with a return code of \code{ompt\_set\_error}.
+All callbacks registered with \code{ompt\_set\_callback} or returned by \code{ompt\_get\_callback}
+use the dummy type signature \code{ompt\_callback\_t}. While this is a compromise, it is
+better than providing unique runtime entry points with precise type signatures
+to set and get the callback for each unique runtime entry point type signature.
+\end{adjustwidth}
+
+----------------
+
+To use the OMPT interface a tool must provide a globally-visible implementation
+of the \code{ompt\_start\_tool} function.
+The function returns a pointer to an \code{ompt\_start\_tool\_result\_t} structure 
+that contains callback pointers for tool initialization and finalization as well 
+as a data word, \plc{tool\_data}, that is to be passed by reference to these callbacks.
+A \code{NULL} return indicates the tool will not use the OMPT interface.
+The runtime execution of \code{ompt\_start\_tool} is triggered by the first OpenMP 
+directive or OpenMP API routine call.
+
+
+In the example below, the user-provided \code{ompt\_start\_tool} function
+performs a check to make sure the runtime OpenMP version that OMPT supports 
+(provided by the \texttt{omp\_version} argument) is identical to the 
+OpenMP implementation (compile-time) version.
+Also, a \code{NULL} is returned to indicate that the OMPT interface is not
+used (no callbacks and tool data are specified). 
+
+\emph{Note}: The \texttt{omp-tools.h} file is included.
+
+\cexample[5.0]{ompt_start}{1}

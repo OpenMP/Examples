@@ -1,0 +1,69 @@
+\pagebreak
+\section{Fortran \code{ASSOCIATE} Construct}
+\fortranspecificstart
+\label{sec:associate}
+\index{ASSOCIATE construct, Fortran@\code{ASSOCIATE} construct, Fortran}
+
+The following is an invalid example of specifying an associate name on a data-sharing attribute 
+clause. The constraint in the Data Sharing Attribute Rules section in the OpenMP 
+4.0 API Specifications states that an associate name preserves the association 
+with the selector established at the \code{ASSOCIATE} statement. The associate 
+name \plc{b} is associated with the shared variable \plc{a}. With the predetermined data-sharing 
+attribute rule, the associate name \plc{b} is not allowed to be specified on the \code{private} 
+clause.
+
+\fnexample[4.0]{associate}{1}
+
+In next example, within the \code{parallel} construct, the association name \plc{thread\_id} 
+is associated with the private copy of \plc{i}. The print statement should output the 
+unique thread number.
+
+\fnexample[4.0]{associate}{2}
+
+The following example illustrates the effect of specifying a selector name on a data-sharing 
+attribute clause. The associate name \plc{u} is associated with \plc{v} and the variable \plc{v} 
+is specified on the \code{private} clause of the \code{parallel} construct. 
+The construct association is established prior to the \code{parallel} region. 
+The association between \plc{u} and the original \plc{v} is retained (see the Data Sharing 
+Attribute Rules section in the OpenMP 4.0 API Specifications). Inside the \code{parallel} 
+region, \plc{v} has the value of -1 and \plc{u} has the value of the original \plc{v}.
+
+\pagebreak
+\ffreenexample[4.0]{associate}{3}
+
+% blue line floater at top of this page for "Fortran, cont."
+\begin{figure}[t!]
+\linewitharrows{-1}{dashed}{Fortran (cont.)}{8em}
+\end{figure}
+\label{sec:associate_target}
+
+\bigskip
+The following example illustrates mapping behavior for a Fortran
+associate name and its selector for a \scode{target} construct.
+
+For the first 3 \scode{target} constructs the associate name \splc{a_aray} is
+associated with the selector \splc{aray}, an array.  
+For the \scode{target} construct of code block TARGET 1 just the selector
+\splc{aray} is used and is implicitly mapped,
+likewise for the associate name \splc{a_aray} in the TARGET 2 block.  
+However, mapping an associate name and its selector is not valid for the same
+\scode{target} construct.  Hence the TARGET 3 block is non-conforming.
+
+
+In TARGET 4, the \splc{scalr} selector used in the \scode{target} region 
+has an implicit data-sharing attribute of firstprivate since it is a scalar.
+Hence, the assigned value is not returned.
+In TARGET 5, the associate name \splc{a_scalr} is implicitly mapped and the
+assigned value is returned to the host (default \scode{tofrom} mapping behavior).
+In TARGET 6, the use of the associate name and its selector in the \scode{target}
+region is conforming because the scalar firstprivate behavior of the selector 
+and the implicit mapping of the associate name are allowed.  
+At the end of the \scode{target} region only the 
+associate name's value is returned to the host. 
+In TARGET 7, the selector and associate name appear in
+an explicit mapping for the same \scode{target} construct, 
+hence the code block is non-conforming.
+
+\ffreenexample[5.1]{associate}{4}
+\fortranspecificend
+

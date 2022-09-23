@@ -1,0 +1,57 @@
+\pagebreak
+\section{\code{copyprivate} Clause}
+\label{sec:copyprivate}
+\index{clauses!copyprivate@\code{copyprivate}}
+\index{copyprivate clause@\code{copyprivate} clause}
+
+The \code{copyprivate} clause can be used to broadcast values acquired by a single 
+thread directly to all instances of the private variables in the other threads. 
+In this example, if the routine is called from the sequential part, its behavior 
+is not affected by the presence of the directives. If it is called from a \code{parallel} 
+region, then the actual arguments with which \code{a} and \code{b} are associated 
+must be private. 
+
+\index{constructs!single@\code{single}}
+\index{single construct@\code{single} construct}
+The thread that executes the structured block associated with the \code{single} 
+ construct broadcasts the values of the private variables \code{a}, \code{b}, 
+\code{x}, and 
+\code{y} from its implicit task's data environment to the data environments 
+of the other implicit tasks in the thread team. The broadcast completes before 
+any of the threads have left the barrier at the end of the construct.
+
+\cexample{copyprivate}{1}
+
+\fexample{copyprivate}{1}
+
+\index{constructs!masked@\code{masked}}
+\index{masked construct@\code{masked} construct}
+In this example, assume that the input must be performed by the primary thread. 
+Since the \code{masked} construct does not support the \code{copyprivate} clause, 
+it cannot broadcast the input value that is read. However, \code{copyprivate} 
+is used to broadcast an address where the input value is stored. 
+
+\cexample[5.1]{copyprivate}{2}
+
+\fexample[5.1]{copyprivate}{2}
+
+Suppose that the number of lock variables required within a \code{parallel} region 
+cannot easily be determined prior to entering it. The \code{copyprivate} clause 
+can be used to provide access to shared lock variables that are allocated within 
+that \code{parallel} region.
+
+\cexample{copyprivate}{3}
+
+\fortranspecificstart
+\fnexample{copyprivate}{3}
+
+Note that the effect of the \code{copyprivate} clause on a variable with the 
+\code{allocatable} attribute is different than on a variable with the \code{pointer} 
+attribute. The value of \code{A} is copied (as if by intrinsic assignment) and 
+the pointer \code{B} is copied (as if by pointer assignment) to the corresponding 
+list items in the other implicit tasks belonging to the \code{parallel} region. 
+
+\fnexample{copyprivate}{4}
+\fortranspecificend
+
+

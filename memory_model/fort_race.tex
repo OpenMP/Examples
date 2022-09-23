@@ -1,0 +1,17 @@
+\pagebreak
+\section{Race Conditions Caused by Implied Copies of Shared Variables in Fortran}
+\fortranspecificstart
+\label{sec:fort_race}
+\index{shared variables!race conditions}
+
+The following example contains a race condition, because the shared variable, which 
+is an array section, is passed as an actual argument to a routine that has an assumed-size 
+array as its dummy argument. The subroutine call passing an array section argument 
+may cause the compiler to copy the argument into a temporary location prior to 
+the call and copy from the temporary location into the original variable when the 
+subroutine returns. This copying would cause races in the \code{parallel} region.
+
+\ffreenexample{fort_race}{1}
+\fortranspecificend
+
+

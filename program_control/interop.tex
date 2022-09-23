@@ -1,0 +1,43 @@
+\pagebreak
+\section{\code{interop} Construct}
+\label{sec:interop}
+\index{constructs!interop@\code{interop}}
+\index{interop construct@\code{interop} construct}
+
+The \scode{interop} construct allows OpenMP to interoperate with foreign runtime environments.
+In the example below, asynchronous cuda memory copies and a \splc{cublasDaxpy} routine are executed 
+in a cuda stream. Also, an asynchronous target task execution (having a \scode{nowait} clause) 
+and two explicit tasks are executed through OpenMP directives.  Scheduling dependences (synchronization) are
+imposed on the foreign stream and the OpenMP tasks through \scode{depend} clauses. 
+
+\index{interop construct@\code{interop} construct!init clause@\code{init} clause}
+\index{init clause@\code{init} clause}
+\index{clauses!init@\code{init}}
+\index{interop construct@\code{interop} construct!depend clause@\code{depend} clause}
+\index{depend clause@\code{depend} clause}
+\index{clauses!depend@\code{depend}}
+First, an interop object, \splc{obj}, is initialized for synchronization by including the
+\scode{targetsync} \splc{interop-type} in the interop \scode{init} clause 
+(\scode{init(}~\scode{targetsync,obj}~\scode{)}).  
+The object provides access to the foreign runtime.
+The \scode{depend} clause provides a dependence behavior
+for foreign tasks associated with a valid object.
+
+\index{routines!omp_get_interop_int@\scode{omp_get_interop_int}}
+\index{omp_get_interop_int routine@\scode{omp_get_interop_int} routine}
+Next, the \scode{omp_get_interop_int} routine is used to extract the foreign 
+runtime id (\scode{omp_ipr_fr_id}), and a test in the next statement ensures 
+that the cuda runtime (\scode{omp_ifr_cuda}) is available.
+
+\index{routines!omp_get_interop_ptr@\scode{omp_get_interop_ptr}}
+\index{omp_get_interop_ptr routine@\scode{omp_get_interop_ptr} routine}
+\index{interop construct@\code{interop} construct!destroy clause@\code{destroy} clause}
+\index{destroy clause@\code{destroy} clause}
+\index{clauses!destroy@\code{destroy}}
+Within the block for executing the \splc{cublasDaxpy} routine, a stream is acquired 
+with the \scode{omp_get_interop_ptr} routine, which returns a cuda stream (\splc{s}).
+The stream is included in the cublas handle, and used directly in the asynchronous memory
+routines.  The following \scode{interop} construct, with the \scode{destroy} clause, 
+ensures that the foreign tasks have completed.
+
+\cexample[5.1]{interop}{1}

@@ -1,0 +1,26 @@
+\cchapter{Loop Transformations}{loop_transformations}
+\label{chap:loop_transformations}
+
+To obtain better performance on a platform, code may need to be restructured 
+relative to the way it is written (which is often for best readability).
+User-directed loop transformations accomplish this goal by providing a means 
+to separate code semantics and its optimization.
+
+A loop transformation construct states that a transformation operation is to be 
+performed on set of nested loops.  This directive approach can target specific loops
+for transformation, rather than applying more time-consuming general compiler 
+heuristics methods with compiler options that may not be able to discover 
+optimal transformations.
+
+Loop transformations can be augmented by preprocessor support or OpenMP \code{metadirective} 
+directives, to select optimal dimension and size parameters for specific platforms,
+facilitating a single code base for multiple platforms.
+Moreover, directive-based transformations make experimenting easier: 
+whereby specific hot spots can be affected by transformation directives.
+
+
+%===== Examples Sections =====
+\input{loop_transformations/tile}
+\input{loop_transformations/unroll}
+\input{loop_transformations/partial_tile}
+

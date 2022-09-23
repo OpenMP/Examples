@@ -1,0 +1,150 @@
+%\pagebreak
+\section{\code{simd} and \code{declare} \code{simd} Directives}
+\label{sec:SIMD}
+
+\index{constructs!simd@\code{simd}}
+\index{simd construct@\code{simd} construct}
+The following example illustrates the basic use of the \code{simd} construct 
+to assure the compiler that the loop can be vectorized.
+
+\cexample[4.0]{SIMD}{1}
+
+\ffreeexample[4.0]{SIMD}{1}
+ 
+
+\index{directives!declare simd@\code{declare}~\code{simd}}
+\index{declare simd directive@\code{declare}~\code{simd} directive}
+\index{clauses!uniform@\code{uniform}}
+\index{uniform clause@\code{uniform} clause}
+\index{clauses!linear@\code{linear}}
+\index{linear clause@\code{linear} clause}
+When a function can be inlined within a loop the compiler has an opportunity to 
+vectorize the loop. By guaranteeing SIMD behavior of a function's operations, 
+characterizing the arguments of the function and privatizing temporary 
+variables of the loop, the compiler can often create faster, vector code for 
+the loop. In the examples below the \code{declare} \code{simd} directive is 
+used on the \plc{add1} and \plc{add2} functions to enable creation of their 
+corresponding SIMD function versions for execution within the associated SIMD 
+loop. The functions characterize two different approaches of accessing data 
+within the function: by a single variable and as an element in a data array, 
+respectively. The \plc{add3} C function uses dereferencing.
+
+The \code{declare} \code{simd} directives also illustrate the use of 
+\code{uniform} and \code{linear} clauses.  The \code{uniform(fact)} clause 
+indicates that the variable \plc{fact} is invariant across the SIMD lanes. In 
+the \plc{add2} function \plc{a} and \plc{b} are included in the \code{uniform} 
+list because the C pointer and the Fortran array references are constant.  The 
+\plc{i} index used in the \plc{add2} function is included in a \code{linear} 
+clause with a constant-linear-step of 1, to guarantee a unity increment of the 
+associated loop. In the \code{declare} \code{simd} directive for the \plc{add3} 
+C function the  \code{linear(a,b:1)} clause instructs the compiler to generate 
+unit-stride loads across the SIMD lanes; otherwise,  costly \emph{gather} 
+instructions would be generated for the unknown sequence of access of the 
+pointer dereferences.
+
+In the \code{simd} constructs for the loops the \code{private(tmp)} clause is 
+necessary to assure that the each vector operation has its own \plc{tmp} 
+variable.
+
+\cexample[4.0]{SIMD}{2}
+
+\ffreeexample[4.0]{SIMD}{2}
+
+%\pagebreak
+\index{clauses!private@\code{private}}
+\index{private clause@\code{private} clause}
+\index{clauses!reduction@\code{reduction}}
+\index{reduction clause@\code{reduction} clause}
+\index{reductions!reduction clause@\code{reduction} clause}
+A thread that encounters a SIMD construct executes a vectorized code of the 
+iterations. Similar to the concerns of a worksharing loop a loop vectorized 
+with a SIMD construct must assure that temporary and reduction variables are 
+privatized and declared as reductions with clauses.  The example below 
+illustrates the use of \code{private} and \code{reduction} clauses in a SIMD 
+construct.
+
+\cexample[4.0]{SIMD}{3}
+
+\ffreeexample[4.0]{SIMD}{3}
+
+
+%\pagebreak
+\index{clauses!safelen@\code{safelen}}
+\index{safelen clause@\code{safelen} clause}
+A \code{safelen(N)} clause in a \code{simd} construct assures the compiler that 
+there are no loop-carried dependencies for vectors of size \plc{N} or below. If 
+the \code{safelen} clause is not specified, then the default safelen value is 
+the number of loop iterations.
+ 
+The \code{safelen(16)} clause in the example below guarantees that the vector 
+code is safe for vectors up to and including size 16.  In the loop, \plc{m} can 
+be 16 or greater, for correct code execution.  If the value of \plc{m} is less 
+than 16, the behavior is undefined.
+
+\cexample[4.0]{SIMD}{4}
+
+\ffreeexample[4.0]{SIMD}{4}
+
+%\pagebreak
+\index{clauses!collapse@\code{collapse}}
+\index{collapse clause@\code{collapse} clause}
+The following SIMD construct instructs the compiler to collapse the \plc{i} and 
+\plc{j} loops into a single SIMD loop in which SIMD chunks are executed by 
+threads of the team. Within the workshared loop chunks of a thread, the SIMD 
+chunks are executed in the lanes of the vector units.
+
+\cexample[4.0]{SIMD}{5}
+
+\ffreeexample[4.0]{SIMD}{5}
+
+
+%%% section
+\section{\code{inbranch} and \code{notinbranch} Clauses}
+\label{sec:SIMD_branch}
+\index{clauses!inbranch@\code{inbranch}}
+\index{inbranch clause@\code{inbranch} clause}
+\index{clauses!notinbranch@\code{notinbranch}}
+\index{notinbranch clause@\code{notinbranch} clause}
+
+The following examples illustrate the use of the \code{declare} \code{simd} 
+directive with the \code{inbranch} and \code{notinbranch} clauses. The 
+\code{notinbranch} clause informs the compiler that the function \plc{foo} is 
+never called conditionally in the SIMD loop of the function \plc{myaddint}. On 
+the other hand, the \code{inbranch} clause for the function goo indicates that 
+the function is always called conditionally in the SIMD loop inside 
+the function \plc{myaddfloat}.
+
+\cexample[4.0]{SIMD}{6}
+
+\ffreeexample[4.0]{SIMD}{6}
+
+
+In the code below, the function \plc{fib()} is called in the main program and 
+also recursively called in the function \plc{fib()} within an \code{if} 
+condition. The compiler creates a masked vector version and a non-masked vector 
+version for the function \plc{fib()} while retaining the original scalar 
+version of the \plc{fib()} function.
+
+\cexample[4.0]{SIMD}{7}
+
+\ffreeexample[4.0]{SIMD}{7}
+
+
+
+%%% section
+\pagebreak
+\section{Loop-Carried Lexical Forward Dependence}
+\label{sec:SIMD_forward_dep}
+\index{dependences!loop-carried lexical forward}
+
+
+ The following example tests the restriction on an SIMD loop with the loop-carried lexical forward-dependence. This dependence must be preserved for the correct execution of SIMD loops.
+
+A loop can be vectorized even though the iterations are not completely independent when it has loop-carried dependences that are forward lexical dependences, indicated in the code below by the read of \plc{A[j+1]} and the write to \plc{A[j]} in C/C++ code (or \plc{A(j+1)} and \plc{A(j)} in Fortran). That is, the read of \plc{A[j+1]} (or \plc{A(j+1)} in Fortran) before the write to \plc{A[j]} (or \plc{A(j)} in Fortran) ordering must be preserved for each iteration in \plc{j} for valid SIMD code generation.
+
+This test assures that the compiler preserves the loop carried lexical forward-dependence for generating a correct SIMD code.
+
+\cexample[4.0]{SIMD}{8}
+
+\ffreeexample[4.0]{SIMD}{8}
+

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# call ../util/chk_tags.x to check tags in source codes
+
+BASE_DIR=$(dirname $0)
+UTIL_DIR=${BASE_DIR}/../util
+chk_tags=$UTIL_DIR/chk_tags.x
+CURR_DIR=$(pwd)
+
+cd $UTIL_DIR; make chk_tags.x; cd $CURR_DIR
+
+echo "Running $chk_tags ..."
+$chk_tags ${BASE_DIR}/../*/sources/* 2>&1 | tee -a chk_tags.log
+

@@ -1,0 +1,91 @@
+\pagebreak
+\section{\code{declare mapper} Directive}
+\label{sec:declare_mapper}
+\index{directives!declare mapper@\code{declare}~\code{mapper}}
+\index{declare mapper directive@\code{declare}~\code{mapper} directive}
+
+The following examples show how to use the \code{declare mapper}
+directive to prescribe a map for later use.
+It is also quite useful for pre-defining partitioned and nested 
+structure elements.
+
+In the first example the \code{declare mapper} directive specifies 
+that any structure of type \plc{myvec\_t} for which implicit data-mapping
+rules apply will be mapped according to its \code{map} clause.
+The variable \plc{v} is used for referencing the structure and its 
+elements within the \code{map} clause. 
+Within the \code{map} clause the \plc{v} variable specifies that all
+elements of the structure are to be mapped.  Additionally, the
+array section \plc{v.data[0:v.len]} specifies that the dynamic 
+storage for data is to be mapped. 
+
+Within the main program the \plc{s} variable is typed as \plc{myvec\_t}.
+Since the variable is found within the target region and the type has a mapping prescribed by
+a \code{declare mapper} directive, it will be automatically mapped according to its prescription: 
+full structure, plus the dynamic storage of the \plc{data} element. 
+
+%Note: By default the mapping is \code{tofrom}. 
+%The associated Fortran allocatable \plc{data} array is automatically mapped with the derived
+%type, it does not require an array section as in the C/C++ example.
+
+\cexample[5.0]{target_mapper}{1}
+
+\ffreeexample[5.0]{target_mapper}{1}
+
+%\pagebreak
+\index{mapping!deep copy}
+\index{map clause@\code{map} clause!mapper modifier@\code{mapper} modifier}
+\index{mapper modifier@\code{mapper} modifier}
+The next example illustrates the use of the \plc{mapper-identifier} and deep copy within a structure. 
+The structure, \plc{dzmat\_t},  represents a complex matrix, 
+with separate real (\plc{r\_m}) and imaginary (\plc{i\_m}) elements.
+Two map identifiers are created for partitioning the \plc{dzmat\_t} structure.
+
+For the C/C++ code the first identifier is named \plc{top\_id} and maps the top half of
+two matrices of type \plc{dzmat\_t}; while the second identifier, \plc{bottom\_id},
+maps the lower half of two matrices. 
+Each identifier is applied to a different \code{target} construct,
+as  \code{map(mapper(top\_id), tofrom: a,b)} 
+and \code{map(mapper(bottom\_id), tofrom: a,b)}.
+Each target offload is allowed to execute concurrently on two different devices 
+(\plc{0} and \plc{1}) through the \code{nowait} clause.
+%The OpenMP 5.1 \code{parallel masked} construct creates a region of two threads
+%for these \code{target} constructs, with a single thread (\plc{primary}) generator.
+
+The Fortran code uses the \plc{left\_id} and \plc{right\_id} map identifiers in the
+\code{map(mapper(left\_id),tofrom: a,b)} and \code{map(mapper(right\_id),tofrom: a,b)} map clauses.  
+The array sections for these left and right contiguous portions of the matrices 
+were defined previously in the \code{declare mapper} directive.
+
+Note, the \plc{is} and \plc{ie} scalars are firstprivate 
+by default for a target region, but are declared firstprivate anyway
+to remind the user of important firstprivate data-sharing properties required here.
+
+\cexample[5.1]{target_mapper}{2}
+
+\ffreeexample[5.1]{target_mapper}{2}
+
+%\pagebreak
+In the third example \plc{myvec} structures are
+nested within a \plc{mypoints} structure. The \plc{myvec\_t} type is mapped
+as in the first example.  Following the \plc{mypoints} structure declaration, 
+the \plc{mypoints\_t} type is mapped by a \code{declare mapper} directive. 
+For this structure the \plc{hostonly\_data} element will not be mapped;
+also the array section of \plc{x} (\plc{v.x[:1]}) and \plc{x} will be mapped; and
+\plc{scratch} will be allocated and used as scratch storage on the device.
+The default map-type mapping, \code{tofrom}, applies to the \plc{x} array section,
+but not to \plc{scratch} which is explicitly mapped with the \code{alloc} map-type. 
+Note: the variable \plc{v} is not included in the map list (otherwise
+the \plc{hostonly\_data} would be mapped)-- just the elements 
+to be mapped are listed.
+
+The two mappers are combined when a \plc{mypoints\_t} structure type is mapped,
+because the mapper \plc{myvec\_t} structure type is used within a \plc{mypoints\_t}
+type structure.
+%Note, in the main program \plc{P} is an array of \plc{mypoints\_t} type structures, 
+%and hence every element of the array is mapped with the mapper prescription.
+
+\cexample[5.0]{target_mapper}{3}
+
+\ffreeexample[5.0]{target_mapper}{3}
+

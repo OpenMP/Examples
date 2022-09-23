@@ -1,0 +1,25 @@
+\pagebreak
+\section{\code{critical} Construct}
+\label{sec:critical}
+\index{constructs!critical@\code{critical}}
+\index{critical construct@\code{critical} construct}
+\index{critical construct@\code{critical} construct!hint clause@\code{hint} clause}
+\index{clauses!hint@\code{hint}}
+\index{hint clause@\code{hint} clause}
+
+The following example includes several \code{critical} constructs. The example 
+illustrates a queuing model in which a task is dequeued and worked on. To guard 
+against multiple threads dequeuing the same task, the dequeuing operation must 
+be in a \code{critical} region. Because the two queues in this example are independent, 
+they are protected by \code{critical} constructs with different names, \plc{xaxis} 
+and \plc{yaxis}.
+
+\cexample{critical}{1}
+
+\fexample{critical}{1}
+
+The following example extends the previous example by adding the \code{hint} clause to the \code{critical} constructs.
+
+\cexample[5.0]{critical}{2}
+
+\fexample[5.0]{critical}{2}

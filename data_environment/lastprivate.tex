@@ -1,0 +1,28 @@
+\pagebreak
+\section{\code{lastprivate} Clause}
+\label{sec:lastprivate}
+\index{clauses!lastprivate@\code{lastprivate}}
+\index{lastprivate clause@\code{lastprivate} clause}
+
+Correct execution sometimes depends on the value that the last iteration of a loop 
+assigns to a variable. Such programs must list all such variables in a \code{lastprivate} 
+clause  so that the values of the variables are the same as when the loop is executed 
+sequentially.
+
+\cexample{lastprivate}{1}
+
+\fexample{lastprivate}{1}
+
+\clearpage
+\index{lastprivate clause@\code{lastprivate} clause!conditional modifier@\code{conditional} modifier}
+\index{conditional modifier@\code{conditional} modifier}
+The next example illustrates the use of the \code{conditional} modifier in
+a \code{lastprivate} clause to return the last value when it may not come from
+the last iteration of a loop.
+That is, users can preserve the serial equivalence semantics of the loop.
+The conditional lastprivate ensures the final value of the variable after the loop 
+is as if the loop iterations were executed in a sequential order.
+
+\cexample[5.0]{lastprivate}{2}
+
+\ffreeexample[5.0]{lastprivate}{2}

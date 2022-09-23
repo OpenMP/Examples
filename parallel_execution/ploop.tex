@@ -1,0 +1,22 @@
+\pagebreak
+\section{A Simple Parallel Loop}
+\label{sec:ploop}
+\index{combined constructs!parallel worksharing-loop}
+\index{constructs!parallel@\code{parallel}}
+\index{parallel construct@\code{parallel} construct}
+\index{worksharing-loop constructs!for@\code{for}}
+\index{worksharing-loop constructs!do@\code{do}}
+\index{constructs!for@\code{for}}
+\index{constructs!do@\code{do}}
+\index{for construct@\code{for} construct}
+\index{do construct@\code{do} construct}
+
+The following example demonstrates how to parallelize a simple loop 
+using the parallel worksharing-loop
+construct. The loop iteration variable is private by default, so it is not 
+necessary to specify it explicitly in a \code{private} clause.
+
+\cexample{ploop}{1}
+
+\fexample{ploop}{1}
+

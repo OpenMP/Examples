@@ -1,0 +1,175 @@
+\pagebreak
+\section{\code{target} Construct}
+\label{sec:target}
+
+\subsection{\code{target} Construct on \code{parallel} Construct}
+\label{subsec:target_parallel}
+\index{constructs!target@\code{target}}
+\index{target construct@\code{target} construct}
+\index{target construct@\code{target} construct!implicit mapping}
+
+This following example shows how the \code{target} construct offloads a code 
+region to a target device. The variables \plc{p}, \plc{v1}, \plc{v2}, and \plc{N} are implicitly mapped 
+to the target device.
+
+\cexample[4.0]{target}{1}
+
+\ffreeexample[4.0]{target}{1}
+
+\subsection{\code{target} Construct with \code{map} Clause}
+\label{subsec:target_map}
+\index{target construct@\code{target} construct!map clause@\code{map} clause}
+\index{clauses!map@\code{map}}
+\index{map clause@\code{map} clause}
+
+This following example shows how the \code{target} construct offloads a code 
+region to a target device. The variables \plc{p}, \plc{v1} and \plc{v2} are explicitly mapped to the 
+target device using the \code{map} clause. The variable \plc{N} is implicitly mapped to 
+the target device.
+
+\cexample[4.0]{target}{2}
+
+\ffreeexample[4.0]{target}{2}
+
+\subsection{\code{map} Clause with \code{to}/\code{from} map-types}
+\label{subsec:target_map_tofrom}
+\index{map clause@\code{map} clause!to map-type@\code{to} map-type}
+\index{map clause@\code{map} clause!from map-type@\code{from} map-type}
+
+The following example shows how the \code{target} construct offloads a code region 
+to a target device. In the \code{map} clause, the \code{to} and \code{from} 
+map-types define the mapping between the original (host) data and the target (device) 
+data. The \code{to} map-type specifies that the data will only be read on the 
+device, and the \code{from} map-type specifies that the data will only be written 
+to on the device. By specifying a guaranteed access on the device, data transfers 
+can be reduced for the \code{target} region.
+
+The \code{to} map-type indicates that at the start of the \code{target} region 
+the variables \plc{v1} and \plc{v2} are initialized with the values of the corresponding variables 
+on the host device, and at the end of the \code{target} region the variables 
+\plc{v1} and \plc{v2} are not assigned to their corresponding variables on the host device.
+
+The \code{from} map-type indicates that at the start of the \code{target} region 
+the variable \plc{p} is not initialized with the value of the corresponding variable 
+on the host device, and at the end of the \code{target} region the variable \plc{p} 
+is assigned to the corresponding variable on the host device.
+
+\cexample[4.0]{target}{3}
+
+The \code{to} and \code{from} map-types allow programmers to optimize data 
+motion. Since data for the \plc{v} arrays are not returned, and data for the \plc{p} array 
+are not transferred to the device, only one-half of the data is moved, compared 
+to the default behavior of an implicit mapping.
+
+\ffreeexample[4.0]{target}{3}
+
+\subsection{\code{map} Clause with Array Sections}
+\label{subsec:target_array_section}
+\index{map clause@\code{map} clause!array sections in}
+
+The following example shows how the \code{target} construct offloads a code region 
+to a target device. In the \code{map} clause, map-types are used to optimize 
+the mapping of variables to the target device. Because variables \plc{p}, \plc{v1} and \plc{v2} are 
+pointers, array section notation must be used to map the arrays. The notation \code{:N} 
+is equivalent to \code{0:N}.
+
+\cexample[4.0]{target}{4}
+\clearpage
+
+In C, the length of the pointed-to array must be specified. In Fortran the extent 
+of the array is known and the length need not be specified. A section of the array 
+can be specified with the usual Fortran syntax, as shown in the following example. 
+The value 1 is assumed for the lower bound for array section \plc{v2(:N)}.
+
+\ffreeexample[4.0]{target}{4}
+
+A more realistic situation in which an assumed-size array is passed to \code{vec\_mult} 
+requires that the length of the arrays be specified, because the compiler does 
+not know the size of the storage. A section of the array must be specified with 
+the usual Fortran syntax, as shown in the following example. The value 1 is assumed 
+for the lower bound for array section \plc{v2(:N)}.
+
+\ffreeexample[4.0]{target}{4b}
+
+\subsection{\code{target} Construct with \code{if} Clause}
+\label{subsec:target_if}
+\index{target construct@\code{target} construct!if clause@\code{if} clause}
+\index{clauses!if@\code{if}}
+\index{if clause@\code{if} clause}
+
+The following example shows how the \code{target} construct offloads a code region 
+to a target device.
+
+The \code{if} clause on the \code{target} construct indicates that if the variable 
+\plc{N} is smaller than a given threshold, then the \code{target} region will be executed 
+by the host device.
+
+The \code{if} clause on the \code{parallel} construct indicates that if the 
+variable \plc{N} is smaller than a second threshold then the \code{parallel} region 
+is inactive.
+
+\cexample[4.0]{target}{5}
+
+\ffreeexample[4.0]{target}{5}
+
+The following example is a modification of the above \plc{target.5} code to show the combined \code{target}
+and parallel loop directives. It uses the \plc{directive-name} modifier in multiple \code{if}
+clauses to specify the component directive to which it applies. 
+
+The \code{if} clause with the \code{target} modifier applies to the \code{target} component of the 
+combined directive, and the \code{if} clause with the \code{parallel} modifier applies 
+to the \code{parallel} component of the combined directive.    
+
+\cexample[4.5]{target}{6}
+
+\ffreeexample[4.5]{target}{6}
+
+\subsection{Target Reverse Offload}
+\label{subsec:target_reverse_offload}
+\index{target reverse offload!reverse_offload clause@\scode{reverse_offload} clause}
+\index{target reverse offload!requires directive@\code{requires} directive}
+\index{requires directive@\code{requires} directive!reverse_offload clause@\scode{reverse_offload} clause}
+\index{directives!requires@\code{requires}}
+\index{clauses!reverse_offload@\scode{reverse_offload}}
+\index{reverse_offload clause@\scode{reverse_offload} clause}
+\index{target construct@\code{target} construct!device clause@\code{device} clause}
+\index{clauses!device@\code{device}}
+\index{device clause@\code{device} clause!ancestor modifier@\code{ancestor} modifier}
+\index{ancestor modifier@\code{ancestor} modifier}
+\index{declare target directive@\code{declare}~\code{target} directive!device_type clause@\scode{device_type} clause}
+\index{clauses!device_type@\scode{device_type}}
+\index{device_type clause@\scode{device_type} clause}
+\index{clauses!enter@\code{enter}}
+\index{enter clause@\code{enter} clause}
+
+\index{directives!declare target@\code{declare}~\code{target}}
+\index{declare target directive@\code{declare}~\code{target} directive}
+
+Beginning with OpenMP 5.0, implementations are allowed to
+offload back to the host (reverse offload).
+
+In the example below the \plc{error\_handler} function
+is executed back on the host, if an erroneous value is
+detected in the \plc{A} array on the device.
+
+This is accomplished by specifying the \plc{device-modifier}
+\code{ancestor} modifier, along with a device number of \code{1},
+to indicate that the execution is to be performed on the
+immediate parent (\plc{1st ancestor})-- the host.
+
+The \code{requires} directive (another 5.0 feature)
+uses the \code{reverse\_offload} clause to guarantee
+that the reverse offload is implemented.
+
+Note that the \code{declare}~\code{target} directive uses the
+\code{device\_type} clause (another 5.0 feature) to specify that
+the \plc{error\_handler} function is compiled to
+execute on the \plc{host} only. This ensures that no
+attempt will be made to create a device version of the
+function.  This feature may be necessary if the function
+exists in another compile unit.
+
+
+\cexample[5.2]{target_reverse_offload}{7}
+
+\ffreeexample[5.0]{target_reverse_offload}{7}

@@ -1,0 +1,188 @@
+\pagebreak
+\section{\code{target} \code{data} Construct}
+\label{sec:target_data}
+
+\subsection{Simple \code{target} \code{data} Construct}
+\label{subsec:target_data_simple}
+\index{constructs!target data@\code{target}~\code{data}}
+\index{target data construct@\code{target}~\code{data} construct}
+
+This example shows how the \code{target} \code{data} construct maps variables 
+to a device data environment. The \code{target} \code{data} construct creates 
+a new device data environment and maps the variables \plc{v1}, \plc{v2}, and \plc{p} to the new device 
+data environment. The \code{target} construct enclosed in the \code{target} 
+\code{data} region creates a new device data environment, which inherits the 
+variables \plc{v1}, \plc{v2}, and \plc{p} from the enclosing device data environment. The variable 
+\plc{N} is mapped into the new device data environment from the encountering task's data 
+environment.
+
+\cexample[4.0]{target_data}{1}
+
+\pagebreak
+The Fortran code passes a reference and specifies the extent of the arrays in the 
+declaration. No length information is necessary in the map clause, as is required 
+with C/C++ pointers.
+
+\ffreeexample[4.0]{target_data}{1}
+
+\subsection{\code{target} \code{data} Region Enclosing Multiple \code{target} Regions}
+\label{subsec:target_data_multiregion}
+
+The following examples show how the \code{target} \code{data} construct maps 
+variables to a device data environment of a \code{target} region. The \code{target} 
+\code{data} construct creates a device data environment and encloses \code{target} 
+regions, which have their own device data environments. The device data environment 
+of the \code{target} \code{data} region is inherited by the device data environment 
+of an enclosed \code{target} region. The \code{target} \code{data} construct 
+is used to create variables that will persist throughout the \code{target} \code{data} 
+region.
+
+In the following example the variables \plc{v1} and \plc{v2} are mapped at each \code{target} 
+construct. Instead of mapping the variable \plc{p} twice, once at each \code{target} 
+construct, \plc{p} is mapped once by the \code{target} \code{data} construct.
+
+\cexample[4.0]{target_data}{2}
+
+
+The Fortran code uses reference and specifies the extent of the \plc{p}, \plc{v1} and \plc{v2} arrays. 
+No length information is necessary in the \code{map} clause, as is required with 
+C/C++ pointers. The arrays \plc{v1} and \plc{v2} are mapped at each \code{target} construct. 
+Instead of mapping the array \plc{p} twice, once at each target construct, \plc{p} is mapped 
+once by the \code{target} \code{data} construct.
+
+\ffreeexample[4.0]{target_data}{2}
+
+\index{target data construct@\code{target}~\code{data} construct!map clause@\code{map} clause}
+\index{target construct@\code{target} construct!map clause@\code{map} clause}
+\index{target construct@\code{target} construct!implicit mapping}
+\index{map clause@\code{map} clause!tofrom map-type@\code{tofrom} map-type}
+In the following example, the array \plc{Q} is mapped once at the enclosing 
+\code{target}~\code{data} region instead of at each \code{target} construct. 
+In OpenMP 4.0, a scalar variable is implicitly mapped with the \code{tofrom} map-type.
+But since OpenMP 4.5, a scalar variable, such as the \plc{tmp} variable, has to be explicitly mapped with 
+the \code{tofrom} map-type at the first \code{target} construct in order to return 
+its reduced value from the parallel loop construct to the host.
+The variable defaults to firstprivate at the second \code{target} construct.
+
+\cexample[4.0]{target_data}{3}
+
+\ffreeexample[4.0]{target_data}{3}
+
+\subsection{\code{target} \code{data} Construct with Orphaned Call}
+
+The following two examples show how the \code{target} \code{data} construct 
+maps variables to a device data environment. The \code{target} \code{data} 
+construct's device data environment encloses the \code{target} construct's device 
+data environment in the function \code{vec\_mult()}.
+
+\index{map clause@\code{map} clause!alloc map-type@\code{alloc} map-type}
+When the type of the variable appearing in an array section is pointer, the pointer 
+variable and the storage location of the corresponding array section are mapped 
+to the device data environment. The pointer variable is treated as if it had appeared 
+in a \code{map} clause with a map-type of \code{alloc}. The array section's 
+storage location is mapped according to the map-type in the \code{map} clause 
+(the default map-type is \code{tofrom}).
+
+The \code{target} construct's device data environment inherits the storage locations 
+of the array sections \plc{v1[0:N]}, \plc{v2[:n]}, and \plc{p0[0:N]} from the enclosing \code{target}~\code{data}
+construct's device data environment. Neither initialization nor assignment is performed 
+for the array sections in the new device data environment.
+
+The pointer variables \plc{p1}, \plc{v3}, and \plc{v4} are mapped into the \code{target} construct's device 
+data environment with an implicit map-type of alloc and they are assigned the address 
+of the storage location associated with their corresponding array sections. Note 
+that the following pairs of array section storage locations are equivalent (\plc{p0[:N]}, 
+\plc{p1[:N]}), (\plc{v1[:N]},\plc{v3[:N]}), and (\plc{v2[:N]},\plc{v4[:N]}).
+
+\cexample[4.0]{target_data}{4}
+
+The Fortran code maps the pointers and storage in an identical manner (same extent, 
+but uses indices from 1 to \plc{N}).
+
+The \code{target} construct's device data environment inherits the storage locations 
+of the arrays \plc{v1}, \plc{v2} and \plc{p0} from the enclosing \code{target} \code{data} constructs's 
+device data environment. However, in Fortran the associated data of the pointer 
+is known, and the shape is not required.
+
+The pointer variables \plc{p1}, \plc{v3}, and \plc{v4} are mapped into the \code{target} construct's 
+device data environment with an implicit map-type of \code{alloc} and they are 
+assigned the address of the storage location associated with their corresponding 
+array sections. Note that the following pair of array storage locations are equivalent 
+(\plc{p0},\plc{p1}), (\plc{v1},\plc{v3}), and (\plc{v2},\plc{v4}).
+
+\ffreeexample[4.0]{target_data}{4}
+
+
+In the following example, the variables \plc{p1}, \plc{v3}, and \plc{v4} are references to the pointer 
+variables \plc{p0}, \plc{v1} and \plc{v2} respectively. The \code{target} construct's device data 
+environment inherits the pointer variables \plc{p0}, \plc{v1}, and \plc{v2} from the enclosing \code{target} 
+\code{data} construct's device data environment. Thus, \plc{p1}, \plc{v3}, and \plc{v4} are already 
+present in the device data environment.
+
+\cppexample[4.0]{target_data}{5}
+
+In the following example, the usual Fortran approach is used for dynamic memory. 
+The \plc{p0}, \plc{v1}, and \plc{v2} arrays are allocated in the main program and passed as references 
+from one routine to another. In \code{vec\_mult}, \plc{p1}, \plc{v3} and \plc{v4} are references to the 
+\plc{p0}, \plc{v1}, and \plc{v2} arrays, respectively. The \code{target} construct's device data 
+environment inherits the arrays \plc{p0}, \plc{v1}, and \plc{v2} from the enclosing target data construct's 
+device data environment. Thus, \plc{p1}, \plc{v3}, and \plc{v4} are already present in the device 
+data environment.
+
+\ffreeexample[4.0]{target_data}{5}
+
+\subsection{\code{target} \code{data} Construct with \code{if} Clause}
+\label{subsec:target_data_if}
+\index{target data construct@\code{target}~\code{data} construct!if clause@\code{if} clause}
+\index{clauses!if@\code{if}}
+\index{if clause@\code{if} clause}
+
+The following two examples show how the \code{target} \code{data} construct 
+maps variables to a device data environment.
+
+In the following example, the if clause on the \code{target} \code{data} construct 
+indicates that if the variable \plc{N} is smaller than a given threshold, then the \code{target} 
+\code{data} construct will not create a device data environment.
+
+The \code{target} constructs enclosed in the \code{target} \code{data} region 
+must also use an \code{if} clause on the same condition, otherwise the pointer 
+variable \plc{p} is implicitly mapped with a map-type of \code{tofrom}, but the storage 
+location for the array section \plc{p[0:N]} will not be mapped in the device data environments 
+of the \code{target} constructs.
+
+\cexample[4.0]{target_data}{6}
+
+\pagebreak
+The \code{if} clauses work the same way for the following Fortran code. The \code{target} 
+constructs enclosed in the \code{target} \code{data} region should also use 
+an \code{if} clause with the same condition, so that the \code{target} \code{data} 
+region and the \code{target} region are either both created for the device, or 
+are both ignored.
+
+\ffreeexample[4.0]{target_data}{6}
+
+\pagebreak
+In the following example, when the \code{if} clause conditional expression on 
+the \code{target} construct evaluates to \plc{false}, the target region will 
+execute on the host device. However, the \code{target} \code{data} construct 
+created an enclosing device data environment that mapped \plc{p[0:N]} to a device data 
+environment on the default device. At the end of the \code{target} \code{data} 
+region the array section \plc{p[0:N]} will be assigned from the device data environment 
+to the corresponding variable in the data environment of the task that encountered 
+the \code{target} \code{data} construct, resulting in undefined values in \plc{p[0:N]}.
+
+\cexample[4.0]{target_data}{7}
+
+\pagebreak
+The \code{if} clauses work the same way for the following Fortran code. When 
+the \code{if} clause conditional expression on the \code{target} construct 
+evaluates to \plc{false}, the \code{target} region will execute on the host 
+device. However, the \code{target} \code{data} construct created an enclosing 
+device data environment that mapped the \plc{p} array (and \plc{v1} and \plc{v2}) to a device data 
+environment on the default target device. At the end of the \code{target} \code{data} 
+region the \plc{p} array will be assigned from the device data environment to the corresponding 
+variable in the data environment of the task that encountered the \code{target} 
+\code{data} construct, resulting in undefined values in \plc{p}.
+
+\ffreeexample[4.0]{target_data}{7}
+

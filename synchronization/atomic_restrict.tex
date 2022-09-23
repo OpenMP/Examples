@@ -1,0 +1,27 @@
+\pagebreak
+\section{Restrictions on the \code{atomic} Construct}
+\label{sec:atomic_restrict}
+\index{constructs!atomic@\code{atomic}}
+\index{atomic construct@\code{atomic} construct}
+
+The following non-conforming examples illustrate the restrictions on the \code{atomic} 
+construct. 
+
+\cexample[3.1]{atomic_restrict}{1}
+
+\fexample[3.1]{atomic_restrict}{1}
+
+\cexample[3.1]{atomic_restrict}{2}
+
+\fortranspecificstart
+The following example is non-conforming because \code{I} and \code{R} reference 
+the same location but have different types.
+
+\fnexample[3.1]{atomic_restrict}{2}
+
+Although the following example might work on some implementations, this is also 
+non-conforming:
+
+\fnexample[3.1]{atomic_restrict}{3}
+\fortranspecificend
+

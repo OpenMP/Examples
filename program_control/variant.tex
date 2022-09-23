@@ -1,0 +1,88 @@
+\pagebreak
+\section{\code{declare}~\code{variant} Directive}
+\label{sec:declare_variant}
+\index{directives!declare variant@\code{declare}~\code{variant}}
+\index{declare variant directive@\code{declare}~\code{variant} directive}
+\index{declare variant directive@\code{declare}~\code{variant} directive!match clause@\code{match} clause}
+\index{clauses!match@\code{match}}
+\index{match clause@\code{match} clause}
+
+\index{directives!declare target@\code{declare}~\code{target}}
+\index{declare target directive@\code{declare}~\code{target} directive}
+
+\index{directives!begin declare target@\code{begin}~\code{declare}~\code{target}}
+\index{begin declare target directive@\code{begin}~\code{declare}~\code{target} directive}
+
+%A \code{declare variant} directive specifies that the following function is an alternate function, 
+%a \plc{function variant}, to be used in place of the specified \plc{base function} 
+%when the trait within the \code{match} clause has a valid context.
+
+A \code{declare}~\code{variant} directive specifies an alternate function, 
+\plc{function variant}, to be used in place of the \plc{base function} 
+%when the trait within the \code{match} clause has a valid context.
+when the trait within the \code{match} clause matches the OpenMP context at a given call site.
+The base function follows the directive in the C and C++ languages.
+In Fortran, either a subroutine or function may be used as the \plc{base function},
+and the \code{declare}~\code{variant} directive must be in the specification 
+part of a subroutine or function (unless a \plc{base-proc-name}
+modifier is used, as in the case of a procedure declaration statement). See
+the OpenMP 5.0 Specification for details on the modifier.
+
+When multiple \code{declare}~\code{variant} directives are used 
+a function variant becomes a candidate for replacing the base function if the
+%base function call context matches the traits of all selectors in the \code{match} clause.
+context at the base function call matches the traits of all selectors in the \code{match} clause.
+If there are multiple candidates, a score is assigned with rules for each
+of the selector traits. The scoring algorithm can be found in the OpenMP 5.0 Specification.
+
+In the first example the \plc{vxv()} function is called within a \code{parallel} region,
+a \code{target} region, and in a sequential part of the program.  Two function variants, \plc{p\_vxv()} and \plc{t\_vxv()},
+are defined for the first two regions by using \plc{parallel} and \plc{target} selectors (within
+the \plc{construct} trait set) in a \code{match} clause.  The \plc{p\_vxv()} function variant includes
+a \code{for} construct (\code{do} construct for Fortran) for the \code{parallel} region, 
+while \plc{t\_vxv()} includes a \code{distribute}~\code{simd} construct for the \code{target} region.
+The \plc{t\_vxv()} function is explicitly compiled for the device using a declare target directive.
+
+Since the two \code{declare}~\code{variant} directives have no selectors that match traits for the context
+of the base function call in the sequential part of the program, the base \plc{vxv()} function is used there, 
+as expected.
+(The vectors in the \plc{p\_vxv} and \plc{t\_vxv} functions have been multiplied
+by 3 and 2, respectively, for checking the validity of the replacement. Normally
+the purpose of a function variant is to produce the same results by a different method.)
+
+%Note: a \code{target teams} construct is used to direct execution onto a device, with a
+%\code{distribute simd} construct in the function variant. As of the OpenMP 5.0 implementation
+%no intervening code is allowed between a \code{target} and \code{teams} construct. So
+%using a \code{target} construct to direct execution onto a device, and including 
+%\code{teams distribute simd} in the variant function would produce non conforming code.
+
+%\pagebreak
+\cexample[5.1]{declare_variant}{1}
+
+\ffreeexample[5.0]{declare_variant}{1}
+
+
+%\pagebreak
+
+In this example, traits from the \plc{device} set are used to select a function variant.
+In the \code{declare}~\code{variant} directive, an \plc{isa} selector
+specifies that if the implementation of the ``\plc{core-avx512}'' 
+instruction set is detected at compile time the \plc{avx512\_saxpy()}
+variant function is used for the call to \plc{base\_saxpy()}.  
+
+A compilation of \plc{avx512\_saxpy()} is aware of
+the AVX-512 instruction set that supports 512-bit vector extensions (for Xeon or Xeon Phi architectures). 
+Within \plc{avx512\_saxpy()}, the \code{parallel}~\code{for}~\code{simd} construct performs parallel execution, and
+takes advantage of 64-byte data alignment. 
+When the \plc{avx512\_saxpy()} function variant is not selected, the base \plc{base\_saxpy()} function variant
+containing only a basic \code{parallel}~\code{for} construct is used for the call to \plc{base\_saxpy()}.
+
+%Note:
+%An allocator is used to set the alignment to 64 bytes when an OpenMP compilation is performed.  
+%Details about allocator variable declarations and functions
+%can be found in the allocator example of the Memory Management Chapter.
+
+%\pagebreak
+\cexample[5.0]{declare_variant}{2}
+
+\ffreeexample[5.0]{declare_variant}{2}

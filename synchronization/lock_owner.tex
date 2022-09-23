@@ -1,0 +1,24 @@
+\subsection{Ownership of Locks}
+\label{subsec:lock_owner}
+
+\index{routines!omp_unset_lock@\scode{omp_unset_lock}}
+\index{omp_unset_lock routine@\scode{omp_unset_lock} routine}
+Ownership of locks has changed since OpenMP 2.5. In OpenMP 2.5, locks are owned 
+by threads; so a lock released by the \code{omp\_unset\_lock} routine must be 
+owned by the same thread executing the routine.  Beginning with OpenMP 3.0, locks are owned 
+by task regions; so a lock released by the \code{omp\_unset\_lock} routine in 
+a task region must be owned by the same task region.
+
+This change in ownership requires extra care when using locks. The following program 
+is conforming in OpenMP 2.5 because the thread that releases the lock \code{lck} 
+in the parallel region is the same thread that acquired the lock in the sequential 
+part of the program (primary thread of parallel region and the initial thread are 
+the same). However, it is not conforming beginning with OpenMP 3.0, because the task 
+region that releases the lock \code{lck} is different from the task region that 
+acquires the lock.
+
+\cexample[5.1]{lock_owner}{1}
+
+\fexample[5.1]{lock_owner}{1}
+
+

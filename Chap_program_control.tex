@@ -1,17 +1,26 @@
-\pagebreak
-\chapter{Program Control}
-\label{sec:program_control}
+\cchapter{Program Control}{program_control}
+\label{chap:program_control}
 
-Some specific and elementary concepts of controlling program execution are
-illustrated in the examples of this chapter.  Control can be directly
-managed with conditional control code (ifdef's with the \code{\_OPENMP} 
-macro, and the Fortran sentinel (\code{!\$}) 
-for conditionally compiling). The \code{if} clause on some constructs
+Basic concepts and mechanisms for directing and controlling a program compilation and execution
+are provided in this introduction and illustrated in subsequent examples.
+
+\bigskip
+CONDITIONAL COMPILATION and EXECUTION
+
+Conditional compilation can be performed with conventional \#ifdef directives
+in C, C++, and Fortran, and additionally with OpenMP sentinel (\code{!\$}) in Fortran. 
+The \code{if} clause on some directives
 can direct the runtime to ignore or alter the behavior of the construct.
-Of course, the base-language \code{if} statements can be used to control the "execution" 
+Of course, the base-language \code{if} statements can be used to control the execution
 of stand-alone directives (such as \code{flush}, \code{barrier}, \code{taskwait}, 
 and  \code{taskyield}).
-However, the directives must appear in a block structure, and not as a substatement as shown in examples 1 and 2 of this chapter.
+However, the directives must appear in a block structure, and not as a substatement.
+The \code{metadirective} and \code{declare}~\code{variant} directives provide conditional 
+selection of directives and routines for compilation (and use), respectively.
+The \code{assume} and \code{requires} directives provide invariants
+for optimizing compilation, and essential features for compilation 
+and correct execution, respectively.
+
 
 \bigskip
 CANCELLATION
@@ -28,15 +37,15 @@ The \code{cancel} construct is also a cancellation point for any other thread of
 to also continue execution at the end of the named region.  
 
 Also, once the specified region has been activated for cancellation any thread that encounnters 
-a \code{cancellation point} construct with the same named region (\plc{construct-type-clause}),
+a \code{cancellation}~\code{point} construct with the same named region (\plc{construct-type-clause}),
 continues execution at the end of the region.
 
 For an activated \code{cancel taskgroup} construct, the tasks that
 belong to the taskgroup set of the innermost enclosing taskgroup region will be canceled. 
 
-A task that encounters the cancel taskgroup construct continues execution at the end of its
+A task that encounters a \code{cancel}~\code{taskgroup} construct continues execution at the end of its
 task region. Any task of the taskgroup that has already begun execution will run to completion,
-unless it encounters a \code{cancellation point}; tasks that have not begun execution "may" be
+unless it encounters a \code{cancellation}~\code{point}; tasks that have not begun execution may be
 discarded as completed tasks.
 
 \bigskip
@@ -44,9 +53,10 @@ CONTROL VARIABLES
 
   Internal control variables (ICV) are used by implementations to hold values which control the execution
   of OpenMP regions.  Control (and hence the ICVs) may be set as implementation defaults, 
-  or set and adjusted through environment variables, clauses, and API functions.  Many of the ICV control
-  values are accessible through API function calls.  Also, initial ICV values are reported by the runtime
-  if the \code{OMP\_DISPLAY\_ENV} environment variable has been set to \code{TRUE}. 
+  or set and adjusted through environment variables, clauses, and API functions.  
+ %Many of the ICV control values are accessible through API function calls.  
+  Initial ICV values are reported by the runtime
+  if the \code{OMP\_DISPLAY\_ENV} environment variable has been set to \code{TRUE} or \code{VERBOSE}. 
 
  %As an example, the \plc{nthreads-var} is the ICV that holds the number of threads
  %to be used in a \code{parallel} region.  It can be set with the \code{OMP\_NUM\_THREADS} environment variable, 
@@ -59,9 +69,9 @@ CONTROL VARIABLES
 \bigskip
 NESTED CONSTRUCTS
 
-Certain combinations of nested constructs are permitted, giving rise to a \plc{combined} construct
-consisting of two or more constructs.  These can be used when the two (or several) constructs would be used
-immediately in succession (closely nested). A combined construct can use the clauses of the component
+Certain combinations of nested constructs are permitted, giving rise to \plc{combined} constructs
+consisting of two or more directives.  These can be used when the two (or several) constructs would be used
+immediately in succession (closely nested). A \plc{combined} construct can use the clauses of the component
 constructs without restrictions.
 A \plc{composite} construct is a combined construct which has one or more clauses with (an often obviously)
 modified or restricted meaning, relative to when the constructs are uncombined. %%[appear separately (singly).
@@ -72,14 +82,33 @@ modified or restricted meaning, relative to when the constructs are uncombined. 
 %the parallel loop constructs and the \code{SIMD} construct), because the \code{collapse} clause must
 %explicitly address the ordering of loop chunking \plc{and} SIMD "combined" execution.
 
-Certain nestings are forbidden, and often the reasoning is obvious.  Worksharing constructs cannot be nested, and
+Certain nestings are forbidden, and often the reasoning is obvious.  For example, worksharing constructs cannot be nested, and
 the \code{barrier} construct cannot be nested inside a worksharing construct, or a \code{critical} construct. 
-Also, \code{target} constructs cannot be nested.  
+Also, \code{target} constructs cannot be nested, unless the nested target is a reverse offload.
 
-The \code{parallel} construct can be nested, as well as the \code{task} construct.  The parallel
-execution in the nested \code{parallel} construct(s) is control by the \code{OMP\_NESTED} and 
-\code{OMP\_MAX\_ACTIVE\_LEVELS} environment variables, and the \code{omp\_set\_nested()} and 
-\code{omp\_set\_max\_active\_levels()} functions.
+The \code{parallel} construct can be nested, as well as the \code{task} construct.  
+The parallel execution in the nested parallel construct(s) is controlled by the 
+\code{OMP\_MAX\_ACTIVE\_LEVELS} environment variable, and the \code{omp\_set\_max\_active\_levels} routine. 
+Use the \code{omp\_get\_max\_active\_levels} routine to determine the maximum levels provided by an implementation.
+As of OpenMP 5.0, use of the \code{OMP\_NESTED} environment variable and the \code{omp\_set\_nested} routine 
+has been deprecated.
 
 More details on nesting can be found in the \plc{Nesting of Regions} of the \plc{Directives} 
 chapter in the OpenMP Specifications document.
+
+
+%===== Examples Sections =====
+\input{program_control/cond_comp}
+\input{program_control/icv}
+\input{program_control/standalone}
+\input{program_control/cancellation}
+\input{program_control/requires}
+\input{program_control/variant}
+\input{program_control/metadirective}
+\input{program_control/nested_loop}
+\input{program_control/nesting_restrict}
+\input{program_control/target_offload}
+\input{program_control/reproducible}
+\input{program_control/interop}
+\input{program_control/utilities}
+

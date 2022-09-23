@@ -1,0 +1,60 @@
+\pagebreak
+\section{\code{depobj} Construct}
+\label{sec:depobj}
+\index{constructs!depobj@\code{depobj}}
+\index{depobj construct@\code{depobj} construct}
+\index{depobj construct@\code{depobj} construct!depend clause@\code{depend} clause}
+\index{depend clause@\code{depend} clause}
+\index{clauses!depend@\code{depend}}
+
+The stand-alone \code{depobj} construct provides a mechanism 
+to create a \plc{depend object} that expresses a dependence to be 
+used subsequently in the \code{depend} clause of another construct.
+The dependence is created from a dependence type and a storage location,
+within a \code{depend} clause of an \code{depobj} construct; 
+%just as one would find directly on a \code{task} construct.  
+and it is stored in the depend object.
+The depend object is represented by a variable of type \code{omp\_depend\_t} 
+in C/C++ (by a scalar variable of integer kind \code{omp\_depend\_kind} in Fortran).
+
+\index{depobj construct@\code{depobj} construct!update clause@\code{update} clause}
+\index{update clause@\code{update} clause}
+\index{clauses!update@\code{update}}
+\index{depobj construct@\code{depobj} construct!destroy clause@\code{destroy} clause}
+\index{destroy clause@\code{destroy} clause}
+\index{clauses!destroy@\code{destroy}}
+In the example below the stand-alone \code{depobj} construct uses the 
+\code{depend}, \code{update} and \code{destroy} clauses to 
+\plc{initialize}, \plc{update} and \plc{uninitialize}
+a depend object (\code{obj}).
+
+The first \code{depobj} construct initializes the \code{obj} 
+depend object with 
+an \code{inout} dependence type with a storage 
+location defined by variable \code{a}.  
+This dependence is passed into the \plc{driver} 
+routine via the \code{obj} depend object.
+
+In the first \plc{driver} routine call, \emph{Task 1} uses
+the dependence of the object (\code{inout}), 
+while \emph{Task 2} uses an \code{in} dependence specified 
+directly in a \code{depend} clause.
+For these task dependences \emph{Task 1} must execute and 
+complete before \emph{Task 2} begins.
+
+Before the second call to \plc{driver}, \code{obj} is updated 
+using the \code{depobj} construct to represent an \code{in} dependence. 
+Hence, in the second call to \plc{driver}, \emph{Task 1}
+will have an \code{in} dependence; and \emph{Task 1} and 
+\emph{Task 2} can execute simultaneously. Note: in an \code{update}
+clause, only the dependence type can be (is) updated.
+
+The third \code{depobj} construct uses the \code{destroy} clause.
+It frees resources as it puts the depend object in an uninitialized state--
+effectively destroying the depend object.
+After an object has been uninitialized it can be initialized again
+with a new dependence type \emph{and} a new variable.
+
+\cexample[5.2]{depobj}{1}
+
+\ffreeexample[5.2]{depobj}{1}

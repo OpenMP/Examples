@@ -1,0 +1,21 @@
+\bchapter{Deprecated Features}
+\label{chap:deprecated_features}
+
+Deprecation of features began in OpenMP 5.0. 
+Examples that use a deprecated feature have been updated with an equivalent replacement feature.  
+
+Deprecations affecting examples are the following:
+\begin{description}[labelindent=5mm,font=\normalfont]
+\item[5.1] -- \ \scode{masked} construct          replaces \scode{master} construct.
+\item[5.1] -- \ \scode{primary} affinity policy   replaces \scode{master} affinity policy.
+\item[5.0] -- \ \scode{omp_sync_hint_*} constants replace  \scode{omp_lock_hint_*} constants.
+\end{description}
+
+These replacements appear in examples that illustrate, otherwise, earlier features.
+When using a compiler that is compliant with a version prior to 
+the indicated version, the earlier form of
+an example is restored by a C-style conditional compilation using the \scode{_OPENMP} macro.
+
+Since Fortran compilers do not preprocess codes by default, a Fortran preprocessor
+flag will be required to compile Fortran examples with the C-style conditional 
+compilation statements.

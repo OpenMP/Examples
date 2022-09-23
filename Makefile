@@ -1,24 +1,30 @@
 # Makefile for the OpenMP Examples document in LaTex format. 
-# For more information, see the master document, openmp-examples.tex.
+# For more information, see the main document, openmp-examples.tex.
 
-version=5.0.1
+version=5.2
 default: openmp-examples.pdf
 diff: openmp-diff-abridged.pdf
 
+book: BOOK_BUILD="\\\\def\\\\bookbuild{1}"
+book: clean openmp-examples.pdf
+	cp openmp-examples-${version}.pdf openmp-examples-${version}-book.pdf
 
 CHAPTERS=Title_Page.tex \
 	Foreword_Chapt.tex \
-	Introduction_Chapt.tex \
-	Examples_*.tex \
-	History.tex
+	Chap_*.tex \
+	Deprecated_Features.tex \
+	History.tex \
+	*/*.tex
 
-SOURCES=sources/*.c \
-	sources/*.cpp \
-	sources/*.f90 \
-	sources/*.f 
+SOURCES=*/sources/*.c \
+	*/sources/*.cpp \
+	*/sources/*.f90 \
+	*/sources/*.f 
 
 INTERMEDIATE_FILES=openmp-examples.pdf \
 		openmp-examples.toc \
+		openmp-examples.lof \
+		openmp-examples.lot \
 		openmp-examples.idx \
 		openmp-examples.aux \
 		openmp-examples.ilg \
@@ -26,20 +32,30 @@ INTERMEDIATE_FILES=openmp-examples.pdf \
 		openmp-examples.out \
 		openmp-examples.log
 
+LATEXCMD=pdflatex -interaction=batchmode -file-line-error
+LATEXDCMD=$(LATEXCMD) -draftmode
+
 # check for branches names with "name_XXX"
 DIFF_TICKET_ID=$(shell git rev-parse --abbrev-ref HEAD)
 
-openmp-examples.pdf: $(CHAPTERS) $(SOURCES) openmp.sty openmp-examples.tex openmp-logo.png
+openmp-examples.pdf: $(CHAPTERS) $(SOURCES) openmp.sty openmp-examples.tex openmp-logo.png generated-include.tex
 	rm -f $(INTERMEDIATE_FILES)
-	pdflatex -interaction=batchmode -file-line-error openmp-examples.tex
-	pdflatex -interaction=batchmode -file-line-error openmp-examples.tex
-	pdflatex -interaction=batchmode -file-line-error openmp-examples.tex
+	touch generated-include.tex
+	$(LATEXDCMD) openmp-examples.tex
+	makeindex -s openmp-index.ist openmp-examples.idx
+	$(LATEXDCMD) openmp-examples.tex
+	$(LATEXCMD) openmp-examples.tex
 	cp openmp-examples.pdf openmp-examples-${version}.pdf
 
 clean:
 	rm -f $(INTERMEDIATE_FILES)
+	rm -f generated-include.tex
 	rm -f openmp-diff-full.pdf openmp-diff-abridged.pdf
 	rm -rf *.tmpdir
+	cd util; make clean
+
+realclean: clean
+	rm -f openmp-examples-${version}.pdf openmp-examples-${version}-book.pdf
 
 ifdef DIFF_TO
     VC_DIFF_TO := -r ${DIFF_TO}
@@ -49,11 +65,11 @@ endif
 ifdef DIFF_FROM
     VC_DIFF_FROM := -r ${DIFF_FROM}
 else
-    VC_DIFF_FROM := -r master
+    VC_DIFF_FROM := -r work_5.2
 endif
 
 DIFF_TO:=HEAD
-DIFF_FROM:=master
+DIFF_FROM:=work_5.2
 DIFF_TYPE:=UNDERLINE
 
 COMMON_DIFF_OPTS:=--math-markup=whole  \
@@ -64,8 +80,16 @@ VC_DIFF_OPTS:=${COMMON_DIFF_OPTS} --force -c latexdiff.cfg --flatten --type="${D
 
 VC_DIFF_MINIMAL_OPTS:= --only-changes --force
 
+generated-include.tex:
+	echo "$(BOOK_BUILD)"
+	echo "$(BOOK_BUILD)" > $@
+
 %.tmpdir: $(wildcard *.sty) $(wildcard *.png) $(wildcard *.aux) openmp-examples.pdf
 	mkdir -p $@/sources
+	for i in affinity devices loop_transformations parallel_execution SIMD tasking \
+		 data_environment memory_model program_control synchronization \
+		 directives ompt_interface;  do \
+	  mkdir -p $@/$$i; ln -sf "$$PWD"/$$i/sources $@/$$i/sources; done
 	mkdir -p $@/figs
 	cp -f $^ "$@/"
 	cp -f sources/* "$@/sources"
@@ -81,3 +105,5 @@ openmp-diff-minimal.pdf: diffs-slow-minimal.tmpdir
 	env PATH="$(shell pwd)/util/latexdiff:$(PATH)" latexdiff-vc ${VC_DIFF_MINIMAL_OPTS} -d $< ${VC_DIFF_OPTS} openmp-examples.tex
 	cp $</openmp-examples.pdf $@
 	if [ "x$(DIFF_TICKET_ID)" != "x" ]; then cp $@ ${@:.pdf=-$(DIFF_TICKET_ID).pdf}; fi
+
+.PHONY: diff default book clean realclean

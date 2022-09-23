@@ -1,0 +1,104 @@
+\subsection{User-Defined Reduction}
+\label{subsec:UDR}
+\index{reductions!user-defined}
+\index{reductions!declare reduction directive@\code{declare}~\code{reduction} directive}
+\index{declare reduction directive@\code{declare}~\code{reduction} directive}
+\index{directives!declare reduction@\code{declare}~\code{reduction}}
+\index{declare reduction directive@\code{declare}~\code{reduction} directive!initializer clause@\code{initializer} clause}
+\index{declare reduction directive@\code{declare}~\code{reduction} directive!combiner}
+\index{declare reduction directive@\code{declare}~\code{reduction} directive!OpenMP variable identifiers}
+\index{OpenMP variable identifiers!omp_in@\scode{omp_in}}
+\index{OpenMP variable identifiers!omp_out@\scode{omp_out}}
+\index{OpenMP variable identifiers!omp_priv@\scode{omp_priv}}
+\index{combiner}
+\index{clauses!initializer@\code{initializer}}
+\index{initializer clause@\code{initializer} clause}
+
+The \code{declare}~\code{reduction} directive can be used to specify 
+user-defined reductions (UDR) for user data types.
+
+%The following examples show how user-defined reductions can be used to support user data types in the \code{reduction} clause.
+
+%The following example computes the enclosing rectangle of a set of points. The point data structure (\code{struct}~\code{point}) is not supported by the \code{reduction} clause. Using two \code{declare}~\code{reduction} directives we define how a reduction for the point data structure is done for the \plc{min} and \plc{max} operations. Each \code{declare}~\code{reduction} directive calls the appropriate function that passes the two special variables that can be used in the user-defined reduction expression: \code{omp\_in}, which holds one of the two values to reduce, and \code{omp\_out}, which holds the other value and should hold also the result of the reduction once the expression has been executed. Note, also, that when defining the user-defined reduction for \plc{min} we specify how the private variables of each thread are to be initialized (that is, the neutral value). This is not the case for \plc{max} as the default values (that is, zero filling) are already adequate.
+
+
+In the following example, \code{declare}~\code{reduction} directives are used to define
+\plc{min} and \plc{max} operations for the \plc{point} data structure for computing
+the rectangle that encloses a set of 2-D points.
+
+Each \code{declare}~\code{reduction} directive defines new reduction identifiers,
+\plc{min} and \plc{max}, to be used in a \code{reduction} clause. The next item in the
+declaration list is the data type (\plc{struct} \plc{point}) used in the reduction,
+followed by the combiner, here the functions \plc{minproc} and \plc{maxproc} perform
+the min and max operations, respectively, on the user data (of type \plc{struct} \plc{point}).
+In the function argument list are two special OpenMP variable identifiers, \code{omp\_in} and \code{omp\_out},
+that denote the two values to be combined in the "real" function;
+the \code{omp\_out} identifier indicates which one is to hold the result.
+
+The initializer of the \code{declare}~\code{reduction} directive specifies
+the initial value for the private variable of each implicit task.
+The \code{omp\_priv} identifier is used to denote the private variable.
+
+\cexample[4.0]{udr}{1}
+%\clearpage
+
+The following example shows the corresponding code in Fortran. 
+The \code{declare}~\code{reduction} directives are specified as part of 
+the declaration in subroutine \plc{find\_enclosing\_rectangle} and 
+the procedures that perform the min and max operations are specified as subprograms.
+
+\ffreeexample[4.0]{udr}{1}
+
+
+The following example shows the same computation as \plc{udr.1} but it illustrates that you can craft complex expressions in the user-defined reduction declaration. In this case, instead of calling the \plc{minproc} and \plc{maxproc} functions we inline the code in a single expression.
+
+\cexample[4.0]{udr}{2}
+
+The corresponding code of the same example in Fortran is very similar
+except that the assignment expression in the \code{declare}~\code{reduction}
+directive can only be used for a single variable, in this case through
+a type structure constructor \plc{point($\ldots$)}.
+
+\ffreeexample[4.0]{udr}{2}
+
+
+\index{OpenMP variable identifiers!omp_orig@\scode{omp_orig}}
+The following example shows the use of special variables in arguments for combiner (\code{omp\_in} and \code{omp\_out}) and initializer (\code{omp\_priv} and \code{omp\_orig}) routines.  This example returns the maximum value of an array and the corresponding index value. The \code{declare}~\code{reduction} directive specifies a user-defined reduction operation \plc{maxloc} for data type \plc{struct} \plc{mx\_s}. The function \plc{mx\_combine} is the combiner and the function \plc{mx\_init} is the initializer.
+
+\cexample[4.0]{udr}{3}
+
+Below is the corresponding Fortran version of the above example.  The \code{declare}~\code{reduction} directive specifies the user-defined operation \plc{maxloc} for user-derived type \plc{mx\_s}.  The combiner \plc{mx\_combine} and the initializer \plc{mx\_init} are specified as subprograms.
+
+\ffreeexample[4.0]{udr}{3}
+
+
+The following example explains a few details of the user-defined reduction 
+in Fortran through modules. The \code{declare}~\code{reduction} directive is declared in a module (\plc{data\_red}). 
+The reduction-identifier \plc{.add.} is a user-defined operator that is
+to allow accessibility in the scope that performs the reduction
+operation.
+The user-defined operator \plc{.add.} and the subroutine \plc{dt\_init} specified in the \code{initializer} clause are defined in the same subprogram.
+
+The reduction operation (that is, the \code{reduction} clause) is in the main program.
+The reduction identifier \plc{.add.} is accessible by use association.
+Since \plc{.add.} is a user-defined operator, the explicit interface
+should also be accessible by use association in the current
+program unit.
+Since the \code{declare}~\code{reduction} associated to this \code{reduction} clause
+has the \code{initializer} clause, the subroutine specified on the clause
+must be accessible in the current scoping unit.  In this case,
+the subroutine \plc{dt\_init} is accessible by use association.
+
+\ffreeexample[4.0]{udr}{4}
+
+
+The following example uses user-defined reductions to declare a plus (+) reduction for a C++ class. As the \code{declare}~\code{reduction} directive is inside the context of the \plc{V} class the expressions in the \code{declare}~\code{reduction} directive are resolved in the context of the class. Also, note that the \code{initializer} clause uses a copy constructor to initialize the private variables of the reduction and it uses as parameter to its original variable by using the special variable \code{omp\_orig}.
+
+\cppexample[4.0]{udr}{5}
+
+The following examples shows how user-defined reductions can be defined for some STL containers. The first \code{declare}~\code{reduction} defines the plus (+) operation for \plc{std::vector<int>} by making use of the \plc{std::transform} algorithm. The second and third define the merge (or concatenation) operation for \plc{std::vector<int>} and \plc{std::list<int>}. 
+%It shows how the same user-defined reduction operation can be defined to be done differently depending on the specified data type.
+It shows how the user-defined reduction operation can be applied to specific data types of an STL.
+
+\cppexample[4.0]{udr}{6}
+

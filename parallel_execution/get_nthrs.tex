@@ -1,0 +1,24 @@
+\pagebreak
+\section{\code{omp\_get\_num\_threads} Routine}
+\label{sec:get_nthrs}
+\index{routines!omp_get_num_threads@\scode{omp_get_num_threads}}
+\index{omp_get_num_threads routine@\scode{omp_get_num_threads} routine}
+
+In the following example, the \code{omp\_get\_num\_threads} call returns 1 in 
+the sequential part of the code, so \code{np} will always be equal to 1. To determine 
+the number of threads that will be deployed for the \code{parallel} region, the 
+call should be inside the \code{parallel} region.
+
+\cexample{get_nthrs}{1}
+
+\fexample{get_nthrs}{1}
+
+\pagebreak
+The following example shows how to rewrite this program without including a query 
+for the number of threads:
+
+\cexample{get_nthrs}{2}
+
+\fexample{get_nthrs}{2}
+
+
