@@ -655,8 +655,8 @@ for FileName in mylists:
     f1.close()
     f2.close()
 os.remove(contents_folder + "Title_Page.ipynb")
-os.remove(contents_folder + "openmp-example.ipynb")
-os.remove(contents_folder + "openmp-examples.ipynb")
+#os.remove(contents_folder + "openmp-example.ipynb")
+#os.remove(contents_folder + "openmp-examples.ipynb")
 
 #####################
 # Generate _toc.yml #
