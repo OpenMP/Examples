@@ -1,7 +1,6 @@
 format: jb-article
 root: intro
 sections:
-\input{generated-include
 - file: contents/Foreword_Chapt
 - file: contents/Chap_introduction
 - file: contents/Chap_directives
