@@ -1,20 +1,20 @@
 format: jb-article
 root: intro
 sections:
-\input{generated-include
-- file: contents/Foreword_Chapt
-- file: contents/Chap_introduction
-- file: contents/Chap_directives
-- file: contents/Chap_parallel_execution
-- file: contents/Chap_affinity
-- file: contents/Chap_tasking
-- file: contents/Chap_devices
-- file: contents/Chap_SIMD
-- file: contents/Chap_loop_transformations
-- file: contents/Chap_synchronization
-- file: contents/Chap_data_environment
-- file: contents/Chap_memory_model
-- file: contents/Chap_program_control
-- file: contents/Chap_ompt_interface
-- file: contents/Deprecated_Features
-- file: contents/History
+\input{generated-include}
+- file: contents/Foreword_Chapt.ipynb
+- file: contents/Chap_introduction.ipynb
+- file: contents/Chap_directives.ipynb
+- file: contents/Chap_parallel_execution.ipynb
+- file: contents/Chap_affinity.ipynb
+- file: contents/Chap_tasking.ipynb
+- file: contents/Chap_devices.ipynb
+- file: contents/Chap_SIMD.ipynb
+- file: contents/Chap_loop_transformations.ipynb
+- file: contents/Chap_synchronization.ipynb
+- file: contents/Chap_data_environment.ipynb
+- file: contents/Chap_memory_model.ipynb
+- file: contents/Chap_program_control.ipynb
+- file: contents/Chap_ompt_interface.ipynb
+- file: contents/Deprecated_Features.ipynb
+- file: contents/History.ipynb
