@@ -208,6 +208,20 @@ def delete_marks(Str):
     
     return Str
 
+## inputs
+def rep_input(match):
+    val = match.group()
+    l = len(val)
+    out = '\n' + "../../" + val[7 :(l - 1)] + ".tex"
+    #out = "../../" + out + ".tex"
+    return out
+    
+def replace_input2(Str):
+    Str = re.sub(r'\\input\{[a-zA-Z0-9/_]*\}', rep_input, Str)
+    #Str = "../../" + Str + ".tex"
+    #print(Str)
+    return Str
+    
 ## sections
 ### \chapter
 def rep_chapter(match):
@@ -215,9 +229,16 @@ def rep_chapter(match):
     l = len(val)
     out = '\n# ' + val[9 :(l - 1)] + '\n'
     return out
+### \cchapter
+def rep_cchapter(match):
+    val = match.group()
+    l = len(val)
+    out = '\n# ' + val[10 :(l - 1)] + '\n'
+    return out
 def replace_chapter(Str):
     Str = re.sub('\\\\chapter\*', '\\\\chapter', Str)
     Str = re.sub(r'\\chapter\{[^\{\}]*\}', rep_chapter, Str)
+    Str = re.sub(r'\\cchapter\{[^\{\}]*\}', rep_cchapter, Str)
     return Str
 ### \section
 def rep_section(match):
@@ -362,6 +383,8 @@ def gen_single_line(Str):
     return Str
 
 def gen_cells(Str):
+## get input{} in Latex
+    Str = replace_input2(Str);
 ## delete marks
     Str = delete_marks(Str)
 ## \plc
@@ -607,6 +630,11 @@ for FileName in mylists:
     output = contents_folder + FileName[:(FileLen - 4)] + '.ipynb'
     testfile = 'TEST' + FileName
     tmp_file = "tmp.txt"
+    
+    ## test for merge 2 files
+    #f1 = open(input)
+    #f2 = open(tmp_file, 'w')
+    
 ## turn the text contents to a single line
     f1 = open(input)
     f2 = open(tmp_file, 'w')
