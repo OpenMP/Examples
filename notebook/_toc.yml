@@ -1,8 +1,6 @@
 format: jb-article
 root: intro
 sections:
-\input{generated-include
-- file: contents/Foreword_Chapt
 - file: contents/Chap_introduction
 - file: contents/Chap_directives
 - file: contents/Chap_parallel_execution
@@ -16,5 +14,3 @@ sections:
 - file: contents/Chap_memory_model
 - file: contents/Chap_program_control
 - file: contents/Chap_ompt_interface
-- file: contents/Deprecated_Features
-- file: contents/History

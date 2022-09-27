@@ -539,10 +539,21 @@ def replace_title_page(Str):
         return ''
     else:
         return Str
+        
+def check_content1(Str):
+    if ('Chap' in Str):
+        return Str
+    else:
+        return ""
+
 
 ## only the lines start with \input{} would be chosen
 def check_content(Str):
-    if ('\input' in Str):
+    #s = '\input'
+    #t = 'Chap'
+    #result = s in Str
+    #result2 = t in Str
+    if('\input{Chap_' in Str):
         return Str
     else:
         return ''
@@ -551,6 +562,9 @@ def check_content(Str):
 def replace_input(Str):
     Str = re.sub(r'\ \ \ \ \\input\{', '- file: contents/', Str)
     Str = re.sub(r'\}', '', Str)
+    #l = len(Str)
+    #Str = '\n' + Str[0 :(l - 1)] + ".ipynb"
+    #Str = Str + ".ipynb"
     #print(Str)
     return Str
 
@@ -568,6 +582,7 @@ def insert_sections(Str, pre, post):
         
 def gen_toc_file(Str):
     Str = replace_comments(Str)
+    Str = check_content1(Str)
     Str = replace_sty(Str)
     Str = replace_title_page(Str)
     Str = check_content(Str)
