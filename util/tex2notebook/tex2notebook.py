@@ -3,6 +3,7 @@
 
 import re
 import os
+import glob
 import sys
 import argparse
 
@@ -797,6 +798,12 @@ for FileName in mylists:
 #os.remove(contents_folder + "Title_Page.ipynb")
 #os.remove(contents_folder + "openmp-example.ipynb")
 #os.remove(contents_folder + "openmp-examples.ipynb")
+
+# remove temprary files
+for filename in glob.glob("../../*_tmp.tex"):
+    os.remove(filename)
+for filename in glob.glob("../../*_tmp.txt"):
+    os.remove(filename)
 
 #####################
 # Generate _toc.yml #
