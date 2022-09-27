@@ -62,15 +62,15 @@ def replace_code(Str):
     Str = re.sub(r'\\code', '', Str)
     return Str
 
-## @\scode
-def rep_at_scode(match):
+## \scode
+def rep_scode(match):
     val = match.group()
     l = len(val)
-    out = '`' + val[8 :(l - 1)] + '`'
+    out = '`' + val[7 :(l - 1)] + '`'
     return out
-def replace_at_scode(Str):
-    Str = re.sub(r'@\\scode\{[^\{\}]*\}', rep_at_scode, Str)
-    Str = re.sub(r'@\\scode', '', Str)
+def replace_scode(Str):
+    Str = re.sub(r'\\scode\{[^\{\}]*\}', rep_scode, Str)
+    Str = re.sub(r'\\scode', '', Str)
     return Str
 
 ## \plc
@@ -81,6 +81,16 @@ def rep_plc(match):
     return out
 def replace_plc(Str):
     Str = re.sub(r'\\plc\{[^\{\}]*\}', rep_plc, Str)
+    return Str
+    
+## \splc
+def rep_splc(match):
+    val = match.group()
+    l = len(val)
+    out = ' _' + val[6 :(l - 1)] + '_ '
+    return out
+def replace_splc(Str):
+    Str = re.sub(r'\\splc\{[^\{\}]*\}', rep_splc, Str)
     return Str
 
 ## \texttt
@@ -463,10 +473,12 @@ def gen_cells(Str):
     Str = delete_marks(Str)
 ## \plc
     Str = replace_plc(Str)
+## \splc
+    Str = replace_splc(Str)
 ## \code
     Str = replace_code(Str)
-## @\scode
-    Str = replace_at_scode(Str)
+## \scode
+    Str = replace_scode(Str)
 ## \texttt
     Str = replace_texttt(Str)
 ## \_
