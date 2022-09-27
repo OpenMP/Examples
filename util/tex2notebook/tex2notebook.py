@@ -184,6 +184,12 @@ def replace_link2(Str):
     Str = re.sub(r'\\specref\{subsec:[\s\w_-]+\}', rep_link2, Str)
     return Str
 
+## ref
+def replace_ref(Str):
+    Str = re.sub(r'\\ref\{[^\{\}]*\}', '', Str)
+    Str = re.sub(r'\\specref\{[^\{\}]*\}', '', Str)
+    return Str
+
 ## \pageref
 def rep_pageref(match):
     val = match.group()
@@ -526,7 +532,8 @@ def gen_cells(Str):
     Str = replace_link2(Str)
 ## \pageref
     Str = replace_pageref(Str)
-## \href
+## \ref
+    Str = replace_ref(Str)
     Str = replace_href(Str)
     Str = replace_web(Str)
 ## replace sections
