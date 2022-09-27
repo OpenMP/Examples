@@ -365,6 +365,59 @@ def gen_markdown_cell(Str):
     Str = Str.strip()
     return Str
 
+#####################################
+# Get Full Text, Handling \input{ } #
+#####################################
+def get_folder_name(Str):
+    #print("Hello!" + Str)
+    folder = Str.partition('_')[2]
+    folder = folder.partition('.')[0]
+    print(folder)
+    return folder
+    
+def insert_dot_tex_file(Str, file):
+    folder = ''
+    if ('.tex' in Str) and (len(Str) <= 50): # handleling the length of file_names
+        #Str = 'please insert LaTex file here!\n'
+        # clean spaces and \n
+        Str = re.sub(r'\n', '', Str)
+        Str = re.sub(r' ', '', Str)
+        #print(Str)
+        f1 = open(Str)
+        line = f1.readline()
+        while line:
+            file.write(line)
+            line = f1.readline()
+    
+    return 0
+    
+def gen_full_text(input):
+# prepare input/tmp/output
+    output = input[0:-4] + '_tmp.tex'
+    tmp    = input[0:-4] + '_tmp.txt'
+# read input by line, save to tmp: .txt files
+    f1 = open(input)
+    f2 = open(tmp, 'w')
+    line = f1.readline()
+    while line:
+        f2.write(line)
+        line = f1.readline()
+        line = replace_input2(line)
+    f1.close()
+    f2.close()
+# read tmp by line, save back to output: .tex files
+    f1 = open(tmp)
+    f2 = open(output, 'w')
+    line = f1.readline()
+    while line:
+        f2.write(line)
+        line = f1.readline()
+        status = insert_dot_tex_file(line, f2)
+    f1.close()
+    f2.close()
+    
+    return output
+
 ###################################
 # Handling Markdown text contents #
 ###################################
@@ -467,7 +520,7 @@ def get_text(Str):
 ## "\cexample{xxxx}{1}"
 ## The source code name should be
 ## "~/Example_xxxx.1.c"
-def gen_code_cell(Str, flg):
+def gen_code_cell(Str, flg, folder_name):
 ## \ is not allowed in .ipynb
     Str = re.sub('\\\\', '', Str)
 ## version number [0-9.0-9]
@@ -509,9 +562,11 @@ def gen_code_cell(Str, flg):
     Str = re.sub(r'\n', '', Str)
 ## //%load or show code
     if (flg == 1):
-        return '//%load ../../sources/Example_' + Str
+        #return '//%load ../../sources/Example_' + Str
+        return '//%load ../../' + folder_name + '/sources/' + Str
     else:
-        return get_text('../../sources/Example_'+Str)
+        #return get_text('../../sources/Example_' + Str)
+        return get_text('../../' + folder_name + '/sources/' + Str)
 
 ################
 # Handling TOC #
@@ -645,13 +700,18 @@ for FileName in mylists:
     output = contents_folder + FileName[:(FileLen - 4)] + '.ipynb'
     testfile = 'TEST' + FileName
     tmp_file = "tmp.txt"
+    # gen_full_texts
+    input2 = gen_full_text(input)
+    # get folder name
+    folder_name = get_folder_name(input)
     
-    ## test for merge 2 files
-    #f1 = open(input)
-    #f2 = open(tmp_file, 'w')
-    
+    # check
+    print("input:       " + input)
+    print("tmp:         " + input2)
+    print("folder_name: " + folder_name)
+
 ## turn the text contents to a single line
-    f1 = open(input)
+    f1 = open(input2)
     f2 = open(tmp_file, 'w')
     line = f1.readline()
 ## write to raw text contents file from inputs
@@ -678,7 +738,7 @@ for FileName in mylists:
     f2.write('{\n "cells": [\n')
     while line:
         if line[1:5] in CodeList:
-            line = gen_code_cell(line, flg)
+            line = gen_code_cell(line, flg, folder_name)
             f2.write(CB)
             f2.write(line)
             f2.write(E)
@@ -697,7 +757,7 @@ for FileName in mylists:
 
     f1.close()
     f2.close()
-os.remove(contents_folder + "Title_Page.ipynb")
+#os.remove(contents_folder + "Title_Page.ipynb")
 #os.remove(contents_folder + "openmp-example.ipynb")
 #os.remove(contents_folder + "openmp-examples.ipynb")
 
