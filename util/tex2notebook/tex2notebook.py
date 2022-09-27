@@ -52,6 +52,12 @@ E2 = '"\n   ]\n  }\n'
 ########################
 # Handling LaTeX marks #
 ########################
+## miscs
+def replace_miscs(Str):
+    Str = re.sub('\\\ ', ' ', Str)
+    Str = re.sub('@', ' ', Str)
+    return Str
+
 ## \code
 def rep_code(match):
     val = match.group()
@@ -253,7 +259,7 @@ def replace_input2(Str):
     #Str = "../../" + Str + ".tex"
     #print(Str)
     return Str
-    
+
 ## sections
 ### \chapter
 def rep_chapter(match):
@@ -261,17 +267,37 @@ def rep_chapter(match):
     l = len(val)
     out = '\n# ' + val[9 :(l - 1)] + '\n'
     return out
+def replace_chapter(Str):
+    Str = re.sub(r'\\chapter\{[^\{\}]*\}', rep_chapter, Str)
+    return Str
+### \chapter*
+def rep_chapter_star(match):
+    val = match.group()
+    l = len(val)
+    out = '\n# ' + val[10 :(l - 1)] + '\n'
+    return out
+def replace_chapter_star(Str):
+    Str = re.sub(r'\\chapter\*\{[^\{\}]*\}', rep_chapter_star, Str)
+    return Str
+### \bchapter
+def rep_bchapter(match):
+    val = match.group()
+    l = len(val)
+    out = '\n# ' + val[10 :(l - 1)] + '\n'
+    return out
+def replace_bchapter(Str):
+    Str = re.sub(r'\\bchapter\{[^\{\}]*\}', rep_bchapter, Str)
+    return Str
 ### \cchapter
 def rep_cchapter(match):
     val = match.group()
     l = len(val)
     out = '\n# ' + val[10 :(l - 1)] + '\n'
     return out
-def replace_chapter(Str):
-    Str = re.sub('\\\\chapter\*', '\\\\chapter', Str)
-    Str = re.sub(r'\\chapter\{[^\{\}]*\}', rep_chapter, Str)
+def replace_cchapter(Str):
     Str = re.sub(r'\\cchapter\{[^\{\}]*\}', rep_cchapter, Str)
     return Str
+
 ### \section
 def rep_section(match):
     val = match.group()
@@ -293,6 +319,9 @@ def replace_subsec(Str):
 
 def replace_sections(Str):
     Str = replace_chapter(Str)
+    Str = replace_chapter_star(Str)
+    Str = replace_bchapter(Str)
+    Str = replace_cchapter(Str)
     Str = replace_section(Str)
     Str = replace_subsec(Str)
 ### \ keep in line show be removed
@@ -506,6 +535,8 @@ def gen_cells(Str):
     Str = replace_examples(Str)
 ## quote
     Str = replace_quote(Str)
+## miscs
+    Str = replace_miscs(Str)
     return Str
 
 ######################################
