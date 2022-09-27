@@ -61,7 +61,18 @@ def replace_code(Str):
     Str = re.sub(r'\\code\{[^\{\}]*\}', rep_code, Str)
     Str = re.sub(r'\\code', '', Str)
     return Str
-    
+
+## @\scode
+def rep_at_scode(match):
+    val = match.group()
+    l = len(val)
+    out = '`' + val[8 :(l - 1)] + '`'
+    return out
+def replace_at_scode(Str):
+    Str = re.sub(r'@\\scode\{[^\{\}]*\}', rep_at_scode, Str)
+    Str = re.sub(r'@\\scode', '', Str)
+    return Str
+
 ## \plc
 def rep_plc(match):
     val = match.group()
@@ -112,6 +123,16 @@ def replace_emph(Str):
 ## \item
 def replace_item(Str):
     Str = re.sub(r'\\item', '\n* ', Str)
+    return Str
+    
+## \index
+def rep_index(match):
+    val = match.group()
+    l = len(val)
+    out = '**' + val[7 :(l - 1)] + '**'
+    return out
+def replace_index(Str):
+    Str = re.sub(r'\\index\{[^\{\}]*\}', rep_index, Str)
     return Str
 
 ## $ $
@@ -444,6 +465,8 @@ def gen_cells(Str):
     Str = replace_plc(Str)
 ## \code
     Str = replace_code(Str)
+## @\scode
+    Str = replace_at_scode(Str)
 ## \texttt
     Str = replace_texttt(Str)
 ## \_
@@ -452,6 +475,8 @@ def gen_cells(Str):
     Str = replace_emph(Str)
 ## \item
     Str = replace_item(Str)
+## \index
+    Str = replace_index(Str)
 ## $ $
     Str = replace_math(Str)
 ## link
