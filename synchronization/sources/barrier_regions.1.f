@@ -1,8 +1,8 @@
 ! @@name:	barrier_regions.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	link
 ! @@expect:	success
+! @@version:	pre_omp_3.0
       SUBROUTINE WORK(N)
         INTEGER N
       END SUBROUTINE WORK

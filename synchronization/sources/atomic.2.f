@@ -1,7 +1,6 @@
 ! @@name:	atomic.2
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
 ! @@version:	omp_3.1
        function atomic_read(p)

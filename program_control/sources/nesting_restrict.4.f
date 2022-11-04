@@ -1,8 +1,8 @@
 ! @@name:	nesting_restrict.4
 ! @@type:	F-fixed
-! @@compilable:	no
-! @@linkable:	no
-! @@expect:	failure
+! @@operation:	compile
+! @@expect:	ct-error
+! @@version:	pre_omp_3.0
       SUBROUTINE WRONG4(N)
       INTEGER N
 

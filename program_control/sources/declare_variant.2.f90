@@ -1,10 +1,8 @@
-! @@name: declare_variant.2
-! @@type: F-free
-! @@compilable: yes
-! @@linkable: yes
-! @@expect: success
-! @@version: omp_5.0
-
+! @@name:	declare_variant.2
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
+! @@version:	omp_5.0
 module subs
   use omp_lib
 contains

@@ -1,10 +1,8 @@
-! @@name:       target_mapper.1
-! @@type:       F-free
-! @@compilable: yes
-! @@linkable:   no
-! @@expect:     success
-! @@version:    omp_5.0
-
+! @@name:	target_mapper.1
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
+! @@version:	omp_5.0
 module my_structures
   type myvec_t
     integer                     :: len

@@ -1,9 +1,8 @@
 /*
 * @@name:	mem_model.1
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	yes
-* @@expect:	rt-error
+* @@operation:	run
+* @@expect:	success
 * @@version:	omp_3.1
 */
 #include <stdio.h>

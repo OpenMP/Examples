@@ -2,6 +2,54 @@
 \label{chap:history}
 
 %=====================================
+\section{Changes from 5.2 to 5.2.1}
+\label{sec:history_52_to_521}
+
+\begin{itemize}
+\item General changes:
+\begin{itemize}
+\item Updated source metadata tags for all examples to use an improved form
+ (see \href{https://github.com/OpenMP/Examples/blob/v\VER/Contributions.md}%
+ {https://github.com/OpenMP/Examples/blob/v\VER/Contributions.md})
+\item Explicitly included the version tag \verlabel[pre\_]{3.0} in those 
+ examples that did not contain a version tag previously
+\end{itemize}
+
+\item Added the following examples for the 5.2 features:
+\begin{itemize}
+  \item \scode{uses_allocators} clause for the use of allocators in 
+  \code{target} regions (\specref{sec:allocators})
+\end{itemize}
+\item Added the following examples for the 5.1 features:
+\begin{itemize}
+  \item The \scode{inoutset} dependence type (\specref{subsec:task_concurrent_depend})
+  \item Atomic compare and capture (\specref{sec:cas})
+\end{itemize}
+\item Added other examples:
+\begin{itemize}
+  \item \scode{omp_pause_resource} and \scode{omp_pause_resource_all}
+     routines (\specref{sec:pause_resource})
+\end{itemize}
+
+\item Miscellaneous fixes:
+\begin{itemize}
+\item Fixed an inconsistent use of mapper in \splc{Example target_mapper.3.f90}
+  (\specref{sec:declare_mapper})
+\item Fixed mismatched argument list in \splc{Example fort_sa_private.5.f}
+  (\specref{sec:fort_sa_private})
+\item Moved the placement of \code{declare}~\code{target}~\code{enter}
+  directive after function declaration
+  (\specref{subsec:target_task_reduction})
+\item Fixed an incorrect use of \scode{omp_in_parallel} routine in 
+  \splc{Example metadirective.4}
+  (\specref{sec:metadirective})
+\item Fixed an incorrect value for \code{at} clause
+  (\specref{subsec:error})
+\end{itemize}
+
+\end{itemize}
+
+%=====================================
 \section{Changes from 5.1 to 5.2}
 \label{sec:history_51_to_52}
 

@@ -1,10 +1,8 @@
 ! @@name:	doacross.4
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
-! @@version:    omp_5.2
-
+! @@version:	omp_5.2
 subroutine work( N, M, A, B, C )
   integer :: N, M
   real(8), dimension(M, N) :: A, B, C

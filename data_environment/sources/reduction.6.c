@@ -1,10 +1,9 @@
 /*
 * @@name:	reduction.6
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	yes
-* @@expect:	rt-error
-* @@version:    omp_5.1
+* @@operation:	run
+* @@expect:	unspecified
+* @@version:	omp_5.1
 */
 #include <stdio.h>
 

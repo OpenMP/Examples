@@ -1,9 +1,8 @@
-! @@name: declare_target.6
-! @@type: F-free
-! @@compilable: yes
-! @@linkable: no
-! @@expect: success
-! @@version: omp_4.5
+! @@name:	declare_target.6
+! @@type:	F-free
+! @@operation:	compile
+! @@expect:	success
+! @@version:	omp_4.5
 module m_dat
    integer, parameter :: N=100000000
    !$omp declare target link(sp,sv1,sv2)

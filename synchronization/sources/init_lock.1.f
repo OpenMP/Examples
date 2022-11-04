@@ -1,8 +1,8 @@
 ! @@name:	init_lock.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
+! @@version:	pre_omp_3.0
       FUNCTION NEW_LOCKS()
         USE OMP_LIB        ! or INCLUDE "omp_lib.h"
         INTEGER(OMP_LOCK_KIND), DIMENSION(1000) :: NEW_LOCKS

@@ -1,10 +1,8 @@
 ! @@name:	doacross.3
 ! @@type:	F-free
-! @@compilable:	no
-! @@linkable:	no
-! @@expect:	failure
-! @@version:    omp_5.2
-
+! @@operation:	compile
+! @@expect:	ct-error
+! @@version:	omp_5.2
 subroutine work_wrong(N, p)
   integer :: N
   real(8), dimension(N,N,N) :: p

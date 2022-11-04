@@ -1,9 +1,9 @@
 /*
 * @@name:	critical.1
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
+* @@version:	pre_omp_3.0
 */
 int dequeue(float *a);
 void work(int i, float *a);

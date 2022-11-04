@@ -1,12 +1,10 @@
 /*
-* @@name: target_mapper.3
-* @@type: C
-* @@compilable: yes
-* @@linkable: no
-* @@expect: success
-* @@version: omp_5.0
+* @@name:	target_mapper.3
+* @@type:	C
+* @@operation:	compile
+* @@expect:	success
+* @@version:	omp_5.0
 */
-
 #include <stdlib.h>
 #include  <stdio.h>
 

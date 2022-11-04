@@ -1,8 +1,7 @@
 ! @@name:	associate.1
 ! @@type:	F-fixed
-! @@compilable:	no
-! @@linkable:	no
-! @@expect:	failure
+! @@operation:	compile
+! @@expect:	ct-error
 ! @@version:	omp_4.0
       program example_broken
       real :: a, c

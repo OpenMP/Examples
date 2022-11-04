@@ -1,9 +1,8 @@
 /*
 * @@name:	mem_model.3
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	yes
-* @@expect:	rt-error
+* @@operation:	run
+* @@expect:	unspecified
 * @@version:	omp_3.1
 */
 #include <omp.h>
@@ -30,12 +29,12 @@ int main()
       {
          int flag_val = 0;
          /* Loop until we see that flag reaches 1*/
-         while(flag_val < 0)
+         while(flag_val < 1)
          {
             #pragma omp atomic read
             flag_val = flag;
          }
-         #pragma omp flush(data0)
+         #pragma omp flush
          /* data0 is 17 here */
          printf("Thread 1 awoken (data0 = %d)\n", data0);
          data1 = 42;

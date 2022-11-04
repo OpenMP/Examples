@@ -1,8 +1,8 @@
 ! @@name:	fort_loopvar.2
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
+! @@version:	pre_omp_3.0
 SUBROUTINE PLOOP_2(A,B,N,I1,I2)
 REAL A(*), B(*)
 INTEGER I1, I2, N

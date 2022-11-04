@@ -1,13 +1,12 @@
 /*
 * @@name:	task_dep.12
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	yes
+* @@operation:	run
 * @@expect:	success
 * @@version:	omp_4.0
 */
 #include <stdio.h>
-int main (int argc, char *argv[])
+int main ()
 {
   int x = 0;
   #pragma omp parallel

@@ -1,8 +1,8 @@
 ! @@name:	private.3
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
+! @@version:	pre_omp_3.0
       SUBROUTINE PRIV_EXAMPLE3()
         INTEGER I, A
 

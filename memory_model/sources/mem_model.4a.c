@@ -1,9 +1,8 @@
 /*
 * @@name:	mem_model.4a
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
-* @@expect:	failure
+* @@operation:	compile
+* @@expect:	unspecified
 * @@version:	omp_3.1
 */
 #include <omp.h>

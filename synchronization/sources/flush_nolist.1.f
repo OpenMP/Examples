@@ -1,8 +1,8 @@
 ! @@name:	flush_nolist.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	link
 ! @@expect:	success
+! @@version:	pre_omp_3.0
       SUBROUTINE F1(Q)
         COMMON /DATA/ X, P
         INTEGER, TARGET  :: X

@@ -1,9 +1,9 @@
 /*
 * @@name:	private.2
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
-* @@expect:	success
+* @@operation:	compile
+* @@expect:	unspecified
+* @@version:	pre_omp_3.0
 */
 int a;
 

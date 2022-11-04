@@ -1,8 +1,8 @@
 ! @@name:	fort_loopvar.1
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
+! @@version:	pre_omp_3.0
 SUBROUTINE PLOOP_1(A,N)
 INCLUDE "omp_lib.h"      ! or USE OMP_LIB
 

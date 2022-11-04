@@ -1,8 +1,8 @@
 ! @@name:	reduction.5
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	run
 ! @@expect:	success
+! @@version:	pre_omp_3.0
 MODULE MOD
    INTRINSIC MAX, MIN
 END MODULE MOD

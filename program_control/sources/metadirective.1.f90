@@ -1,9 +1,8 @@
-! @@name: metadirective.1
-! @@type: F-free
-! @@compilable: yes
-! @@linkable: yes
-! @@expect: success
-! @@version: omp_5.2
+! @@name:	metadirective.1
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
+! @@version:	omp_5.2
 program main
    integer, parameter :: N= 100
    integer ::  v1(N), v2(N), v3(N);

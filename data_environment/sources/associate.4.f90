@@ -1,7 +1,6 @@
 ! @@name:	associate.4
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	link
 ! @@expect:	success
 ! @@version:	omp_5.1
 program main
@@ -18,7 +17,7 @@ program main
   !$omp target           !! TARGET 2
     a_aray = [4,5,6]
   !$omp end target
-  print *, a_aray, aray  !! 4 5 6   4 5 6 
+  print *, a_aray, aray  !!  4 5 6   4 5 6 
 
 !!!$omp target           !! TARGET 3
 !!                       !! mapping, in this case implicit,
@@ -31,7 +30,7 @@ program main
   !$omp target              !! TARGET 4
     scalr = 1               !! scalr is firstprivate
   !$omp end target
-  print *, a_scalr, scalr   !! -1  -1  
+  print *, a_scalr, scalr   !!  -1  -1  
 
   !$omp target              !! TARGET 5
     a_scalr = 2             !! a_scalr implicitly mapped 

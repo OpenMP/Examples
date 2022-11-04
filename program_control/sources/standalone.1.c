@@ -1,12 +1,10 @@
 /*
 * @@name:	standalone.1
 * @@type:	C
-* @@compilable:	no
-* @@linkable:	no
-* @@expect:	failure
+* @@operation:	compile
+* @@expect:	ct-error
 * @@version:	omp_3.1
 */
-
 void standalone_wrong()
 {
   int a = 1;

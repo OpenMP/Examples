@@ -1,8 +1,7 @@
 /*
 * @@name:	tasking.9
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	rt-error
 * @@version:	omp_3.0
 */

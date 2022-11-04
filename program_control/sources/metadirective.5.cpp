@@ -1,10 +1,9 @@
 /*
-* @@name:       metadirective.5
-* @@type:       C++
-* @@compilable: yes
-* @@linkable:   yes
-* @@expect:     success
-* @@version:    omp_5.0
+* @@name:	metadirective.5
+* @@type:	C++
+* @@operation:	run
+* @@expect:	success
+* @@version:	omp_5.0
 */
 #include <stdio.h>
 

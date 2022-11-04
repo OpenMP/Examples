@@ -1,12 +1,10 @@
 /*
 * @@name:	async_target.4
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
 * @@version:	omp_4.5
 */
-
 extern void init(  float*, int);
 extern void output(float*, int);
 

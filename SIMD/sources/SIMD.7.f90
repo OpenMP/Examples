@@ -1,7 +1,6 @@
 ! @@name:	SIMD.7
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	run
 ! @@expect:	success
 ! @@version:	omp_4.0
 program fibonacci

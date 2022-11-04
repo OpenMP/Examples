@@ -1,10 +1,12 @@
 /*
-* @@name:       affinity_display.2
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   yes
-* @@expect:     success
+* @@name:	affinity_display.2
+* @@type:	C
+* @@operation:	run
+* @@expect:	success
 * @@version:	omp_5.0
+* @@env:	OMP_PROC_BIND=TRUE OMP_NUM_THREADS="2,4"
+* @@env:	OMP_PLACES="{0,2,4,6},{1,3,5,7}"
+* @@env:	OMP_AFFINITY_FORMAT="nest_level= %L, parent_thrd_num= %a, thrd_num= %n, thrd_affinity= %A"
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -57,8 +59,8 @@ void socket_work(int socket_num, int n_thrds)
          printf(" LEVEL 2 AFFINITIES, %d threads on socket %d\n",
                 n_thrds, socket_num);
 
-         // not needed if OMP_DISPLAY_AFFINITY=TRUE
-         omp_display_affinity(NULL);
+      // not needed if OMP_DISPLAY_AFFINITY=TRUE
+      omp_display_affinity(NULL);
 
  // OUTPUT:
  // LEVEL 2 AFFINITIES, 4 threads on socket 0

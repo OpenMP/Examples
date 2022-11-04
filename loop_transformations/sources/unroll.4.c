@@ -1,10 +1,9 @@
 /*
 * @@name:	unroll.4
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	run
 * @@expect:	success
-* @@version:    omp_5.1
+* @@version:	omp_5.1
 */
 void unroll_partial_remainder(int n, int A[])
 {

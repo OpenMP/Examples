@@ -28,7 +28,7 @@ associated storage on the host.
 Storage for pointers \plc{ptr1} and \plc{ptr2} is created on the host. 
 To map storage that is associated with a pointer on the host, the data can be
 explicitly mapped as an array section so that the compiler knows 
-the amount of data to be assigned in the device (to the "corresponding" data storage area).
+the amount of data to be assigned in the device (to the ``corresponding'' data storage area).
 On the \code{target} construct array sections are mapped; however, the pointer \plc{ptr1}
 is mapped, while \plc{ptr2} is not. Since \plc{ptr2} is not explicitly mapped, it is
 firstprivate.  This creates a subtle difference in the way these pointers can be used.

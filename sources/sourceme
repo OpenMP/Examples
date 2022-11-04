@@ -1,3 +1,3 @@
-export PATH=`pwd`:$PATH                  #put test_cases in path
+export PATH=`pwd`:$PATH                  #put eval_cases in path
 export OMP_BASE_DIR=$( dirname `pwd` )   #directory above pwd is base
-alias tc=test_codes
+alias ec=eval_codes

@@ -1,8 +1,8 @@
 ! @@name:	lastprivate.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
+! @@version:	pre_omp_3.0
       SUBROUTINE LASTPRIV(N, A, B)
 
         INTEGER N

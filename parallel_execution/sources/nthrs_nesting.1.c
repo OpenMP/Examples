@@ -1,9 +1,10 @@
 /*
 * @@name:	nthrs_nesting.1
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	yes
+* @@operation:	run
 * @@expect:	success
+* @@env:	OMP_NUM_THREADS=2,3
+* @@version:	pre_omp_3.0
 */
 #include <stdio.h>
 #include <omp.h>

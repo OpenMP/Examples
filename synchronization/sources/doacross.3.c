@@ -1,12 +1,10 @@
 /*
 * @@name:	doacross.3
 * @@type:	C
-* @@compilable:	no
-* @@linkable:	no
-* @@expect:	failure
+* @@operation:	compile
+* @@expect:	ct-error
 * @@version:	omp_5.2
 */
-
 #define N 100
 
 void work_wrong(double p[][N][N])

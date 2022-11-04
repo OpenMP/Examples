@@ -1,8 +1,7 @@
 ! @@name:	mem_model.2
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	yes
-! @@expect:	rt-error
+! @@operation:	run
+! @@expect:	success
 ! @@version:	omp_3.1
        PROGRAM EXAMPLE
        INCLUDE "omp_lib.h" ! or USE OMP_LIB

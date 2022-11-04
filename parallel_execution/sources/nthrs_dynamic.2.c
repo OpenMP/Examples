@@ -1,9 +1,9 @@
 /*
 * @@name:	nthrs_dynamic.2
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	yes
+* @@operation:	link
 * @@expect:	success
+* @@version:	pre_omp_3.0
 */
 #include <omp.h>
 int main()

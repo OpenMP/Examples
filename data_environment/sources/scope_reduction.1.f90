@@ -1,7 +1,6 @@
 ! @@name:	scope_reduction.1
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
 ! @@version:	omp_5.1
 subroutine do_work(n, a, s)

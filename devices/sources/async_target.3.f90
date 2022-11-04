@@ -1,7 +1,6 @@
 ! @@name:	async_target.3
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
 ! @@version:	omp_5.1
 program concurrent_async

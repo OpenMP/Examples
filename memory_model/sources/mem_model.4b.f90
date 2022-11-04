@@ -1,7 +1,6 @@
 ! @@name:	mem_model.4b
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
 ! @@version:	omp_3.1
 subroutine flush_correct

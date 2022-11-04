@@ -1,8 +1,7 @@
 /*
 * @@name:	display_env.1
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	yes
+* @@operation:	link
 * @@expect:	success
 * @@version:	omp_5.1
 */

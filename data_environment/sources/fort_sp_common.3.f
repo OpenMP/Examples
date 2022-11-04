@@ -1,8 +1,8 @@
 ! @@name:	fort_sp_common.3
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
+! @@version:	pre_omp_3.0
       SUBROUTINE COMMON_GOOD3()
         COMMON /C/ X,Y
 !$OMP   PARALLEL PRIVATE (/C/)

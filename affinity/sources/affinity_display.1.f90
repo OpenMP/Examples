@@ -1,9 +1,9 @@
-! @@name: affinity_display.1
-! @@type: F-free
-! @@compilable: yes
-! @@linkable: yes
-! @@expect: success
-! @@version: omp_5.0
+! @@name:	affinity_display.1
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
+! @@version:	omp_5.0
+! @@env:	OMP_DISPLAY_AFFINITY=TRUE OMP_NUM_THREADS=8
 program affinity_display        ! MAX threads = 8, single socket system
 
    use omp_lib

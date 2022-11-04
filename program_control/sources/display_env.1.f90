@@ -1,7 +1,6 @@
 ! @@name:	display_env.1
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	link
 ! @@expect:	success
 ! @@version:	omp_5.1
 !implementers: customize debug routines for app debugging
@@ -22,4 +21,3 @@ program display_omp_environment
   if( debug() ) call omp_display_env( debug_omp_verbose() )
   !! ...
 end program
-

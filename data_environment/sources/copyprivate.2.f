@@ -1,9 +1,8 @@
 ! @@name:	copyprivate.2
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
-! @@version:    omp_5.1
+! @@version:	omp_5.1
         REAL FUNCTION READ_NEXT()
         REAL, POINTER :: TMP
 

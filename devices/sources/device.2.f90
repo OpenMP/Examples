@@ -1,9 +1,8 @@
 ! @@name:	device.2
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
-! @@version:    omp_4.0
+! @@version:	omp_4.0
 subroutine vec_mult(p, v1, v2, N)
 use omp_lib, ONLY : omp_get_num_devices
 real    :: p(N), v1(N), v2(N)

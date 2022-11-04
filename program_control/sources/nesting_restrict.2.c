@@ -1,9 +1,9 @@
 /*
 * @@name:	nesting_restrict.2
 * @@type:	C
-* @@compilable:	maybe
-* @@linkable:	no
-* @@expect:	failure
+* @@operation:	compile
+* @@expect:	unspecified
+* @@version:	pre_omp_3.0
 */
 void work(int i, int j) {}
 void work1(int i, int n)

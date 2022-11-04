@@ -41,12 +41,16 @@ and some directives also accept parenthesized arguments that follow the directiv
 A clause may just be a keyword (e.g., \scode{untied}) or it may also accept argument lists 
 (e.g., \scode{shared(x,y,z)}) and/or optional modifiers (e.g., \scode{tofrom} in 
 \scode{map(tofrom:}~\scode{x,y,z)}).
-Clause modifiers may be "simple" or "complex" -- a complex modifier consists of a 
+Clause modifiers may be ``simple'' or ``complex'' -- a complex modifier consists of a
 keyword followed by one or more parameters, bracketed by parentheses, while a simple 
 modifier does not. An example of a complex modifier is the \scode{iterator} modifier, 
 as in \scode{map(iterator(i=0:n),}~\scode{tofrom:}~\scode{p[i])}, or the \scode{step} modifier, as in 
 \scode{linear(x:}~\scode{ref,}~\scode{step(4))}. 
 In the preceding examples, \scode{tofrom} and \scode{ref} are simple modifiers.
+
+For Fortran, a declarative directive (such as \code{declare}~\code{reduction})
+must appear after any \code{USE}, \code{IMPORT}, and \code{IMPLICIT} statements
+in the specification part.
 
 
 %===== Examples Sections =====

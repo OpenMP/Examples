@@ -1,9 +1,8 @@
 ! @@name:	target.5
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
-! @@version:    omp_4.0
+! @@version:	omp_4.0
 module params
 integer,parameter :: THRESHOLD1=1000000, THRESHHOLD2=1000
 end module

@@ -1,8 +1,7 @@
 /*
 * @@name:	linear_in_loop.1
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	yes
+* @@operation:	run
 * @@expect:	success
 * @@version:	omp_4.5
 */

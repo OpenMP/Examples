@@ -1,9 +1,8 @@
 ! @@name:	taskgroup.1
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	compile
 ! @@expect:	success
-! @@version:    omp_4.0
+! @@version:	omp_4.0
 module tree_type_mod
   integer, parameter :: max_steps=100
   type tree_type

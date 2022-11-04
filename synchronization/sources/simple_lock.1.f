@@ -1,8 +1,8 @@
 ! @@name:	simple_lock.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	link
 ! @@expect:	success
+! @@version:	pre_omp_3.0
       SUBROUTINE SKIP(ID)
       END SUBROUTINE SKIP
 

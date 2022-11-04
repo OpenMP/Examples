@@ -1,10 +1,9 @@
 /*
 * @@name:	unroll.2
 * @@type:	C
-* @@compilable:	no
-* @@linkable:	no
-* @@expect:	success
-* @@version:    omp_5.1
+* @@operation:	compile
+* @@expect:	ct-error
+* @@version:	omp_5.1
 */
 void illegal_2a(double A[])
 {

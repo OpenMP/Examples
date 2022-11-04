@@ -1,8 +1,8 @@
 ! @@name:	private.2
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
-! @@expect:	success
+! @@operation:	compile
+! @@expect:	unspecified
+! @@version:	pre_omp_3.0
       MODULE PRIV_EXAMPLE2
         REAL A
 

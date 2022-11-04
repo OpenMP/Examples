@@ -1,10 +1,9 @@
 /*
-* @@name: declare_target.6
-* @@type: C
-* @@compilable: yes
-* @@linkable: no
-* @@expect: success
-* @@version: omp_5.1
+* @@name:	declare_target.6
+* @@type:	C
+* @@operation:	compile
+* @@expect:	success
+* @@version:	omp_5.1
 */
 #define N 100000000
 

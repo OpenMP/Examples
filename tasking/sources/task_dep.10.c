@@ -1,9 +1,8 @@
 /*
 * @@name:	task_dep.10
 * @@type:	C
-* @@compilable:	no
-* @@linkable:	no
-* @@expect:	failure
+* @@operation:	compile
+* @@expect:	success
 * @@version:	omp_5.0
 */
 extern int longTaskA(), shortTaskB();

@@ -1,10 +1,9 @@
 /*
-* @@name: target_mapper.1
-* @@type: C
-* @@compilable: yes
-* @@linkable: no
-* @@expect: success
-* @@version: omp_5.0
+* @@name:	target_mapper.1
+* @@type:	C
+* @@operation:	run
+* @@expect:	success
+* @@version:	omp_5.0
 */
 #include  <stdlib.h>
 #include   <stdio.h>
@@ -32,4 +31,4 @@ int main(){
 }
 
 void init(myvec_t *s)
-{ for(int i=0; i<s->len; i++) s->data[i]=i; }
+{ for(size_t i=0; i<s->len; i++) s->data[i]=i; }

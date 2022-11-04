@@ -1,7 +1,6 @@
 ! @@name:	SIMD.2
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	link
 ! @@expect:	success
 ! @@version:	omp_4.0
 program main

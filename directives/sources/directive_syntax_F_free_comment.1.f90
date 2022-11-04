@@ -1,8 +1,8 @@
-! @@name:       directive_syntax_F_free_comment.1
-! @@type:       F-free
-! @@compilable: yes
-! @@linkable:   yes
-! @@expect:     success
+! @@name:	directive_syntax_F_free_comment.1
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
+! @@version:	pre_omp_3.0
   program main
      use omp_lib
      integer,parameter :: NT = 4

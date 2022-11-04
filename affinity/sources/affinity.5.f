@@ -1,7 +1,6 @@
 ! @@name:	affinity.5
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
 ! @@version:	omp_5.1
       PROGRAM EXAMPLE

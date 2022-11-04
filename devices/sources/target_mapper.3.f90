@@ -1,17 +1,15 @@
-! @@name:       target_mapper.3
-! @@type:       F-free
-! @@compilable: yes
-! @@linkable:   no
-! @@expect:     success
-! @@version:    omp_5.0
-
+! @@name:	target_mapper.3
+! @@type:	F-free
+! @@operation:	compile
+! @@expect:	success
+! @@version:	omp_5.0
 module my_structures
   type myvec_t
     integer                   :: len
     double precision, pointer :: data(:)
   end type
   !$omp  declare mapper(myvec_t :: v) &
-  !$omp&         map(v)
+  !$omp&         map(v, v%data(:))
 
   type mypoints_t
      type(myvec_t)            :: scratch
@@ -36,4 +34,3 @@ program main
    call eval_mypts_array(P)
 
 end program
-

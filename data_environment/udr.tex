@@ -32,7 +32,7 @@ declaration list is the data type (\plc{struct} \plc{point}) used in the reducti
 followed by the combiner, here the functions \plc{minproc} and \plc{maxproc} perform
 the min and max operations, respectively, on the user data (of type \plc{struct} \plc{point}).
 In the function argument list are two special OpenMP variable identifiers, \code{omp\_in} and \code{omp\_out},
-that denote the two values to be combined in the "real" function;
+that denote the two values to be combined in the ``real'' function;
 the \code{omp\_out} identifier indicates which one is to hold the result.
 
 The initializer of the \code{declare}~\code{reduction} directive specifies

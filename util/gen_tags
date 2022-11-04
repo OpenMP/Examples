@@ -1,0 +1,227 @@
+#!/usr/bin/env python3
+
+import sys
+import os
+import re
+
+tag_metadata = {
+   'name'     : ['R', '', '<example_name>.<seqno>'],
+   'type'     : ['R', '', ['c','cpp','f','f90']], 
+   'operation': ['R', '', ['compile','link','run','view']], 
+   'expect'   : ['R', '', ['success','ct-error','rt-error','unspecified']], 
+   'version'  : ['V', '', ['5.2','5.1','5.0','4.5','4.0','3.1','3.0']], 
+   'env'      : ['O', '', '<environment_variable>=<value>'], 
+   'depend'   : ['O', '', '<source_file_name>']
+}
+tv_kind = 0
+tv_val  = 1
+tv_sval = 2
+
+tag_present = {
+   'R' : 'required',
+   'V' : 'optional',
+   'O' : 'optional, repeatable'
+}
+
+tag_type_conv = {
+   'c'   : 'C',
+   'cpp' : 'C++',
+   'f'   : 'F-fixed',
+   'f90' : 'F-free'
+}
+
+def write_tags(dflag):
+   ft = tag_metadata['type'][tv_val]
+   tv = tv_sval
+   ps = ''
+
+   if dflag <= 0:
+      tv = tv_val
+      if ft[0] == 'c':
+         ps = '*'
+      else:
+         ps = '!'
+      fname = tag_metadata['name'][tv_val] + '.' + ft
+      if dflag == 0:
+         fname_save = fname + '_save'
+         os.rename(fname, fname_save)
+         print(f">>> adding tags to file: {fname}")
+         print(f"... original saved to  : {fname_save}")
+      else:
+         print(f">>> creating file: {fname}")
+      f = open(fname, 'w')
+      if ft[0] == 'c':
+         f.write("/*\n")
+
+   cnt = 0
+   for tag in list(tag_metadata):
+      val = tag_metadata[tag][tv]
+      kind = tag_metadata[tag][tv_kind]
+      if val == '' and kind == 'V':
+         val = "pre_omp_3.0"
+      elif val == '' and kind != 'R':
+         continue
+      if dflag > 0:
+         print(' {:9s} ({}): {}'.format(tag, tag_present[kind], val))
+      elif kind != 'O':
+         if tag == 'type':
+            val = tag_type_conv[val]
+         elif tag == 'version' and val.find("pre", 0) < 0:
+            val = "omp_" + val
+         cnt += 1
+         f.write('{} @@{}:\t{}\n'.format(ps, tag, val))
+      else:
+         for val in tag_metadata[tag][tv_val]:
+            cnt += 1
+            f.write('{} @@{}:\t{}\n'.format(ps, tag, val))
+
+   if dflag <= 0:
+      if ft[0] == 'c':
+         f.write("*/\n")
+      if dflag == 0:
+         fs = open(fname_save, 'r')
+         f.write(fs.read())
+         fs.close()
+      f.close()
+      print(f'... {cnt} tags added')
+
+def list_tags(fname):
+   cnt = 0
+   try:
+      f = open(fname, 'r')
+   except OSError:
+      cnt = -1
+   else:
+      for line in f:
+         idx = line.find("@@")
+         if idx >= 0:
+            cnt += 1
+            print(line, end='')
+         elif cnt > 0:
+            break
+      f.close()
+   if cnt > 0:
+      print(f">>> {fname} contains {cnt} tags")
+   return cnt
+
+def get_tag_values():
+   cnt = -1
+   for tag in list(tag_metadata):
+      if tag == 'operation':
+         fname = tag_metadata['name'][tv_val]
+         fname += '.' + tag_metadata['type'][tv_val]
+         cnt = list_tags(fname)
+         if cnt > 0:
+            return cnt
+      prompt = tag + '? '
+      kind = tag_metadata[tag][tv_kind]
+      pval = tag_metadata[tag][tv_val]
+      if pval == '':
+         val = tag_metadata[tag][tv_sval]
+         print('{}: {}'.format(tag, val))
+         if kind == 'R' and tag != 'name':
+            print('.. enter a first few letters (def={})'.format(val[0]))
+      else:
+         print('>> {} = {}'.format(tag, pval))
+      if kind == 'R' or kind == 'V':
+         val = ''
+         while val == '':
+            if pval == '':
+               val = input(prompt)
+            else:
+               val = pval
+               pval = ''
+            if val == '':
+               if kind == 'V':
+                  break
+               if tag != 'name':
+                  val = tag_metadata[tag][tv_sval][0]
+            elif tag == 'name':
+               if not '.' in val:
+                  print("*** '.' missing, try again")
+                  val = ''
+            else:
+               for rval in tag_metadata[tag][tv_sval]:
+                  if rval.find(val, 0) >= 0:
+                     val = rval
+                     break
+               else:
+                  sval = ''
+                  if tag == 'type':
+                     for rval in list(tag_type_conv):
+                        if tag_type_conv[rval].find(val, 0) >= 0:
+                           sval = rval
+                           break
+                  if sval == '':
+                     print(f"*** [{val}] not in the supported list:")
+                     print(tag_metadata[tag][tv_sval])
+                  val = sval
+            tag_metadata[tag][tv_val] = val
+      else:
+         if pval == '':
+            val = input(prompt)
+         else:
+            val = pval
+         mval = []
+         while val != '':
+            if tag != 'env' or '=' in val:
+               mval.append(val)
+            else:
+               print("*** '=' missing, not added")
+            val = input(prompt)
+         tag_metadata[tag][tv_val] = mval
+   return cnt
+
+def main():
+   tcnt = 0
+   i = 1
+   while i < len(sys.argv):
+      arg, i = sys.argv[i], i+1
+      if arg == '-t' or arg == '-tags':
+         write_tags(1)
+         return 0
+      tag = re.sub('^-', '', arg)
+      if tag in list(tag_metadata):
+         if i < len(sys.argv):
+            tag_metadata[tag][tv_val], i = sys.argv[i], i+1
+      elif arg == '-h' or arg == '-help':
+         print(
+"""usage: gen_tags [-tags] [-<tag_name> <value>...] [<filename>]
+   -tags                ; list supported tags and values
+   -<tag_name> <value>  ; specify a tag and its value
+   <filename>           ; give filename in form of <name.seqno.ext>
+
+Any of the tag information may be entered at the prompt later.
+If <filename> is not given, construct it from <name> and <type>.
+For an existing file with tags, print tags in the file;
+for an existing file without tags, add tags to the file;
+otherwise, create a file with new tags.""")
+         sys.exit(0);
+      elif arg[0] == '-':
+         print(f"*** unknown option: {arg}")
+         return 1
+      elif tcnt < 0:
+         print(f"*** too many filenames - {arg}")
+         return 1
+      else:
+         cnt = list_tags(arg)
+         if cnt > 0 or tcnt > 0:
+            tcnt += 1
+            continue
+         tcnt = -1
+         items = arg.split('.')
+         tag_metadata['name'][tv_val] = items[0]
+         if len(items) > 1 and items[1] != '':
+            tag_metadata['name'][tv_val] += '.' + items[1]
+         if len(items) > 2:
+            tag_metadata['type'][tv_val] = items[2]
+
+   if tcnt < 1:
+      cnt = get_tag_values()
+      if cnt <= 0:
+         write_tags(cnt)
+
+   return 0
+
+if __name__ == "__main__":
+   sys.exit(main())

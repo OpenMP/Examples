@@ -1,10 +1,9 @@
 /*
 * @@name:	unroll.3
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
-* @@version:    omp_5.1
+* @@version:	omp_5.1
 */
 void unroll3_partial(double A[])
 {

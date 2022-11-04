@@ -1,10 +1,9 @@
 /*
-* @@name:       lambda_expressions.1
-* @@type:       C++
-* @@compilable: yes
-* @@linkable:   yes
-* @@expect:     success
-* @@version:   omp_5.0
+* @@name:	lambda_expressions.1
+* @@type:	C++
+* @@operation:	run
+* @@expect:	success
+* @@version:	omp_5.0
 */
 #include <iostream>
 using namespace std;

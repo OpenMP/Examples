@@ -1,8 +1,8 @@
 ! @@name:	worksharing_critical.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
+! @@version:	pre_omp_3.0
       SUBROUTINE CRITICAL_WORK()
 
         INTEGER I

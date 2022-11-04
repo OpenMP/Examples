@@ -1,15 +1,15 @@
 /*
-* @@name:       declare_target.2b_main
-* @@type:       C++
-* @@compilable: yes
-* @@linkable:   no
-* @@expect:     failure
-* @@version:    omp_5.1
+* @@name:	declare_target.2b_main
+* @@type:	C++
+* @@operation:	run
+* @@expect:	success
+* @@version:	omp_5.1
+* @@depend:	declare_target.2b_classes.hpp
 */
 #include <iostream>
 using namespace std;
 
-#include "classes.hpp"
+#include "declare_target.2b_classes.hpp"
 
 int main (){
 

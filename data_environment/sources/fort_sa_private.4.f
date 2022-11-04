@@ -1,8 +1,8 @@
 ! @@name:	fort_sa_private.4
 ! @@type:	F-fixed
-! @@compilable:	maybe
-! @@linkable:	maybe
-! @@expect:	rt-error
+! @@operation:	run
+! @@expect:	unspecified
+! @@version:	pre_omp_3.0
       PROGRAM PRIV_RESTRICT4
         INTEGER I, J
         INTEGER A(100), B(100)

@@ -1,8 +1,8 @@
 ! @@name:	threadprivate.3
 ! @@type:	F-fixed
-! @@compilable:	no
-! @@linkable:	no
-! @@expect:	failure
+! @@operation:	compile
+! @@expect:	ct-error
+! @@version:	pre_omp_3.0
       SUBROUTINE INC_WRONG()
         COMMON /T/ A
 !$OMP   THREADPRIVATE(/T/)

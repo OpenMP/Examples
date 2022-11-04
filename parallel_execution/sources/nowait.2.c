@@ -1,11 +1,10 @@
 /*
 * @@name:	nowait.2
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
+* @@version:	pre_omp_3.0
 */
-
 #include <math.h>
 void nowait_example2(int n, float *a, float *b, float *c, float *y, float
 *z)

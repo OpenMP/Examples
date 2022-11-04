@@ -1,12 +1,10 @@
 /*
 * @@name:	tasking.1
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
 * @@version:	omp_3.0
 */
-
 struct node {
   struct node *left;
   struct node *right;

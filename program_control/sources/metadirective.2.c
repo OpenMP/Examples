@@ -1,10 +1,9 @@
 /*
-* @@name: metadirective.2
-* @@type: C
-* @@compilable: yes
-* @@linkable: no
-* @@expect: success
-* @@version: omp_5.2
+* @@name:	metadirective.2
+* @@type:	C
+* @@operation:	compile
+* @@expect:	success
+* @@version:	omp_5.2
 */
 #define N 100
 #include <stdio.h>
@@ -33,4 +32,3 @@ int main()                    //Driver
    }
    return 0;
 }
-

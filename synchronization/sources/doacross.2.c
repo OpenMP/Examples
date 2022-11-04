@@ -1,12 +1,10 @@
 /*
 * @@name:	doacross.2
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
 * @@version:	omp_5.2
 */
-
 float foo(int i, int j);
 float bar(float a, float b, float c);
 float baz(float b);

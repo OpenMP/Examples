@@ -1,8 +1,8 @@
 ! @@name:	fort_do.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
+! @@version:	pre_omp_3.0
       SUBROUTINE WORK(I, J)
       INTEGER I,J
       END SUBROUTINE WORK

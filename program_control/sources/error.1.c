@@ -1,10 +1,9 @@
 /*
-* @@name:       error.1
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   yes
-* @@expect:     success
-* @@version:    omp_5.2
+* @@name:	error.1
+* @@type:	C
+* @@operation:	link
+* @@expect:	success
+* @@version:	omp_5.2
 */
 #include <stdio.h>
 #include   <omp.h>
@@ -17,7 +16,7 @@ int main(){
                     message("GNU compiler required."))
 
   if( omp_get_num_procs() < 3 ){
-    #pragma omp error at(runtime) severity(fatal) \
+    #pragma omp error at(execution) severity(fatal) \
                       message("3 or more procs required.")
   }
 
@@ -26,7 +25,7 @@ int main(){
     // Give notice about master deprecation at compile time and run time.
     #pragma omp error at(compilation) severity(warning) \
                       message("Notice: master is deprecated.")
-    #pragma omp error at(runtime) severity(warning) \
+    #pragma omp error at(execution) severity(warning) \
                       message("Notice: masked used next release.")
 
      printf(" Hello from thread number 0.\n");

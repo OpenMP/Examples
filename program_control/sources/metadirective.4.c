@@ -1,13 +1,13 @@
 /*
-* @@name:       metadirective.4
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   yes
-* @@expect:     success
-* @@version:    omp_5.2
+* @@name:	metadirective.4
+* @@type:	C
+* @@operation:	run
+* @@expect:	success
+* @@version:	omp_5.2
 */
 #define N 100
 #include <stdbool.h>
+#include  <stdlib.h>
 #include   <stdio.h>
 #include     <omp.h>
 
@@ -32,8 +32,8 @@ void bar (int *a, int n, bool run_parallel, bool unbalanced)
    #pragma omp metadirective \
                when(user={condition(run_parallel)}: parallel)
    {
-      if(omp_in_parallel() == 1 && omp_get_thread_num() == 0) 
-      {printf("PASSED 2 of 3\n");}
+      if(omp_in_parallel() && omp_get_thread_num() == 0) 
+         printf("PASSED 2 of 3\n");
 
       #pragma omp metadirective \
           when( construct={parallel}, \
@@ -63,4 +63,5 @@ int main(){
    foo(p, N, use_gpu);
    bar(p, N, run_parallel,unbalanced);
 
+   return 0;
 }

@@ -1,0 +1,42 @@
+\pagebreak
+\section{Atomic Compare}
+\label{sec:cas}
+
+\index{constructs!atomic@\code{atomic}}
+\index{atomic construct@\code{atomic} construct}
+\index{clauses!capture@\code{capture}}
+\index{clauses!compare@\code{compare}}
+\index{capture clause@\code{capture} clause}
+\index{compare clause@\code{compare} clause}
+
+In OpenMP 5.1 the \scode{compare} clause was added to the extended-atomic clauses.
+The \scode{compare} clause extends the semantics to perform the \scode{atomic}
+update conditionally. 
+
+In the following C/C++ example, two formats of structured blocks
+are shown for associated \scode{atomic} constructs with the \scode{compare} clause.
+In the first \scode{atomic} construct, the format forms a conditional update statement.
+In the second \scode{atomic} construct the format forms a conditional expression statement.
+The ``greater than'' and ``less than'' forms are not available with the Fortran \scode{compare}
+clause.  One can use the \splc{max} and \splc{min} functions with the \scode{atomic}~\scode{update}
+construct to perform the C/C++ example operations.
+
+\cexample[5.1]{cas}{1}
+%\ffreeexample[5.1]{cas}{1}
+
+In OpenMP 5.1 the \scode{compare} clause was also added to support Compare And
+Swap (CAS) semantics. In the following example the \splc{enqueue} routine
+(a naive implementation of a Michael and Scott enqueue function), uses the
+\scode{compare} clause, with the \scode{capture} clause, to perform and compare
+(\splc{q->head == node->next}) and swap (\splc{if-else} assignments) of the
+form: 
+\begin{description}[noitemsep,labelindent=5mm,widest=f90]
+\item \splc{{ r = x == e; if(r) { x = d; } else { v = x; } }}.
+\end{description}
+The example program concurrently enqueues nodes from an array of nodes (\splc{nodes[N]}).
+Since the equivalence of Fortran pointers can be determined only with a function (such as associated),
+no Fortran version is provided here. The use of the associated function in an atomic compare syntax is
+being considered in a future release.
+
+\cexample[5.1]{cas}{2}
+%\ffreeexample[5.1]{cas}{2}

@@ -1,9 +1,8 @@
 ! @@name:	lock_owner.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	link
 ! @@expect:	success
-! @@version:    omp_5.1
+! @@version:	omp_5.1
         program lock
         use omp_lib
         integer :: x

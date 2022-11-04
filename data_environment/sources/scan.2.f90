@@ -1,9 +1,8 @@
-! @@name:       scan.2
-! @@type:       F-free
-! @@compilable: yes
-! @@linkable:   yes
-! @@expect:     success
-! @@version: omp_5.0
+! @@name:	scan.2
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
+! @@version:	omp_5.0
 program exclusive_scan
    implicit none
    integer, parameter :: n = 100

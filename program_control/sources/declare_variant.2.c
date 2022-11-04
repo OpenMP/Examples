@@ -1,10 +1,9 @@
 /*
-* @@name: declare_variant.2
-* @@type: C
-* @@compilable: yes
-* @@linkable: no
-* @@expect: success
-* @@version: omp_5.0
+* @@name:	declare_variant.2
+* @@type:	C
+* @@operation:	run
+* @@expect:	success
+* @@version:	omp_5.0
 */
 #include <omp.h>
 

@@ -1,9 +1,8 @@
 ! @@name:	task_dep.9
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	run
 ! @@expect:	success
-! @@version:    omp_5.0
+! @@version:	omp_5.0
 program example
    integer :: a, b, c, d
    !$omp parallel

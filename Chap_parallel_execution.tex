@@ -49,8 +49,10 @@ WORKSHARING CONSTRUCTS
 A worksharing construct distributes the execution of the associated region
 among the members of the team that encounter it.  There is an
 implied barrier at the end of the worksharing region
-(there is no barrier at the beginning). The worksharing
-constructs are:
+(there is no barrier at the beginning). 
+
+\newpage
+The worksharing constructs are:
 
 \begin{compactitem}
 
@@ -66,10 +68,10 @@ consisting of a loop.  A loop controlled by a loop construct is called
 an \plc{associated} loop.  Nested loops can form a single region when the 
 \code{collapse} clause (with an integer argument) designates the number of 
 \plc{associated} loops to be executed in parallel, by forming a 
-"single iteration space" for the specified number of nested loops.  
+``single iteration space'' for the specified number of nested loops.
 The \code{ordered} clause can also control multiple associated loops.
 
-An associated loop must adhere to a "canonical form" (specified in the 
+An associated loop must adhere to a ``canonical form'' (specified in the
 \plc{Canonical Loop Form} of the OpenMP Specifications document) which allows the 
 iteration count (of all associated loops) to be computed before the 
 (outermost) loop is executed. %[58:27-29].  

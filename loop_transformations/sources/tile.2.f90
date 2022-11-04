@@ -1,10 +1,8 @@
-! @@name:       tile.2
-! @@type:       F-free
-! @@compilable: yes
-! @@linkable:   no
-! @@expect:     success
-! @@version:    omp_5.1
-
+! @@name:	tile.2
+! @@type:	F-free
+! @@operation:	compile
+! @@expect:	success
+! @@version:	omp_5.1
 subroutine func1(A)
     integer :: A(128,100)
     integer :: i, j

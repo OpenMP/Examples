@@ -1,10 +1,9 @@
 /*
-* @@name:       ompt_start.1
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   yes
-* @@expect:     success
-* @@version:    omp_5.0
+* @@name:	ompt_start.1
+* @@type:	C
+* @@operation:	link
+* @@expect:	success
+* @@version:	omp_5.0
 */
 #include <stdio.h>
 #include <omp.h>

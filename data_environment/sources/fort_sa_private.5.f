@@ -1,11 +1,10 @@
 ! @@name:	fort_sa_private.5
 ! @@type:	F-fixed
-! @@compilable:	maybe
-! @@linkable:	maybe
-! @@expect:	rt-error
-! @@version:    omp_5.1
+! @@operation:	run
+! @@expect:	unspecified
+! @@version:	omp_5.1
       SUBROUTINE SUB1(X)
-        DIMENSION X(10)
+        DIMENSION X(*)
 
         ! This use of X does not conform to the
         ! specification. It would be legal Fortran 90,
@@ -19,7 +18,7 @@
       PROGRAM PRIV_RESTRICT5
         COMMON /BLOCK5/ A
 
-        DIMENSION B(10)
+        DIMENSION A(1),B(10)
         EQUIVALENCE (A,B(1))
 
         ! the common block has to be at least 10 words
@@ -39,3 +38,4 @@
 !$OMP     END MASKED
 
 !$OMP   END PARALLEL
+      END PROGRAM PRIV_RESTRICT5

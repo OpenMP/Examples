@@ -1,9 +1,8 @@
 /*
 * @@name:	udr.6
 * @@type:	C++
-* @@compilable:	no
-* @@linkable:	no
-* @@expect:	success
+* @@operation:	view
+* @@expect:	unspecified
 * @@version:	omp_4.0
 */
 #include <algorithm>

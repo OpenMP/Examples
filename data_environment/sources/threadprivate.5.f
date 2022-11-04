@@ -1,8 +1,8 @@
 ! @@name:	threadprivate.5
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	run
 ! @@expect:	success
+! @@version:	pre_omp_3.0
       PROGRAM INC_GOOD2
         INTEGER, ALLOCATABLE, SAVE :: A(:)
         INTEGER, POINTER, SAVE :: PTR

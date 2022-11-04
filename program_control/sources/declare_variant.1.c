@@ -1,12 +1,10 @@
 /*
-* @@name: declare_variant.1
-* @@type: C
-* @@compilable: yes
-* @@linkable: yes 
-* @@expect: success
-* @@version: omp_5.1
+* @@name:	declare_variant.1
+* @@type:	C
+* @@operation:	run
+* @@expect:	success
+* @@version:	omp_5.1
 */
-
 #define N 100
 #include <stdio.h>
 #include <omp.h>

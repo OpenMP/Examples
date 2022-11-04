@@ -1,12 +1,10 @@
 /*
 * @@name:	cpp_reference.1
 * @@type:	C++
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
 * @@version:	omp_4.5
 */
-
 void task_body (int &);
 void gen_task (int &x) { // on orphaned task construct reference argument
   #pragma omp task // x is implicitly determined firstprivate(x)
@@ -23,4 +21,3 @@ void test (int &y, int &z) {
     gen_task (y);
   }
 }
-

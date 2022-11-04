@@ -1,14 +1,59 @@
 #!/bin/bash
 
-# call ../util/chk_tags.x to check tags in source codes
+# call util/chk_tags.x to check tags in source codes
 
-BASE_DIR=$(dirname $0)
-UTIL_DIR=${BASE_DIR}/../util
-chk_tags=$UTIL_DIR/chk_tags.x
+BASE_DIR=$(dirname $0)/..
 CURR_DIR=$(pwd)
+UTIL_DIR=$BASE_DIR/util
+chk_tags=$UTIL_DIR/chk_tags.x
+log_file=chk_tags.log
 
 cd $UTIL_DIR; make chk_tags.x; cd $CURR_DIR
 
 echo "Running $chk_tags ..."
-$chk_tags ${BASE_DIR}/../*/sources/* 2>&1 | tee -a chk_tags.log
+
+# check specific files
+cnt=0
+while (($#)); do
+  (( cnt = cnt + 1 ))
+  ff=$1
+  echo $ff | grep '/' &> /dev/null
+  if [[ $? == 0 ]]; then
+    flist=$(ls $ff)
+  elif [[ $ff =~ .tex$ ]]; then
+    flist=$(ls $BASE_DIR/*/$ff)
+  else
+    flist=$(ls $BASE_DIR/*/sources/$ff)
+  fi
+  for f in $flist; do
+    if [[ $f =~ .tex$ ]]; then
+      echo "
+>>> version tags in $f" | tee -a $log_file
+      $chk_tags -vtag $f 2>&1 | tee -a $log_file
+    else
+      echo "
+>>> source tags and line length of $f" | tee -a $log_file
+      $chk_tags -sc $f 2>&1 | tee -a $log_file
+      $chk_tags -clen $f 2>&1 | tee -a $log_file
+    fi
+  done
+  shift
+done
+[[ $cnt -gt 0 ]] && exit
+
+# check all files
+echo "
+>>> Checking version tags in tex files" | tee -a $log_file
+$chk_tags -vtag $BASE_DIR/*/*.tex 2>&1 | tee -a $log_file
+echo "
+>>> Checking tags and line length of source files" | tee -a $log_file
+$chk_tags -sc $BASE_DIR/*/sources/* 2>&1 | tee -a $log_file
+$chk_tags -clen $BASE_DIR/*/sources/* 2>&1 | tee -a $log_file
+
+echo "
+>>> Checking if all source files are referenced in tex files" | tee -a $log_file
+$chk_tags -v -list -vtag $BASE_DIR/*/*.tex | sort > msrc_in_tex.list
+ls $BASE_DIR/*/sources/* | sort > msrc_files.list
+diff -p msrc_in_tex.list msrc_files.list 2>&1 | tee -a $log_file
+\rm -f msrc_in_tex.list msrc_files.list
 

@@ -1,8 +1,8 @@
 ! @@name:	reduction.2
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
+! @@version:	pre_omp_3.0
   SUBROUTINE REDUCTION2(A, B, C, D, X, Y, N)
     REAL :: X(*), A, D
     INTEGER :: Y(*), N, B, C

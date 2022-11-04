@@ -1,10 +1,9 @@
 /*
-* @@name: allocators.4
-* @@type: C
-* @@compilable: yes
-* @@linkable: no
-* @@expect: success
-* @@version: omp_5.1
+* @@name:	allocators.4
+* @@type:	C
+* @@operation:	compile
+* @@expect:	success
+* @@version:	omp_5.1
 */
 #include <omp.h>
 #include <stdio.h>

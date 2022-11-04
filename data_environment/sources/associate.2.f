@@ -1,7 +1,6 @@
 ! @@name:	associate.2
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	link
 ! @@expect:	success
 ! @@version:	omp_4.0
       program example

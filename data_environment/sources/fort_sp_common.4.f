@@ -1,8 +1,8 @@
 ! @@name:	fort_sp_common.4
 ! @@type:	F-fixed
-! @@compilable:	no
-! @@linkable:	no
-! @@expect:	failure
+! @@operation:	compile
+! @@expect:	ct-error
+! @@version:	pre_omp_3.0
       SUBROUTINE COMMON_WRONG()
         COMMON /C/ X,Y
 ! Incorrect because X is a constituent element of C

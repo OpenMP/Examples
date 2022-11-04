@@ -1,8 +1,8 @@
 ! @@name:	fpriv_sections.1
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	run
 ! @@expect:	success
+! @@version:	pre_omp_3.0
 program section
     use omp_lib
     integer :: section_count = 0

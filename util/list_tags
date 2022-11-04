@@ -1,0 +1,134 @@
+#!/usr/bin/env python3
+
+import sys
+import re
+from enum import Enum
+
+class Pflag(Enum):
+   list = 0
+   vtag = 1
+   clen = 2
+   env  = 3
+   fenv = 4
+tag_names = ['name', 'type', 'operation', 'expect', 'version', 'env', 'depend']
+total_cnt = 0
+
+def print_hline():
+   a = 'filename'
+   for tag in tag_names:
+      a += ',' + tag
+   print(a)
+
+def esc_vstr(tag, val):
+   if tag != 'env' and tag != 'depend':
+      return val
+   if not ('"' in val or ',' in val):
+      return val
+   a = '"'
+   for v in val:
+      if v == '"':
+         a += '"'
+      a += v
+   a += '"'
+   return a
+
+def list_tags(fname, pflag):
+   global total_cnt
+   with open(fname, 'r') as f:
+      tags = {}
+      cnt = 0
+      for line in f:
+         idx = line.find("@@")
+         if idx >= 0:
+            m = re.split('[:\t ]+', line[idx+2:], 1)
+            if pflag == Pflag.env or pflag == Pflag.fenv:
+               if m[0] == 'env':
+                  cnt += 1
+                  if pflag == Pflag.fenv and cnt == 1:
+                     print(">> file =", fname)
+                  print("export {}".format(m[1]),end='')
+            else:
+               cnt += 1
+               tags[m[0]] = re.sub('\n', '', m[1])
+         elif cnt > 0:
+            break
+      if cnt > 0 and pflag == Pflag.vtag:
+         idx = fname.rfind('/') + 1
+         if idx < 1:
+            idx = 0
+         a = '\\newlabel{ex_vtag:'+fname[idx:]+'}{{'
+         tag = 'version'
+         if tag in tags:
+            a += re.sub("omp_","",tags[tag])
+         a += '}{'+'{0:d}'.format(cnt)+'}{}{}{}}'
+         print(a)
+      elif pflag == Pflag.list:
+         total_cnt += 1
+         if total_cnt == 1:
+            print_hline()
+         a = fname
+         for tag in tag_names:
+            a += ','
+            if tag in tags:
+               a += esc_vstr(tag, tags[tag])
+         print(a)
+   return cnt
+
+def check_lln(fname, lsize):
+   with open(fname, 'r') as f:
+      cnt, s, lineno = 0, 0, 0
+      for line in f:
+         lineno += 1
+         idx = line.find("@@")
+         if idx >= 0:
+            s += 1
+            if s == 1 and line.find("!", 0, idx) < 0:
+               s += 2
+         else:
+            m = len(line) - 1
+            if m > lsize:
+               cnt += 1
+               if cnt == 1:
+                  print(">>> file =", fname)
+               print('  line {0:d}'.format(lineno), end='')
+               if s > 0:
+                  print(" (S-{0:d})".format(lineno-s), end='')
+               print(': nchars = {0:d}'.format(m))
+   return cnt
+
+def main():
+   pflag = Pflag.list
+   lsize = 75
+   for arg in sys.argv[1:]:
+      if arg == '-list':
+         pflag = Pflag.list
+      elif arg == '-vtag':
+         pflag = Pflag.vtag
+      elif arg[:5] == '-clen':
+         pflag = Pflag.clen
+         if len(arg) > 6 and arg[5] == '=':
+            lsize = int(arg[6:])
+            if lsize < 2:
+               lsize = 75
+      elif arg == '-env':
+         pflag = Pflag.env
+      elif arg == '-fenv':
+         pflag = Pflag.fenv
+      elif arg == '-h' or arg == '-help':
+         print("""usage: list_tags [options] [-h] <files>
+available options -
+  -list        ; list tags in csv format
+  -vtag        ; create version tag info for use in latex file
+  -env|-fenv   ; print env tag values
+  -clen=<len>  ; check line length, default <len>=75
+multiple files may be specified""")
+         break
+      elif pflag == Pflag.clen:
+         check_lln(arg, lsize)
+      else:
+         list_tags(arg, pflag)
+   return 0
+
+if __name__ == "__main__":
+   sys.exit(main())
+

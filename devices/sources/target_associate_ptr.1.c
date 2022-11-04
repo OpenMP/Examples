@@ -1,9 +1,8 @@
 /*
-* @@name:       target_associate_ptr.1
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   yes
-* @@expect:     success
+* @@name:	target_associate_ptr.1
+* @@type:	C
+* @@operation:	run
+* @@expect:	success
 * @@version:	omp_4.5
 */
 #include <stdio.h>

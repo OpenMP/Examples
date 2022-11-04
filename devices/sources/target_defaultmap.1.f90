@@ -1,9 +1,8 @@
-! @@name:       target_defaultmap.1
-! @@type:       F-free
-! @@compilable: yes
-! @@linkable:   yes
-! @@expect:     success
-! @@version:    omp_5.0
+! @@name:	target_defaultmap.1
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
+! @@version:	omp_5.0
 program defaultmap
   integer, parameter :: N=2
 
@@ -13,15 +12,12 @@ program defaultmap
   end type
 
   integer             :: s,s1,s2,s3 !! SCALAR: variable (integer)
-
   integer,target      :: A(N)       !! AGGREGATE: Array
   type(DDT_sA)        :: D          !! AGGREGATE: Derived Data Type (D)
-
   integer,allocatable :: H(:)       !! ALLOCATABLE: Heap allocated array
-   
-  integer,pointer     :: ptrA(:)    !! POINTER: points to Array
-  
-  ! Assign vaues to scalar, Array, Allocatable, and Pointers
+  integer,pointer     :: ptrA(:)    !! POINTER: points to array
+
+  ! Assign values to scalar, array, allocatable, and pointers
 
     s=2; 
     s1=0;   s2=0;     s3=0
@@ -72,9 +68,10 @@ program defaultmap
         print*," PASSED 2 of 4"
 
 !! Target Region 3
-                !!defaultmap & explicit map with variables in same category
+            !! defaultmap & explicit data-sharing clause
+            !! with variables in same category
     s1=1; s2=1; s3=1
-    !$omp defaultmap(tofrom: scalar) map(firstprivate: s1,s2)
+    !$omp target defaultmap(tofrom: scalar) firstprivate(s1,s2)
 
         s1 = s1+5;          !! firstprivate (s1 value not returned to host)
         s2 = s2+5;          !! firstprivate (s2 value not returned to host)
@@ -87,15 +84,15 @@ program defaultmap
     A(1)=0;   A(2)=0
     D%A(1)=0; D%A(2)=0
     H(1)=0;   H(2)=0
-              !! non-allocated arrays & derived types are in AGGREGATE cat.
-              !! Allocatable Arrays are in ALLOCATABLE category
+              !! non-allocated arrays & derived types are in AGGREGATE cat
+              !! Allocatable arrays are in ALLOCATABLE category
               !! Scalars are explicitly mapped from
     !$omp target defaultmap(firstprivate: aggregate )  &
     !$omp&       defaultmap(firstprivate: allocatable) &
     !$omp&       map(from: s1, s2)
 
         A(1)=A(1)+1; D%A(1)=D%A(1)+1; H(1)=H(1)+1 !! changes to A, D%A, H
-        A(2)=A(2)+1; D%A(2)=D%A(2)+1; H(2)=H(2)+1 !!   not returned to host
+        A(2)=A(2)+1; D%A(2)=D%A(2)+1; H(2)=H(2)+1 !! not returned to host
         s1 = A(1)+D%A(1)+H(1)                     !! s1 returned to host
         s2 = A(2)+D%A(2)+H(1)                     !! s2 returned to host
 

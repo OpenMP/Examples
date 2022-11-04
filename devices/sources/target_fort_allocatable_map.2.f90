@@ -1,9 +1,8 @@
-! @@name:       target_fort_allocatable_map.2
-! @@type:       F-free
-! @@compilable: yes
-! @@linkable:   yes
-! @@expect:     unspecified
-! @@version:    omp_5.1
+! @@name:	target_fort_allocatable_map.2
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	unspecified
+! @@version:	omp_5.1
 program main
   implicit none
 

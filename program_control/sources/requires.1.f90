@@ -1,10 +1,8 @@
-! @@name:       requires.1
-! @@type:       F-free
-! @@compilable: yes
-! @@linkable:   yes
-! @@expect:     success
-! @@version:    omp_5.0
-
+! @@name:	requires.1
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
+! @@version:	omp_5.0
 module data
 !$omp requires unified_shared_memory
   type,public :: mypoints

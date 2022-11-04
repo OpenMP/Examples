@@ -1,7 +1,6 @@
 ! @@name:	device.4
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	run
 ! @@expect:	success
 ! @@version:	omp_5.0
 program device_mem

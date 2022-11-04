@@ -1,8 +1,8 @@
 ! @@name:	nestable_lock.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
+! @@version:	pre_omp_3.0
       MODULE DATA
         USE OMP_LIB, ONLY: OMP_NEST_LOCK_KIND
         TYPE LOCKED_PAIR

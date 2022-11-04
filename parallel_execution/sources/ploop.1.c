@@ -1,9 +1,9 @@
 /*
 * @@name:	ploop.1
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
+* @@version:	pre_omp_3.0
 */
 void simple(int n, float *a, float *b)
 {

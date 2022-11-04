@@ -1,8 +1,7 @@
 ! @@name:	atomic_restrict.2
 ! @@type:	F-fixed
-! @@compilable:	maybe
-! @@linkable:	no
-! @@expect:	failure
+! @@operation:	compile
+! @@expect:	unspecified
 ! @@version:	omp_3.1
       SUBROUTINE SUB()
         COMMON /BLK/ R

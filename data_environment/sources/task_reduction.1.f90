@@ -1,9 +1,8 @@
-! @@name:       task_reduction.1
-! @@type:       F-free
-! @@compilable: yes
-! @@linkable:   yes
-! @@expect:     success
-
+! @@name:	task_reduction.1
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
+! @@version:	omp_5.0
 module m
     type node_t
         integer :: val
@@ -69,4 +68,3 @@ program main
     !$omp end parallel
 
 end program main
-

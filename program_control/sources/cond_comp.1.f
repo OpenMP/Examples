@@ -1,8 +1,8 @@
 ! @@name:	cond_comp.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	run
 ! @@expect:	success
+! @@version:	pre_omp_3.0
       PROGRAM EXAMPLE
 
 C234567890

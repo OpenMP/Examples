@@ -1,9 +1,8 @@
-! @@name:       unroll.4
-! @@type:       F-free
-! @@compilable: yes
-! @@linkable:   no
-! @@expect:     success
-! @@version:    omp_5.1
+! @@name:	unroll.4
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
+! @@version:	omp_5.1
 subroutine unroll_partial_remainder(n, A)
    implicit none
    integer :: n, i

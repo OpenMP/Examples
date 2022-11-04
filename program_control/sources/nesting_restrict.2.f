@@ -1,8 +1,8 @@
 ! @@name:	nesting_restrict.2
 ! @@type:	F-fixed
-! @@compilable:	maybe
-! @@linkable:	no
-! @@expect:	failure
+! @@operation:	compile
+! @@expect:	unspecified
+! @@version:	pre_omp_3.0
        SUBROUTINE WORK1(I,N)
        INTEGER I, N
        INTEGER J

@@ -1,9 +1,9 @@
 /*
 * @@name:	nested_loop.2
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
+* @@version:	pre_omp_3.0
 */
 void work(int i, int j) {}
 

@@ -1,10 +1,9 @@
 /*
 * @@name:	unroll.1
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
-* @@version:    omp_5.1
+* @@version:	omp_5.1
 */
 void unroll(double A[], int n)
 {
@@ -27,4 +26,3 @@ void unroll_full_equivalent(double A[])
    A[2] = 0;
    A[3] = 0;
 }
-

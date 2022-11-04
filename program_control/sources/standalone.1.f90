@@ -1,11 +1,8 @@
 ! @@name:	standalone.1
 ! @@type:	F-free
-! @@compilable:	no
-! @@linkable:	no
-! @@expect:	failure
-! @@version:     omp_3.1
-
-
+! @@operation:	compile
+! @@expect:	ct-error
+! @@version:	omp_3.1
 SUBROUTINE STANDALONE_WRONG()
 
   INTEGER  A

@@ -1,9 +1,8 @@
-! @@name: allocators.3
-! @@type: F-free
-! @@compilable: yes
-! @@linkable: no
-! @@expect: failure
-! @@version: omp_5.2
+! @@name:	allocators.3
+! @@type:	F-free
+! @@operation:	compile
+! @@expect:	ct-error
+! @@version:	omp_5.2
 subroutine broken_auto_deallocation
    use omp_lib
    implicit none

@@ -1,10 +1,9 @@
 /*
-* @@name: metadirective.3
-* @@type: C
-* @@compilable: yes
-* @@linkable: yes
-* @@expect: success
-* @@version: omp_5.2
+* @@name:	metadirective.3
+* @@type:	C
+* @@operation:	run
+* @@expect:	success
+* @@version:	omp_5.2
 */
 #include <stdio.h>
 #include  <math.h>

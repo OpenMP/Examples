@@ -2,7 +2,7 @@
 \label{chap:openmp_affinity}
 
 OpenMP Affinity consists of a \code{proc\_bind} policy (thread affinity policy) and a specification of
-places (\texttt{"}location units\texttt{"} or \plc{processors} that may be cores, hardware
+places (``location units'' or \plc{processors} that may be cores, hardware
 threads, sockets, etc.).  
 OpenMP Affinity enables users to bind computations on specific places.
 The placement will hold for the duration of the parallel region. 
@@ -26,7 +26,7 @@ SMT is enabled, a processor is a hardware thread (HW-thread). (This is the
 usual case; but actually, the execution unit is implementation defined.) Processor
 numbers are numbered sequentially from 0 to the number of cores less one (without SMT), or
 0 to the number HW-threads less one (with SMT). OpenMP places use the processor number to designate
-binding locations (unless an \texttt{"}abstract name\texttt{"} is used.) 
+binding locations (unless an ``abstract name'' is used.) 
 
 
 The processors available to a process may be a subset of the system's

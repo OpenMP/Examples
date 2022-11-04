@@ -1,12 +1,10 @@
 /*
 * @@name:	udr.3
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	yes
+* @@operation:	run
 * @@expect:	success
 * @@version:	omp_4.0
 */
-
 #include <stdio.h>
 #define N 100
 

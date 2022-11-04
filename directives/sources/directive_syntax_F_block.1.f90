@@ -1,9 +1,8 @@
-! @@name:       directive_syntax_F_block.1
-! @@type:       F-free
-! @@compilable: yes
-! @@linkable:   yes
-! @@expect:     success
-! @@version:    omp_5.1
+! @@name:	directive_syntax_F_block.1
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
+! @@version:	omp_5.1
   program main
 
      use omp_lib

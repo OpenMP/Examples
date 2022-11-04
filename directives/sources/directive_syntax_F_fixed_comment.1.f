@@ -1,8 +1,8 @@
-! @@name:       directive_syntax_F_fixed_comment.1
-! @@type:       F-fixed
-! @@compilable: yes
-! @@linkable:   yes
-! @@expect:     success
+! @@name:	directive_syntax_F_fixed_comment.1
+! @@type:	F-fixed
+! @@operation:	run
+! @@expect:	success
+! @@version:	pre_omp_3.0
       program main
       include 'omp_lib.h'
       integer NT

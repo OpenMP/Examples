@@ -1,7 +1,6 @@
 ! @@name:	collapse.3
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
 ! @@version:	omp_3.0
       program test

@@ -1,10 +1,10 @@
 /*
-* @@name: target_offload_control.1
-* @@type: C
-* @@compilable: yes
-* @@linkable: yes
-* @@expect: success
-* @@version: omp_5.0
+* @@name:	target_offload_control.1
+* @@type:	C
+* @@operation:	run
+* @@expect:	success
+* @@version:	omp_5.0
+* @@env:	OMP_TARGET_OFFLOAD=default
 */
 #include    <omp.h>
 #include  <stdio.h>
@@ -39,7 +39,6 @@ offload_policy_t get_offload_policy()
 
 int main()
 {
-   int i;
    int device_num, on_init_dev;
 
    // get policy from OMP_TARGET_OFFLOAD variable

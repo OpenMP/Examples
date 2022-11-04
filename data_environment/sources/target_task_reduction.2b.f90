@@ -1,10 +1,8 @@
 ! @@name:	target_task_reduction.2b
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	run
 ! @@expect:	success
 ! @@version:	omp_5.2
-
 program target_task_reduction_ex2b
    interface
       subroutine device_compute(res)
@@ -36,4 +34,3 @@ subroutine host_compute(sum)
    integer :: sum
    sum = 1
 end subroutine
-

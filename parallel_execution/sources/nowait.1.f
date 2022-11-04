@@ -1,8 +1,8 @@
 ! @@name:	nowait.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
+! @@version:	pre_omp_3.0
         SUBROUTINE NOWAIT_EXAMPLE(N, M, A, B, Y, Z)
 
         INTEGER N, M

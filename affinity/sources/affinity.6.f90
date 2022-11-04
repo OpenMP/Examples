@@ -1,8 +1,7 @@
-! @@name:       affinity.6
-! @@type:       F-free
-! @@compilable: yes
-! @@linkable:   no
-! @@expect:     success
+! @@name:	affinity.6
+! @@type:	F-free
+! @@operation:	compile
+! @@expect:	success
 ! @@version:	omp_5.0
 subroutine task_affinity(A, N)
 
@@ -21,4 +20,3 @@ subroutine task_affinity(A, N)
    !$omp taskwait
 
 end subroutine
-

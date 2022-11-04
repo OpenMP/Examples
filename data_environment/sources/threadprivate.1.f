@@ -1,8 +1,8 @@
 ! @@name:	threadprivate.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
+! @@version:	pre_omp_3.0
       INTEGER FUNCTION INCREMENT_COUNTER()
         COMMON/INC_COMMON/COUNTER
 !$OMP   THREADPRIVATE(/INC_COMMON/)

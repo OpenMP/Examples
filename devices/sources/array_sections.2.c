@@ -1,9 +1,8 @@
 /*
 * @@name:	array_sections.2
 * @@type:	C
-* @@compilable:	no
-* @@linkable:	no
-* @@expect:	failure
+* @@operation:	compile
+* @@expect:	ct-error
 * @@version:	omp_4.0
 */
 void foo ()

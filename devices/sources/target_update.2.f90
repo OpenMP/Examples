@@ -1,9 +1,8 @@
 ! @@name:	target_update.2
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
-! @@version:     omp_4.0
+! @@version:	omp_4.0
 subroutine vec_mult(p, v1, v2, N)
    interface
       logical function maybe_init_again (v1, N)

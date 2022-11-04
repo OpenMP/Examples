@@ -1,9 +1,9 @@
 /*
-* @@name:       directive_syntax_pragma.1
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   yes
-* @@expect:     success
+* @@name:	directive_syntax_pragma.1
+* @@type:	C
+* @@operation:	run
+* @@expect:	success
+* @@version:	pre_omp_3.0
 */
 #include   <omp.h>
 #include <stdio.h>

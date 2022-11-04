@@ -1,11 +1,10 @@
 /*
-* @@name:       task_reduction.1
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   yes
-* @@expect:     success
+* @@name:	task_reduction.1
+* @@type:	C
+* @@operation:	run
+* @@expect:	success
+* @@version:	omp_5.0
 */
-
 #include<stdlib.h>
 #include<stdio.h>
 #define N 10
@@ -34,7 +33,7 @@ int linked_list_sum(node_t *p)
 }
 
 
-int main(int argc, char *argv[]) {
+int main() {
     int i;
 //                           Create the root node.
     node_t* root = (node_t*) malloc(sizeof(node_t));
@@ -60,4 +59,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-

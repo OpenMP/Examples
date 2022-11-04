@@ -36,7 +36,7 @@ continues execution at the end of the named region.
 The \code{cancel} construct is also a cancellation point for any other thread of the team 
 to also continue execution at the end of the named region.  
 
-Also, once the specified region has been activated for cancellation any thread that encounnters 
+Also, once the specified region has been activated for cancellation any thread that encounters
 a \code{cancellation}~\code{point} construct with the same named region (\plc{construct-type-clause}),
 continues execution at the end of the region.
 
@@ -80,7 +80,7 @@ modified or restricted meaning, relative to when the constructs are uncombined. 
 %construct with one of the loops constructs \code{do} or \code{for}.  The
 %\code{parallel do SIMD} and \code{parallel for SIMD} constructs are composite constructs (composed from
 %the parallel loop constructs and the \code{SIMD} construct), because the \code{collapse} clause must
-%explicitly address the ordering of loop chunking \plc{and} SIMD "combined" execution.
+%explicitly address the ordering of loop chunking \plc{and} SIMD ``combined'' execution.
 
 Certain nestings are forbidden, and often the reasoning is obvious.  For example, worksharing constructs cannot be nested, and
 the \code{barrier} construct cannot be nested inside a worksharing construct, or a \code{critical} construct. 
@@ -108,6 +108,7 @@ chapter in the OpenMP Specifications document.
 \input{program_control/nested_loop}
 \input{program_control/nesting_restrict}
 \input{program_control/target_offload}
+\input{program_control/pause_resource}
 \input{program_control/reproducible}
 \input{program_control/interop}
 \input{program_control/utilities}

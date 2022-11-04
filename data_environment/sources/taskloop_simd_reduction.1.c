@@ -1,8 +1,7 @@
 /*
 * @@name:	taskloop_simd_reduction.1
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	yes
+* @@operation:	run
 * @@expect:	success
 * @@version:	omp_5.1
 */

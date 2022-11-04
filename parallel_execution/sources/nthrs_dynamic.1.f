@@ -1,8 +1,8 @@
 ! @@name:	nthrs_dynamic.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	link
 ! @@expect:	success
+! @@version:	pre_omp_3.0
       PROGRAM EXAMPLE
         INCLUDE "omp_lib.h"      ! or USE OMP_LIB
         CALL OMP_SET_DYNAMIC(.FALSE.)

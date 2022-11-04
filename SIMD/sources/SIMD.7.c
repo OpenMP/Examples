@@ -1,8 +1,7 @@
 /*
 * @@name:	SIMD.7
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	yes
+* @@operation:	run
 * @@expect:	success
 * @@version:	omp_4.0
 */
@@ -33,6 +32,6 @@ int main(void)
    for (i=0; i < N; i++) {
       a[i] = fib(b[i]);
    }
-   printf("Done a[%d] = %d\n", N-1, a[N-1]);
+   printf("Done a[%d] = %d\n", N-1, a[N-1]); //Done a[44] = 701408733
    return 0;
 }

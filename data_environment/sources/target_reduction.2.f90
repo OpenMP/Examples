@@ -1,10 +1,8 @@
-! @@name: target_reduction.2
-! @@type: F-free
-! @@compilable: yes
-! @@linkable: yes
-! @@expect: success
-! @@version: omp_5.0
-
+! @@name:	target_reduction.2
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
+! @@version:	omp_5.0
 program target_reduction_ex2
    interface
       function f(res)

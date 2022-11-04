@@ -1,0 +1,44 @@
+A Few Utilities for Checking and Listing Tags in Source Codes
+
+- chk_tags.x (created from 'make chk_tags.x')
+
+ A utility to check validity of @@<tags> in source codes.
+ The tool can also be used to fix issues when possible.
+ This tool is used by script '../sources/check_tags'.
+
+ Usage: chk_tags.x [-options] filename ...
+ options -
+  -sc      ; strictly check for "@@<tag>:"
+  -vtag    ; check version tags in tex file
+  -clen<n> ; check line length over a limit (def <n>=75)
+  -fix     ; apply tag fix if needed (to <filename>_fix)
+  -list    ; list tags (with -vtag to list version tags)
+
+- get_tags
+
+ Generate a source template with proper source tags.
+
+ Usage: gen_tags [-tags] [-<tag_name> <value>...] [<filename>]
+ options -
+   -tags                ; list supported tags and values
+   -<tag_name> <value>  ; specify a tag and its value
+   <filename>           ; give filename in form of <name.seqno.ext>
+
+ Any of the tag information may be entered at the prompt later.
+ If <filename> is not given, construct it from <name> and <type>.
+ For an existing file with tags, print tags in the file;
+ for an existing file without tags, add tags to the file;
+ otherwise, create a file with new tags.
+
+- list_tags
+
+ List tag information in source codes.  This tool is used by make
+ in the top-level directory to generate generated-include.tex.
+
+ Usage: list_tags [options] [-h] <files>
+ options -
+  -list        ; list tags in csv format
+  -vtag        ; create version tag info for use in latex file
+  -env|-fenv   ; print env tag values
+  -clen=<len>  ; check line length, default <len>=75
+ Multiple files may be specified

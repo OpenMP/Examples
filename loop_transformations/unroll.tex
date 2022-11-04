@@ -63,7 +63,7 @@ In the latter case the construct generates a loop with a single iteration.
 When the iteration count is not a multiple of the \plc{unroll-factor},
 iterations that should not produce executions must be conditionally
 protected from execution. In this example, the first function
-unrolls a loop that has a variable iteraction count. Since the \code{unroll}
+unrolls a loop that has a variable iteration count. Since the \code{unroll}
 construct uses a \code{partial(}~\plc{4}~\code{)} clause, the compiler will need to
 create code that can account for cases when the iteration count is not a
 multiple of 4. A brute-force, simple-to-understand approach for implementing 

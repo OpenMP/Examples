@@ -1,10 +1,8 @@
-! @@name: array_shaping.1
-! @@type: F-free
-! @@compilable: yes
-! @@linkable: no
-! @@expect: success
-! @@version: omp_5.2
-
+! @@name:	array_shaping.1
+! @@type:	F-free
+! @@operation:	compile
+! @@expect:	success
+! @@version:	omp_5.2
 module m
    interface
       subroutine do_work(a, nx, ny)

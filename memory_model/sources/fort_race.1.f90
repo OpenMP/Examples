@@ -1,8 +1,8 @@
 ! @@name:	fort_race.1
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
-! @@expect:	rt-error
+! @@operation:	compile
+! @@expect:	unspecified
+! @@version:	pre_omp_3.0
 SUBROUTINE SHARED_RACE
 
   INCLUDE "omp_lib.h"      ! or USE OMP_LIB

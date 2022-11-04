@@ -1,0 +1,22 @@
+#!/bin/bash
+
+dryrun=0
+if [ "$1" = "revert" ]; then
+   for i in `ls */sources/*_orig`; do
+      nf=`echo $i | sed -e 's/_orig$//'`
+      echo "file -- $i --> $nf"
+      if [ $dryrun -eq 0 ]; then
+         mv $nf ${nf}_fix
+         mv $i $nf
+      fi
+   done
+else
+   for i in `ls */sources/*_fix`; do
+      nf=`echo $i | sed -e 's/_fix$//'`
+      echo "file -- $i --> $nf"
+      if [ $dryrun -eq 0 ]; then
+         mv $nf ${nf}_orig
+         mv $i $nf
+      fi
+   done
+fi

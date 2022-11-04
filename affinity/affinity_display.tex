@@ -37,9 +37,9 @@ not changed, so affinity is NOT reported.
 In the last parallel region, the thread affinities are reported
 because the thread affinity has changed.
 
-\cexample[5.0]{affinity_display}{1}
+\cexample[5.0]{affinity_display}{1}[1]
 
-\ffreeexample[5.0]{affinity_display}{1}
+\ffreeexample[5.0]{affinity_display}{1}[1]
 
 
 In the following example 2 threads are forked, and each executes on a socket. Next,
@@ -69,10 +69,11 @@ the parallel nesting level (\%L), the ancestor thread number (\%a), the thread n
 and the thread affinity (\%A). In the nested parallel region within the \plc{socket\_work} routine
 the affinities for the threads on each socket are printed according to this format.
 
-\cexample[5.0]{affinity_display}{2}
+\cexample[5.0]{affinity_display}{2}[3]
 
-\ffreeexample[5.0]{affinity_display}{2}
+\ffreeexample[5.0]{affinity_display}{2}[3]
 
+%\newpage
 \index{affinity display!omp_get_affinity_format routine@\scode{omp_get_affinity_format} routine}
 \index{routines!omp_get_affinity_format@\scode{omp_get_affinity_format}}
 \index{omp_get_affinity_format routine@\scode{omp_get_affinity_format} routine}
@@ -87,14 +88,14 @@ Next, the \code{omp\_set\_affinity\_format()} API routine sets a user-defined
 format: \plc{host=\%20H thrd\_num=\%0.4n binds\_to=\%A}.   
 
 The host, thread number and affinity fields are specified by \plc{\%20H}, 
-\plc{\%0.4n} and \plc{\%A}: \plc{H}, \plc{n} and \plc{A} are single character "short names" 
+\plc{\%0.4n} and \plc{\%A}: \plc{H}, \plc{n} and \plc{A} are single character ``short names''
 for the host, thread\_num and thread\_affinity data to be printed,
-with format sizes of \plc{20}, \plc{4}, and "size as needed". 
+with format sizes of \plc{20}, \plc{4}, and ``size as needed''.
 The period (.) indicates that the field is displayed right-justified (default is left-justified) 
-and the "0" indicates that any unused space is to be prefixed with zeros 
-(e.g. instead of "1", "0001" is displayed for the field size of 4).
+and the ``0'' indicates that any unused space is to be prefixed with zeros
+(e.g. instead of ``1'', ``0001'' is displayed for the field size of 4).
 
-%The period (.) indicates that the field is displayed left-justified and the "0" indicates 
+%The period (.) indicates that the field is displayed left-justified and the ``0'' indicates
 %that leading zeros are to be added so that the total length for the display of this “n” (thread_num) field is 4.
 
 %The period (\plc{.}) indicates right justified and \plc{0} leading zeros.  
@@ -118,7 +119,6 @@ The maximum value for the number of characters (\plc{nchars}) returned by
 clause and the \plc{if(nchars >= max\_req\_store) max\_req\_store=nchars} statement. 
 It is used to report possible truncation (if \plc{max\_req\_store} > \plc{buffer\_store}).
 
-\newpage
 \cexample[5.0]{affinity_display}{3}
 
 \ffreeexample[5.0]{affinity_display}{3}

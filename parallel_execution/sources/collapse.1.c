@@ -1,12 +1,10 @@
 /*
 * @@name:	collapse.1
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
 * @@version:	omp_3.0
 */
-
 void bar(float *a, int i, int j, int k);
 
 int kl, ku, ks, jl, ju, js, il, iu,is;

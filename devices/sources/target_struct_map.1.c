@@ -1,9 +1,8 @@
 /*
-* @@name:       target_struct_map.1
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   yes
-* @@expect:     success
+* @@name:	target_struct_map.1
+* @@type:	C
+* @@operation:	run
+* @@expect:	success
 * @@version:	omp_5.1
 */
 #include <stdio.h>

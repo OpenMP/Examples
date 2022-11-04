@@ -1,7 +1,6 @@
 ! @@name:	SIMD.8
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	run
 ! @@expect:	success
 ! @@version:	omp_4.0
 module work

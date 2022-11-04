@@ -1,9 +1,8 @@
 ! @@name:	target_update.1
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
-! @@version:     omp_4.0
+! @@version:	omp_4.0
 subroutine vec_mult(p, v1, v2, N)
    real    ::  p(N), v1(N), v2(N)
    integer ::  i

@@ -1,9 +1,8 @@
 ! @@name:	standalone.2
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
-! @@version:     omp_3.1
+! @@version:	omp_3.1
 SUBROUTINE STANDALONE_OK()
   INTEGER  A
   A = 1

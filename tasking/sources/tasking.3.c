@@ -1,12 +1,10 @@
 /*
 * @@name:	tasking.3
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
 * @@version:	omp_3.0
 */
-
 typedef struct node node;
 struct node {
       int data;

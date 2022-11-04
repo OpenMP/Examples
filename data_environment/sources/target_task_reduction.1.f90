@@ -1,10 +1,8 @@
 ! @@name:	target_task_reduction.1
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	run
 ! @@expect:	success
 ! @@version:	omp_5.2
-
 program target_task_reduction_ex1
    interface
       subroutine device_compute(res)

@@ -1,9 +1,8 @@
 /*
-* @@name:       target_ptr_map.3a
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   no
-* @@expect:     failure
+* @@name:	target_ptr_map.3a
+* @@type:	C
+* @@operation:	compile
+* @@expect:	unspecified
 * @@version:	omp_5.1
 */
 #define N 100
@@ -37,7 +36,7 @@ int foo()
     // The initial value of p2 in the target region is undefined
     //   because map(y) may occur after map(p2[:0]).
     p2[1] = 4;      // accessing p2 is undefined
-  }
 
+  }
   return 0;
 }

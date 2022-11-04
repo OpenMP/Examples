@@ -1,10 +1,9 @@
 /*
-* @@name:        target_unstructured_data.1
-* @@type:        C++
-* @@compilable:  yes
-* @@linkable:    no
-* @@expect:      success
-* @@version:     omp_4.5
+* @@name:	target_unstructured_data.1
+* @@type:	C++
+* @@operation:	compile
+* @@expect:	success
+* @@version:	omp_4.5
 */
 class Matrix
 {
@@ -17,7 +16,7 @@ class Matrix
 
   ~Matrix() {
     // NOTE: delete map type should be used, since the corresponding 
-    // host data will cease to exist after the deconstructor is called.
+    // host data will cease to exist after the destructor is called.
 
     #pragma omp target exit data map(delete:v[0:len])
     delete[] v;

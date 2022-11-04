@@ -1,8 +1,8 @@
 ! @@name:	get_wtime.1
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	link
 ! @@expect:	success
+! @@version:	pre_omp_3.0
 subroutine work_to_be_timed
   use, intrinsic :: iso_c_binding, only: c_int
   interface

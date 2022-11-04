@@ -1,9 +1,9 @@
 /*
 * @@name:	get_nthrs.2
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
+* @@version:	pre_omp_3.0
 */
 #include <omp.h>
 void work(int i);

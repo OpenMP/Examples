@@ -1,9 +1,8 @@
 ! @@name:	task_dep.5
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
-! @@version:    omp_4.0
+! @@version:	omp_4.0
 ! Assume BS divides N perfectly
 subroutine matmul_depend (N, BS, A, B, C)
    implicit none

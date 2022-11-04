@@ -1,9 +1,8 @@
-! @@name:       unroll.3
-! @@type:       F-free
-! @@compilable: yes
-! @@linkable:   no
-! @@expect:     success
-! @@version:    omp_5.1
+! @@name:	unroll.3
+! @@type:	F-free
+! @@operation:	compile
+! @@expect:	success
+! @@version:	omp_5.1
 subroutine unroll3_partial(A)
    implicit none
    double precision :: A(*)

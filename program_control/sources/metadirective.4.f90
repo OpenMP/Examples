@@ -1,9 +1,8 @@
-! @@name: metadirective.4
-! @@type: F-free
-! @@compilable: yes
-! @@linkable: yes
-! @@expect: success
-! @@version: omp_5.2
+! @@name:	metadirective.4
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
+! @@version:	omp_5.2
 subroutine foo(a, n, use_gpu)
    integer :: n, a(n)
    logical :: use_gpu
@@ -22,14 +21,14 @@ subroutine foo(a, n, use_gpu)
 end subroutine
 
 subroutine bar (a, n, run_parallel, unbalanced)
-   use omp_lib, only : omp_get_thread_num
+   use omp_lib, only : omp_get_thread_num, omp_in_parallel
    integer :: n, a(n)
    logical :: run_parallel, unbalanced
 
    integer :: b=0
    !$omp begin metadirective when(user={condition(run_parallel)}: parallel)
 
-    if(omp_in_parallel() == 1 .and. omp_get_thread_num() == 0) &
+    if(omp_in_parallel() .and. omp_get_thread_num() == 0) &
        print *,"PASSED 2 of 3"
 
     !$omp metadirective &

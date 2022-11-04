@@ -1,9 +1,8 @@
-! @@name: allocators.1
-! @@type: F-free
-! @@compilable: yes
-! @@linkable: yes
-! @@expect: success
-! @@version: omp_5.2
+! @@name:	allocators.1
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
+! @@version:	omp_5.2
 program main
  use omp_lib
 
@@ -48,4 +47,3 @@ program main
    call omp_destroy_allocator(xy_alloc)
 
 end program
-

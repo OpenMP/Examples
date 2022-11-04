@@ -1,7 +1,6 @@
 ! @@name:	taskloop_simd_reduction.1
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	run
 ! @@expect:	success
 ! @@version:	omp_5.1
 program main

@@ -1,8 +1,8 @@
 ! @@name:	threadprivate.4
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
+! @@version:	pre_omp_3.0
        SUBROUTINE INC_GOOD()
         COMMON /T/ A
 !$OMP   THREADPRIVATE(/T/)

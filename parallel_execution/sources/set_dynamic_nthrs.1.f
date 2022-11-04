@@ -1,8 +1,8 @@
 ! @@name:	set_dynamic_nthrs.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
+! @@version:	pre_omp_3.0
       SUBROUTINE DO_BY_16(X, IAM, IPOINTS)
         REAL X(*)
         INTEGER IAM, IPOINTS

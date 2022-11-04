@@ -1,10 +1,9 @@
 /*
-* @@name: target_reduction.1
-* @@type: C
-* @@compilable: yes
-* @@linkable: yes
-* @@expect: success
-* @@version: omp_5.0
+* @@name:	target_reduction.1
+* @@type:	C
+* @@operation:	run
+* @@expect:	success
+* @@version:	omp_5.0
 */
 #include <stdio.h>
 int f(int);
@@ -12,7 +11,6 @@ int g(int);
 int main()
 {
    int sum1=0, sum2=0;
-   int i;
    const int n = 100;
 
    #pragma omp target teams distribute reduction(+:sum1)

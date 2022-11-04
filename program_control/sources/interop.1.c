@@ -1,10 +1,9 @@
 /*
-* @@name:       interop.1
-* @@type:       C
-* @@compilable: no
-* @@linkable:   no
-* @@expect:     success
-* @@version:    omp_5.1
+* @@name:	interop.1
+* @@type:	C
+* @@operation:	link
+* @@expect:	success
+* @@version:	omp_5.1
 */
 #include <omp.h>
 #include <stdio.h>

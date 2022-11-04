@@ -1,9 +1,8 @@
 ! @@name:	task_detach.1
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
-! @@version:    omp_5.0
+! @@version:	omp_5.0
 program main
   use omp_lib
   implicit none

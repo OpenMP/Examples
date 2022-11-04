@@ -1,8 +1,7 @@
 /*
 * @@name:	affinity.5
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
 * @@version:	omp_5.1
 */

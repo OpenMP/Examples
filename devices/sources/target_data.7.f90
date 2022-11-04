@@ -1,9 +1,8 @@
 ! @@name:	target_data.7
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
-! @@version:    omp_4.0
+! @@version:	omp_4.0
 module params
 integer, parameter :: THRESHOLD=1000000
 end module

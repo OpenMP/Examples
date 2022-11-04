@@ -1,9 +1,8 @@
 /*
-* @@name:       task_reduction.2
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   yes
-* @@expect:     success
+* @@name:	task_reduction.2
+* @@type:	C
+* @@operation:	run
+* @@expect:	success
 * @@version:	omp_5.0
 */
 #include <stdio.h>

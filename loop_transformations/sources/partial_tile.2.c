@@ -1,8 +1,7 @@
 /*
 * @@name:	partial_tile.2
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
 * @@version:	omp_5.1
 */

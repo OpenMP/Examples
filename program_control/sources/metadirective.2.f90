@@ -1,9 +1,8 @@
-! @@name: metadirective.2
-! @@type: F-free
-! @@compilable: yes
-! @@linkable: no
-! @@expect: success
-! @@version: omp_5.2
+! @@name:	metadirective.2
+! @@type:	F-free
+! @@operation:	compile
+! @@expect:	success
+! @@version:	omp_5.2
 program main                    !!Driver
   use omp_lib
   implicit none

@@ -1,16 +1,14 @@
-! @@name:       loop.1
-! @@type:       F-free
-! @@compilable: yes
-! @@linkable:   yes
-! @@expect:     success
-! @@version:    omp_5.0
-
+! @@name:	loop.1
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
+! @@version:	omp_5.0
 program main
   integer, parameter :: N=100
   real :: x(N), y(N) 
   real :: a = 2.0e0
 
-  x=(/ (i,i=1,N) /); y=1.0e0                    !! initialize
+  x=(/ (i,i=1,N) /); y=0.0e0                    !! initialize
 
   !$omp parallel
     !$omp loop

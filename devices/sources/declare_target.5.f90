@@ -1,7 +1,6 @@
 ! @@name:	declare_target.5
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
 ! @@version:	omp_4.0
 module my_global_array

@@ -1,10 +1,9 @@
 /*
-* @@name:       declare_target.2a
-* @@type:       C++
-* @@compilable: yes
-* @@linkable:   yes
-* @@expect:     success
-* @@version:    omp_5.1
+* @@name:	declare_target.2a
+* @@type:	C++
+* @@operation:	run
+* @@expect:	success
+* @@version:	omp_5.1
 */
 #include <iostream>
 using namespace std;
@@ -16,7 +15,7 @@ using namespace std;
     public:
       XOR1(int arg): a(arg) {};
       int foo();
-  }
+  };
   int XOR1::foo() { return a^0x01;}
   #pragma omp end declare target
 

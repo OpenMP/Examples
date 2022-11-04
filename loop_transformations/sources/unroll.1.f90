@@ -1,9 +1,8 @@
-! @@name:       unroll.1
-! @@type:       F-free
-! @@compilable: yes
-! @@linkable:   no
-! @@expect:     success
-! @@version:    omp_5.1
+! @@name:	unroll.1
+! @@type:	F-free
+! @@operation:	compile
+! @@expect:	success
+! @@version:	omp_5.1
 subroutine unroll(A, n)
    implicit none
    integer          :: i,n

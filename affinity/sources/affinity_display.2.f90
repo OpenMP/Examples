@@ -1,9 +1,11 @@
-! @@name: affinity_display.2
-! @@type: F-free
-! @@compilable: yes
-! @@linkable: yes
-! @@expect: success
-! @@version: omp_5.0
+! @@name:	affinity_display.2
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
+! @@version:	omp_5.0
+! @@env:	OMP_PROC_BIND=TRUE OMP_NUM_THREADS="2,4"
+! @@env:	OMP_PLACES="{0,2,4,6},{1,3,5,7}"
+! @@env:	OMP_AFFINITY_FORMAT="nest_level= %L, parent_thrd_num= %a, thrd_num= %n, thrd_affinity= %A"
 program affinity_display
 
    use omp_lib

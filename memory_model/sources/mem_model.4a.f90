@@ -1,8 +1,7 @@
 ! @@name:	mem_model.4a
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
-! @@expect:	failure
+! @@operation:	compile
+! @@expect:	unspecified
 ! @@version:	omp_3.1
 subroutine flush_incorrect
   use omp_lib

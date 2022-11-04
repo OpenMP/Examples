@@ -1,8 +1,8 @@
 ! @@name:	reduction.3
 ! @@type:	F-free
-! @@compilable:	no
-! @@linkable:	no
-! @@expect:	failure
+! @@operation:	compile
+! @@expect:	ct-error
+! @@version:	pre_omp_3.0
  PROGRAM REDUCTION_WRONG
  MAX = HUGE(0)
  M = 0

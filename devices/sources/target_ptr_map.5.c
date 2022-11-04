@@ -1,9 +1,8 @@
 /*
-* @@name:       target_ptr_map.5
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   no
-* @@expect:     success
+* @@name:	target_ptr_map.5
+* @@type:	C
+* @@operation:	compile
+* @@expect:	success
 * @@version:	omp_5.2
 */
 #include <stdio.h>

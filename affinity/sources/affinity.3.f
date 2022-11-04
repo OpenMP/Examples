@@ -1,7 +1,6 @@
 ! @@name:	affinity.3
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
 ! @@version:	omp_4.0
       PROGRAM EXAMPLE

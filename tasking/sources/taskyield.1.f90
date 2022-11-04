@@ -1,9 +1,8 @@
 ! @@name:	taskyield.1
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
-! @@version:    omp_3.1
+! @@version:	omp_3.1
 subroutine foo ( lock, n )
    use omp_lib
    integer (kind=omp_lock_kind) :: lock

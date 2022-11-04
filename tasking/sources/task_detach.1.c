@@ -1,10 +1,9 @@
 /*
-* @@name:       task_detach.1
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   no
-* @@expect:     success
-* @@version:    omp_5.0
+* @@name:	task_detach.1
+* @@type:	C
+* @@operation:	compile
+* @@expect:	success
+* @@version:	omp_5.0
 */
 #include <omp.h>
 

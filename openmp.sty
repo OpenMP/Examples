@@ -484,6 +484,7 @@
    \DoReplace{#3}\egroup}
 
 \newcommand{\escstr}[1]{\myreplace{_}{\_}{#1}}
+\newcommandx*\verlabel[2][1=]{(\code{\small{}#1omp\_#2})}
 
 \newcommand{\exampleheader}[6]{%
    \ifthenelse{ \equal{#1}{} }{
@@ -500,36 +501,42 @@
    \cnt=#4
    \ifthenelse{ \equal{#5}{0} }{}{\global\advance\cnt by #5}
 
-   \ifthenelse{ \equal{#6}{} }{
-      \def\vername{}
+   \def\cverno{\ref{ex_vtag:\cname}}
+   \ifthenelse{ \equal{\cverno}{pre_3.0} }{\def\cverno{}}{}
+   \ifthenelse{ \equal{\cverno}{??} }{\def\cverno{#6}}{}
+   \def\stagcnt{\pageref{ex_vtag:\cname}}
+   \ifthenelse{ \equal{\cverno}{} }{
+      \global\advance\cnt by 1
+      \def\vername{\;\;\verlabel[pre\_]{3.0}}
    }{
       \def\myver##1{\toolboxSplitAt{##1}{_}\lefttext\righttext
          \lefttext\toolboxIfElse{\ifx\righttext\undefined}%
          {\global\advance\cnt by 1}{\expandafter{\righttext}}}
-      \def\vername{\;\;(\code{\small{}omp\_\myver{#6}})}
+      \def\vername{\;\;\verlabel{\myver{\cverno}}}
    }
+   \def\fcnt{\the\cnt}
+%   \def\fcnt{\stagcnt}
    \noindent
    \hypertarget{ex:\cname}{\textit{Example \ename}}\vername
-   \def\fcnt{\the\cnt}
    %\vspace*{-3mm}
    \code{\VerbatimInput[numbers=left,numbersep=5ex,firstnumber=1,firstline=\fcnt,fontsize=\small]%
       {\chapdirname/sources/\cname}} 
 }
 
 \newcommandx*\cnexample[4][1=,4=0]{%
-   \exampleheader{#2}{#3}{c}{8}{#4}{#1}
+   \exampleheader{#2}{#3}{c}{7}{#4}{#1}
 }
 
 \newcommandx*\cppnexample[4][1=,4=0]{%
-   \exampleheader{#2}{#3}{cpp}{8}{#4}{#1}
+   \exampleheader{#2}{#3}{cpp}{7}{#4}{#1}
 }
 
 \newcommandx*\fnexample[4][1=,4=0]{%
-   \exampleheader{#2}{#3}{f}{6}{#4}{#1}
+   \exampleheader{#2}{#3}{f}{5}{#4}{#1}
 }
 
 \newcommandx*\ffreenexample[4][1=,4=0]{%
-   \exampleheader{#2}{#3}{f90}{6}{#4}{#1}
+   \exampleheader{#2}{#3}{f90}{5}{#4}{#1}
 }
 
 \newcommandx*\srcnexample[5][1=,5=0]{%

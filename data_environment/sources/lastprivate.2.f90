@@ -1,9 +1,8 @@
 ! @@name:	lastprivate.2
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
-! @@version: omp_5.0
+! @@version:	omp_5.0
 function condlastprivate(a, n) result(x)
    implicit none
    real a(*), x

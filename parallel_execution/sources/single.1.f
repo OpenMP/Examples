@@ -1,8 +1,8 @@
 ! @@name:	single.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	link
 ! @@expect:	success
+! @@version:	pre_omp_3.0
       SUBROUTINE WORK1()
       END SUBROUTINE WORK1
 

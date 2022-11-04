@@ -1,10 +1,9 @@
 /*
-* @@name:       task_priority.1
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   no
-* @@expect:     success
-* @@version:    omp_4.5
+* @@name:	task_priority.1
+* @@type:	C
+* @@operation:	compile
+* @@expect:	success
+* @@version:	omp_4.5
 */
 void compute_array (float *node, int M);
 

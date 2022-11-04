@@ -1,8 +1,7 @@
 /*
 * @@name:	task_dep.4
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	yes
+* @@operation:	run
 * @@expect:	success
 * @@version:	omp_4.0
 */

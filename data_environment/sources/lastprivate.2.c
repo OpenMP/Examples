@@ -1,10 +1,9 @@
 /*
 * @@name:	lastprivate.2
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
-* @@version: omp_5.0
+* @@version:	omp_5.0
 */
 #include <math.h>
 

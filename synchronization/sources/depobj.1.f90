@@ -1,10 +1,8 @@
-! @@name:       depobj.1
-! @@type:       F-free
-! @@compilable: yes
-! @@linkable:   yes
-! @@expect:     success
-! @@version: omp_5.2
-
+! @@name:	depobj.1
+! @@type:	F-free
+! @@operation:	link
+! @@expect:	success
+! @@version:	omp_5.2
 program main
     use omp_lib
     implicit none

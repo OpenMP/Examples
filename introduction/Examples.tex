@@ -7,8 +7,8 @@
 
 This document includes examples of the OpenMP API directives, constructs, and routines.
 
-Each example is labeled as \plc{ename.seqno.ext}, where \plc{ename} is 
-the example name, \plc{seqno} is the sequence number in a section, and 
+Each example is labeled with \plc{ename.seq-id.ext}, where \plc{ename} is 
+the example name, \plc{seq-id} is the sequence identifier in a section, and 
 \plc{ext} is the source file extension to indicate the code type and 
 source form.  \plc{ext} is one of the following:
 \begin{description}[noitemsep,labelindent=5mm,widest=f90]
@@ -18,12 +18,22 @@ source form.  \plc{ext} is one of the following:
 \item[\plc{f90}] -- \ Fortran code in free form.
 \end{description}
 
-Some of the example labels may include version information 
-(\code{\small{}omp\_\plc{verno}}) to indicate features that are illustrated
-by an example for a specific OpenMP version, such as ``\plc{scan.1.c} 
-\;(\code{\small{}omp\_5.0}).''
+Example labels include version information of the form
+\verlabel{\plc{verno}} to indicate features that are illustrated
+by an example for a specific OpenMP version, such as 
+``\plc{scan.1.c} \;\verlabel{5.0}.''
+Some of the example labels include version information of the form
+\verlabel[pre\_]{3.0} to indicate features that are specified 
+prior to OpenMP version 3.0, such as
+``\plc{ploop.1.c} \;\verlabel[pre\_]{3.0}.''
 
+Language markers may be used to indicate text or codes that are specific 
+to a particular base language.
 \ccppspecificstart
+This is C/C++ specific: 
 A statement following a directive is compound only when necessary, and a 
 non-compound statement is indented with respect to a directive preceding it.
 \ccppspecificend
+\fortranspecificstart
+This is Fortran specific...
+\fortranspecificend

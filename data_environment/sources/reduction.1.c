@@ -1,8 +1,7 @@
 /*
 * @@name:	reduction.1
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
 * @@version:	omp_3.1
 */

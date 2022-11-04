@@ -1,9 +1,9 @@
 /*
 * @@name:	worksharing_critical.1
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
+* @@version:	pre_omp_3.0
 */
 void critical_work()
 {

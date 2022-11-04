@@ -1,9 +1,8 @@
 /*
-* @@name:       target_ptr_map.3b
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   no
-* @@expect:     success
+* @@name:	target_ptr_map.3b
+* @@type:	C
+* @@operation:	compile
+* @@expect:	success
 * @@version:	omp_5.1
 */
 #define N 100

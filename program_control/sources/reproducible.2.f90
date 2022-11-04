@@ -1,9 +1,8 @@
 ! @@name:	reproducible.2
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	link
 ! @@expect:	success
-! @@version:    omp_5.1
+! @@version:	omp_5.1
 program main
    implicit none
    integer, parameter :: n = 1000
@@ -12,11 +11,12 @@ program main
 
    !$omp parallel 
       !! reproducible schedules are used the following two constructs 
-      !$omp do order(reproducible: concurrent) nowait
+      !$omp do order(reproducible: concurrent) 
       do i = 1, n
          u(i) = i
          v(i) = i
       end do
+      !$omp end do nowait
       !$omp do order(reproducible: concurrent)
       do i = 1, n
          v(i) = v(i) + u(i) * u(i)
@@ -25,11 +25,12 @@ program main
 
    !$omp parallel 
       !! static schedules preserve data dependences between the loops
-      !$omp do schedule(static) order(concurrent) nowait
+      !$omp do schedule(static) order(concurrent) 
       do i = 1, n
          u(i) = i
          v(i) = i
-      end do
+      end do 
+      !$omp end do nowait
       !$omp do schedule(static) order(concurrent)
       do i = 1, n
          v(i) = v(i) + u(i) * u(i)

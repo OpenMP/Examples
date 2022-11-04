@@ -1,0 +1,363 @@
+#!/bin/bash
+
+#******************************************************************************
+#                                            Author Henry Jin
+# test example source-codes with C, C++ and Fortran compilers 
+# set in comp_* variables. 
+#                                            Additions 2021-07-30 Kent Milfeld
+# Command line entry of files to be tested.
+# Automatic compiler determination
+# Automatic version (DATE/NUMBER) determination
+# Utilities file, eval_utils, created for clean coding
+#                                           2022-05-31 Changes
+# Use tag (@@operation + @@version) info from source files
+#   to set up test conditions
+# Removed codes related to preprocessing
+#                                           2022-05-31 Changes KM
+# Now uses variable names with VER, NUM, REL 
+#  for compiler VERsion, compiler version NUMber & RELease
+#  e.g.         5.0,                      50       202111
+# Allows any combination types c/C++/f code evaluation
+# Allows setting Compliance Version for Compiler (comp-ver/COMP_VER) 
+#    (e.g. allows testing 5.0 code for  Intel 4.5+ Compliant.)
+# Removed aopt = 1/2/3. Changed to using variables/values that are relatable. 
+# Just uses no-omp for turning openmp off, no need for with-omp option
+# Cleaned up eval_one_code selection for skipping due to COMP_VER/CODE_VER
+# Cleaned up get_compiler_version_date_number 
+#  +more error checking, prints more information about decisions
+# Changed TEST_DEBUG to EVAL_DEBUG, print lines now have DEBUG: prefix 
+#                    
+#******************************************************************************
+
+BASE_DIR=$(dirname $0)/..   #Top level directory
+
+source $BASE_DIR/sources/eval_utils
+
+# Hard code Compiler names and flags here:  comp_c, comp_cpp, comp_f, omp_flag
+# Keep comp_c="" to automatically determine compiler parameters
+# Specifying compiler system (amd,cray,gnu,ibm,intel,nvhpc) on command line, or
+#  setting env. var. COMP_SYS (to AMD,CRAY,GNU,IBM,INTEL,NVHPC), 
+#  will override specifying compiler here, and auto detection..
+
+comp_c=""
+comp_cpp=""
+comp_f=""
+omp_flag=""
+
+#COMP_SYS=GNU  #(or AMD,CRAY,IBM,INTEL) forces one of these compiler systems
+(list in eval_utils)
+
+#========================= No need to change code below =======================
+
+# command line option
+do_with_omp=yes
+
+dryrun=0    #0:normal, 1:print commands without executing
+
+COMP_SYS=""
+CODE_VER="" 
+COMP_VER="" 
+[[ -z $EVAL_DEBUG ]] && EVAL_DEBUG=0
+code_types=""
+
+while (($#)); do
+  case "$1" in
+    no-omp   | -no-omp  ) do_with_omp=no       ;;
+    code-ver | -code-ver) shift; CODE_VER=$1   ;;
+    comp-ver | -comp-ver) shift; COMP_VER=$1   ;;
+    c-only   | -c-only  ) code_types+="c-only" ;;
+    cpp-only | -cpp-only) code_types+="C-only" ;;
+    f-only   | -f-only  ) code_types+="f-only" ;;
+    c-cpp-only | -c-cpp-only ) code_types+="c-C-only" ;;
+    dryrun   | -dryrun  ) dryrun=1     ;;
+    debug    | -debug   ) EVAL_DEBUG=1 ;;
+    cleanup  | -cleanup )
+       \rm -f *.o *.mod a.x exmpl_*
+       exit ;;
+    help     | -h |-help)
+       echo "USAGE: eval_codes [options]
+
+options: meaning
+   -no-omp        ; no   OpenMP compilation flag
+   -code-ver <ver>; code limit: eval codes of this version tag & lower (3.0,...)
+   -comp-ver <ver>; assume Compiler is compliant with this version (3.0,...)
+   -c-cpp-only    ; test C & C++ codes only
+   -c-only        ; test C codes only
+   -cpp-only      ; test C++ codes only
+   -f-only        ; test Fortran codes only
+   -dryrun        ; print commands without execution
+   -debug         ; print debug information
+   -cleanup       ; clean up temp files
+   amd | cray | gnu | ibm | intel | nvhpc
+                  ; choose a compilation system (default is auto-detection)
+   <file name(s)> ; one or more example codes to test"
+        exit ;;
+
+    amd   | AMD  | aocc | AOCC ) COMP_SYS=AMD  ;;
+    cray  | CRAY | cce  | CCE  ) COMP_SYS=CRAY ;;
+    gnu   | GNU                ) COMP_SYS=GNU  ;;
+    ibm   | IBM  | pwr  | PWR  ) COMP_SYS=IBM  ;;
+    intel | INTEL              ) COMP_SYS=INTEL;;
+    nvhpc | NVHPC| pgi  | PGI  ) COMP_SYS=NVHPC;;
+    #These will override auto detection, and comp_x setting below.
+
+    *.f* ) FILES+=($1) ;;
+    *.c* ) FILES+=($1) ;;
+    * ) echo "*** unknown option - $1"; exit 1 ;;
+  esac
+  shift
+done
+
+echo "
+***                      DISCLAIMER                                     ***
+*** eval_codes DOES NOT VALIDATE OpenMP COMPLIANCE OF A COMPILER.       ***
+*** eval_codes evaluates compile/link/run FOR EXAMPLES DEVELOPER TEAM.  ***
+"
+
+[[   -z "$code_types" ]] && code_types="c C f"  # if code_types not set, default is all (c, C, f)
+
+[[ ! -z $COMP_SYS     ]] && unset comp_c        # If Compiler System Set (COMP_SYS or cmd line) unset comp_c.
+                                                # This will allow get_compiler_commands_and_omp_flag call.
+
+[[ ! -z $CODE_VER ]] && CODE_NUM=`echo $CODE_VER | sed -e 's/\.//'`
+
+# Set Compiler comp_c, comp_cpp, comp_f, omp_flag
+
+# *** If comp_c is hard coded above don't get compiler commands and omp_flag, use comp_x & omp_flag
+[[ -z $comp_c  ]] && get_compiler_commands_and_omp_flag
+
+# *** Always get Compiler _OPENMP Release Date and Compiler Version
+get_compiler_version_date_number
+
+[[ $EVAL_DEBUG -gt 0 ]] && echo " DEBUG: Using CC=$comp_c FC=$comp_f omp_flag=$omp_flag  Compile type(s) = $code_types ."
+[[ $EVAL_DEBUG -gt 0 ]] && echo " DEBUG: Expected/Assuming Compiler Compliance: $COMP_VER" 
+[[ $EVAL_DEBUG -gt 0 ]] && echo " DEBUG: Evaluations limited to codes of this version or earlier: ${CODE_VER:-$COMP_VER}"
+
+# function to test one code ($f)
+eval_one_code() {
+  local s opr copts="" verno="" tested="compile & link" TEST=CL
+
+  if [[ -z $comp ]]; then
+    return
+  fi
+
+  f_base=`basename $f`
+  ef=exmpl_${f_base}
+  ext=$1
+
+  if [[ $do_with_omp == no ]]; then
+    s=omp.h
+    if [[ "$ext" =~ ^f ]]; then
+      s="use omp_lib|omp_lib.h"
+    fi
+    egrep "$s" $f > /dev/null 2>&1
+    if [ $? -eq 0 ]; then
+      printf " [ %-3s ] [       SKIP ][ %30s ]  Requested NO OMP: but code uses header\n" "OMP" "$f_base"
+      (( cntskip = cntskip + 1 ))
+      return
+    fi
+  else
+    copts="$omp_flag"
+  fi
+
+  opr=`grep -i '@@operation' $f | cut -d: -f2`
+  if [[ "$opr" =~ "view" ]]; then
+    printf " [ %-3s ] [       SKIP ][ %30s ]  View Only\n" "V" "$f_base"
+    TEST=V
+    (( cntskip = cntskip + 1 ))
+    return
+  fi
+  if [[ "$opr" =~ "compile" ]]; then
+    copts+=" -c"
+    tested="compile only"
+    TEST=C
+  else
+    copts+=" -o a.x"
+  fi
+
+  [[ "$opr" =~ "run" ]] && TEST=CLR
+
+  # Consider Skipping Code
+  code_ver=""
+  if [ $do_with_omp == yes ]; then   #only if compiling with OpenMP
+
+    code_ver=`grep -i '@@version' $f | cut -d_ -f2`
+    [[ $code_ver == "omp" ]] && code_ver=""
+    verno=`echo $code_ver | sed -e 's/\.//'`
+    if [[ ! -z $verno ]]; then        #Only consider skipping if verno != null
+      skip=" "
+  
+      #Check compiler compliance
+      [[ $verno -gt $COMP_NUM ]] && skip=" comp_yes"
+  
+      #check code limit
+      [[ ! -z $CODE_NUM ]] && [[ $verno -gt $CODE_NUM ]] && skip+=" code_yes"
+  
+      if [[ $skip =~ yes ]]; then
+
+        printf " [ %-3s ] [       SKIP ][ %30s ] code is omp_$code_ver, " "$TEST" "$f_base"
+        printf "compiler limit is $COMP_VER " 
+        if [[ $skip =~ code_yes ]]; then
+          printf " or code limit is $CODE_VER : $f_base \n"
+        else
+          printf " : $f_base\n"
+        fi  
+  
+        (( cntskip = cntskip + 1 ))
+        return
+  
+      fi  
+  
+    fi  # if verno exists
+  fi  #if using omp
+
+
+  s=`grep -i '@@depend' $f | cut -d: -f2 | cut -f2`
+  [[ ! -z $s ]] && copts+=" -I$(dirname $f)"
+  s=`grep -i '@@expect' $f | cut -d: -f2 | cut -f2`
+  [[ ! -z $s ]] && s="expect=$s"
+  [[ ! -z $code_ver ]] && s+=" omp_$code_ver"
+
+  if [ $dryrun -gt 0 ]; then
+    printf " [$s]\n" >> $logf
+    return
+  fi
+  # compile and link if requested
+  CorCL=$TEST
+  [[ $TEST == CLR ]] && CorCL="CL"
+  \cp -f $f $ef
+  $comp $copts $ef >> $logf 2>&1
+
+  if [ $? -ne 0 ]; then
+    printf "***" >> $logf
+    printf " [ %-3s ] [ FAILED  %-2s ][ %30s ] %s" "$TEST" "$CorCL" "$f_base" "$s" | tee -a $logf
+    (( cntfail = cntfail + 1 ))
+  else
+    printf " [ %-3s ] [ PASSED  %-2s ][ %30s ]" "$TEST" "$CorCL" "$f_base" | tee -a $logf
+    if [[ "$opr" =~ "run" && -e a.x ]]; then
+      TEST=R
+    fi
+  fi
+  echo " >>> $comp $copts $f" | tee -a $logf
+
+  # run the compiled code
+  if [[ $TEST == R ]]; then
+    $BASE_DIR/sources/run_code ./a.x $ef >> $logf 2>&1
+    if [ $? -ne 0 ]; then
+      printf " [     ] [ FAILED  R  ][ %30s ] %s" "$f_base" "$s" | tee -a $logf
+      (( cntfail = cntfail + 1 ))
+    else
+      printf " [     ] [ SUCCESS R  ][ %30s ]" "$f_base" | tee -a $logf
+    fi
+    echo " ... ran compiled code" | tee -a $logf
+  fi
+
+  # clean up
+  \rm -f *.o *.mod *.x
+  \rm -f $ef
+}
+
+# start testing
+cntc=0
+cntcpp=0
+cntf=0
+cntffree=0
+cntskip=0
+cntfail=0
+logf=eval_codes.log
+
+printf "\nLegend: [ <CHARS> ]  C=Compile L=Link R=Run V=View\n"
+
+#                          SELECTED FILE PROCESSING
+if [[ ! -z $FILES ]]; then
+
+  echo -e " >>> TESTING: ${#FILES[*]} files\n"
+
+  for ff in ${FILES[@]}; do
+
+    echo $ff | grep '/' &> /dev/null
+    if [[ $? == 0 ]]; then
+      flist=$(ls $ff)
+    else
+      flist=$(ls $BASE_DIR/*/sources/$ff)
+    fi
+    for f in $flist; do
+
+      if [[ $f =~ .c$ ]]; then
+        comp=$comp_c
+        (( cntc = cntc + 1 ))
+        eval_one_code c
+      elif [[ $f =~ .cpp$ ]]; then
+        comp=$comp_cpp
+        (( cntcpp = cntcpp + 1 ))
+        eval_one_code cpp
+      elif [[ $f =~ .f$ ]]; then
+        comp=$comp_f
+        (( cntf = cntf + 1 ))
+        eval_one_code f
+      elif [[ $f =~ .f90$ ]]; then
+        comp=$comp_f
+        (( cntffree = cntffree + 1 ))
+        eval_one_code f90
+      fi
+
+    done
+  done
+
+else
+
+#                          BULK PROCESSING
+  if [[ $code_types =~ c ]]; then
+    comp=$comp_c
+    for f in $BASE_DIR/*/sources/*.c; do
+      (( cntc = cntc + 1 ))
+      eval_one_code c
+    done
+  fi
+  
+  if [[ $code_types =~ C ]]; then
+    comp=$comp_cpp
+    for f in $BASE_DIR/*/sources/*.cpp; do
+      (( cntcpp = cntcpp + 1 ))
+      eval_one_code cpp
+    done
+  fi
+  
+  if [[ $code_types =~ f ]]; then
+    comp=$comp_f
+    for f in $BASE_DIR/*/sources/*.f; do
+      (( cntf = cntf + 1 ))
+      eval_one_code f
+    done
+  
+    for f in $BASE_DIR/*/sources/*.f90; do
+      (( cntffree = cntffree + 1 ))
+      eval_one_code f90
+    done
+  fi
+
+fi
+
+# print summary stats
+(( cntotal = cntc + cntcpp + cntf + cntffree ))
+echo "
+C compiler       = $comp_c
+C++ compiler     = $comp_cpp
+Fortran compiler = $comp_f
+OpenMP flag      = $omp_flag" | tee -a $logf
+
+if [[ ! -z $DATE_OPENMP ]]; then
+   echo "Compiler Version = $COMP_VER_FROM_OPENMP_DATE ($COMP_REL) " | tee -a $logf
+   #echo " Comp_openmp=$COMP_VER_FROM_OPENMP_DATE CoMPVER=$COMP_VER"
+   [[ $COMP_VER_FROM_OPENMP_DATE != $COMP_VER ]] && echo "User set support = $COMP_VER " | tee -a $logf
+fi
+
+echo "
+Total number of C examples      : $cntc
+Total number of C++ examples    : $cntcpp
+Total number of F-fixed examples: $cntf
+Total number of F-free examples : $cntffree
+
+Total number of files           : $cntotal
+Total number of files skipped   : $cntskip
+Total number of failed examples : $cntfail" | tee -a $logf

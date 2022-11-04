@@ -1,10 +1,8 @@
 ! @@name:	collapse.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
 ! @@version:	omp_3.0
-
       subroutine sub(a)
 
       real a(*)

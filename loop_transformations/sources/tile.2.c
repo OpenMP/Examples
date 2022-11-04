@@ -1,10 +1,9 @@
 /*
-* @@name:       tile.2
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   no
-* @@expect:     success
-* @@version:    omp_5.1
+* @@name:	tile.2
+* @@type:	C
+* @@operation:	compile
+* @@expect:	success
+* @@version:	omp_5.1
 */
 void func1(int A[100][128])
 {

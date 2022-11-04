@@ -1,0 +1,44 @@
+\pagebreak
+\section{\scode{omp_pause_resource} and \\
+  \scode{omp_pause_resource_all} Routines}
+\label{sec:pause_resource}
+\index{routines!omp_pause_resource@\scode{omp_pause_resource}}
+\index{omp_pause_resource routine@\scode{omp_pause_resource} routine}
+\index{routines!omp_get_max_threads@\scode{omp_get_max_threads}}
+\index{omp_get_max_threads routine@\scode{omp_get_max_threadsi} routine}
+\index{routines!omp_get_initial_device@\scode{omp_get_initial_device}}
+\index{omp_get_initial_device routine@\scode{omp_get_initial_device} routine}
+
+Sometimes, it is necessary to relinquish resources created or allocated
+for the OpenMP runtime environment to avoid interference with subsequent
+actions as illustrated by the following example.  In the beginning 
+either a call to the \scode{omp_get_max_threads} routine 
+or the subsequent \code{parallel} construct may trigger resource allocation
+by the OpenMP runtime, which may cause unexpected side effects 
+for the subsequent \plc{fork} call.
+It is desirable to relinquish OpenMP resources allocated before 
+the fork by using the \scode{omp_pause_resource} routine for a given
+device, in this case the host device.  The host device number is returned by 
+the \scode{omp_get_initial_device} routine.
+The \scode{omp_pause_hard} value is used here to free as many
+OpenMP resources as possible.
+After the fork, the child process will initialize its OpenMP runtime
+environment when encountering the \code{parallel} construct.
+
+\cexample[5.0]{pause_resource}{1}
+
+\index{routines!omp_pause_resource_all@\scode{omp_pause_resource_all}}
+\index{omp_pause_resource_all routine@\scode{omp_pause_resource_all} routine}
+The following example illustrates a different use case. 
+After executing the first parallel code (parallel region 1), 
+the \plc{relinquish} program switches to executing an external parallel program
+(called \plc{subprogram}, which is compiled from \splc{pause_resource.2b}).  
+In order to make resources available for the external
+subprogram, \plc{relinquish} calls \scode{omp_pause_resource_all}
+to relinquish OpenMP resources used by the current program before
+calling \scode{execute_command_line} to execute \plc{subprogram}.
+The \scode{omp_pause_soft} value is used here to allow subsequent
+OpenMP regions (parallel region 2) to restart more quickly.
+
+\ffreeexample[5.0]{pause_resource}{2a}
+\ffreeexample{pause_resource}{2b}

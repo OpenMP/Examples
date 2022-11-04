@@ -1,10 +1,10 @@
 /*
-* @@name: affinity_display.1
-* @@type: C
-* @@compilable: yes
-* @@linkable: yes
-* @@expect: success
-* @@version: omp_5.0
+* @@name:	affinity_display.1
+* @@type:	C
+* @@operation:	run
+* @@expect:	success
+* @@version:	omp_5.0
+* @@env:	OMP_DISPLAY_AFFINITY=TRUE OMP_NUM_THREADS=8
 */
 #include <stdio.h>
 #include <omp.h>

@@ -1,10 +1,9 @@
 /*
-* @@name:   taskloop.2
-* @@type:   C
-* @@compilable: yes
-* @@linkable:   no
-* @@expect: success
-* @@version: omp_4.5
+* @@name:	taskloop.2
+* @@type:	C
+* @@operation:	compile
+* @@expect:	success
+* @@version:	omp_4.5
 */
 #include <stdio.h>
 

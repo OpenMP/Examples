@@ -1,8 +1,8 @@
 ! @@name:	psections.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
+! @@version:	pre_omp_3.0
       SUBROUTINE SECT_EXAMPLE()
 !$OMP PARALLEL SECTIONS
 !$OMP SECTION

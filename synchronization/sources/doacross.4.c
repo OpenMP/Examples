@@ -1,12 +1,10 @@
 /*
 * @@name:	doacross.4
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
 * @@version:	omp_5.2
 */
-
 double foo(int i, int j);
 
 void work( int N, int M, double **A, double **B, double **C )

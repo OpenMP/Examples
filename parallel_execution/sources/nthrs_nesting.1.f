@@ -1,8 +1,9 @@
 ! @@name:	nthrs_nesting.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	run
 ! @@expect:	success
+! @@env:	OMP_NUM_THREADS=2,3
+! @@version:	pre_omp_3.0
 	program icv
 	use omp_lib
 	call omp_set_nested(.true.)

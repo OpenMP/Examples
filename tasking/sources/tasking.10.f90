@@ -1,9 +1,8 @@
 ! @@name:	tasking.10
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
-! @@version:    omp_3.0
+! @@version:	omp_3.0
       module example
       include 'omp_lib.h'
       integer (kind=omp_lock_kind) lock

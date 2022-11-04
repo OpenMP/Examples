@@ -1,9 +1,9 @@
 /*
 * @@name:	nesting_restrict.3
 * @@type:	C
-* @@compilable:	no
-* @@linkable:	no
-* @@expect:	failure
+* @@operation:	compile
+* @@expect:	ct-error
+* @@version:	pre_omp_3.0
 */
 void work(int i, int j) {}
 void wrong3(int n)

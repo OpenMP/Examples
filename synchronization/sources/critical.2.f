@@ -1,7 +1,6 @@
 ! @@name:	critical.2
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
 ! @@version:	omp_5.0
       SUBROUTINE CRITICAL_EXAMPLE(X, Y)

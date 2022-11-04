@@ -1,8 +1,8 @@
 ! @@name:	fort_sa_private.2
 ! @@type:	F-fixed
-! @@compilable:	maybe
-! @@linkable:	maybe
-! @@expect:	rt-error
+! @@operation:	run
+! @@expect:	unspecified
+! @@version:	pre_omp_3.0
       PROGRAM PRIV_RESTRICT2
         COMMON /BLOCK2/ X
         X = 1.0

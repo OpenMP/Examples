@@ -1,7 +1,6 @@
 ! @@name:	task_dep.13
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	run
 ! @@expect:	success
 ! @@version:	omp_5.1
 program main

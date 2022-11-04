@@ -1,10 +1,8 @@
 ! @@name:	collapse.2
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	run
 ! @@expect:	success
 ! @@version:	omp_3.0
-
       program test
 !$omp parallel
 !$omp do private(j,k) collapse(2) lastprivate(jlast, klast)
@@ -16,7 +14,7 @@
       enddo
 !$omp end do
 !$omp single
-      print *, klast, jlast
+      print *, klast, jlast !2, 3
 !$omp end single
 !$omp end parallel
       end program test

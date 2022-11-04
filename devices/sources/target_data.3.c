@@ -1,12 +1,10 @@
 /*
 * @@name:	target_data.3
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
 * @@version:	omp_4.0
 */
-
 #include <math.h>
 #define COLS 100
 

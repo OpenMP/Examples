@@ -1,9 +1,8 @@
 /*
-* @@name:       target_struct_map.4
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   yes
-* @@expect:     success
+* @@name:	target_struct_map.4
+* @@type:	C
+* @@operation:	run
+* @@expect:	success
 * @@version:	omp_5.1
 */
 #include <stdio.h>
@@ -84,4 +83,3 @@ int main()
   free(S3.p);
   return 0;
 }
-

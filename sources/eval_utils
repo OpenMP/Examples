@@ -1,0 +1,216 @@
+COMP_RELS=(       202111      202011      201811      201511      201307      201107      200805 )
+COMP_REL_2_NUM=( [202111]=52 [202011]=51 [201811]=50 [201511]=45 [201307]=40 [201107]=31 [200805]=30 )
+
+add_decimal(){ sed 's/\([0-9]\)/\1./' <<< $1; } # replace 1st # with #.
+rm_decimal(){  sed 's/\(\.\)//'       <<< $1; } # replace . with blank
+
+for i in ${COMP_RELS[@]}; do  #loop over Release Dates                   (e.g. 202011)
+  num=${COMP_REL_2_NUM[$i]}   #Release Date hash has Compiler Numbers    (e.g. 51)
+  ver=${num:0:1}\.${num:1}    #Change Release Number to Compiler Version (e.g. 5.1)
+  COMP_VERS+=($ver)           #Make an array of Compiler Versions
+done
+
+get_compiler_version_date_number(){
+  [[ $EVAL_DEBUG -gt 0 ]] && echo " DEBUG: BEGIN get_compiler_version_date_number"
+
+  cat <<'  EOF' >version.c
+    #include <omp.h>
+    #include <stdio.h>
+    int main(){ printf("%d\n", _OPENMP);}
+  EOF
+  DATE_OPENMP=$( $comp_c -o a.x $omp_flag version.c; ./a.x; rm -f version.c a.x )
+
+  FORCE_COMP_VER="no"
+  if [[ ! -z $COMP_VER ]]; then
+    FORCE_COMP_VER=yes
+  fi
+  comp_num=""
+  if [[ ! -z $DATE_OPENMP ]]; then
+    for rd in ${COMP_RELS[@]}; do
+      if [[ $DATE_OPENMP -ge $rd ]]; then
+
+        if [[ $rd -ne $DATE_OPENMP ]]; then
+
+          comp_num=${COMP_REL_2_NUM[$rd]}
+          comp_ver=$(add_decimal $comp_num)
+          COMP_VER_FROM_OPENMP_DATE=$comp_ver
+          COMP_REL=$rd
+
+          printf " -> Compiler $comp_c reported _OPENMP = $DATE_OPENMP. Valid Releases are: $prev_rd and $rd.\n"
+          printf " -> This could be a Technical Report Date.\n\n"
+
+          # If not Forced compiler version (e.g. cmd ln comp-ver), set COMP_NUM/VER here from _OPENMP
+          if [[ $FORCE_COMP_VER == no ]]; then 
+            COMP_VER=$comp_ver
+            COMP_NUM=$comp_num
+
+            printf " -> ** ASSUMING COMPLIANCE at Version $COMP_VER (Release Date $COMP_REL) from _OPENMP in $comp_c.\n\n"
+            printf " -> To force Compiler Version use cmd line comp-ver option or set COMP_VER env. var to one of:\n"
+            printf " -> ${COMP_VERS[*]}\n"
+          fi
+        fi
+
+        if [[ $DATE_OPENMP -eq $rd ]]; then
+
+          comp_num=${COMP_REL_2_NUM[$rd]}
+          comp_ver=$(add_decimal $comp_num)
+          COMP_VER_FROM_OPENMP_DATE=$comp_ver
+          COMP_REL=$rd
+          if [[ $FORCE_COMP_VER == no ]]; then
+            COMP_VER=$comp_ver
+            COMP_NUM=$comp_num
+            printf " -> ** Using Compliant Version $COMP_VER (Release Date $COMP_REL) from _OPENMP in compiler $comp_c.\n"
+          fi
+            
+        fi
+
+        if [[ $DATE_OPENMP -eq $rd ]] && [[ $FORCE_COMP_VER == yes ]] ; then
+          printf " -> ** Informational: $comp_c is Version $comp_ver (Release Date $rd) from _OPENMP.\n"
+        fi
+
+        break
+
+      fi
+      prev_rd=$rd
+    done
+  fi
+
+  if [[ $FORCE_COMP_VER == yes ]]; then    #if Forced compiler VER. check and set COMP_NUM
+
+    if [[ ! "$COMP_VER" =~ ^[0-9]\.{0,1}[0-9]$ ]] ; then
+        echo " -> ERROR: Wrong Syntax for COMP_VER environment variable."
+        echo " ->        Format Version: #.#   (or use number ##)."
+        echo " ->        Read Value: COMP_VER=$COMP_VER"
+        echo " ->        Must be one of {${COMP_VERS[@]}}"
+        echo " ->        or corresponding number {${COMP_REL_2_NUM[@]}}"
+        exit 1
+     fi
+                                           # COMP_VER can have decimal or not (for convenience)
+     if [[ $COMP_VER =~ \. ]]; then
+        comp_ver=$COMP_VER
+        comp_num=$(rm_decimal  $COMP_VER)
+     else
+        comp_ver=$(add_decimal $COMP_VER)
+        comp_num=$COMP_VER
+     fi
+
+     found_force_compliance=no              #Make sure $COMP_VER exits: look through COMP_NUMS
+     for i in ${!COMP_REL_2_NUM[@]}; do   #Loop over releases
+       if [[ ${COMP_REL_2_NUM[$i]} -eq $comp_num ]]; then #get COMP_NUM from hash and compare
+          comp_rel=$i
+          found_force_compliance=yes
+          break
+       fi
+     done
+
+     if [[ $found_force_compliance == no ]]; then
+        echo " -> ERROR: Not a valid Compiler Version used in COMP_VER."
+        echo " ->        Read Value: COMP_VER=$COMP_VER"
+        echo " ->        Must be one of {${COMP_VERS[@]}}"
+        echo " ->        or corresponding number {${COMP_REL_2_NUM[@]}}"
+        exit 1
+     fi
+
+     COMP_NUM=$comp_num
+     COMP_VER=$comp_ver
+     COMP_REL=$comp_rel
+
+     echo " -> Compiler Version from cmd line: comp-ver=$COMP_VER"
+     echo " -> ASSUMING COMPLIANCE at Version: $COMP_VER"
+     echo " -> corresponding to  Release Date: $COMP_REL"
+
+  fi
+
+
+  if [ -z $COMP_NUM ]; then
+    echo "Can't determine an OpenMP version number from $comp_c"
+    exit 1
+  fi
+
+  [[ $EVAL_DEBUG -gt 0 ]] && echo " DEBUG: Determined: COMP_REL=$COMP_REL COMP_VER=$COMP_VER"
+  [[ $EVAL_DEBUG -gt 0 ]] && echo " DEBUG: END get_compiler_version_date_number" && echo ""
+}
+
+get_compiler_commands_and_omp_flag(){
+  # Determine compiler and return compiler commands 
+ 
+  local found=""
+
+  [[ $EVAL_DEBUG -gt 0 ]] && echo -e "\n DEBUG: BEGIN get_compiler_commands_and_omp_flag:"
+
+  if [[ -z $COMP_SYS ]]; then
+ 
+    command -v nvc   &> /dev/null
+    [[ $? == 0 ]] && COMP_SYS="NVHPC" found+=" $COMP_SYS"
+ 
+    command -v icc   &> /dev/null
+    [[ $? == 0 ]] && COMP_SYS="INTEL" found+=" $COMP_SYS"
+
+    command -v xlc   &> /dev/null
+    [[ $? == 0 ]] && COMP_SYS="IBM"   found+=" $COMP_SYS"
+
+    command -v ftn   &> /dev/null
+    [[ $? == 0 ]] && COMP_SYS="CRAY"  found+=" $COMP_SYS"
+ 
+    command -v clang &> /dev/null
+    [[ $? == 0 ]] && COMP_SYS="AMD"   found+=" $COMP_SYS"
+
+    command -v gcc   &> /dev/null
+    [[ $? == 0 ]] && COMP_SYS="GNU"   found+=" $COMP_SYS"
+
+    [[ ! -z $COMP_SYS ]] && printf " -> Detected    compilers:$found. If multiple compilers, will use last found.\n"
+ 
+  fi
+
+  if   [[ "$COMP_SYS" == 'GNU'   ]]; then
+    comp_c=gcc   comp_cpp=g++     omp_flag="-fopenmp"
+    command -v gfortran &> /dev/null
+    [[ $? == 0 ]] && comp_f=gfortran
+  elif [[ "$COMP_SYS" == 'IBM'   ]]; then
+    comp_c=xlc_r comp_cpp=xlC_r   omp_flag="-qsmp"
+    command -v flang &> /dev/null
+    [[ $? == 0 ]] && comp_f=xlf90_r
+  elif [[ "$COMP_SYS" == 'INTEL' ]]; then
+    comp_c=icc   comp_cpp=icpc    omp_flag="-qopenmp"
+    command -v ifort &> /dev/null
+    [[ $? == 0 ]] && comp_f=ifort
+  elif [[ "$COMP_SYS" == 'AMD'   ]]; then
+    comp_c=clang comp_cpp=clang++ omp_flag="-fopenmp"
+    command -v flang &> /dev/null
+    [[ $? == 0 ]] && comp_f=flang
+  elif [[ "$COMP_SYS" == 'CRAY'  ]]; then
+    comp_c=cc    comp_cpp=CC      omp_flag="-homp"
+    comp_f=ftn
+  elif [[ "$COMP_SYS" == 'NVHPC' ]]; then
+    comp_c=nvc   comp_cpp=nvc++   omp_flag="-mp"
+    command -v nvfortran &> /dev/null
+    [[ $? == 0 ]] && comp_f=nvfortran
+  fi
+ 
+  [[ ! -z $comp_c ]] && echo " -> Using compiler system: $COMP_SYS"
+
+  if [[ -z $comp_c ]]; then
+    echo " >>> Auto detection of GNU, AMD, CRAY, INTEL, IBM, and NVHPC compilers failed".
+    echo "     (SYSTEM must have a Fortran compiler.)"
+    echo " >>> REQUIREMENT: Must set compiler info (comp_xxx variables,...) in eval_codes:"
+    echo "     ** comp_c, comp_cpp, comp_f, and omp_flag"
+    echo "     or set COMP_SYS env. var. to one of: GNU, AMD, CRAY, INTEL, IBM, or NVHPC."
+    echo "     See COMP_SYS array in eval_utils comp_xxx values."
+    exit 1
+  fi
+
+  #        AMD          INTEL        IBM
+  # ARCH   x86_64       x86_64       ppc64le
+  # VENID  AuthenticAMD GenuineIntel N/A
+  command -v lscpu &> /dev/null
+  if [[ $? == 0 ]]; then
+    ARCH=$(lscpu | grep Architecture)
+    [[ $EVAL_DEBUG -gt 0 ]] && echo " DEBUG: lscpu FOUND Architecture: $ARCH"
+
+    VENID=$(lscpu | grep -i "Vendor ID:")
+    [[ $EVAL_DEBUG -gt 0 ]] && echo " DEBUG: lscpu FOUND Vendor ID: $VENID"
+  fi
+
+  [[ $EVAL_DEBUG -gt 0 ]] && echo " DEBUG: FOUND CC: $comp_c  CXX: $comp_cpp  FC: $comp_f  omp_flag: $omp_flag"
+  [[ $EVAL_DEBUG -gt 0 ]] && echo " DEBUG: END get_compiler_commands_and_omp_flag" && echo ""
+}

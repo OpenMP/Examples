@@ -1,9 +1,8 @@
-! @@name:       unroll.2
-! @@type:       F-free
-! @@compilable: yes
-! @@linkable:   no
-! @@expect:     success
-! @@version:    omp_5.1
+! @@name:	unroll.2
+! @@type:	F-free
+! @@operation:	compile
+! @@expect:	ct-error
+! @@version:	omp_5.1
 subroutine illegal_2a(A)
    implicit none
    double precision :: A(*)

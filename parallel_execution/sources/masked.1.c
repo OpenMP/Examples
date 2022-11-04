@@ -1,10 +1,9 @@
 /*
 * @@name:	masked.1
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
-* @@version:    omp_5.1
+* @@version:	omp_5.1
 */
 #include <stdio.h>
 

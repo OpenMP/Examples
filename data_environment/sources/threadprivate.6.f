@@ -1,8 +1,8 @@
 ! @@name:	threadprivate.6
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	run
 ! @@expect:	success
+! @@version:	pre_omp_3.0
       MODULE INC_MODULE_GOOD3
         REAL, POINTER :: WORK(:)
         SAVE WORK

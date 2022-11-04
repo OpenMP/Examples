@@ -1,9 +1,9 @@
 /*
 * @@name:	reduction.2
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
+* @@version:	pre_omp_3.0
 */
 #include <limits.h>
 #include <math.h>

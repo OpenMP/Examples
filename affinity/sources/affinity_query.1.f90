@@ -1,7 +1,6 @@
 ! @@name:	affinity_query.1
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	run
 ! @@expect:	success
 ! @@version:	omp_4.5
 subroutine socket_init(socket_num)

@@ -1,10 +1,8 @@
-! @@name: host_teams.1
-! @@type: F-free
-! @@compilable: yes
-! @@linkable: yes
-! @@expect: success
-! @@version: omp_5.0
-
+! @@name:	host_teams.1
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
+! @@version:	omp_5.0
 program main
    use omp_lib
    integer           :: nteams_required=2, max_thrds, tm_id
@@ -15,8 +13,8 @@ program main
    max_thrds = omp_get_num_procs()/nteams_required
  
    !! Create 2 teams, each team works in a different precision
-   !$omp teams num_teams(nteams_required) thread_limit(max_thrds) \
-               private(tm_id)
+   !$omp teams num_teams(nteams_required) thread_limit(max_thrds) &
+   !$omp&      private(tm_id)
 
       tm_id = omp_get_team_num()
 

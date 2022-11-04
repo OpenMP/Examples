@@ -1,8 +1,8 @@
 ! @@name:	workshare.2
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
+! @@version:	pre_omp_3.0
       SUBROUTINE WSHARE2(AA, BB, CC, DD, EE, FF, N)
       INTEGER N
       REAL AA(N,N), BB(N,N), CC(N,N)

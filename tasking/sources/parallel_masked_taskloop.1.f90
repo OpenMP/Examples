@@ -1,9 +1,8 @@
-! @@name:       parallel_masked_taskloop.1
-! @@type:       F-free
-! @@compilable: yes
-! @@linkable:   yes
-! @@expect:     success
-! @@version:    omp_5.1
+! @@name:	parallel_masked_taskloop.1
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
+! @@version:	omp_5.1
 program main
 
    integer, parameter :: N=100

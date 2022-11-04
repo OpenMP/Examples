@@ -1,9 +1,8 @@
 ! @@name:	taskloop.1
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
-! @@version:    omp_4.5
+! @@version:	omp_4.5
 subroutine parallel_work
    integer i
    integer j

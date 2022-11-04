@@ -1,7 +1,6 @@
 ! @@name:	tasking.6
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
 ! @@version:	omp_3.0
        real*8 item(10000000)

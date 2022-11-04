@@ -1,8 +1,7 @@
-! @@name:       target_associate_ptr.1
-! @@type:       F-free
-! @@compilable: yes
-! @@linkable:   yes
-! @@expect:     success
+! @@name:	target_associate_ptr.1
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
 ! @@version:	omp_5.1
 program target_associate
   use omp_lib

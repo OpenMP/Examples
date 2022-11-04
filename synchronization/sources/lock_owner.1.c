@@ -1,10 +1,9 @@
 /*
 * @@name:	lock_owner.1
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	yes
+* @@operation:	link
 * @@expect:	success
-* @@version:    omp_5.1
+* @@version:	omp_5.1
 */
 #include <stdlib.h>
 #include <stdio.h>

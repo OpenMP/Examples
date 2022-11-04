@@ -1,8 +1,7 @@
 /*
 * @@name:	parallel_masked_taskloop.1
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	yes
+* @@operation:	run
 * @@expect:	success
 * @@version:	omp_5.1
 */

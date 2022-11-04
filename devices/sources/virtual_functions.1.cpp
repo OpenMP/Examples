@@ -1,9 +1,8 @@
 /*
-* @@name:       virtual_functions.1
-* @@type:       C++
-* @@compilable: yes
-* @@linkable:   no
-* @@expect:     success
+* @@name:	virtual_functions.1
+* @@type:	C++
+* @@operation:	link
+* @@expect:	rt-error
 * @@version:	omp_5.2
 */
 #include <iostream>

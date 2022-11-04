@@ -1,8 +1,8 @@
 ! @@name:	get_nthrs.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	rt-error
+! @@version:	pre_omp_3.0
       SUBROUTINE WORK(I)
       INTEGER I
         I = I + 1

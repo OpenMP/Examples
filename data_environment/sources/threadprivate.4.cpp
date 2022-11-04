@@ -1,9 +1,9 @@
 /*
 * @@name:	threadprivate.4
 * @@type:	C++
-* @@compilable:	no
-* @@linkable:	no
-* @@expect:	nothing
+* @@operation:	view
+* @@expect:	unspecified
+* @@version:	pre_omp_3.0
 */
 struct T { T (); T (int); ~T (); int t; };
 int f();

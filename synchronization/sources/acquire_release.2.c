@@ -1,12 +1,10 @@
 /*
-* @@name: acquire_release.2
-* @@type: C
-* @@compilable: yes
-* @@linkable: yes
-* @@expect: success
-* @@version: omp_5.0
+* @@name:	acquire_release.2
+* @@type:	C
+* @@operation:	run
+* @@expect:	success
+* @@version:	omp_5.0
 */
-
 #include <stdio.h>
 #include <omp.h>
 

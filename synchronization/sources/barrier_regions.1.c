@@ -1,9 +1,9 @@
 /*
 * @@name:	barrier_regions.1
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	yes
+* @@operation:	link
 * @@expect:	success
+* @@version:	pre_omp_3.0
 */
 void work(int n) {}
 

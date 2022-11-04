@@ -1,12 +1,10 @@
 /*
 * @@name:	tasking.7
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
 * @@version:	omp_3.0
 */
-
 int tp;
 #pragma omp threadprivate(tp)
 int var;

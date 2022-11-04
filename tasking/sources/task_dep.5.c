@@ -1,14 +1,14 @@
 /*
 * @@name:	task_dep.5
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
 * @@version:	omp_4.0
 */
+#define N 100
 // Assume BS divides N perfectly
-void matmul_depend(int N, int BS, float A[N][N], float B[N][N], float
-C[N][N] )
+void matmul_depend(int BS, float A[N][N], float B[N][N],
+                   float C[N][N])
 {
    int i, j, k, ii, jj, kk;
    for (i = 0; i < N; i+=BS) {

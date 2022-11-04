@@ -1,14 +1,12 @@
 /*
 * @@name:	collapse.2
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	run
 * @@expect:	success
 * @@version:	omp_3.0
 */
-
 #include <stdio.h>
-void test()
+int main()
 {
    int j, k, jlast, klast;
    #pragma omp parallel
@@ -21,6 +19,6 @@ void test()
             klast=k;
          }
       #pragma omp single
-      printf("%d %d\n", klast, jlast);
+      printf("%d %d\n", klast, jlast); //2 3
    }
 }

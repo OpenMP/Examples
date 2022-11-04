@@ -1,8 +1,8 @@
 ! @@name:	nesting_restrict.5
 ! @@type:	F-fixed
-! @@compilable:	no
-! @@linkable:	no
-! @@expect:	failure
+! @@operation:	compile
+! @@expect:	ct-error
+! @@version:	pre_omp_3.0
       SUBROUTINE WRONG5(N)
       INTEGER N
 

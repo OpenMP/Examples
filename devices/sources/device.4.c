@@ -1,8 +1,7 @@
 /*
 * @@name:	device.4
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
 * @@version:	omp_4.5
 */
@@ -11,7 +10,7 @@
 #include <stdlib.h>
 #include <omp.h>
 
-void get_dev_cos(double *mem, size_t s)
+void get_dev_cos(double *mem, int s)
 {
    int h, t, i;
    double * mem_dev_cpy;

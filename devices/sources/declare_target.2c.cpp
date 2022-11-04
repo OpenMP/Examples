@@ -1,10 +1,9 @@
 /*
 * @@name:	declare_target.2c
 * @@type:	C++
-* @@compilable:	no
-* @@linkable:	no
-* @@expect:	failure
-* @@version:	omp_5.2
+* @@operation:	compile
+* @@expect:	ct-error
+* @@version:	omp_5.1
 */
 struct typeX
 {

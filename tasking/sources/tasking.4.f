@@ -1,7 +1,6 @@
 ! @@name:	tasking.4
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
 ! @@version:	omp_3.0
       RECURSIVE INTEGER FUNCTION fib(n) RESULT(res)

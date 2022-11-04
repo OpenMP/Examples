@@ -1,9 +1,9 @@
-! @@name: target_offload_control.1
-! @@type: F-free
-! @@compilable: yes
-! @@linkable: yes
-! @@expect: success
-! @@version: omp_5.0
+! @@name:	target_offload_control.1
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
+! @@version:	omp_5.0
+! @@env:	OMP_TARGET_OFFLOAD=default
 module offload_policy
   implicit none
   integer, parameter :: LEN_POLICY=10

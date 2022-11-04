@@ -1,9 +1,8 @@
 /*
-* @@name:       target_defaultmap.1
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   yes
-* @@expect:     success
+* @@name:	target_defaultmap.1
+* @@type:	C
+* @@operation:	run
+* @@expect:	success
 * @@version:	omp_5.0
 */
 #include <stdlib.h>
@@ -30,10 +29,9 @@ int main(){
                    // Uses defaultmap to set scalars, aggregates & 
                    // pointers to normal defaults.  
     #pragma omp target \
-            defaultmap(firstprivate: scalar)   //could also be default \
-            defaultmap(tofrom:       aggregate)//could also be default \
-            defaultmap(default:      pointer)  //must be default       \
-            map(ptr2m[:N])
+            defaultmap(firstprivate: scalar)   /* could also be default */ \
+            defaultmap(tofrom:       aggregate)/* could also be default */ \
+            defaultmap(default:      pointer)  /* must be default */
     {
         s       = 3;            //SCALAR firstprivate, value not returned
  
@@ -65,9 +63,10 @@ int main(){
    
   
 // Target Region 3
-            // defaultmap & explicit map with variables in same category
+            // defaultmap & explicit data-sharing clause
+            // with variables in same category
     s1=s2=s3=1;
-    #pragma  omp defaultmap(tofrom: scalar) map(firstprivate: s1,s2) 
+    #pragma omp target defaultmap(tofrom: scalar) firstprivate(s1,s2)
     {
         s1 += 5;         // firstprivate (s1 value not returned to host)
         s2 += 5;         // firstprivate (s2 value not returned to host)

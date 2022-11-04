@@ -1,10 +1,9 @@
 /*
-* @@name:       task_dep.11
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   no
-* @@expect:     success
-* @@version: omp_5.0
+* @@name:	task_dep.11
+* @@type:	C
+* @@operation:	compile
+* @@expect:	success
+* @@version:	omp_5.0
 */
 #include<stdio.h>
 
@@ -36,4 +35,3 @@ void parallel_computation(int n) {
         print_all_elements(v, n);
     }
 }
-

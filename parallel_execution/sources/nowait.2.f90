@@ -1,8 +1,8 @@
 ! @@name:	nowait.2
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
+! @@version:	pre_omp_3.0
    SUBROUTINE NOWAIT_EXAMPLE2(N, A, B, C, Y, Z)
    INTEGER N
    REAL A(*), B(*), C(*), Y(*), Z(*)

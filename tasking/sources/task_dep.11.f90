@@ -1,9 +1,8 @@
 ! @@name:	task_dep.11
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
-! @@version:    omp_5.0
+! @@version:	omp_5.0
 subroutine set_an_element(e, val)
     implicit none
     integer :: e, val

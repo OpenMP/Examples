@@ -1,9 +1,8 @@
 ! @@name:	taskloop_reduction.2
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	run
 ! @@expect:	success
-! @@version:    omp_5.0
+! @@version:	omp_5.0
 function array_sum(n, v) result(res)
     implicit none
     integer :: n, v(n), res

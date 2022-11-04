@@ -1,8 +1,7 @@
 /*
 * @@name:	atomic.1
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	yes
+* @@operation:	link
 * @@expect:	success
 * @@version:	omp_3.1
 */

@@ -1,9 +1,8 @@
 ! @@name:	task_dep.10
 ! @@type:	F-free
-! @@compilable:	no
-! @@linkable:	no
-! @@expect:	failure
-! @@version:    omp_5.0
+! @@operation:	compile
+! @@expect:	success
+! @@version:	omp_5.0
 subroutine foo
    integer :: a,b,c
    c = 0

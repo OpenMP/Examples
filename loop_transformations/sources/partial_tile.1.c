@@ -1,10 +1,9 @@
 /*
-* @@name:       partial_tile.1
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   no
-* @@expect:     success
-* @@version:    omp_5.1
+* @@name:	partial_tile.1
+* @@type:	C
+* @@operation:	compile
+* @@expect:	success
+* @@version:	omp_5.1
 */
 int min(int a, int b){ return (a < b)? a : b; }
 

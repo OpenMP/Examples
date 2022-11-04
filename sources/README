@@ -14,17 +14,22 @@ under the corresponding chapter directory:
 ../synchronization/sources
 ../tasking/sources
 
-This directory contains the test_codes script that performs
+This directory contains the eval_codes script that performs
 a quick compilation test of all example codes (default).  The
-test results are stored in the test_codes.log file.  The script 
+test results are stored in the eval_codes.log file.  The script 
 tries to automatically detect a compiler. Set the comp_c, comp_cc 
 and comp_f variables if that doesn't work.  
 
-          The test script (test_codes) is 
 
-    ***** for reference purpose only and is NOT intended to validate *****
+***********************************************************************
+***  The test script (eval_codes) is for reference purpose only
+***  and is NOT intended to validate OpenMP compliance of a compiler.
+***********************************************************************
 
-          OpenMP compliance of a compiler.
+
+The "check_tags" script can be used to check the validity of source
+tags in source codes.  The results are recorded in chk_tags.log.
+
 
 July 31 2021 Changes
 * Automatic compiler determination (no need to specify comp_c, etc.)
@@ -32,6 +37,12 @@ July 31 2021 Changes
 * Automatic Backdown (replacement) for deprecation if compiler is not 5.1/5.0
   (replacements: masked->master,primary->master, *lock_hint*->*lock_sync*)
 * Automatic -c compiler flag for "linkable=no" metadata
-* Utilities file, test_utils, created for clean coding
+* Utilities file, eval_utils, created for clean coding
 * Command line now takes file name argument (just file name, not path)
-* sourceme file: puts test_codes in PATH, creates tc alias, defines OMP_BASE_DI
+* sourceme file: puts eval_codes in PATH, creates tc alias, defines OMP_BASE_DI
+
+
+May 31 2022 Changes
+* Reworked to use info from the tags "@@operation" and "@@version"
+* Removed codes related to preprocessing
+

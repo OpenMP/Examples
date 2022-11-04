@@ -1,9 +1,8 @@
 ! @@name:	masked.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
-! @@version:    omp_5.1
+! @@version:	omp_5.1
       SUBROUTINE MASKED_EXAMPLE( X, XOLD, N, TOL )
       REAL X(*), XOLD(*), TOL
       INTEGER N

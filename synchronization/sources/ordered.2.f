@@ -1,8 +1,8 @@
 ! @@name:	ordered.2
 ! @@type:	F-fixed
-! @@compilable:	no
-! @@linkable:	no
-! @@expect:	failure
+! @@operation:	compile
+! @@expect:	ct-error
+! @@version:	pre_omp_3.0
       SUBROUTINE WORK(I)
       INTEGER I
       END SUBROUTINE WORK

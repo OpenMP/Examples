@@ -1,8 +1,8 @@
 ! @@name:	reduction.7
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
+! @@version:	pre_omp_3.0
 program array_red
 
   integer,parameter :: n=100

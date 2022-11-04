@@ -1,12 +1,10 @@
 /*
-* @@name:       task_detach.2
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   yes
-* @@expect:     success
-* @@version:    omp_5.0
+* @@name:	task_detach.2
+* @@type:	C
+* @@operation:	run
+* @@expect:	success
+* @@version:	omp_5.0
 */
-
 // use -lrt on loader line
 #include  <stdio.h>
 #include <unistd.h>
@@ -14,6 +12,7 @@
 #include    <aio.h>
 #include  <errno.h>
 #include <signal.h>
+#include <stdint.h>
 
 #include    <omp.h>
 
@@ -24,7 +23,8 @@ static void callback_aioSigHandler(int sig, siginfo_t *si,
                                    void *ucontext) {
    if (si->si_code == SI_ASYNCIO){
       printf( "OUT: I/O completion signal received.\n");
-      omp_fulfill_event( (omp_event_handle_t)(si->si_value.sival_ptr) );
+      omp_fulfill_event( (omp_event_handle_t)(uintptr_t)
+                         (si->si_value.sival_ptr) );
    }
 }
 

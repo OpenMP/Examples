@@ -1,7 +1,6 @@
 ! @@name:	teams.3
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	success
 ! @@version:	omp_4.5
 function dotprod(B,C,N) result(sum)

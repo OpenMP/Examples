@@ -1,12 +1,10 @@
 /*
-* @@name: metadirective.1
-* @@type: C
-* @@compilable: yes
-* @@linkable: yes
-* @@expect: success
-* @@version: omp_5.2
+* @@name:	metadirective.1
+* @@type:	C
+* @@operation:	run
+* @@expect:	success
+* @@version:	omp_5.2
 */
-
 #define N 100
 #include <stdio.h>
 

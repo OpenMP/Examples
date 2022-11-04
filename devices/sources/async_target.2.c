@@ -1,8 +1,7 @@
 /*
 * @@name:	async_target.2
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
 * @@version:	omp_5.1
 */

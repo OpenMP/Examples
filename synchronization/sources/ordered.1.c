@@ -1,9 +1,9 @@
 /*
 * @@name:	ordered.1
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	yes
+* @@operation:	run
 * @@expect:	success
+* @@version:	pre_omp_3.0
 */
 #include <stdio.h>
 

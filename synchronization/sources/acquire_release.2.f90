@@ -1,10 +1,8 @@
-! @@name: acquire_release.2
-! @@type: F-free
-! @@compilable: yes
-! @@linkable: yes
-! @@expect: success
-! @@version: omp_5.0
-
+! @@name:	acquire_release.2
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
+! @@version:	omp_5.0
 program rel_acq_ex2
    use omp_lib
    integer :: x, y, thrd, tmp

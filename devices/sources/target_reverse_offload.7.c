@@ -1,12 +1,10 @@
 /*
 * @@name:	target_reverse_offload.7
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	yes
+* @@operation:	run
 * @@expect:	success
 * @@version:	omp_5.2
 */
-
 #include <stdio.h>
 #include <stdlib.h>
 

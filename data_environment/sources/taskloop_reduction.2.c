@@ -1,10 +1,9 @@
 /*
-* @@name:       taskloop_reduction.2
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   yes
-* @@expect:     success
-* @@version:    omp_5.0
+* @@name:	taskloop_reduction.2
+* @@type:	C
+* @@operation:	run
+* @@expect:	success
+* @@version:	omp_5.0
 */
 #include <stdio.h>
 
@@ -27,7 +26,7 @@ int array_sum(int n, int *v) {
     return res;
 }
 
-int main(int argc, char *argv[]) {
+int main() {
     int n = 10;
     int v[10] = {1,2,3,4,5,6,7,8,9,10};
 

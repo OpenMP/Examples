@@ -1,10 +1,9 @@
 /*
-* @@name: affinity.6
-* @@type: C
-* @@compilable: yes
-* @@linkable: no
-* @@expect: success
-* @@version: omp_5.0
+* @@name:	affinity.6
+* @@type:	C
+* @@operation:	compile
+* @@expect:	success
+* @@version:	omp_5.0
 */
 double * alloc_init_B(double *A, int N);
 void     compute_on_B(double *B, int N);
@@ -24,4 +23,3 @@ void task_affinity(double *A, int N)
 
    #pragma omp taskwait
 }
-

@@ -1,10 +1,9 @@
 /*
-* @@name:       directive_syntax_attribute.1
-* @@type:       C++
-* @@compilable: yes
-* @@linkable:   yes
-* @@expect:     success
-* @@version:    omp_5.0
+* @@name:	directive_syntax_attribute.1
+* @@type:	C++
+* @@operation:	run
+* @@expect:	success
+* @@version:	omp_5.1
 */
 #include <stdio.h>
 #include <omp.h>
@@ -80,4 +79,3 @@ int main() {
 
 //    repeated 3 time:
 //    OUTPUT: 656700.000000
-

@@ -1,9 +1,8 @@
-! @@name: allocators.4
-! @@type: F-free
-! @@compilable: yes
-! @@linkable: no
-! @@expect: success
-! @@version: omp_5.1
+! @@name:	allocators.4
+! @@type:	F-free
+! @@operation:	compile
+! @@expect:	success
+! @@version:	omp_5.1
 subroutine test_allocate
    use omp_lib
 

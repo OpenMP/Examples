@@ -1,8 +1,7 @@
 /*
 * @@name:	udr.5
 * @@type:	C++
-* @@compilable:	no
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
 * @@version:	omp_4.0
 */

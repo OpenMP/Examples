@@ -1,8 +1,8 @@
 ! @@name:	fort_sa_private.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	yes
-! @@expect:	rt-error
+! @@operation:	run
+! @@expect:	unspecified
+! @@version:	pre_omp_3.0
        SUBROUTINE SUB()
        COMMON /BLOCK/ X
        PRINT *,X             ! X is undefined

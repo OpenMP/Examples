@@ -1,9 +1,9 @@
 /*
 * @@name:	private.3
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
+* @@version:	pre_omp_3.0
 */
 #include <assert.h>
 void priv_example3()

@@ -1,8 +1,8 @@
 ! @@name:	parallel.1
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	link
 ! @@expect:	success
+! @@version:	pre_omp_3.0
       SUBROUTINE SUBDOMAIN(X, ISTART, IPOINTS)
           INTEGER ISTART, IPOINTS
           REAL X(*)

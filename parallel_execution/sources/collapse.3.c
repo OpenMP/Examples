@@ -1,8 +1,7 @@
 /*
 * @@name:	collapse.3
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
 * @@version:	omp_3.0
 */
@@ -11,7 +10,7 @@
 void work(int a, int j, int k);
 void sub()
 {
-   int j, k, a;
+   int j, k, a = 5;
    #pragma omp parallel num_threads(2)
    {
       #pragma omp for collapse(2) ordered private(j,k) schedule(static,3)

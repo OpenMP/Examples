@@ -1,13 +1,13 @@
 # Makefile for the OpenMP Examples document in LaTex format. 
 # For more information, see the main document, openmp-examples.tex.
 
-version=5.2
+version=5.2.1
 default: openmp-examples.pdf
 diff: openmp-diff-abridged.pdf
 
 book: BOOK_BUILD="\\\\def\\\\bookbuild{1}"
 book: clean openmp-examples.pdf
-	cp openmp-examples-${version}.pdf openmp-examples-${version}-book.pdf
+	mv openmp-examples-${version}.pdf openmp-examples-${version}-book.pdf
 
 CHAPTERS=Title_Page.tex \
 	Foreword_Chapt.tex \
@@ -53,6 +53,7 @@ clean:
 	rm -f openmp-diff-full.pdf openmp-diff-abridged.pdf
 	rm -rf *.tmpdir
 	cd util; make clean
+	rm -f chk_tags.log sources/*.log
 
 realclean: clean
 	rm -f openmp-examples-${version}.pdf openmp-examples-${version}-book.pdf
@@ -83,6 +84,7 @@ VC_DIFF_MINIMAL_OPTS:= --only-changes --force
 generated-include.tex:
 	echo "$(BOOK_BUILD)"
 	echo "$(BOOK_BUILD)" > $@
+	util/list_tags -vtag */sources/* >> $@
 
 %.tmpdir: $(wildcard *.sty) $(wildcard *.png) $(wildcard *.aux) openmp-examples.pdf
 	mkdir -p $@/sources

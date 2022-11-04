@@ -1,12 +1,10 @@
 /*
-* @@name:       depobj.1
-* @@type:       C
-* @@compilable: yes
-* @@linkable:   yes
-* @@expect:     success
-* @@version:    omp_5.2
+* @@name:	depobj.1
+* @@type:	C
+* @@operation:	link
+* @@expect:	success
+* @@version:	omp_5.2
 */
-
 #include <stdio.h>
 #include <omp.h>
 
@@ -73,4 +71,3 @@ void init(float a[], int n)
 {  
    for(int i=0;i<n;i++) a[i]=i; 
 }
-

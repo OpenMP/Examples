@@ -1,8 +1,8 @@
 ! @@name:	workshare.6
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
-! @@expect:	success
+! @@operation:	compile
+! @@expect:	unspecified
+! @@version:	pre_omp_3.0
       SUBROUTINE WSHARE6_WRONG(AA, BB, CC, DD, N)
       INTEGER N
       REAL AA(N,N), BB(N,N), CC(N,N), DD(N,N)

@@ -1,9 +1,9 @@
 /*
 * @@name:	threadprivate.3
 * @@type:	C++
-* @@compilable:	maybe
-* @@linkable:	no
-* @@expect:	failure
+* @@operation:	compile
+* @@expect:	unspecified
+* @@version:	pre_omp_3.0
 */
 class T {
   public:

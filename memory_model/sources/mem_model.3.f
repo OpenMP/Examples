@@ -1,8 +1,7 @@
 ! @@name:	mem_model.3
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	yes
-! @@expect:	rt-error
+! @@operation:	run
+! @@expect:	unspecified
 ! @@version:	omp_3.1
        PROGRAM EXAMPLE
        INCLUDE "omp_lib.h" ! or USE OMP_LIB
@@ -22,7 +21,6 @@
 
          ELSE IF(OMP_GET_THREAD_NUM() .EQ. 1) THEN
          ! Loop until we see that FLAG reaches 1
-!$OMP        FLUSH(FLAG, DATA)
              FLAG_VAL = 0
              DO WHILE(FLAG_VAL .LT. 1)
 !$OMP           ATOMIC READ

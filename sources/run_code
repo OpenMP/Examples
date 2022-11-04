@@ -1,0 +1,20 @@
+#!/bin/bash
+
+basedir=$(dirname $0)
+cmd=$1
+ef=$2
+envfile=exmpl_test_envs
+if [ ! -z $ef ]; then
+  $basedir/../util/list_tags -env $ef | tee $envfile
+  source $envfile
+fi
+
+s=0
+if [ -e $cmd ]; then
+  $cmd
+  s=$?
+fi
+if [ -e $envfile ]; then
+  \rm -f $envfile
+fi
+exit $s

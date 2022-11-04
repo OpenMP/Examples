@@ -1,10 +1,9 @@
 /*
 * @@name:	copyprivate.2
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	compile
 * @@expect:	success
-* @@version:    omp_5.1
+* @@version:	omp_5.1
 */
 #include <stdio.h>
 #include <stdlib.h>

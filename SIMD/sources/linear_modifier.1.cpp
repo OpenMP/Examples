@@ -1,10 +1,9 @@
 /*
 * @@name:	linear_modifier.1
 * @@type:	C++
-* @@compilable:	yes
-* @@linkable:	yes
+* @@operation:	run
 * @@expect:	success
-* @@version:	omp_5.1
+* @@version:	omp_5.2
 */
 #include <stdio.h>
  

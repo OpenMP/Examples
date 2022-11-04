@@ -137,3 +137,51 @@ and \scode{omp_get_default_allocator} API routines.
 
 \cexample[5.1]{allocators}{4}
 \ffreeexample[5.1]{allocators}{4}
+
+\pagebreak
+\index{uses_allocators clause@\scode{uses_allocators} clause}
+\index{clauses!uses_allocators@\scode{uses_allocators}}
+
+The use of allocators in \scode{target} regions is facilitated by the
+\scode{uses_allocators} clause as shown in the cases below.
+
+In CASE 1, the predefined \scode{omp_cgroup_mem_alloc} allocator is made available on the
+device in the first \scode{target} construct as specified in the \scode{uses_allocators} clause.
+The allocator is then used in the \scode{allocate}
+clause of the \scode{teams} construct to allocate a private array for each
+team (contention group). The private \splc{xbuf} arrays that are filled by each
+team are reduced as specified in the \scode{reduction} clause on the \scode{teams} construct.
+
+In CASE 2, user-defined traits are specified in the \splc{cgroup_traits} variable.
+An allocator is initialized for the \scode{target} region in the \scode{uses_allocators} clause,
+and the traits specified in \splc{cgroup_traits} are included by the \scode{traits} modifier.
+
+As shown above, the \scode{uses_allocators} clause creates a new allocator for the
+\scode{target} region, and uses only traits specified in the clause with a modifier.
+In CASE 3, the \splc{cgroup_alloc} variable is initialized on the host with traits
+and a memory space. However, these are ignored by the \scode{uses_allocators} clause,
+because a new allocator is initialized, and has no traits specified within the clause.
+
+\cexample[5.2]{allocators}{5}
+\ffreeexample[5.2]{allocators}{5}
+
+The following example shows how to make an allocator, defined on the host, available in a \scode{target} region.
+
+When the \scode{requires} directive is specified with a \scode{dynamic_allocators}
+clause, allocators initialized on the host can be used in a \scode{target} region
+without specifying a \scode{uses_allocators} clause. This applies to predefined
+allocators and user-defined allocators.
+
+In CASE 1, the predefined \scode{omp_cgroup_mem_alloc} allocator is used in the \scode{target}
+region as in CASE 1 of the previous example, but without specifying a \scode{uses_allocators} clause.
+This is accomplished by specifying the \scode{requires} directive with a
+\scode{dynamic_allocators} clause in the same compilation unit, to remove
+restrictions on allocator usage in \scode{target} regions.
+
+CASE 2 also uses the \scode{dynamic_allocators} clause to remove allocator
+restrictions in the \scode{target} region. Here, an allocator initialized
+on the host is used for target array allocations of an \scode{allocate} clause.
+
+
+\cexample[5.2]{allocators}{6}
+\ffreeexample[5.2]{allocators}{6}

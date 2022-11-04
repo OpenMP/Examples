@@ -1,7 +1,6 @@
 ! @@name:	tasking.9
 ! @@type:	F-fixed
-! @@compilable:	yes
-! @@linkable:	no
+! @@operation:	compile
 ! @@expect:	rt-error
 ! @@version:	omp_3.0
        module example

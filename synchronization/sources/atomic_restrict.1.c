@@ -1,9 +1,8 @@
 /*
 * @@name:	atomic_restrict.1
 * @@type:	C
-* @@compilable:	maybe
-* @@linkable:	no
-* @@expect:	failure
+* @@operation:	compile
+* @@expect:	unspecified
 * @@version:	omp_3.1
 */
 void atomic_wrong ()

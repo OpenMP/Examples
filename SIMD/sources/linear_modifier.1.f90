@@ -1,7 +1,6 @@
 ! @@name:	linear_modifier.1
 ! @@type:	F-free
-! @@compilable:	yes
-! @@linkable:	yes
+! @@operation:	run
 ! @@expect:	success
 ! @@version:	omp_5.2
 module m
@@ -10,8 +9,9 @@ module m
 
  contains
    subroutine add_one2(p)
-   !$omp declare simd(add_one2) linear(p: ref) simdlen(8)
    implicit none
+   !$omp declare simd(add_one2) linear(p: ref) simdlen(8)
+   
    integer :: p
 
    p = p + 1
@@ -45,4 +45,3 @@ program main
    end do
    print *, "passed"
 end program
-

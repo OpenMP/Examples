@@ -1,8 +1,7 @@
 /*
 * @@name:	SIMD.8
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	yes
+* @@operation:	run
 * @@expect:	success
 * @@version:	omp_4.0
 */

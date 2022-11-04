@@ -1,16 +1,16 @@
 /*
 * @@name:	single.1
 * @@type:	C
-* @@compilable:	yes
-* @@linkable:	no
+* @@operation:	link
 * @@expect:	success
+* @@version:	pre_omp_3.0
 */
 #include <stdio.h>
 
 void work1() {}
 void work2() {}
 
-void single_example()
+int main()
 {
   #pragma omp parallel
   {

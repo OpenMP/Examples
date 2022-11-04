@@ -1,9 +1,8 @@
-! @@name: metadirective.3
-! @@type: F-free
-! @@compilable: yes
-! @@linkable: yes
-! @@expect: success
-! @@version: omp_5.2
+! @@name:	metadirective.3
+! @@type:	F-free
+! @@operation:	run
+! @@expect:	success
+! @@version:	omp_5.2
 module params
    integer, parameter :: N=1000
    DOUBLE PRECISION, PARAMETER::M_PI=4.0d0*DATAN(1.0d0)
