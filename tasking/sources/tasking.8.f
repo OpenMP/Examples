@@ -7,8 +7,10 @@
       integer tp
 !$omp threadprivate(tp)
       integer var
-      contains
+      end module
+
       subroutine work
+         use example
 !$omp parallel
          ! do work here
 !$omp task
@@ -21,4 +23,3 @@
 !$omp end task
 !$omp end parallel
       end subroutine
-      end module

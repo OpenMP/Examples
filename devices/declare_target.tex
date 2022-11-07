@@ -246,3 +246,25 @@ double precision data are in scope on the device only for the second \code{targe
 \cexample[5.1]{declare_target}{6}
 \ffreeexample[4.5]{declare_target}{6}
 
+
+\subsection{Declare Target Directive with \code{device\_type} Clause}
+\label{subsec:declare_target_device_type}
+
+\index{directives!declare target@\code{declare}~\code{target}}
+\index{declare target directive@\code{declare}~\code{target} directive}
+
+\index{directives!begin declare target@\code{begin}~\code{declare}~\code{target}}
+\index{begin declare target directive@\code{begin}~\code{declare}~\code{target} directive}
+
+\index{clauses!device_type@\code{device\_type}}
+\index{device_type clause@\code{device\_type} clause}
+
+The \code{declare}~\code{target} directives apply to procedures to ensure that they can be executed or accessed on a device. 
+The \code{device\_type} clause specifies whether a version of the procedure or variable should be made available on the host, device or both. 
+This example uses  \code{nohost} for a procedure \plc{foo}. Only a device version of the procedure \plc{foo} is made available. 
+If the variant function \plc{foo\_onhost} is not specified for the host fallback execution, the call to \plc{foo} from the \code{target} region will result in a link time error due to the code generated for host execution of the target region.
+This is because host symbol for the device routine \plc{foo} marked as \code{nohost} is not required to be present in the host environment.
+
+\cexample[5.2]{declare_target}{7}
+\ffreeexample[5.2]{declare_target}{7}
+
