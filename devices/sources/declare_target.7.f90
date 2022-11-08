@@ -22,8 +22,8 @@ program main
 
    use subs
    !$omp target
-   call foo    ! calls foo() on device
-               ! or foo_onhost() in case of host fallback
+   call foo    !calls foo() on device or 
+               !foo_onhost() in case of host fallback
    !$omp end target
 
 end program

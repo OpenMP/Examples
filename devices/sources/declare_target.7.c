@@ -14,7 +14,7 @@ void foo_onhost();
 
 #pragma omp declare variant(foo_onhost) match(device={kind(host)})
 void foo(){
-  // device specific computation
+  //device specific computation
 }
 
 void foo_onhost(){
@@ -24,8 +24,8 @@ void foo_onhost(){
 int main(){
   #pragma omp target teams 
   {
-    foo();  // calls foo() on target device 
-            // or foo_onhost() in case of host fallback
+    foo(); //calls foo() on target device or 
+           //foo_onhost() in case of host fallback
   }
   return 0;
 

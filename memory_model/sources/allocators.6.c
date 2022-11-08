@@ -13,14 +13,14 @@
 int calc(int i, int j) { return i*j;}
 #pragma omp declare target(calc)
 
-
 int main()
 {
     #define N 256
     int sum;
     int xbuf[N];
 
-    omp_allocator_handle_t cgroup_alloc;
+    static omp_allocator_handle_t cgroup_alloc;
+    #pragma omp declare target(cgroup_alloc)
     const omp_alloctrait_t cgroup_traits[1] = 
                            {{omp_atk_access, omp_atv_cgroup}};
 
@@ -50,11 +50,14 @@ int main()
 
     for (int i = 0; i < N; i++) { xbuf[i] = 0; }
 
-    cgroup_alloc = omp_init_allocator( 
-                   omp_default_mem_space, 1, cgroup_traits);
+    // initializes the allocator in target region
+    #pragma omp target
+        cgroup_alloc = omp_init_allocator( 
+                       omp_default_mem_space, 1, cgroup_traits);
 
-    // WARNING: cgroup_alloc is in undefined state on target device!
-    #pragma omp target teams reduction(+:xbuf) thread_limit(N) \
+    // uses the initialized allocator
+    #pragma omp target
+    #pragma omp teams reduction(+:xbuf) thread_limit(N) \
                       allocate(cgroup_alloc:xbuf) num_teams(4)
     {
         #pragma omp parallel for
@@ -63,7 +66,9 @@ int main()
         }
     }
 
-    omp_destroy_allocator(cgroup_alloc);
+    // destroys the allocator after its use
+    #pragma omp target
+        omp_destroy_allocator(cgroup_alloc);
 
     sum = 0;
     #pragma omp parallel for reduction(+:sum)

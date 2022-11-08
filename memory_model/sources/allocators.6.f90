@@ -25,8 +25,9 @@ program main
 
     !$omp requires dynamic_allocators
 
-    integer( omp_allocator_handle_kind ) :: cgroup_alloc
-    type(omp_alloctrait),parameter       :: cgroup_traits(1)= &
+    integer(omp_allocator_handle_kind),save :: cgroup_alloc
+    !$omp declare target(cgroup_alloc)
+    type(omp_alloctrait),parameter :: cgroup_traits(1)= &
                          [omp_alloctrait(omp_atk_access,omp_atv_cgroup)]
                     
 !*** CASE 1: ***!
@@ -55,21 +56,29 @@ program main
 
     do i=1,N; xbuf(i)=0; end do
 
-    cgroup_alloc = omp_init_allocator(omp_default_mem_space, 1, &
-                                      cgroup_traits)
+    !! initializes allocator in the target region
+    !$omp target
+        cgroup_alloc = omp_init_allocator(omp_default_mem_space, 1, &
+                                          cgroup_traits)
+    !$omp end target
 
-    !! WARNING: cgroup_alloc is in undefined state on target device!
-    !$omp  target teams reduction(+:xbuf) thread_limit(N) &
-    !$omp&              allocate(cgroup_alloc:xbuf) num_teams(4)
+    !! uses the initialized allocator
+    !$omp  target
+    !$omp  teams reduction(+:xbuf) thread_limit(N) &
+    !$omp&       allocate(cgroup_alloc:xbuf) num_teams(4)
 
         !$omp parallel do
         do i = 1,N
            xbuf(i) = xbuf(i) + calc(i,omp_get_team_num())
         enddo
 
-    !$omp end target teams
+    !$omp end teams
+    !$omp end target
 
-    call omp_destroy_allocator(cgroup_alloc)
+    !! destroys the allocator after its use
+    !$omp target
+        call omp_destroy_allocator(cgroup_alloc)
+    !$omp end target
 
     sum = 0
     !$omp parallel do reduction(+:sum)
