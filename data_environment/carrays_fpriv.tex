@@ -1,33 +1,33 @@
-\pagebreak
-\section{C/C++ Arrays in a \code{firstprivate} Clause}
+%\pagebreak
+\section{C/C++ Arrays in a \kcode{firstprivate} Clause}
 \ccppspecificstart
 \label{sec:carrays_fpriv}
-\index{clauses!firstprivate@\code{firstprivate}}
-\index{firstprivate clause@\code{firstprivate} clause!C/C++ arrays in}
+\index{clauses!firstprivate@\kcode{firstprivate}}
+\index{firstprivate clause@\kcode{firstprivate} clause!C/C++ arrays in}
 
 The following example illustrates the size and value of list items of array or 
-pointer type in a \code{firstprivate} clause . The size of new list items is 
+pointer type in a \kcode{firstprivate} clause. The size of new list items is 
 based on the type of the corresponding original list item, as determined by the 
 base language.
 
 In this example:
 
 \begin{compactitem}
-\item The type of \code{A} is array of two arrays of two ints.
+\item The type of \ucode{A} is array of two arrays of two \bcode{int}s.
 
-\item  The type of \code{B} is adjusted to pointer to array of \code{n} 
-ints, because it is a function parameter.
+\item  The type of \ucode{B} is adjusted to pointer to array of \ucode{n} 
+\bcode{int}s, because it is a function parameter.
 
-\item  The type of \code{C} is adjusted to pointer to int, because 
+\item  The type of \ucode{C} is adjusted to pointer to \bcode{int}, because 
 it is a function parameter.
 
-\item  The type of \code{D} is array of two arrays of two ints.
+\item  The type of \ucode{D} is array of two arrays of two \bcode{int}s.
 
-\item  The type of \code{E} is array of \code{n} arrays of \code{n} 
-ints.
+\item  The type of \ucode{E} is array of \ucode{n} arrays of \ucode{n} 
+\bcode{int}s.
 \end{compactitem}
 
-Note that  \code{B} and \code{E} involve variable length array types.
+Note that  \ucode{B} and \ucode{E} involve variable length array types.
 
 The new items of array type are initialized as if each integer element of the original 
 array is assigned to the corresponding element of the new array. Those of pointer 

@@ -2,6 +2,73 @@
 \label{chap:history}
 
 %=====================================
+\section{Changes from 5.2.1 to 5.2.2}
+\label{sec:history_521_to_522}
+
+\begin{itemize}
+\item To improve the style of the document, a set of macros was introduced
+  and consistently used for language keywords, names, concepts, and user codes
+  in the text description of the document.  Refer to the content of 
+  \examplesblob{v5.2.2/Contributions.md}
+  for details.
+
+\item Added the following examples:
+\begin{itemize}
+  \item Orphaned and nested \kcode{loop} constructs (\specref{sec:loop})
+  \item \kcode{all} variable category for the \kcode{defaultmap} clause
+    (\specref{sec:defaultmap})
+  \item \kcode{target update} construct using a custom mapper
+    (\specref{subsec:target_update_mapper})
+  \item \kcode{indirect} clause for indirect procedure calls in a
+    \kcode{target} region (\specref{subsec:indirect})
+  \item \kcode{omp_target_memcpy_async} routine with depend object
+    (\specref{subsec:target_mem_and_device_ptrs})
+  \item Synchronization hint for atomic operation (\specref{sec:atomic_hint})
+  \item Implication of passing shared variable to a procedure
+    in Fortran (\specref{sec:fort_shared_var})
+  \item Assumption directives for providing additional information
+    about program properties (\specref{sec:assumption})
+  \item Mapping behavior of scalars, pointers, references (C++) and associate names
+        (Fortran) when unified shared memory is required
+    (\specref{sec:requires})
+  \item \kcode{begin declare variant} paired with \kcode{end declare variant}
+    example to show use of nested declare variant 
+    directives (\specref{subsec:declare_variant})
+  \item Explicit scoring in context selectors
+    (\specref{subsec:context_selector_scoring})
+\end{itemize}
+
+\item Miscellaneous changes:
+\begin{itemize}
+  \item Included a general statement in Introduction about the number of 
+    threads used throughout the examples document (\specref{sec:examples})
+  \item Clarified the mapping of virtual functions in \kcode{target} regions
+    (\specref{sec:virtual_functions})
+  \item Added missing \kcode{declare target} directive for procedures
+    called inside \kcode{target} region in \example{Examples} 
+    \example{declare_mapper.1.f90} (\specref{sec:declare_mapper}),
+    \example{target_reduction.*.f90} (\specref{subsec:target_reduction}), 
+    and \example{target_task_reduction.*.f90}
+    (\specref{subsec:target_task_reduction})
+  \item Added missing \kcode{end target} directive in 
+    \example{Example declare_mapper.3.f90}
+    (\specref{sec:declare_mapper})
+  \item Removed example for \kcode{flush} without a list from Synchronization 
+    since the example is confusing and the use of \kcode{flush} is already
+    covered in other examples
+    (\specref{chap:synchronization})
+  \item \docref{declare variant Directive} and \docref{Metadirective} sections were moved to
+         subsections in the new \docref{Context-based Variant Selection} section, 
+         with a section introduction on context selectors.
+    (\specref{sec:context_based_variants})
+  \item Fixed a typo (`\kcode{for}' $\rightarrow$ `\kcode{do}') in 
+    \example{Example metadirective.4.f90}
+    (\specref{subsec:metadirective})
+\end{itemize}
+
+\end{itemize}
+
+%=====================================
 \section{Changes from 5.2 to 5.2.1}
 \label{sec:history_52_to_521}
 
@@ -9,44 +76,57 @@
 \item General changes:
 \begin{itemize}
 \item Updated source metadata tags for all examples to use an improved form
- (see \href{https://github.com/OpenMP/Examples/blob/v\VER/Contributions.md}%
- {https://github.com/OpenMP/Examples/blob/v\VER/Contributions.md})
+ (see \examplesblob{v5.2.1/Contributions.md})
 \item Explicitly included the version tag \verlabel[pre\_]{3.0} in those 
  examples that did not contain a version tag previously
 \end{itemize}
 
 \item Added the following examples for the 5.2 features:
 \begin{itemize}
-  \item \scode{uses_allocators} clause for the use of allocators in 
-  \code{target} regions (\specref{sec:allocators})
+  \item \kcode{uses_allocators} clause for the use of allocators in 
+  \kcode{target} regions (\specref{sec:allocators})
 \end{itemize}
 \item Added the following examples for the 5.1 features:
 \begin{itemize}
-  \item The \scode{inoutset} dependence type (\specref{subsec:task_concurrent_depend})
+  \item The \kcode{inoutset} dependence type (\specref{subsec:task_concurrent_depend})
   \item Atomic compare and capture (\specref{sec:cas})
 \end{itemize}
 \item Added the following examples for the 5.0 features:
 \begin{itemize}
-  \item \code{declare}~\code{target} directive with \scode{device_type(nohost)}
+  \item \kcode{declare target} directive with \kcode{device_type(nohost)}
      clause (\specref{subsec:declare_target_device_type})
-  \item \scode{omp_pause_resource} and \scode{omp_pause_resource_all}
+  \item \kcode{omp_pause_resource} and \kcode{omp_pause_resource_all}
      routines (\specref{sec:pause_resource})
 \end{itemize}
 
 \item Miscellaneous fixes:
 \begin{itemize}
-\item Fixed an inconsistent use of mapper in \splc{Example target_mapper.3.f90}
-  (\specref{sec:declare_mapper})
-\item Fixed mismatched argument list in \splc{Example fort_sa_private.5.f}
-  (\specref{sec:fort_sa_private})
-\item Moved the placement of \code{declare}~\code{target}~\code{enter}
-  directive after function declaration
-  (\specref{subsec:target_task_reduction})
-\item Fixed an incorrect use of \scode{omp_in_parallel} routine in 
-  \splc{Example metadirective.4}
-  (\specref{sec:metadirective})
-\item Fixed an incorrect value for \code{at} clause
-  (\specref{subsec:error})
+  \item Cast to implementation-defined enum type \kcode{omp_event_handle_t} 
+    now uses \bcode{uintptr_t} (not \bcode{void *}) in
+    \example{Example task_detach.2.c}
+    (\specref{sec:task_detachment})
+  \item Moved Fortran \kcode{requires} directive into program main (\ucode{rev_off}), 
+    the program unit, in \example{Example target_reverse_offload.7.f90}
+    (\specref{subsec:target_reverse_offload})
+  \item Fixed an inconsistent use of mapper in \example{Example target_mapper.3.f90}
+    (\specref{sec:declare_mapper})
+  \item Added a missing semicolon at end of \ucode{XOR1} class definition in
+    \example{Example declare_target.2a.cpp}
+    (\specref{subsec:declare_target_class})
+  \item Fixed the placement of \kcode{declare simd} directive in 
+    \example{Examples linear_modifier.*.f90} (\specref{sec:linear_modifier})
+    and added a general statement about where a Fortran declarative
+    directive can appear (\specref{chap:directive_syntax})
+  \item Fixed mismatched argument list in \example{Example fort_sa_private.5.f}
+    (\specref{sec:fort_sa_private})
+  \item Moved the placement of \kcode{declare target enter}
+    directive after function declaration
+    (\specref{subsec:target_task_reduction})
+  \item Fixed an incorrect use of \kcode{omp_in_parallel} routine in 
+    \example{Example metadirective.4}
+    (\specref{subsec:metadirective})
+  \item Fixed an incorrect value for \kcode{at} clause
+    (\specref{subsec:error})
 \end{itemize}
 
 \end{itemize}
@@ -75,7 +155,7 @@ Table~\ref{tab:Updated Examples 5.2} for details.
 \begin{itemize}
   \item Mapping class objects with virtual functions
      (\specref{sec:virtual_functions})
-  \item \scode{allocators} construct for Fortran \code{allocate} statement
+  \item \kcode{allocators} construct for Fortran \bcode{allocate} statement
      (\specref{sec:allocators})
   \item Behavior of reallocation of variables through OpenMP allocator in
      Fortran (\specref{sec:allocators})
@@ -83,36 +163,36 @@ Table~\ref{tab:Updated Examples 5.2} for details.
 
 \item Added the following examples for the 5.1 features:
 \begin{itemize}
-  \item Clarification of optional \code{end} directive for strictly structured 
+  \item Clarification of optional \kcode{end} directive for strictly structured 
       block in Fortran (\specref{sec:fortran_free_format_comments})
-  \item \scode{filter} clause on \scode{masked} construct (\specref{sec:masked})
-  \item \scode{omp_all_memory} reserved locator for specifying task dependences
+  \item \kcode{filter} clause on \kcode{masked} construct (\specref{sec:masked})
+  \item \kcode{omp_all_memory} reserved locator for specifying task dependences
       (\specref{subsec:depend_undefer_task})
-  \item Behavior of Fortran allocatable variables in \code{target} regions
+  \item Behavior of Fortran allocatable variables in \kcode{target} regions
       (\specref{sec:fort_allocatable_array_mapping})
   \item Device memory routines in Fortran
       (\specref{subsec:target_mem_and_device_ptrs})
-  \item Partial tiles from \scode{tile} construct
+  \item Partial tiles from \kcode{tile} construct
       (\specref{sec:incomplete_tiles})
-  \item Fortran associate names and selectors in \code{target} region
+  \item Fortran associate names and selectors in \kcode{target} region
       (\specref{sec:associate_target})
-  \item \scode{allocate} directive for variable declarations and 
-      \scode{allocate} clause on \scode{task} constructs
+  \item \kcode{allocate} directive for variable declarations and 
+      \kcode{allocate} clause on \kcode{task} constructs
       (\specref{sec:allocators})
-  \item Controlling concurrency and reproducibility with \code{order} clause
+  \item Controlling concurrency and reproducibility with \kcode{order} clause
       (\specref{sec:reproducible_modifier})
 \end{itemize}
 
 \item Added other examples:
 \begin{itemize}
-  \item Using lambda expressions with \scode{target} constructs
+  \item Using lambda expressions with \kcode{target} constructs
      (\specref{sec:lambda_expressions})
   \item Target memory and device pointer routines
      (\specref{subsec:target_mem_and_device_ptrs})
   \item Examples to illustrate the ordering properties of 
      the \plc{flush} operation (\specref{sec:mem_model})
-  \item User selector in the \code{metadirective} directive
-     (\specref{sec:metadirective})
+  \item User selector in the \kcode{metadirective} directive
+     (\specref{subsec:metadirective})
 \end{itemize}
 
 \end{itemize}
@@ -124,11 +204,11 @@ Table~\ref{tab:Updated Examples 5.2} for details.
 \begin{itemize}
 \item General changes:
 \begin{itemize}
-  \item Replaced \code{master} construct example with equivalent \code{masked} construct example (\specref{sec:masked})
+  \item Replaced \kcode{master} construct example with equivalent \kcode{masked} construct example (\specref{sec:masked})
   \item Primary thread is now used to describe thread number 0 in the current team
-  \item \code{primary} thread affinity policy is now used to specify that every 
+  \item \kcode{primary} thread affinity policy is now used to specify that every 
       thread in the team is assigned to the same place as the primary thread (\specref{subsec:affinity_primary})
-  \item The \scode{omp_lock_hint_*} constants have been renamed \scode{omp_sync_hint_*} (\specref{sec:critical}, \specref{sec:locks})
+  \item The \kcode{omp_lock_hint_*} constants have been renamed \kcode{omp_sync_hint_*} (\specref{sec:critical}, \specref{sec:locks})
 \end{itemize}
 
 \item Added the following new chapters:
@@ -143,34 +223,34 @@ Table~\ref{tab:Updated Examples 5.2} for details.
 \begin{itemize}
   \item OpenMP directives in C++ \plc{attribute} specifiers
     (\specref{sec:attributes})
-  \item Directive syntax adjustment to allow Fortran \code{BLOCK} ... 
-    \code{END}~\code{BLOCK} as a structured block 
+  \item Directive syntax adjustment to allow Fortran \bcode{BLOCK} ... 
+    \bcode{END BLOCK} as a structured block 
       (\specref{sec:fortran_free_format_comments})
-  \item \code{omp\_target\_is\_accessible} API routine
+  \item \kcode{omp_target_is_accessible} API routine
       (\specref{sec:pointer_mapping})
-  \item Fortran allocatable array mapping in \code{target} regions (\specref{sec:fort_allocatable_array_mapping})
-  \item \code{begin}~\code{declare}~\code{target} (with
-        \code{end}~\code{declare}~\code{target}) directive
+  \item Fortran allocatable array mapping in \kcode{target} regions (\specref{sec:fort_allocatable_array_mapping})
+  \item \kcode{begin declare target} (with
+        \kcode{end declare target}) directive
       (\specref{subsec:declare_target_class})
-  \item \code{tile} construct             (\specref{sec:tile})
-  \item \code{unroll} construct           (\specref{sec:unroll})
-  \item Reduction with the \code{scope} construct
+  \item \kcode{tile} construct             (\specref{sec:tile})
+  \item \kcode{unroll} construct           (\specref{sec:unroll})
+  \item Reduction with the \kcode{scope} construct
       (\specref{subsec:reduction_scope})
-  \item  \code{metadirective} directive with dynamic \code{condition} selector
-      (\specref{sec:metadirective})
-  \item \code{interop} construct  (\specref{sec:interop})
-  \item Environment display with the \scode{omp_display_env} routine
+  \item  \kcode{metadirective} directive with dynamic \kcode{condition} selector
+      (\specref{subsec:metadirective})
+  \item \kcode{interop} construct  (\specref{sec:interop})
+  \item Environment display with the \kcode{omp_display_env} routine
       (\specref{subsec:display_env})
-  \item \code{error} directive  (\specref{subsec:error})
+  \item \kcode{error} directive  (\specref{subsec:error})
 \end{itemize}
 
 \item Included additional examples for the 5.0 features:
 \begin{itemize}
-  \item \code{collapse} clause for non-rectangular loop nest
+  \item \kcode{collapse} clause for non-rectangular loop nest
       (\specref{sec:collapse})
-  \item \code{detach} clause for tasks (\specref{sec:task_detachment})
+  \item \kcode{detach} clause for tasks (\specref{sec:task_detachment})
   \item Pointer attachment for a structure member (\specref{sec:structure_mapping})
-  \item Host and device pointer association with the \scode{omp_target_associate_ptr} routine (\specref{sec:target_associate_ptr})
+  \item Host and device pointer association with the \kcode{omp_target_associate_ptr} routine (\specref{sec:target_associate_ptr})
   
   \item Sample code on activating the tool interface 
       (\specref{sec:ompt_start})
@@ -178,7 +258,7 @@ Table~\ref{tab:Updated Examples 5.2} for details.
 
 \item Added other examples:
 \begin{itemize}
-  \item The \scode{omp_get_wtime} routine (\specref{subsec:get_wtime})
+  \item The \kcode{omp_get_wtime} routine (\specref{subsec:get_wtime})
 \end{itemize}
 \end{itemize}
 
@@ -188,22 +268,22 @@ Table~\ref{tab:Updated Examples 5.2} for details.
 \label{sec:history_50_to_501}
 
 \begin{itemize}
-\item Added version tags (\code{\small{}omp\_}\plc{x.y}) in example labels 
+\item Added version tags \verlabel{\plc{x.y}} in example labels 
 and the corresponding source codes for all examples that feature
 OpenMP 3.0 and later. 
 
 \item Included additional examples for the 5.0 features:
 
 \begin{itemize}
-\item Extension to the \code{defaultmap} clause
+\item Extension to the \kcode{defaultmap} clause
 (\specref{sec:defaultmap})
-\item Transferring noncontiguous data with the \code{target}~\code{update} directive in Fortran (\specref{sec:array-shaping})
-\item \code{conditional} modifier for the \code{lastprivate} clause                             (\specref{sec:lastprivate})
-\item \code{task} modifier for the \code{reduction} clause                                      (\specref{subsec:task_reduction})
+\item Transferring noncontiguous data with the \kcode{target update} directive in Fortran (\specref{sec:array-shaping})
+\item \kcode{conditional} modifier for the \kcode{lastprivate} clause                             (\specref{sec:lastprivate})
+\item \kcode{task} modifier for the \kcode{reduction} clause                                      (\specref{subsec:task_reduction})
 \item Reduction on combined target constructs                                                     (\specref{subsec:target_reduction})
-\item Task reduction with \code{target} constructs 
+\item Task reduction with \kcode{target} constructs 
    (\specref{subsec:target_task_reduction})
-\item \code{scan} directive for returning the \emph{prefix sum} of a reduction                  (\specref{sec:scan})
+\item \kcode{scan} directive for returning the \emph{prefix sum} of a reduction                  (\specref{sec:scan})
 
 \end{itemize}
 
@@ -212,7 +292,7 @@ OpenMP 3.0 and later.
 \begin{itemize}
 \item Dependence for undeferred tasks
 (\specref{subsec:depend_undefer_task})
-\item \code{ref}, \code{val}, \code{uval} modifiers for \code{linear} clause (\specref{sec:linear_modifier})
+\item \kcode{ref}, \kcode{val}, \kcode{uval} modifiers for \kcode{linear} clause (\specref{sec:linear_modifier})
 
 \end{itemize}
 
@@ -231,37 +311,39 @@ in \specref{sec:mem_model}.
 \item Added the following examples for the 5.0 features:
 
 \begin{itemize}
-\item Extended \code{teams} construct for host execution     (\specref{sec:host_teams})
-\item \code{loop} and \code{teams}~\code{loop} constructs specify loop iterations that can execute concurrently 
+\item Extended \kcode{teams} construct for host execution     (\specref{sec:host_teams})
+\item \kcode{loop} and \kcode{teams loop} constructs specify loop iterations that can execute concurrently 
                                                              (\specref{sec:loop})
-\item Task data affinity is indicated by \code{affinity} clause of \code{task} construct
+\item Task data affinity is indicated by \kcode{affinity} clause of \kcode{task} construct
                                                              (\specref{sec: task_affinity})
-\item Display thread affinity with \code{OMP\_DISPLAY\_AFFINITY} environment variable or \code{omp\_display\_affinity()} API routine
+\item Display thread affinity with \kcode{OMP_DISPLAY_AFFINITY} environment variable or \kcode{omp_display_affinity()} API routine
                                                              (\specref{sec:affinity_display})
-\item \code{taskwait} with dependences                       (\specref{subsec:taskwait_depend})
-\item \code{mutexinoutset} task dependences                  (\specref{subsec:task_dep_mutexinoutset})
-\item Multidependence Iterators (in \code{depend} clauses)   (\specref{subsec:depend_iterator})
-\item Combined constructs: \code{parallel}~\code{master}~\code{taskloop} and \code{parallel}~\code{master}~\code{taskloop}~\code{simd}
+\item \kcode{taskwait} with dependences                       (\specref{subsec:taskwait_depend})
+\item \kcode{mutexinoutset} task dependences                  (\specref{subsec:task_dep_mutexinoutset})
+\item Multidependence Iterators (in \kcode{depend} clauses)   (\specref{subsec:depend_iterator})
+\item Combined constructs: \kcode{parallel master taskloop} and \kcode{parallel master taskloop simd}
                                                                                   (\specref{sec:parallel_masked_taskloop})
-\item Reverse Offload through \plc{ancestor} modifier of \code{device} clause.    (\specref{subsec:target_reverse_offload})
+\item Reverse Offload through \kcode{ancestor} modifier of \kcode{device} clause.    (\specref{subsec:target_reverse_offload})
 \item Pointer Mapping  - behavior of mapped pointers                              (\specref{sec:pointer_mapping})   %Example_target_ptr_map*
 \item Structure Mapping  - behavior of mapped structures                          (\specref{sec:structure_mapping}) %Examples_target_structure_mapping.tex target_struct_map*
 \item Array Shaping with the \plc{shape-operator}                                 (\specref{sec:array-shaping})
-\item The \code{declare}~\code{mapper} directive                                  (\specref{sec:declare_mapper})
+\item The \kcode{declare mapper} directive                                  (\specref{sec:declare_mapper})
 \item Acquire and Release Semantics Synchronization: Memory ordering 
-      clauses \code{acquire}, \code{release}, and \code{acq\_rel} were added
+      clauses \kcode{acquire}, \kcode{release}, and \kcode{acq_rel} were added
       to flush and atomic constructs
                                                                                   (\specref{sec:acquire_and_release_semantics})
-\item \code{depobj} construct provides dependence objects for subsequent use in \code{depend} clauses
+\item \kcode{depobj} construct provides dependence objects for subsequent use in \kcode{depend} clauses
                                                                                   (\specref{sec:depobj})
-\item \code{reduction} clause for \code{task} construct                           (\specref{subsec:task_reduction})
-\item \code{reduction} clause for \code{taskloop} construct                       (\specref{subsec:taskloop_reduction})
-\item \code{reduction} clause for \code{taskloop}~\code{simd} construct           (\specref{subsec:taskloop_reduction})
+\item \kcode{reduction} clause for \kcode{task} construct                           (\specref{subsec:task_reduction})
+\item \kcode{reduction} clause for \kcode{taskloop} construct                       (\specref{subsec:taskloop_reduction})
+\item \kcode{reduction} clause for \kcode{taskloop simd} construct           (\specref{subsec:taskloop_reduction})
 \item Memory Allocators for making OpenMP memory requests with traits             (\specref{sec:allocators})
-\item \code{requires} directive specifies required features of implementation     (\specref{sec:requires})
-\item \code{declare}~\code{variant} directive - for function variants             (\specref{sec:declare_variant})
-\item \code{metadirective} directive  - for directive variants                    (\specref{sec:metadirective})
-\item \code{OMP\_TARGET\_OFFLOAD} Environment Variable  - controls offload behavior (\specref{sec:target_offload})
+\item \kcode{requires} directive specifies required features of implementation     (\specref{sec:requires})
+\item \kcode{declare variant} directive - for function variants
+(\specref{subsec:declare_variant})
+\item \kcode{metadirective} directive  - for directive variants
+(\specref{subsec:metadirective})
+\item \kcode{OMP_TARGET_OFFLOAD} Environment Variable  - controls offload behavior (\specref{sec:target_offload})
 \end{itemize}
 
 \item Included the following additional examples for the 4.x features:
@@ -278,22 +360,22 @@ in \specref{sec:mem_model}.
 \begin{itemize}
 \item Reorganized into chapters of major topics
 \item Included file extensions in example labels to indicate source type
-\item Applied the explicit \code{map(tofrom)} for scalar variables 
+\item Applied the explicit \kcode{map(tofrom)} for scalar variables 
       in a number of examples to comply with 
       the change of the default behavior for scalar variables from 
-      \code{map(tofrom)} to \code{firstprivate} in the 4.5 specification
+      \kcode{map(tofrom)} to \kcode{firstprivate} in the 4.5 specification
 \item Added the following new examples:
 
 \begin{itemize}
-\item \code{linear} clause in loop constructs     (\specref{sec:linear_in_loop})
-\item \code{priority} clause for \code{task} construct (\specref{sec:task_priority})
-\item \code{taskloop} construct                   (\specref{sec:taskloop})
-\item \plc{directive-name} modifier in multiple \code{if} clauses on
+\item \kcode{linear} clause in loop constructs     (\specref{sec:linear_in_loop})
+\item \kcode{priority} clause for \kcode{task} construct (\specref{sec:task_priority})
+\item \kcode{taskloop} construct                   (\specref{sec:taskloop})
+\item \plc{directive-name} modifier in multiple \kcode{if} clauses on
 a combined construct                              (\specref{subsec:target_if})
 \item unstructured data mapping                   (\specref{sec:target_enter_exit_data})
-\item \code{link} clause for \code{declare}~\code{target} directive 
+\item \kcode{link} clause for \kcode{declare target} directive 
                                                   (\specref{subsec:declare_target_link})
-\item asynchronous target execution with \code{nowait} clause (\specref{sec:async_target_exec_depend})
+\item asynchronous target execution with \kcode{nowait} clause (\specref{sec:async_target_exec_depend})
 \item device memory routines and device pointers  (\specref{subsec:target_mem_and_device_ptrs})
 \item doacross loop nest                          (\specref{sec:doacross})
 \item locks with hints                            (\specref{sec:locks})
@@ -316,8 +398,8 @@ a combined construct                              (\specref{subsec:target_if})
 
 Added the following new examples:
 \begin{itemize}
-\item the \code{proc\_bind} clause   (\specref{sec:affinity})
-\item the \code{taskgroup} construct (\specref{sec:taskgroup})
+\item the \kcode{proc_bind} clause   (\specref{sec:affinity})
+\item the \kcode{taskgroup} construct (\specref{sec:taskgroup})
 \end{itemize}
 
 \section{Changes from 3.1 to 4.0}
@@ -329,13 +411,13 @@ Added the following new examples:
 
 \begin{itemize}
 \item task dependences                       (\specref{sec:task_depend})
-\item \code{target} construct                (\specref{sec:target})
+\item \kcode{target} construct                (\specref{sec:target})
 \item array sections in device constructs    (\specref{sec:array_sections})
-\item \code{target}~\code{data} construct    (\specref{sec:target_data})
-\item \code{target}~\code{update} construct  (\specref{sec:target_update})
-\item \code{declare}~\code{target} directive (\specref{sec:declare_target})
-\item \code{teams} constructs                (\specref{sec:teams})
-\item asynchronous execution of a \code{target} region using tasks (\specref{subsec:async_target_with_tasks})
+\item \kcode{target data} construct    (\specref{sec:target_data})
+\item \kcode{target update} construct  (\specref{sec:target_update})
+\item \kcode{declare target} directive (\specref{sec:declare_target})
+\item \kcode{teams} constructs                (\specref{sec:teams})
+\item asynchronous execution of a \kcode{target} region using tasks (\specref{subsec:async_target_with_tasks})
 \item device runtime routines                (\specref{sec:device})
 \item Fortran ASSOCIATE construct            (\specref{sec:associate})
 \item cancellation constructs                (\specref{sec:cancellation})

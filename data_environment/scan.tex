@@ -1,47 +1,47 @@
-\pagebreak
-\section{\code{scan} Directive}
+%\pagebreak
+\section{\kcode{scan} Directive}
 \label{sec:scan}
-\index{directives!scan@\code{scan}}
-\index{scan directive@\code{scan} directive}
-\index{reduction clause@\code{reduction} clause!inscan modifier@\code{inscan} modifier}
-\index{inscan modifier@\code{inscan} modifier}
+\index{directives!scan@\kcode{scan}}
+\index{scan directive@\kcode{scan} directive}
+\index{reduction clause@\kcode{reduction} clause!inscan modifier@\kcode{inscan} modifier}
+\index{inscan modifier@\kcode{inscan} modifier}
 
 The following examples illustrate how to parallelize a loop that saves 
 the \emph{prefix sum} of a reduction. This is accomplished by using 
-the \code{inscan} modifier in the \code{reduction} clause for the input 
-variable of the scan, and specifying with a \code{scan} directive whether 
+the \kcode{inscan} modifier in the \kcode{reduction} clause for the input 
+variable of the scan, and specifying with a \kcode{scan} directive whether 
 the storage statement includes or excludes the scan input of the present 
-iteration (\texttt{k}).
+iteration (\ucode{k}).
 
-\index{scan directive@\code{scan} directive!inclusive clause@\code{inclusive} clause}
-\index{scan directive@\code{scan} directive!exclusive clause@\code{exclusive} clause}
-\index{clauses!inclusive@\code{inclusive}}
-\index{inclusive clause@\code{inclusive} clause}
-\index{clauses!exclusive@\code{exclusive}}
-\index{exclusive clause@\code{exclusive} clause}
-Basically, the \code{inscan} modifier connects a loop and/or SIMD reduction to 
-the scan operation, and a \code{scan} construct with an \code{inclusive} or 
-\code{exclusive} clause specifies whether the ``scan phase'' (lexical block 
+\index{scan directive@\kcode{scan} directive!inclusive clause@\kcode{inclusive} clause}
+\index{scan directive@\kcode{scan} directive!exclusive clause@\kcode{exclusive} clause}
+\index{clauses!inclusive@\kcode{inclusive}}
+\index{inclusive clause@\kcode{inclusive} clause}
+\index{clauses!exclusive@\kcode{exclusive}}
+\index{exclusive clause@\kcode{exclusive} clause}
+Basically, the \kcode{inscan} modifier connects a loop and/or SIMD reduction to 
+the scan operation, and a \kcode{scan} construct with an \kcode{inclusive} or 
+\kcode{exclusive} clause specifies whether the ``scan phase'' (lexical block 
 before and after the directive, respectively) is to use an \plc{inclusive} or 
-\plc{exclusive} scan value for the list item (\texttt{x}).
+\plc{exclusive} scan value for the list item (\ucode{x}).
 
 The first example uses the \plc{inclusive} scan operation on a composite
-loop-SIMD construct. The \code{scan} directive separates the reduction 
-statement on variable \texttt{x} from the use of \texttt{x} (saving to array \texttt{b}).
+loop-SIMD construct. The \kcode{scan} directive separates the reduction 
+statement on variable \ucode{x} from the use of \ucode{x} (saving to array \ucode{b}).
 The order of the statements in this example indicates that
-value \texttt{a[k]} (\texttt{a(k)} in Fortran) is included in the computation of 
-the prefix sum \texttt{b[k]} (\texttt{b(k)} in Fortran) for iteration \texttt{k}.
+value \ucode{a[k]} (\ucode{a(k)} in Fortran) is included in the computation of 
+the prefix sum \ucode{b[k]} (\ucode{b(k)} in Fortran) for iteration \ucode{k}.
 
 \cexample[5.0]{scan}{1}
 
 \ffreeexample[5.0]{scan}{1}
 
 The second example uses the \plc{exclusive} scan operation on a composite
-loop-SIMD construct. The \code{scan} directive separates the use of \texttt{x} 
-(saving to array \texttt{b}) from the reduction statement on variable \texttt{x}.
+loop-SIMD construct. The \kcode{scan} directive separates the use of \ucode{x} 
+(saving to array \ucode{b}) from the reduction statement on variable \ucode{x}.
 The order of the statements in this example indicates that
-value \texttt{a[k]} (\texttt{a(k)} in Fortran) is excluded from the computation 
-of the prefix sum \texttt{b[k]} (\texttt{b(k)} in Fortran) for iteration \texttt{k}.
+value \ucode{a[k]} (\ucode{a(k)} in Fortran) is excluded from the computation 
+of the prefix sum \ucode{b[k]} (\ucode{b(k)} in Fortran) for iteration \ucode{k}.
 
 \cexample[5.0]{scan}{2}
 

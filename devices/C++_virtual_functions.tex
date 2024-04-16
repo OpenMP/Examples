@@ -1,4 +1,4 @@
-\pagebreak
+%\pagebreak
 \section{C++ Virtual Functions}
 \label{sec:virtual_functions}
 
@@ -6,33 +6,45 @@
 
 The 5.2 OpenMP Specification clarified restrictions on the use 
 of polymorphic classes and virtual functions when used within 
-\scode{target} regions.  The following example identifies 
-problem cases in which the restrictions are not followed
-(for Unified Shared Memory, as prescribed by the \scode{requires}
-directive).
+\kcode{target} regions. The following examples illustrate 
+use cases and the limitations imposed by restrictions for
+references and the use of Unified Shared Memory. 
 
-The first section illustrates the restriction
-that when mapping an object for the first time, 
-the static and dynamic types must match.
+The first example illustrates two simple cases of using a virtual function
+through a pointer and reference without Unified Shared Memory. 
 
-For the first target region the behavior of the implicit map of \splc{ar} 
-is not specified-- its static type (A) doesn't match its dynamic type (D).  
-Hence access to the virtual functions is undefined.
-However, the second target region can access \splc{D::vf()} 
-since the object to which \splc{ap} points is not mapped and 
-therefore the restriction does not apply.
+A class, \ucode{D}, is derived from class \ucode{A}.  
+Function \ucode{vf} in class \ucode{A} is declared
+virtual, and the function \ucode{vf} in class \ucode{D} is declared with override.
+An object, \ucode{d} of type \ucode{D}, is created and mapped through a \kcode{target data}
+directive.
 
-The second section illustrates the restriction:
+In the first case, a pointer of type \ucode{A}, \ucode{ap}, is assigned to point 
+to the derived object \ucode{d}, and in the first \kcode{target} region the pointer
+is used to call the \ucode{vf} function of the derived class, \ucode{D}.
+
+In the second case, the reference variable \ucode{ar} of type \ucode{A} references 
+the derived object \ucode{d}).  The use of the reference variable \ucode{ar} 
+in the \kcode{target} region is illegal due to the restriction that the static and dynamic 
+types must match when mapping an object for the first time.
+That is, the behavior of the implicit map of \ucode{ar} 
+is non-conforming -- its static type \ucode{A} doesn't match its dynamic type \ucode{D}.  
+Hence the behavior of the access to the virtual functions is unspecified.
+
+\cppexample[5.2]{virtual_functions}{1}
+
+The second example illustrates the restriction:
 
 \emph{``Invoking a virtual member function of an object on a device other than the device on which the
 object was constructed results in unspecified behavior, unless the object is accessible and was
 constructed on the host device.''}
 
-An instantiation of a polymorphic class (\splc{A}) occurs in the 
-\scode{target} region, and access of its virtual function
+In the first case, an instantiation \ucode{ap} of a polymorphic class (\ucode{A}) occurs in the 
+\kcode{target} region, and access of its virtual function
 is incorrectly attempted on the host (another device).
-However, once the object is deleted on
-the target device and instantiated on the host, access within
-the next \scode{target} region is permitted.
 
-\cppexample[5.2]{virtual_functions}{1}
+In the second case, the object \ucode{ap} is instantiated on the host; access of \ucode{ap} within
+the next \kcode{target} region is permitted. (Unified Shared Memory is
+used here to minimize mapping concerns.)
+
+\cppexample[5.2]{virtual_functions}{2}

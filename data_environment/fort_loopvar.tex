@@ -1,14 +1,15 @@
-\pagebreak
+%\pagebreak
 \section{Fortran Private Loop Iteration Variables}
 \label{sec:fort_loopvar}
 \fortranspecificstart
 \index{loop variables, Fortran}
 
 In general loop iteration variables will be private, when used in the \plc{do-loop} 
-of a \code{do} and \code{parallel do} construct or in sequential loops in a 
-\code{parallel} construct (see Section 2.7.1 and Section 2.14.1 of 
+of a \kcode{do} and \kcode{parallel do} construct or in sequential loops in a 
+\kcode{parallel} construct (see the \docref{Loop Construct} section and 
+the \docref{Data-sharing Attribute Rules} section of 
 the OpenMP 4.0 specification). In the following example of a sequential 
-loop in a \code{parallel} construct the loop iteration variable \plc{I} will 
+loop in a \kcode{parallel} construct the loop iteration variable \ucode{I} will 
 be private.
 
 \ffreenexample{fort_loopvar}{1}

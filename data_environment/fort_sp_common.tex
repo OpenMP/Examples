@@ -1,36 +1,33 @@
-\pagebreak
-\section{Fortran Restrictions on \code{shared} and \code{private} Clauses with Common Blocks}
+%\pagebreak
+\section{Fortran Restrictions on \kcode{shared} and \kcode{private} Clauses with Common Blocks}
 \fortranspecificstart
 \label{sec:fort_sp_common}
-\index{clauses!private@\code{private}}
-\index{clauses!shared@\code{shared}}
-\index{private clause@\code{private} clause!common blocks, Fortran}
-\index{shared clause@\code{shared} clause!common blocks, Fortran}
+\index{clauses!private@\kcode{private}}
+\index{clauses!shared@\kcode{shared}}
+\index{private clause@\kcode{private} clause!common blocks, Fortran}
+\index{shared clause@\kcode{shared} clause!common blocks, Fortran}
 
-When a named common block is specified in a \code{private}, \code{firstprivate}, 
-or \code{lastprivate} clause of a construct, none of its members may be declared 
+When a named common block is specified in a \kcode{private}, \kcode{firstprivate}, 
+or \kcode{lastprivate} clause of a construct, none of its members may be declared 
 in another data-sharing attribute clause on that construct. The following examples 
 illustrate this point. 
 
 The following example is conforming:
 
+\pagebreak
 \fnexample{fort_sp_common}{1}
 
 The following example is also conforming:
 
 \fnexample{fort_sp_common}{2}
-% blue line floater at top of this page for "Fortran, cont."
-%\begin{figure}[t!]
-%\linewitharrows{-1}{dashed}{Fortran (cont.)}{8em}
-%\end{figure}
-\clearpage
+\topmarker{Fortran}
 
 The following example is conforming:
 
 \fnexample{fort_sp_common}{3}
 
-The following example is non-conforming because \code{x} is a constituent element 
-of \code{c}:
+The following example is non-conforming because \ucode{x} is a constituent element 
+of \ucode{c}:
 
 \fnexample{fort_sp_common}{4}
 

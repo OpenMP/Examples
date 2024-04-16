@@ -32,5 +32,6 @@ program main
 
    !$omp target map(P)
    call eval_mypts_array(P)
+   !$omp end target
 
 end program

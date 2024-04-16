@@ -2,7 +2,7 @@
 ! @@type:	F-free
 ! @@operation:	run
 ! @@expect:	success
-! @@version:	omp_5.0
+! @@version:	omp_5.2
 program defaultmap
   integer, parameter :: N=2
 
@@ -19,7 +19,7 @@ program defaultmap
 
   ! Assign values to scalar, array, allocatable, and pointers
 
-    s=2; 
+    s=2
     s1=0;   s2=0;     s3=0
     D%s=0;  D%A(1)=0; D%A(2)=0
     A(1)=0; A(2)=0
@@ -52,7 +52,7 @@ program defaultmap
     !$omp end target
 
     if(s==2 .and. A(1)==2 .and. D%s==2 .and. D%A(1)==2 .and. H(1) == 2) &
-       print*," PASSED 1 of 4"
+       print*," PASSED 1 of 5"
 
 !! Target Region 2
                    !! no implicit mapping allowed
@@ -65,7 +65,7 @@ program defaultmap
 
     !$omp end target
     if(s==7 .and. A(1)==7 .and. D%s==7 .and. D%A(1)==7) &
-        print*," PASSED 2 of 4"
+        print*," PASSED 2 of 5"
 
 !! Target Region 3
             !! defaultmap & explicit data-sharing clause
@@ -73,12 +73,12 @@ program defaultmap
     s1=1; s2=1; s3=1
     !$omp target defaultmap(tofrom: scalar) firstprivate(s1,s2)
 
-        s1 = s1+5;          !! firstprivate (s1 value not returned to host)
-        s2 = s2+5;          !! firstprivate (s2 value not returned to host)
-        s3 = s3 +s1 + s2;   !! mapped as tofrom
+        s1 = s1+5          !! firstprivate (s1 value not returned to host)
+        s2 = s2+5          !! firstprivate (s2 value not returned to host)
+        s3 = s3 +s1 + s2   !! mapped as tofrom
 
     !$omp end target
-    if(s1==1 .and. s2==1 .and. s3==13) print*," PASSED 3 of 4"
+    if(s1==1 .and. s2==1 .and. s3==13) print*," PASSED 3 of 5"
 
 !! Target Region 4
     A(1)=0;   A(2)=0
@@ -98,7 +98,20 @@ program defaultmap
 
     !$omp end target
     if(A(1)==0 .and. D%A(1)==0 .and. H(1)==0 .and. s1==3) &
-       print*," PASSED 4 of 4"
+       print*," PASSED 4 of 5"
+
+!! Target Region 5
+            !! defaultmap & explicit data-sharing clause
+            !! with variables in same category
+    s1=1; s2=1; s3=1
+    !$omp target defaultmap(to: all) map(from: s3)
+
+        s1 = s1+5        !! mapped as to
+        s2 = s2+5        !! mapped as to
+        s3 = s1 + s2     !! mapped as from
+
+    !$omp end target
+    if(s1==1 .and. s2==1 .and. s3==12) print*," PASSED 5 of 5"
 
     deallocate(H)
 

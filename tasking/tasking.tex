@@ -1,14 +1,14 @@
 \pagebreak
-\section{\code{task} and \code{taskwait} Constructs}
+\section{\kcode{task} and \kcode{taskwait} Constructs}
 \label{sec:task_taskwait}
-\index{constructs!task@\code{task}}
-\index{task construct@\code{task} construct}
-\index{constructs!taskwait@\code{taskwait}}
-\index{taskwait construct@\code{taskwait} construct}
+\index{constructs!task@\kcode{task}}
+\index{task construct@\kcode{task} construct}
+\index{constructs!taskwait@\kcode{taskwait}}
+\index{taskwait construct@\kcode{taskwait} construct}
 
 The following example shows how to traverse a tree-like structure using explicit 
-tasks. Note that the \code{traverse} function should be called from within a 
-parallel region for the different specified tasks to be executed in parallel. Also 
+tasks. Note that the \ucode{traverse} function should be called from within a 
+\kcode{parallel} region for the different specified tasks to be executed in parallel. Also 
 note that the tasks will be executed in no specified order because there are no 
 synchronization directives. Thus, assuming that the traversal will be done in post 
 order, as in the sequential code, is wrong.
@@ -17,7 +17,7 @@ order, as in the sequential code, is wrong.
 
 \ffreeexample[3.0]{tasking}{1}
 
-In the next example, we force a postorder traversal of the tree by adding a \code{taskwait} 
+In the next example, we force a postorder traversal of the tree by adding a \kcode{taskwait} 
 directive. Now, we can safely assume that the left and right sons have been executed 
 before we process the current node.
 
@@ -25,20 +25,21 @@ before we process the current node.
 
 \ffreeexample[3.0]{tasking}{2}
 
-The following example demonstrates how to use the \code{task} construct to process 
-elements of a linked list in parallel. The thread executing the \code{single} 
+The following example demonstrates how to use the \kcode{task} construct to process 
+elements of a linked list in parallel. The thread executing the \kcode{single} 
 region generates all of the explicit tasks, which are then executed by the threads 
-in the current team. The pointer \plc{p} is \code{firstprivate} by default 
-on the \code{task} construct so it is not necessary to specify it in a \code{firstprivate} 
+in the current team. The pointer \ucode{p} is firstprivate by default 
+on the \kcode{task} construct so it is not necessary to specify it in a \kcode{firstprivate} 
 clause.
+%
 
 \cexample[3.0]{tasking}{3}
 
 \ffreeexample[3.0]{tasking}{3}
 
-The \code{fib()} function should be called from within a \code{parallel}  region 
+The \ucode{fib()} function should be called from within a \kcode{parallel} region 
 for the different specified tasks to be executed in parallel. Also, only one thread 
-of the \code{parallel} region should call \code{fib()} unless multiple concurrent 
+of the \kcode{parallel} region should call \ucode{fib()} unless multiple concurrent 
 Fibonacci computations are desired. 
 
 \cexample[3.0]{tasking}{4}
@@ -53,7 +54,7 @@ The following example demonstrates a way to generate a large number of tasks wit
 one thread and execute them with the threads in the team. While generating these 
 tasks, the implementation may reach its limit on unassigned tasks.  If it does, 
 the implementation is allowed to cause the thread executing the task generating 
-loop to suspend its task at the task scheduling point in the \code{task} directive, 
+loop to suspend its task at the task scheduling point in the \kcode{task} directive, 
 and start executing unassigned tasks.  Once the number of unassigned tasks is sufficiently 
 low, the thread may resume execution of the task generating loop.
 
@@ -61,15 +62,15 @@ low, the thread may resume execution of the task generating loop.
 
 \fexample[3.0]{tasking}{5}
 
-\index{task construct@\code{task} construct!untied clause@\code{untied} clause}
-\index{untied clause@\code{untied} clause}
-\index{clauses!untied@\code{untied}}
+\index{task construct@\kcode{task} construct!untied clause@\kcode{untied} clause}
+\index{untied clause@\kcode{untied} clause}
+\index{clauses!untied@\kcode{untied}}
 \index{task scheduling point}
 The following example is the same as the previous one, except that the tasks are 
 generated in an untied task. While generating the tasks, the implementation may 
 reach its limit on unassigned tasks. If it does, the implementation is allowed 
 to cause the thread executing the task generating loop to suspend its task at the 
-task scheduling point in the \code{task} directive, and start executing unassigned 
+task scheduling point in the \kcode{task} directive, and start executing unassigned 
 tasks.  If that thread begins execution of a task that takes a long time to complete, 
 the other threads may complete all the other tasks before it is finished.
 
@@ -83,24 +84,24 @@ the task generating loop was in a tied task.
 \fexample[3.0]{tasking}{6}
 
 The following two examples demonstrate how the scheduling rules illustrated in 
-Section 2.11.3 of the OpenMP 4.0 specification affect the usage of 
-\code{threadprivate} variables in tasks. A \code{threadprivate} 
+the \docref{Task Scheduling} section of the OpenMP 4.0 specification affect the usage of 
+threadprivate variables in tasks. A threadprivate 
 variable can be modified by another task that is executed by the same thread. Thus, 
-the value of a \code{threadprivate} variable cannot be assumed to be unchanged 
+the value of a threadprivate variable cannot be assumed to be unchanged 
 across a task scheduling point. In untied tasks, task scheduling points may be 
 added in any place by the implementation.
 
 A task switch may occur at a task scheduling point. A single thread may execute 
-both of the task regions that modify \code{tp}. The parts of these task regions 
-in which \code{tp} is modified may be executed in any order so the resulting 
-value of \code{var} can be either 1 or 2.
+both of the \kcode{task} regions that modify \ucode{tp}. The parts of these \kcode{task} regions 
+in which \ucode{tp} is modified may be executed in any order so the resulting 
+value of \ucode{var} can be either 1 or 2.
 
 \cexample[3.0]{tasking}{7}
 
 \fexample[3.0]{tasking}{7}
 
 In this example, scheduling constraints prohibit a thread in the team from executing 
-a new task that modifies \code{tp}  while another such task region tied to the 
+a new task that modifies \ucode{tp} while another such \kcode{task} region tied to the 
 same thread is suspended. Therefore, the value written will persist across the 
 task scheduling point.
 
@@ -109,96 +110,96 @@ task scheduling point.
 \fexample[3.0]{tasking}{8}
 
 The following two examples demonstrate how the scheduling rules illustrated in 
-Section 2.11.3 of the OpenMP 4.0 specification affect the usage of locks 
+\docref{Task Scheduling} section of the OpenMP 4.0 specification affect the usage of locks 
 and critical sections in tasks.  If a lock is held 
 across a task scheduling point, no attempt should be made to acquire the same lock 
 in any code that may be interleaved.  Otherwise, a deadlock is possible.
 
 In the example below, suppose the thread executing task 1 defers task 2.  When 
 it encounters the task scheduling point at task 3, it could suspend task 1 and 
-begin task 2 which will result in a deadlock when it tries to enter critical region 
+begin task 2 which will result in a deadlock when it tries to enter \kcode{critical} region 
 1.
 
 \cexample[3.0]{tasking}{9}
 
 \fexample[3.0]{tasking}{9}
 
-In the following example, \code{lock} is held across a task scheduling point. 
+In the following example, \ucode{lock} is held across a task scheduling point. 
  However, according to the scheduling restrictions, the executing thread can't 
-begin executing one of the non-descendant tasks that also acquires \code{lock} before 
-the task region is complete.  Therefore, no deadlock is possible.
+begin executing one of the non-descendant tasks that also acquires \ucode{lock} before 
+the \kcode{task} region is complete.  Therefore, no deadlock is possible.
 
 \cexample[3.0]{tasking}{10}
 
 \ffreeexample[3.0]{tasking}{10}
 \clearpage
 
-\index{task construct@\code{task} construct!mergeable clause@\code{mergeable} clause}
-\index{clauses!mergeable@\code{mergeable}}
-\index{mergeable clause@\code{mergeable} clause}
-The following examples illustrate the use of the \code{mergeable} clause in the 
-\code{task} construct. In this first example, the \code{task} construct has 
-been annotated with the \code{mergeable}  clause. The addition of this clause 
+\index{task construct@\kcode{task} construct!mergeable clause@\kcode{mergeable} clause}
+\index{clauses!mergeable@\kcode{mergeable}}
+\index{mergeable clause@\kcode{mergeable} clause}
+The following examples illustrate the use of the \kcode{mergeable} clause in the 
+\kcode{task} construct. In this first example, the \kcode{task} construct has 
+been annotated with the \kcode{mergeable}  clause. The addition of this clause 
 allows the implementation to reuse the data environment (including the ICVs) of 
-the parent task for the task inside \code{foo} if the task is included or undeferred. 
+the parent task for the task inside \ucode{foo} if the task is included or undeferred. 
 Thus, the result of the execution may differ depending on whether the task is merged 
 or not. Therefore the mergeable clause needs to be used with caution. In this example, 
-the use of the mergeable clause is safe. As \code{x} is a shared variable the 
+the use of the mergeable clause is safe. As \ucode{x} is a shared variable the 
 outcome does not depend on whether or not the task is merged (that is, the task 
 will always increment the same variable and will always compute the same value 
-for \code{x}).
+for \ucode{x}).
 
 \cexample[3.1]{tasking}{11}
 
 \ffreeexample[3.1]{tasking}{11}
 
-This second example shows an incorrect use of the \code{mergeable} clause. In 
+This second example shows an incorrect use of the \kcode{mergeable} clause. In 
 this example, the created task will access different instances of the variable 
-\code{x} if the task is not merged, as \code{x} is \code{firstprivate}, but 
-it will access the same variable \code{x} if the task is merged. As a result, 
+\ucode{x} if the task is not merged, as \ucode{x} is firstprivate, but 
+it will access the same variable \ucode{x} if the task is merged. As a result, 
 the behavior of the program is unspecified, and it can print two different values 
-for \code{x} depending on the decisions taken by the implementation.
+for \ucode{x} depending on the decisions taken by the implementation.
 
 \cexample[3.1]{tasking}{12}
 
 \ffreeexample[3.1]{tasking}{12}
 
-\index{task construct@\code{task} construct!final clause@\code{final} clause}
-\index{clauses!final@\code{final}}
-\index{final clause@\code{final} clause}
-\index{routines!omp_in_final@\scode{omp_in_final}}
-\index{omp_in_final routine@\scode{omp_in_final} routine}
-The following example shows the use of the \code{final} clause and the \code{omp\_in\_final} 
+\index{task construct@\kcode{task} construct!final clause@\kcode{final} clause}
+\index{clauses!final@\kcode{final}}
+\index{final clause@\kcode{final} clause}
+\index{routines!omp_in_final@\kcode{omp_in_final}}
+\index{omp_in_final routine@\kcode{omp_in_final} routine}
+The following example shows the use of the \kcode{final} clause and the \kcode{omp_in_final} 
 API call in a recursive binary search program. To reduce overhead, once a certain 
-depth of recursion is reached the program uses the \code{final} clause to create 
+depth of recursion is reached the program uses the \kcode{final} clause to create 
 only included tasks, which allow additional optimizations.
 
-The use of the \code{omp\_in\_final} API call allows programmers to optimize 
+The use of the \kcode{omp_in_final} API call allows programmers to optimize 
 their code by specifying which parts of the program are not necessary when a task 
-can create only included tasks (that is, the code is inside a \code{final} task). 
+can create only included tasks (that is, the code is inside a final task). 
 In this example, the use of a different state variable is not necessary so once 
 the program reaches the part of the computation that is finalized and copying from 
-the parent state to the new state is eliminated. The allocation of \code{new\_state} 
+the parent state to the new state is eliminated. The allocation of \ucode{new_state} 
 in the stack could also be avoided but it would make this example less clear. The 
-\code{final} clause is most effective when used in conjunction with the \code{mergeable} 
-clause since all tasks created in a \code{final} task region are included tasks 
-that can be merged if the \code{mergeable} clause is present.
+\kcode{final} clause is most effective when used in conjunction with the \kcode{mergeable} 
+clause since all tasks created in a final \kcode{task} region are included tasks 
+that can be merged if the \kcode{mergeable} clause is present.
 
 \cexample[3.1]{tasking}{13}
 
 \ffreeexample[3.1]{tasking}{13}
 
-\index{task construct@\code{task} construct!if clause@\code{if} clause}
-\index{clauses!if@\code{if}}
-\index{if clause@\code{if} clause}
-The following example illustrates the difference between the \code{if}  and the 
-\code{final} clauses. The \code{if} clause has a local effect. In the first 
-nest of tasks, the one that has the \code{if}  clause will be undeferred but 
-the task nested inside that task will not be affected by the \code{if} clause 
-and will be created as usual. Alternatively, the \code{final} clause affects 
-all \code{task} constructs in the \code{final} task region but not the \code{final} 
+\index{task construct@\kcode{task} construct!if clause@\kcode{if} clause}
+\index{clauses!if@\kcode{if}}
+\index{if clause@\kcode{if} clause}
+The following example illustrates the difference between the \kcode{if}  and the 
+\kcode{final} clauses. The \kcode{if} clause has a local effect. In the first 
+nest of tasks, the one that has the \kcode{if} clause will be undeferred but 
+the task nested inside that task will not be affected by the \kcode{if} clause 
+and will be created as usual. Alternatively, the \kcode{final} clause affects 
+all \kcode{task} constructs in the final \kcode{task} region but not the final 
 task itself. In the second nest of tasks, the nested tasks will be created as included 
-tasks. Note also that the conditions for the \code{if} and \code{final} clauses 
+tasks. Note also that the conditions for the \kcode{if} and \kcode{final} clauses 
 are usually the opposite.
 
 \cexample[3.1]{tasking}{14}

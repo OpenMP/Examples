@@ -44,16 +44,20 @@ done
 # check all files
 echo "
 >>> Checking version tags in tex files" | tee -a $log_file
+echo "$chk_tags -vtag $BASE_DIR/*/*.tex" | tee -a $log_file
 $chk_tags -vtag $BASE_DIR/*/*.tex 2>&1 | tee -a $log_file
 echo "
 >>> Checking tags and line length of source files" | tee -a $log_file
+echo "$chk_tags -sc $BASE_DIR/*/sources/*" | tee -a $log_file
 $chk_tags -sc $BASE_DIR/*/sources/* 2>&1 | tee -a $log_file
+echo "$chk_tags -clen $BASE_DIR/*/sources/*" | tee -a $log_file
 $chk_tags -clen $BASE_DIR/*/sources/* 2>&1 | tee -a $log_file
 
 echo "
 >>> Checking if all source files are referenced in tex files" | tee -a $log_file
 $chk_tags -v -list -vtag $BASE_DIR/*/*.tex | sort > msrc_in_tex.list
 ls $BASE_DIR/*/sources/* | sort > msrc_files.list
+echo "diff -p msrc_in_tex.list msrc_files.list" | tee -a $log_file
 diff -p msrc_in_tex.list msrc_files.list 2>&1 | tee -a $log_file
 \rm -f msrc_in_tex.list msrc_files.list
 

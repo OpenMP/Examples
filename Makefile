@@ -1,13 +1,17 @@
 # Makefile for the OpenMP Examples document in LaTex format. 
 # For more information, see the main document, openmp-examples.tex.
 
-version=5.2.1
+include versioninfo
+
 default: openmp-examples.pdf
 diff: openmp-diff-abridged.pdf
 
 book: BOOK_BUILD="\\\\def\\\\bookbuild{1}"
+book: VERSIONSTR="$(version_date)"
 book: clean openmp-examples.pdf
 	mv openmp-examples-${version}.pdf openmp-examples-${version}-book.pdf
+release: VERSIONSTR="$(version_date)"
+release: clean openmp-examples.pdf
 
 CHAPTERS=Title_Page.tex \
 	Foreword_Chapt.tex \
@@ -37,6 +41,8 @@ LATEXDCMD=$(LATEXCMD) -draftmode
 
 # check for branches names with "name_XXX"
 DIFF_TICKET_ID=$(shell git rev-parse --abbrev-ref HEAD)
+GITREV=$(shell git rev-parse --short HEAD)
+VERSIONSTR="GIT rev $(GITREV)"
 
 openmp-examples.pdf: $(CHAPTERS) $(SOURCES) openmp.sty openmp-examples.tex openmp-logo.png generated-include.tex
 	rm -f $(INTERMEDIATE_FILES)
@@ -46,6 +52,9 @@ openmp-examples.pdf: $(CHAPTERS) $(SOURCES) openmp.sty openmp-examples.tex openm
 	$(LATEXDCMD) openmp-examples.tex
 	$(LATEXCMD) openmp-examples.tex
 	cp openmp-examples.pdf openmp-examples-${version}.pdf
+
+check:
+	sources/check_tags
 
 clean:
 	rm -f $(INTERMEDIATE_FILES)
@@ -66,11 +75,11 @@ endif
 ifdef DIFF_FROM
     VC_DIFF_FROM := -r ${DIFF_FROM}
 else
-    VC_DIFF_FROM := -r work_5.2
+    VC_DIFF_FROM := -r main
 endif
 
 DIFF_TO:=HEAD
-DIFF_FROM:=work_5.2
+DIFF_FROM:=main
 DIFF_TYPE:=UNDERLINE
 
 COMMON_DIFF_OPTS:=--math-markup=whole  \
@@ -84,6 +93,9 @@ VC_DIFF_MINIMAL_OPTS:= --only-changes --force
 generated-include.tex:
 	echo "$(BOOK_BUILD)"
 	echo "$(BOOK_BUILD)" > $@
+	echo "\def\VER{${version}}" >> $@
+	echo "\def\PVER{${version_spec}}" >> $@
+	echo "\def\VERDATE{${VERSIONSTR}}" >> $@
 	util/list_tags -vtag */sources/* >> $@
 
 %.tmpdir: $(wildcard *.sty) $(wildcard *.png) $(wildcard *.aux) openmp-examples.pdf

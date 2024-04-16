@@ -1,4 +1,4 @@
-\pagebreak
+%\pagebreak
 \section{Lambda Expressions}
 \label{sec:lambda_expressions}
 
@@ -7,45 +7,45 @@
 
 \cppspecificstart
 The following example illustrates the usage of lambda expressions and their
-corresponding closure objects within a \scode{target} region.
+corresponding closure objects within a \kcode{target} region.
 
-In CASE 1, a lambda expression is defined inside a \scode{target} construct
-that implicitly maps the structure \textit{s}. Inside the construct, the
-lambda captures (by reference) the corresponding \textit{s}, and the resulting
-closure object is assigned to \textit{lambda1}.  When the call operator is
-invoked on \textit{lambda1}, the captured reference to \textit{s} is used in
-the call.  The modified \textit{s} is then copied back to the host device on
-exit from the \scode{target} construct.
+In Case 1, a lambda expression is defined inside a \kcode{target} construct
+that implicitly maps the structure \ucode{s}. Inside the construct, the
+lambda captures (by reference) the corresponding \ucode{s}, and the resulting
+closure object is assigned to \ucode{lambda1}.  When the call operator is
+invoked on \ucode{lambda1}, the captured reference to \ucode{s} is used in
+the call.  The modified \ucode{s} is then copied back to the host device on
+exit from the \kcode{target} construct.
 
-In CASE 2, a lambda expression is instead defined before the \scode{target}
-construct and captures (by copy) the pointer \textit{sp}. A
-\scode{target}~\scode{data} construct is used to first map the structure, and
-then the \scode{target} construct implicitly maps the closure object
-referenced by \textit{lambda2}, a zero-length array section based on the
-structure pointer \textit{sp}, and a zero-length array section based on the
+In Case 2, a lambda expression is instead defined before the \kcode{target}
+construct and captures (by copy) the pointer \ucode{sp}. A
+\kcode{target data} construct is used to first map the structure, and
+then the \kcode{target} construct implicitly maps the closure object
+referenced by \ucode{lambda2}, a zero-length array section based on the
+structure pointer \ucode{sp}, and a zero-length array section based on the
 captured pointer in the closure object. The implicit maps result in attached
-pointers to the corresponding structure. The call for \textit{lambda2} inside
-the \scode{target} construct will access \textit{sp->a} and \textit{sp->b}
+pointers to the corresponding structure. The call for \ucode{lambda2} inside
+the \kcode{target} construct will access \ucode{sp->a} and \ucode{sp->b}
 from the corresponding structure.
 
-CASE 3 is similar to CASE 2, except \textit{s} is instead captured by
-reference by the lambda expression. As for CASE 2, the structure is first
-mapped by an enclosing \scode{target}~\scode{data} construct, and then the
-\scode{target} construct implicitly maps \textit{s} and the closure object
-referenced by \textit{lambda3}. The effect of the map is to make the
-the call for \textit{lambda3} refer to the corresponding \textit{s} inside the
-\scode{target} construct rather than the original \textit{s}.
+Case 3 is similar to Case 2, except \ucode{s} is instead captured by
+reference by the lambda expression. As for Case 2, the structure is first
+mapped by an enclosing \kcode{target data} construct, and then the
+\kcode{target} construct implicitly maps \ucode{s} and the closure object
+referenced by \ucode{lambda3}. The effect of the map is to make the
+the call for \ucode{lambda3} refer to the corresponding \ucode{s} inside the
+\kcode{target} construct rather than the original \ucode{s}.
 
-In CASE 4, the program defines a static variable \textit{ss} of the same
-structure type as \textit{s}. While the body of the lambda expression refers
-to \textit{ss}, it is not captured. In order for \textit{lambda4} to be
-callable in the \scode{target} region, the reference to \textit{ss} should be
-to a device copy of \textit{ss} that also has static storage. This is achieved
-with the use of the \scode{declare}~\scode{target} directive.  Inside the
-\scode{target} construct, all references to \textit{ss}, including in the
-\textit{lambda4()} call, will refer to the corresponding \textit{ss} that
-results from the \scode{declare}~\scode{target} directive. The \scode{always}
-modifier is used on the \scode{map} clause to transfer the updated values for
+In Case 4, the program defines a static variable \ucode{ss} of the same
+structure type as \ucode{s}. While the body of the lambda expression refers
+to \ucode{ss}, it is not captured. In order for \ucode{lambda4} to be
+callable in the \kcode{target} region, the reference to \ucode{ss} should be
+to a device copy of \ucode{ss} that also has static storage. This is achieved
+with the use of the \kcode{declare target} directive.  Inside the
+\kcode{target} construct, all references to \ucode{ss}, including in the
+\ucode{lambda4} call, will refer to the corresponding \ucode{ss} that
+results from the \kcode{declare target} directive. The \kcode{always}
+modifier is used on the \kcode{map} clause to transfer the updated values for
 the structure back to the host device.
 
 \cppnexample[5.0]{lambda_expressions}{1}

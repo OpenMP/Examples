@@ -1,24 +1,24 @@
 \pagebreak
-\section{\code{teams} Construct on Host}
+\section{\kcode{teams} Construct on Host}
 \label{sec:host_teams}
-\index{constructs!teams@\code{teams}}
-\index{teams construct@\code{teams} construct}
+\index{constructs!teams@\kcode{teams}}
+\index{teams construct@\kcode{teams} construct}
 
 %{\color{blue} ... } {\color{violet} ... }
-Originally the \code{teams} construct was created for devices (such as GPUs)
+Originally the \kcode{teams} construct was created for devices (such as GPUs)
 for independent executions of a structured block by teams within a league (on SMs).
-It was only available through offloading with the \code{target} construct,
-and the execution of a \code{teams} region could only be directed to host
-execution by various means such as \code{if} and \code{device} clauses,
-and the \code{OMP\_TARGET\_OFFLOAD} environment variable.
+It was only available through offloading with the \kcode{target} construct,
+and the execution of a \kcode{teams} region could only be directed to host
+execution by various means such as \kcode{if} and \kcode{device} clauses,
+and the \kcode{OMP_TARGET_OFFLOAD} environment variable.
 
-In OpenMP 5.0 the \code{teams} construct was extended to enable the host
-to execute a \code{teams} region (without an associated \code{target} construct), 
+In OpenMP 5.0 the \kcode{teams} construct was extended to enable the host
+to execute a \kcode{teams} region (without an associated \kcode{target} construct), 
 with anticipation of further affinity and threading controls in future OpenMP releases.
 %With additional affinity controls, a team could be
 %assigned to execute on a socket or use only a specified number of threads.
 
-In the example below the \code{teams} construct is used to create two
+In the example below the \kcode{teams} construct is used to create two
 teams, one to execute single precision code, and the other
 to execute double precision code. Two teams are required, and
 the thread limit for each team is set to 1/2 of the number of 

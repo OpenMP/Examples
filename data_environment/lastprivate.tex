@@ -1,11 +1,11 @@
-\pagebreak
-\section{\code{lastprivate} Clause}
+%\pagebreak
+\section{\kcode{lastprivate} Clause}
 \label{sec:lastprivate}
-\index{clauses!lastprivate@\code{lastprivate}}
-\index{lastprivate clause@\code{lastprivate} clause}
+\index{clauses!lastprivate@\kcode{lastprivate}}
+\index{lastprivate clause@\kcode{lastprivate} clause}
 
 Correct execution sometimes depends on the value that the last iteration of a loop 
-assigns to a variable. Such programs must list all such variables in a \code{lastprivate} 
+assigns to a variable. Such programs must list all such variables in a \kcode{lastprivate} 
 clause  so that the values of the variables are the same as when the loop is executed 
 sequentially.
 
@@ -13,11 +13,10 @@ sequentially.
 
 \fexample{lastprivate}{1}
 
-\clearpage
-\index{lastprivate clause@\code{lastprivate} clause!conditional modifier@\code{conditional} modifier}
-\index{conditional modifier@\code{conditional} modifier}
-The next example illustrates the use of the \code{conditional} modifier in
-a \code{lastprivate} clause to return the last value when it may not come from
+\index{lastprivate clause@\kcode{lastprivate} clause!conditional modifier@\kcode{conditional} modifier}
+\index{conditional modifier@\kcode{conditional} modifier}
+The next example illustrates the use of the \kcode{conditional} modifier in
+a \kcode{lastprivate} clause to return the last value when it may not come from
 the last iteration of a loop.
 That is, users can preserve the serial equivalence semantics of the loop.
 The conditional lastprivate ensures the final value of the variable after the loop 

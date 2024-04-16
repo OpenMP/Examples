@@ -1,21 +1,21 @@
 \pagebreak
-\section{\code{masked} Construct}
+\section{\kcode{masked} Construct}
 \label{sec:masked}
-\index{constructs!masked@\code{masked}}
-\index{masked construct@\code{masked} construct}
-\index{masked construct@\code{masked} construct!filter clause@\code{filter} clause}
-\index{clauses!filter@\code{filter}}
-\index{filter clause@\code{filter} clause}
+\index{constructs!masked@\kcode{masked}}
+\index{masked construct@\kcode{masked} construct}
+\index{masked construct@\kcode{masked} construct!filter clause@\kcode{filter} clause}
+\index{clauses!filter@\kcode{filter}}
+\index{filter clause@\kcode{filter} clause}
 
-The following example demonstrates the \code{masked} construct. 
+The following example demonstrates the \kcode{masked} construct. 
 In the example, the primary thread (thread number 0) 
 keeps track of how many iterations have been executed and prints out 
 a progress report in the iteration loop.
-The other threads skip the \code{masked} region without waiting. 
-The \code{filter} clause can be used to specify a thread number other 
+The other threads skip the \kcode{masked} region without waiting. 
+The \kcode{filter} clause can be used to specify a thread number other 
 than the primary thread to execute a structured block, as illustrated by
-the second \code{masked} construct after the iteration loop.
-If the thread specified in a \scode{filter} clause does not exist 
+the second \kcode{masked} construct after the iteration loop.
+If the thread specified in a \kcode{filter} clause does not exist 
 in the team then the structured block is not executed by any thread.
 
 \cexample[5.1]{masked}{1}

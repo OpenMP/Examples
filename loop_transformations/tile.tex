@@ -1,44 +1,44 @@
 %\pagebreak
-\section{\code{tile} Construct}
+\section{\kcode{tile} Construct}
 \label{sec:tile}
-\index{constructs!tile@\code{tile}}
-\index{tile construct@\code{tile} construct}
-\index{tile construct@\code{tile} construct!sizes clause@\code{sizes} clause}
-\index{sizes clause@\code{sizes} clause}
-\index{clauses!sizes@\code{sizes}}
+\index{constructs!tile@\kcode{tile}}
+\index{tile construct@\kcode{tile} construct}
+\index{tile construct@\kcode{tile} construct!sizes clause@\kcode{sizes} clause}
+\index{sizes clause@\kcode{sizes} clause}
+\index{clauses!sizes@\kcode{sizes}}
 
-In the following example a \code{tile} construct transforms two nested loops
-within the \texttt{func1} function into four nested loops.
-The tile sizes in the \code{sizes} clause are applied from outermost
+In the following example a \kcode{tile} construct transforms two nested loops
+within the \ucode{func1} function into four nested loops.
+The tile sizes in the \kcode{sizes} clause are applied from outermost
 to innermost loops (left-to-right). The effective tiling operation is illustrated in
-the \texttt{func2} function. 
+the \ucode{func2} function. 
 (For easier illustration, tile sizes for all examples in this section evenly 
 divide the iteration counts so that there are no remainders.)
 
 In the following C/C++ code the inner loop traverses columns
 and the outer loop traverses the rows of a 100x128 (row x column) matrix.  
-The \code{sizes(5,16)} clause of the \code{tile} construct specifies
+The \kcode{sizes(\ucode{5,16})} clause of the \kcode{tile} construct specifies
 a 5x16 blocking, applied to the outer (row) and inner (column) loops.
-The worksharing-loop construct before the \code{tile}
+The worksharing-loop construct before the \kcode{tile}
 construct is applied after the transform.
 
 \cexample[5.1]{tile}{1}
 
 In the following Fortran code the inner loop traverses rows 
 and the outer loop traverses the columns of a 128x100 (row x column) matrix.  
-The  \code{sizes(5,16)} clause of the \code{tile} construct specifies 
+The  \kcode{sizes(\ucode{5,16})} clause of the \kcode{tile} construct specifies 
 a 5x16 blocking, applied to the outer (column) and inner (row) loops.
-The worksharing-loop construct before the \code{tile}
+The worksharing-loop construct before the \kcode{tile}
 construct is applied after the transform.
 
 \ffreeexample[5.1]{tile}{1}
 \clearpage
 
 This example illustrates transformation nesting.
-Here, a 4x4 ``outer''  \code{tile} construct is applied to the ``inner'' tile transform shown in the example above.
-The effect of the inner loop is shown in \texttt{func2} (cf.\ \texttt{func2} in tile.1.c).
-The outer \code{tile} construct's \code{sizes(4,4)} clause applies a 4x4 tile upon the resulting
-blocks of the inner transform.  The effective looping is shown in \texttt{func3}.
+Here, a 4x4 ``outer''  \kcode{tile} construct is applied to the ``inner'' tile transform shown in the example above.
+The effect of the inner loop is shown in \ucode{func2} (cf.\ \ucode{func2} in \example{tile.1.c}).
+The outer \kcode{tile} construct's \kcode{sizes(\ucode{4,4})} clause applies a 4x4 tile upon the resulting
+blocks of the inner transform.  The effective looping is shown in \ucode{func3}.
 
 \cexample[5.1]{tile}{2}
 \ffreeexample[5.1]{tile}{2}

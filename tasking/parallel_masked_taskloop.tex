@@ -1,39 +1,39 @@
-\pagebreak
-\section{Combined \code{parallel} \code{masked} and \code{taskloop} Constructs}
+%\pagebreak
+\section{Combined \kcode{parallel masked} and \kcode{taskloop} Constructs}
 \label{sec:parallel_masked_taskloop}
-\index{combined constructs!parallel masked taskloop@\code{parallel} \code{masked} \code{taskloop}}
-\index{combined constructs!parallel masked taskloop simd@\code{parallel} \code{masked} \code{taskloop} \code{simd}}
-\index{constructs!parallel@\code{parallel}}
-\index{constructs!masked@\code{masked}}
-\index{constructs!taskloop@\code{taskloop}}
-\index{constructs!simd@\code{simd}}
-\index{parallel construct@\code{parallel} construct}
-\index{masked construct@\code{masked} construct}
-\index{taskloop construct@\code{taskloop} construct}
-\index{simd construct@\code{simd} construct}
+\index{combined constructs!parallel masked taskloop@\kcode{parallel masked taskloop}}
+\index{combined constructs!parallel masked taskloop simd@\kcode{parallel masked taskloop simd}}
+\index{constructs!parallel@\kcode{parallel}}
+\index{constructs!masked@\kcode{masked}}
+\index{constructs!taskloop@\kcode{taskloop}}
+\index{constructs!simd@\kcode{simd}}
+\index{parallel construct@\kcode{parallel} construct}
+\index{masked construct@\kcode{masked} construct}
+\index{taskloop construct@\kcode{taskloop} construct}
+\index{simd construct@\kcode{simd} construct}
 
-Just as the \code{for} and \code{do} constructs were combined
-with the \code{parallel} construct for convenience, so too, the combined
-\code{parallel}~\code{masked}~\code{taskloop} and 
-\code{parallel}~\code{masked}~\code{taskloop}~\code{simd}
+Just as the \kcode{for} and \kcode{do} constructs were combined
+with the \kcode{parallel} construct for convenience, so too, the combined
+\kcode{parallel masked taskloop} and 
+\kcode{parallel masked taskloop simd}
 constructs have been created for convenience when using the
-\code{taskloop} construct.
+\kcode{taskloop} construct.
   
-In the following example the first \code{taskloop} construct is enclosed
-by the usual \code{parallel} and \code{masked} constructs to form
+In the following example the first \kcode{taskloop} construct is enclosed
+by the usual \kcode{parallel} and \kcode{masked} constructs to form
 a team of threads, and a single task generator (primary thread) for
-the \code{taskloop} construct.
+the \kcode{taskloop} construct.
 
 The same OpenMP operations for the first taskloop are accomplished by the second
-taskloop with the \code{parallel}~\code{masked}~\code{taskloop} 
+taskloop with the \kcode{parallel masked taskloop} 
 combined construct. 
-The third taskloop uses the combined \code{parallel}~\code{masked}~\code{taskloop}~\code{simd} 
-construct to accomplish the same behavior as closely nested \code{parallel masked},
-and \code{taskloop simd} constructs.
+The third taskloop uses the combined \kcode{parallel masked taskloop simd} 
+construct to accomplish the same behavior as closely nested \kcode{parallel masked},
+and \kcode{taskloop simd} constructs.
 
 As with any combined construct the clauses of the components may be used
-with appropriate restrictions. The combination of the \code{parallel}~\code{masked} construct
-with the \code{taskloop} or \code{taskloop}~\code{simd} construct produces no additional 
+with appropriate restrictions. The combination of the \kcode{parallel masked} construct
+with the \kcode{taskloop} or \kcode{taskloop simd} construct produces no additional 
 restrictions.
 
 \cexample[5.1]{parallel_masked_taskloop}{1}

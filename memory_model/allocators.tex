@@ -1,49 +1,49 @@
-\pagebreak
+%\pagebreak
 \section{Memory Allocators}
 \label{sec:allocators}
 
 \index{memory allocators!allocator traits}
 \index{memory allocators!memory space}
-\index{memory allocators!omp_alloc routine@\scode{omp_alloc} routine}
-\index{memory allocators!allocators directive@\scode{allocators} directive}
+\index{memory allocators!omp_alloc routine@\kcode{omp_alloc} routine}
+\index{memory allocators!allocators directive@\kcode{allocators} directive}
 
-\index{omp_alloc routine@\scode{omp_alloc} routine}
-\index{routines!omp_alloc@\scode{omp_alloc}}
+\index{omp_alloc routine@\kcode{omp_alloc} routine}
+\index{routines!omp_alloc@\kcode{omp_alloc}}
 
-\index{directives!allocators@\code{allocators}}
-\index{allocators directive@\code{allocators} directive}
-\index{allocators directive@\code{allocators} directive!allocator clause@\code{allocator} clause}
+\index{directives!allocators@\kcode{allocators}}
+\index{allocators directive@\kcode{allocators} directive}
+\index{allocators directive@\kcode{allocators} directive!allocator clause@\kcode{allocator} clause}
 
-\index{clauses!allocator@\code{allocator}}
-\index{allocator clause@\code{allocator} clause}
-\index{omp_init_allocator routine@\scode{omp_init_allocator} routine}
-\index{routines!omp_init_allocator@\scode{omp_init_allocator}}
+\index{clauses!allocator@\kcode{allocator}}
+\index{allocator clause@\kcode{allocator} clause}
+\index{omp_init_allocator routine@\kcode{omp_init_allocator} routine}
+\index{routines!omp_init_allocator@\kcode{omp_init_allocator}}
 
 OpenMP memory allocators can be used to allocate memory with
 specific allocator traits.  In the following example an OpenMP allocator is used to
-specify an alignment for arrays \plc{x} and \plc{y}. The
+specify an alignment for arrays \ucode{x} and \ucode{y}. The
 general approach for attributing traits to variables allocated by
 OpenMP is to create or specify a pre-defined \plc{memory space}, create an
 array of \plc{traits}, and then form an \plc{allocator} from the
 memory space and trait.
 The allocator is then specified
-in an OpenMP allocation (using an API \plc{omp\_alloc()} function
-for C/C++ code and an \code{allocators} directive for Fortran code
-in the \splc{allocators.1} example).
+in an OpenMP allocation (using an API \kcode{omp_alloc()} function
+for C/C++ code and an \kcode{allocators} directive for Fortran code
+in the \example{allocators.1} example).
 
-In the example below the \plc{xy\_memspace} variable is declared
-and assigned the default memory space (\plc{omp\_default\_mem\_space}).
+In the example below the \ucode{xy_memspace} variable is declared
+and assigned the default memory space (\kcode{omp_default_mem_space}).
 Next, an array for \plc{traits} is created. Since only one
-trait will be used, the array size is \plc{1}.
+trait will be used, the array size is \ucode{1}.
 A trait is a structure in C/C++ and a derived type in Fortran,
 containing 2 components: a key and a corresponding value (key-value pair).
-The trait key used here is \plc{omp\_atk\_alignment} (an enum for C/C++
+The trait key used here is \kcode{omp_atk_alignment} (an enum for C/C++
 and a parameter for Fortran)
-and the trait value of 64 is specified in the \plc{xy\_traits} declaration.
+and the trait value of 64 is specified in the \ucode{xy_traits} declaration.
 These declarations are followed by a call to the
-\plc{omp\_init\_allocator()} function to combine the memory
-space (\plc{xy\_memspace}) and the traits (\plc{xy\_traits})
-to form an allocator (\plc{xy\_alloc}).
+\kcode{omp_init_allocator()} function to combine the memory
+space (\ucode{xy_memspace}) and the traits (\ucode{xy_traits})
+to form an allocator (\ucode{xy_alloc}).
 
 %In the C/C++ code the API  \plc{omp\_allocate()} function is used 
 %to allocate space, similar to \plc{malloc}, except that the allocator 
@@ -54,17 +54,17 @@ to form an allocator (\plc{xy\_alloc}).
 %with an \code{allocator} clause (specifying the \plc{xy\_alloc} as the allocator)
 %for the following Fortran \plc{allocate} statement.
 
-In the C/C++ code the API  \plc{omp\_allocate()} function is used
-to allocate space, similar to \plc{malloc}, except that the allocator
+In the C/C++ code the API  \kcode{omp_allocate()} function is used
+to allocate space, similar to \bcode{malloc}, except that the allocator
 is specified as the second argument.
-In Fortran an \code{allocators} directive is used to specify an allocator
-for the following Fortran \plc{allocate} statement.
-A variable list in the \scode{allocate} clause may be supplied if the allocator
+In Fortran an \kcode{allocators} directive is used to specify an allocator
+for the following Fortran \bcode{allocate} statement.
+A variable list in the \kcode{allocate} clause may be supplied if the allocator
 is to be applied to a subset of variables in the Fortran allocate
 statement.
-Here, the \plc{xy\_alloc} allocator is specified
-in the modifier of the \code{allocator} clause,
-and the set of all variables used in the \plc{allocate} statement is specified in the list.
+Here, the \ucode{xy_alloc} allocator is specified
+in the modifier of the \kcode{allocator} clause,
+and the set of all variables used in the \bcode{allocate} statement is specified in the list.
 
 %"for a following Fortran allocation statement" (no using "immediately" here)
 % it looks like if you have a list, the allocation statement does not need
@@ -72,118 +72,116 @@ and the set of all variables used in the \plc{allocate} statement is specified i
 % spec5.0 157:19-20 The allocate directive must appear in the same scope as
 % the declarations of each of its list items and must follow all such declarations.
 
-%\pagebreak
-
 \cexample[5.0]{allocators}{1}
 \ffreeexample[5.2]{allocators}{1}
 
 
-When using the \scode{allocators} construct with optional clauses in Fortran code, 
+When using the \kcode{allocators} construct with optional clauses in Fortran code, 
 users should be aware of the behavior of a reallocation.
 
-In the following example, the \splc{a} variable is allocated with 64-byte
-alignment through the \scode{align} clause of the \scode{allocators} construct.
+In the following example, the \ucode{a} variable is allocated with 64-byte
+alignment through the \kcode{align} clause of the \kcode{allocators} construct.
 %The alignment of the newly allocated object, \splc{a}, in the (reallocation)
 %assignment \splc{a = b} may not be the same as before.  
-The alignment of the newly allocated object, \splc{a}, in the (reallocation)
-assignment \splc{a = b} will not be reallocated with the 64-byte alignment, but
-with the 32-byte alignment prescribed by the trait of the \splc{my_alloctr} 
+The alignment of the newly allocated object, \ucode{a}, in the (reallocation)
+assignment \ucode{a = b} will not be reallocated with the 64-byte alignment, but
+with the 32-byte alignment prescribed by the trait of the \ucode{my_alloctr} 
 allocator. It is best to avoid this problem by constructing and using an
-allocator (not the \scode{align} clause) with the required alignment in 
-the \scode{allocators} construct.
+allocator (not the \kcode{align} clause) with the required alignment in 
+the \kcode{allocators} construct.
 Note that in the subsequent
-deallocation of \splc{a} the deallocation must precede the destruction
-of the allocator used in the allocation of \splc{a}.
+deallocation of \ucode{a} the deallocation must precede the destruction
+of the allocator used in the allocation of \ucode{a}.
 
 \ffreeexample[5.2]{allocators}{2}
 
-When creating and using an \scode{allocators} construct within a Fortran procedure
+When creating and using an \kcode{allocators} construct within a Fortran procedure
 for allocating storage (and subsequently freeing the allocator storage with an 
-\scode{omp_destroy_allocator} construct), users should be aware of the necessity
+\kcode{omp_destroy_allocator} construct), users should be aware of the necessity
 of using an explicit Fortran deallocation instead of relying on auto-deallocation.
 
 In the following example, a user-defined allocator is used in the allocation
-of the \splc{c} variable, and then the allocator is destroyed.
-Auto-deallocation at the end of the \splc{broken_auto_deallocation} procedure
+of the \ucode{c} variable, and then the allocator is destroyed.
+Auto-deallocation at the end of the \ucode{broken_auto_deallocation} procedure
 will fail without the allocator, hence an explicit deallocation should be used 
-(before the \scode{omp_destroy_allocator} construct).
-Note that an allocator may be specified directly in the \scode{allocate} clause
-without using the \scode{allocator} complex modifier, so long as no other modifier 
+(before the \kcode{omp_destroy_allocator} construct).
+Note that an allocator may be specified directly in the \kcode{allocate} clause
+without using the \kcode{allocator} complex modifier, so long as no other modifier 
 is specified in the clause.
 
 \ffreeexample[5.2]{allocators}{3}
+\pagebreak
 
-\index{directives!allocate@\code{allocate}}
-\index{allocate directive@\code{allocate} directive}
-\index{allocate directive@\code{allocate} directive!allocator clause@\code{allocator} clause}
+\index{directives!allocate@\kcode{allocate}}
+\index{allocate directive@\kcode{allocate} directive}
+\index{allocate directive@\kcode{allocate} directive!allocator clause@\kcode{allocator} clause}
 
-The \scode{allocate} directive is a convenient way to apply an OpenMP 
+The \kcode{allocate} directive is a convenient way to apply an OpenMP 
 allocator to the allocation of declared variables.
 
 This example illustrates the allocation of specific types of storage in a program 
 for use in libraries, privatized variables, and with offloading.
 
-Two groups of variables, \{\plc{v1, v2}\} and \{\plc{v3, v4}\}, are used with the \scode{allocate} 
-directive, and the \{\plc{v5, v6}\} pair is used with the \scode{allocate} clause. 
-Here we explicitly use predefined allocators \scode{omp_high_bw_mem_alloc} and \scode{omp_default_mem_alloc}
-with the \scode{allocate} directive in CASE 1. Similar effects are achieved for private variables of a task
-by using the \scode{allocate} clause, as shown in CASE 2.  
+Two groups of variables, \{\ucode{v1, v2}\} and \{\ucode{v3, v4}\}, are used with the \kcode{allocate} 
+directive, and the \{\ucode{v5, v6}\} pair is used with the \kcode{allocate} clause. 
+Here we explicitly use predefined allocators \kcode{omp_high_bw_mem_alloc} and \kcode{omp_default_mem_alloc}
+with the \kcode{allocate} directive in CASE 1. Similar effects are achieved for private variables of a task
+by using the \kcode{allocate} clause, as shown in CASE 2.  
 
-Note, when the \scode{allocate} directive does not specify an \scode{allocator} clause, an
-implementation-defined default, stored in the \splc{def-allocator-var} ICV, is used
+Note, when the \kcode{allocate} directive does not specify an \kcode{allocator} clause, an
+implementation-defined default, stored in the \plc{def-allocator-var} ICV, is used
 (not illustrated here).
-Users can set and get the default allocator with the \scode{omp_set_default_allocator}
-and \scode{omp_get_default_allocator} API routines. 
+Users can set and get the default allocator with the \kcode{omp_set_default_allocator}
+and \kcode{omp_get_default_allocator} API routines. 
 
 \cexample[5.1]{allocators}{4}
 \ffreeexample[5.1]{allocators}{4}
 
-\pagebreak
-\index{uses_allocators clause@\scode{uses_allocators} clause}
-\index{clauses!uses_allocators@\scode{uses_allocators}}
+\index{uses_allocators clause@\kcode{uses_allocators} clause}
+\index{clauses!uses_allocators@\kcode{uses_allocators}}
 
-The use of allocators in \scode{target} regions is facilitated by the
-\scode{uses_allocators} clause as shown in the cases below.
+The use of allocators in \kcode{target} regions is facilitated by the
+\kcode{uses_allocators} clause as shown in the cases below.
 
-In CASE 1, the predefined \scode{omp_cgroup_mem_alloc} allocator is made available on the
-device in the first \scode{target} construct as specified in the \scode{uses_allocators} clause.
-The allocator is then used in the \scode{allocate}
-clause of the \scode{teams} construct to allocate a private array for each
-team (contention group). The private \splc{xbuf} arrays that are filled by each
-team are reduced as specified in the \scode{reduction} clause on the \scode{teams} construct.
+In CASE 1, the predefined \kcode{omp_cgroup_mem_alloc} allocator is made available on the
+device in the first \kcode{target} construct as specified in the \kcode{uses_allocators} clause.
+The allocator is then used in the \kcode{allocate}
+clause of the \kcode{teams} construct to allocate a private array for each
+team (contention group). The private \ucode{xbuf} arrays that are filled by each
+team are reduced as specified in the \kcode{reduction} clause on the \kcode{teams} construct.
 
-In CASE 2, user-defined traits are specified in the \splc{cgroup_traits} variable.
-An allocator is initialized for the \scode{target} region in the \scode{uses_allocators} clause,
-and the traits specified in \splc{cgroup_traits} are included by the \scode{traits} modifier.
+In CASE 2, user-defined traits are specified in the \ucode{cgroup_traits} variable.
+An allocator is initialized for the \kcode{target} region in the \kcode{uses_allocators} clause,
+and the traits specified in \ucode{cgroup_traits} are included by the \kcode{traits} modifier.
 
-In CASE 3, the \splc{cgroup_alloc} variable is initialized on the host with traits
-and a memory space. However, these are ignored by the \scode{uses_allocators} clause
-and a new allocator for the \scode{target} region is initialized with default traits.
+In CASE 3, the \ucode{cgroup_alloc} variable is initialized on the host with traits
+and a memory space. However, these are ignored by the \kcode{uses_allocators} clause
+and a new allocator for the \kcode{target} region is initialized with default traits.
 
 \cexample[5.2]{allocators}{5}
 \ffreeexample[5.2]{allocators}{5}
 
-\index{dynamic_allocators clause@\scode{dynamic_allocators} clause}
-\index{clauses!dynamic_allocators@\scode{dynamic_allocators}}
+\index{dynamic_allocators clause@\kcode{dynamic_allocators} clause}
+\index{clauses!dynamic_allocators@\kcode{dynamic_allocators}}
 
-The following example shows how to make an allocator available in a \scode{target} region 
-without specifying a \scode{uses_allocators} clause.
+The following example shows how to make an allocator available in a \kcode{target} region 
+without specifying a \kcode{uses_allocators} clause.
 
-In CASE 1, the predefined \scode{omp_cgroup_mem_alloc} allocator is used in the \scode{target}
-region as in CASE 1 of the previous example, but without specifying a \scode{uses_allocators} clause.
-This is accomplished by specifying the \scode{requires} directive with a
-\scode{dynamic_allocators} clause in the same compilation unit, to remove
-restrictions on allocator usage in \scode{target} regions.
+In CASE 1, the predefined \kcode{omp_cgroup_mem_alloc} allocator is used in the \kcode{target}
+region as in CASE 1 of the previous example, but without specifying a \kcode{uses_allocators} clause.
+This is accomplished by specifying the \kcode{requires} directive with a
+\kcode{dynamic_allocators} clause in the same compilation unit, to remove
+restrictions on allocator usage in \kcode{target} regions.
 
-CASE 2 also uses the \scode{dynamic_allocators} clause to remove allocator
-restrictions in \scode{target} regions. Here, an allocator is initialized
-by calling the \scode{omp_init_allocator} routine in the \code{target} region.
-The allocator is then used for the allocations of array \plc{xbuf} in 
-an \scode{allocate} clause of the \code{target}~\code{teams} construct 
+CASE 2 also uses the \kcode{dynamic_allocators} clause to remove allocator
+restrictions in \kcode{target} regions. Here, an allocator is initialized
+by calling the \kcode{omp_init_allocator} routine in the \kcode{target} region.
+The allocator is then used for the allocations of array \ucode{xbuf} in 
+an \kcode{allocate} clause of the \kcode{target teams} construct 
 for each team and destroyed after its use.
-The use of separate \code{target} regions is needed here since
-no statement is allowed between a \code{target} directive and 
-its nested \code{teams} construct.
+The use of separate \kcode{target} regions is needed here since
+no statement is allowed between a \kcode{target} directive and 
+its nested \kcode{teams} construct.
 
 \cexample[5.2]{allocators}{6}
 \ffreeexample[5.2]{allocators}{6}

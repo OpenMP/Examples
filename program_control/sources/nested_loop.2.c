@@ -7,7 +7,6 @@
 */
 void work(int i, int j) {}
 
-
 void work1(int i, int n)
 {
   int j;
@@ -18,7 +17,6 @@ void work1(int i, int n)
       work(i, j);
   }
 }
-
 
 void good_nesting2(int n)
 {

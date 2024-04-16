@@ -5,18 +5,18 @@
 
 OpenMP directives for C++ can also be specified with 
 %the implementation-defined 
-the \code{directive} extension for the C++11 standard \plc{attributes}.
+the \kcode{directive} extension for the C++11 standard \plc{attributes}.
 %https://en.cppreference.com/w/cpp/language/attributes
 
-The C++ example below shows two ways to parallelize a \code{for} loop using the \code{\#pragma} syntax.
-The first pragma uses the combined \code{parallel}~\code{for} directive, and the second
-applies the uncombined closely nested directives, \code{parallel} and \code{for}, directly to the same statement. 
+The C++ example below shows two ways to parallelize a \bcode{for} loop using the \kcode{\#pragma} syntax.
+The first pragma uses the combined \kcode{parallel for} directive, and the second
+applies the uncombined closely nested directives, \kcode{parallel} and \kcode{for}, directly to the same statement. 
 These are labeled PRAG 1-3.
 
 Using the attribute syntax, the same construct in PRAG 1
 is applied two different ways in attribute form, as shown in the ATTR 1 and ATTR 2 sections.
-In ATTR 1 the attribute syntax is used with the \code{omp ::} namespace form.
-In ATTR 2 the attribute syntax is used with the \code{using omp :} namespace form.
+In ATTR 1 the attribute syntax is used with the \kcode{omp ::} namespace form.
+In ATTR 2 the attribute syntax is used with the \kcode{using omp :} namespace form.
 
 Next, parallelization is attempted by applying directives using two different syntaxes.
 For ATTR 3 and PRAG 4, the loop parallelization will fail to compile because multiple directives that
@@ -25,32 +25,32 @@ The lines have been commented out and labeled INVALID.
 
 While multiple attributes may be applied to the same statement,
 compilation may fail if the ordering of the directive matters.
-For the ATTR 4-5 loop parallelization, the \code{parallel} directive precedes 
-the \code{for} directive, but the compiler may reorder consecutive attributes.
+For the ATTR 4-5 loop parallelization, the \kcode{parallel} directive precedes 
+the \kcode{for} directive, but the compiler may reorder consecutive attributes.
 If the directives are reversed, compilation will fail.
 
 The attribute directive of the ATTR 6 section resolves the previous problem (in ATTR 4-5).
-Here, the \code{sequence} attribute is used to apply ordering to the
-directives of ATTR 4-5, using the \code{omp}~\code{::} namespace qualifier. (The
-\code{using omp :} namespace form is not available for the \code{sequence} attribute.) 
-Note, for the \code{sequence} attribute a comma must separate the \code{directive} extensions.
+Here, the \kcode{sequence} attribute is used to apply ordering to the
+directives of ATTR 4-5, using the \kcode{omp ::} namespace qualifier. (The
+\kcode{using omp :} namespace form is not available for the \kcode{sequence} attribute.) 
+Note, for the \kcode{sequence} attribute a comma must separate the \kcode{directive} extensions.
 
 
 The last 3 pairs of sections (PRAG DECL 1-2, 3-4, and 5-6) show cases where 
-directive ordering does not matter for \code{declare}~\code{simd} directives. 
+directive ordering does not matter for \kcode{declare simd} directives. 
 
-In section PRAG DECL 1-2, the two loops use different SIMD forms of the \plc{P} function
-(one with \code{simdlen(4)} and the other with \code{simdlen(8)}), 
-as prescribed by the two different \code{declare}~\code{simd} directives
-applied to the \plc{P} function definitions (at the beginning of the code). 
+In section PRAG DECL 1-2, the two loops use different SIMD forms of the \ucode{P} function
+(one with \kcode{simdlen(\ucode{4})} and the other with \kcode{simdlen(\ucode{8})}), 
+as prescribed by the two different \kcode{declare simd} directives
+applied to the \ucode{P} function definitions (at the beginning of the code). 
 The directives use the pragma syntax, and order is not important. 
 For the next set of loops 
-(PRAG DECL 3-4) that use the \plc{Q} function, the attribute syntax is 
-used for the \code{declare}~\code{simd} directives. 
+(PRAG DECL 3-4) that use the \ucode{Q} function, the attribute syntax is 
+used for the \kcode{declare simd} directives. 
 The result is compliant code since directive order is irrelevant.
 Sections ATTR DECL 5-6 are included for completeness. Here, the attribute 
-form of the \code{simd} directive is used for loops calling the \plc{Q} function, 
-in combination with the attribute form of the \code{declare}~\code{simd} 
-directives declaring the variants for \plc{Q}.
+form of the \kcode{simd} directive is used for loops calling the \ucode{Q} function, 
+in combination with the attribute form of the \kcode{declare simd} 
+directives declaring the variants for \ucode{Q}.
 
 \cppexample[5.1]{directive_syntax_attribute}{1}

@@ -47,7 +47,6 @@ int main()
   #pragma omp target //implicit map of S1
   saxpyfun(&S1);
 
-
   // Case 2
 
   S2.a = 2.0;

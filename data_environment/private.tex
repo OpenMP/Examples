@@ -1,28 +1,29 @@
-\pagebreak
-\section{\code{private} Clause}
+%\pagebreak
+\section{\kcode{private} Clause}
 \label{sec:private}
-\index{clauses!private@\code{private}}
-\index{private clause@\code{private} clause}
+\index{clauses!private@\kcode{private}}
+\index{private clause@\kcode{private} clause}
 
-In the following example, the values of original list items \plc{i} and \plc{j} 
-are retained on exit from the \code{parallel} region, while the private list 
-items \plc{i} and \plc{j} are modified within the \code{parallel} construct. 
+In the following example, the values of original list items \ucode{i} and \ucode{j} 
+are retained on exit from the \kcode{parallel} region, while the private list 
+items \ucode{i} and \ucode{j} are modified within the \kcode{parallel} construct. 
 
 \cexample{private}{1}
 
 \fexample{private}{1}
 
-In the following example, all uses of the variable \plc{a} within the loop construct 
-in the routine \plc{f} refer to a private list item \plc{a}, while it is 
-unspecified whether references to \plc{a} in the routine \plc{g} are to a 
+\pagebreak
+In the following example, all uses of the variable \ucode{a} within the loop construct 
+in the routine \ucode{f} refer to a private list item \ucode{a}, while it is 
+unspecified whether references to \ucode{a} in the routine \ucode{g} are to a 
 private list item or the original list item.
 
 \cexample{private}{2}
 
 \fexample{private}{2}
 
-The following example demonstrates that a list item that appears in a \code{private} 
- clause in a \code{parallel} construct may also appear in a \code{private} 
+The following example demonstrates that a list item that appears in a \kcode{private} 
+ clause in a \kcode{parallel} construct may also appear in a \kcode{private} 
  clause in an enclosed worksharing construct, which results in an additional private 
 copy.
 

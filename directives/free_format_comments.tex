@@ -5,47 +5,47 @@
 \index{free form syntax, Fortran}
 
 OpenMP directives in Fortran codes with free source form are specified as comments
-that use the \code{!\$omp} sentinel, followed by the
-directive name, and required and optional clauses.  Lines are continued with an ending ampersand (\code{\&}),
-and the continued line begins with \code{!\$omp} or \code{!\$omp\&}. Comments may appear on the
+that use the \scode{!$omp} sentinel, followed by the
+directive name, and required and optional clauses.  Lines are continued with an ending ampersand (\scode{&}),
+and the continued line begins with \scode{!$omp} or \scode{!$omp&}. Comments may appear on the
 same line as the directive.  Directives are case insensitive.
 
 In the example below the first directive (DIR 1) specifies the %parallel work-sharing 
-\code{parallel}~\code{do} combined directive, with a \code{num\_threads} clause, and a comment.
+\kcode{parallel do} combined directive, with a \kcode{num_threads} clause, and a comment.
 The second directive (DIR 2) shows the same directive split across two lines. 
 The next nested directives (DIR 3 and 4) show the previous combined directive as
 two separate directives. 
-Here, an \code{end} directive (\code{end}~\code{parallel}) must be specified to demarcate the range (region)
-of the \code{parallel} directive. 
+Here, an \kcode{end} directive (\kcode{end parallel}) must be specified to demarcate the range (region)
+of the \kcode{parallel} directive. 
 
 \ffreeexample{directive_syntax_F_free_comment}{1}
 \clearpage
 
-As of OpenMP 5.1, \code{block} and \code{end}~\code{block} statements can be used to designate 
-a structured block for an OpenMP region, and any paired OpenMP \code{end} directive becomes optional,
-as shown in the next example.  Note, the variables \plc{i} and \plc{thrd\_no} are declared within the 
+As of OpenMP 5.1, \bcode{block} and \bcode{end block} statements can be used to designate 
+a structured block for an OpenMP region, and any paired OpenMP \kcode{end} directive becomes optional,
+as shown in the next example.  Note, the variables \ucode{i} and \ucode{thrd_no} are declared within the 
 block structure and are hence private.
-It was necessary to explicitly declare the \plc{i} variable, due to the \code{implicit none} statement; 
+It was necessary to explicitly declare the \ucode{i} variable, due to the \bcode{implicit none} statement; 
 it could have also been declared outside the structured block.
 
 \ffreeexample[5.1]{directive_syntax_F_block}{1}
 
-A Fortran BLOCK construct may eliminate the need for a paired \scode{end} directive for an OpenMP construct, 
+A Fortran \bcode{BLOCK} construct may eliminate the need for a paired \kcode{end} directive for an OpenMP construct, 
 as illustrated in the following example.
 
-The first \code{parallel} construct is specified with an OpenMP loosely structured block 
-(where the first executable construct is not a Fortran 2008 BLOCK construct). 
-A paired \scode{end} directive must end the OpenMP construct.
-The second \code{parallel} construct is specified with an OpenMP strictly structured block 
-(consists only of a single Fortran BLOCK construct). 
-The paired \scode{end} directive is optional in this case, and is not used here.
+The first \kcode{parallel} construct is specified with an OpenMP loosely structured block 
+(where the first executable construct is not a Fortran 2008 \bcode{BLOCK} construct). 
+A paired \kcode{end} directive must end the OpenMP construct.
+The second \kcode{parallel} construct is specified with an OpenMP strictly structured block 
+(consists only of a single Fortran \bcode{BLOCK} construct). 
+The paired \kcode{end} directive is optional in this case, and is not used here.
 
-The next two \code{parallel} directives form an enclosing outer \code{parallel} construct 
-and a nested inner \code{parallel} construct. The first \code{end}~\code{parallel} directive
-that subsequently appears terminates the inner \code{parallel} construct, 
-because a paired \scode{end} directive immediately following a BLOCK construct that is 
+The next two \kcode{parallel} directives form an enclosing outer \kcode{parallel} construct 
+and a nested inner \kcode{parallel} construct. The first \kcode{end parallel} directive
+that subsequently appears terminates the inner \kcode{parallel} construct, 
+because a paired \kcode{end} directive immediately following a \bcode{BLOCK} construct that is 
 a strictly structured block of an OpenMP construct is treated as the terminating end directive 
 of that construct. 
-The next \code{end}~\code{parallel} directive is required to terminate the outer \code{parallel} construct.
+The next \kcode{end parallel} directive is required to terminate the outer \kcode{parallel} construct.
 
 \ffreeexample[5.1]{directive_syntax_F_block}{2}

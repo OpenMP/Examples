@@ -1,15 +1,15 @@
 \section{Array Shaping}
 \label{sec:array-shaping}
 \index{array shaping!in motion-clause@in \plc{motion-clause}}
-\index{constructs!target update@\code{target}~\code{update}}
-\index{target update construct@\code{target}~\code{update} construct!to clause@\code{to} clause}
-\index{target update construct@\code{target}~\code{update} construct!from clause@\code{from} clause}
+\index{constructs!target update@\kcode{target update}}
+\index{target update construct@\kcode{target update} construct!to clause@\kcode{to} clause}
+\index{target update construct@\kcode{target update} construct!from clause@\kcode{from} clause}
 
-\index{directives!declare target@\code{declare}~\code{target}}
-\index{declare target directive@\code{declare}~\code{target} directive}
+\index{directives!declare target@\kcode{declare target}}
+\index{declare target directive@\kcode{declare target} directive}
 
-\index{directives!begin declare target@\code{begin}~\code{declare}~\code{target}}
-\index{begin declare target directive@\code{begin}~\code{declare}~\code{target} directive}
+\index{directives!begin declare target@\kcode{begin declare target}}
+\index{begin declare target directive@\kcode{begin declare target} directive}
 
 \ccppspecificstart
 A pointer variable can be shaped to a multi-dimensional array to facilitate
@@ -20,27 +20,28 @@ a pointer (lvalue expression):
 \end{description}
 where each $s_i$ is an integral-type expression of positive value.
 The shape-operator can appear in either the \plc{motion-clause}
-of the \code{target}~\code{update} directive or the \code{depend} clause.
+of the \kcode{target update} directive or the \kcode{depend} clause.
 
 The following example shows the use of the shape-operator in the 
-\code{target}~\code{update} directive. The shape-operator \code{([nx][ny+2])}
-casts pointer variable $a$ to a 2-dimensional array of size
-\plc{nx}$\times$\plc{(ny+2)}.  The resulting array is then accessed as
-array sections (such as \code{[0:nx][1]} and \code{[0:nx][ny]}) 
-in the \code{from} or \code{to} clause for transferring two columns of 
+\kcode{target update} directive. The shape-operator \ucode{([nx][ny+2])}
+casts pointer variable \ucode{a} to a 2-dimensional array of size
+%\ucode{nx}$\times$\ucode{(ny+2)}.  The resulting array is then accessed as
+\ucode{nx}*\ucode{(ny+2)}.  The resulting array is then accessed as
+array sections (such as \ucode{[0:nx][1]} and \ucode{[0:nx][ny]}) 
+in the \kcode{from} or \kcode{to} clause for transferring two columns of 
 noncontiguous boundary data from or to the device.  
 Note the use of additional parentheses
-around the shape-operator and $a$ to ensure the correct precedence 
+around the shape-operator and \ucode{a} to ensure the correct precedence 
 over array-section operations.
 
 \cnexample[5.1]{array_shaping}{1}
 \ccppspecificend
-\clearpage
+%\clearpage
 
 The shape operator is not defined for Fortran.  Explicit array shaping
 of procedure arguments can be used instead to achieve a similar goal.
-Below is the Fortran-equivalent of the above example that illustrates
+Below is the Fortran equivalent of the above example that illustrates
 the support of transferring two rows of noncontiguous boundary
-data in the \code{target}~\code{update} directive.
+data in the \kcode{target update} directive.
  
 \ffreeexample[5.2]{array_shaping}{1}

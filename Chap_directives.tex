@@ -2,7 +2,7 @@
 \label{chap:directive_syntax}
 \index{directive syntax}
 
-OpenMP \emph{directives} use base-language mechanisms to specify OpenMP program behavior.
+OpenMP \plc{directives} use base-language mechanisms to specify OpenMP program behavior.
 In C code, the directives are formed exclusively with pragmas, whereas in C++
 code, directives are formed from either pragmas or attributes.
 Fortran directives are formed with comments in free form and fixed form sources (codes).
@@ -20,36 +20,36 @@ The formats for combining a base-language mechanism and a \plc{directive-specifi
 
 C/C++ pragmas
 \begin{indentedcodelist}
-\code{\#pragma omp} \plc{directive-specification}
+\kcode{\#pragma omp} \plc{directive-specification}
 \end{indentedcodelist}
 
 C++ attributes
 \begin{indentedcodelist}
-\code{[[omp :: directive(} \plc{directive-specification} \code{)]]}
-\code{[[using omp : directive(} \plc{directive-specification} \code{)]]}
+\kcode{[[omp :: directive( \plc{directive-specification} )]]}
+\kcode{[[using omp : directive( \plc{directive-specification} )]]}
 \end{indentedcodelist}
 
 Fortran comments
 \begin{indentedcodelist}
-\code{!\$omp} \plc{directive-specification}
+\scode{!$omp} \plc{directive-specification}
 \end{indentedcodelist}
 
-where \code{c\$omp} and \code{*\$omp} may be used in Fortran fixed form sources.
+where \scode{c$omp} and \scode{*$omp} may be used in Fortran fixed form sources.
 
 Most OpenMP directives accept clauses that alter the semantics of the directive in some way, 
 and some directives also accept parenthesized arguments that follow the directive name. 
-A clause may just be a keyword (e.g., \scode{untied}) or it may also accept argument lists 
-(e.g., \scode{shared(x,y,z)}) and/or optional modifiers (e.g., \scode{tofrom} in 
-\scode{map(tofrom:}~\scode{x,y,z)}).
+A clause may just be a keyword (e.g., \kcode{untied}) or it may also accept argument lists 
+(e.g., \kcode{shared(\ucode{x,y,z})}) and/or optional modifiers (e.g., \kcode{tofrom} in 
+\kcode{map(tofrom: \ucode{x,y,z})}).
 Clause modifiers may be ``simple'' or ``complex'' -- a complex modifier consists of a
 keyword followed by one or more parameters, bracketed by parentheses, while a simple 
-modifier does not. An example of a complex modifier is the \scode{iterator} modifier, 
-as in \scode{map(iterator(i=0:n),}~\scode{tofrom:}~\scode{p[i])}, or the \scode{step} modifier, as in 
-\scode{linear(x:}~\scode{ref,}~\scode{step(4))}. 
-In the preceding examples, \scode{tofrom} and \scode{ref} are simple modifiers.
+modifier does not. An example of a complex modifier is the \kcode{iterator} modifier, 
+as in \kcode{map(iterator(\ucode{i=0:n}), tofrom: \ucode{p[i]})}, or the \kcode{step} modifier, as in 
+\kcode{linear(\ucode{x}: ref, step(\ucode{4}))}. 
+In the preceding examples, \kcode{tofrom} and \kcode{ref} are simple modifiers.
 
-For Fortran, a declarative directive (such as \code{declare}~\code{reduction})
-must appear after any \code{USE}, \code{IMPORT}, and \code{IMPLICIT} statements
+For Fortran, a declarative directive (such as \kcode{declare reduction})
+must appear after any \bcode{USE}, \bcode{IMPORT}, and \bcode{IMPLICIT} statements
 in the specification part.
 
 

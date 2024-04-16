@@ -1,17 +1,17 @@
-\pagebreak
-\section{\code{single} Construct}
+%\pagebreak
+\section{\kcode{single} Construct}
 \label{sec:single}
-\index{constructs!single@\code{single}}
-\index{single construct@\code{single} construct}
+\index{constructs!single@\kcode{single}}
+\index{single construct@\kcode{single} construct}
 
-The following example demonstrates the \code{single} construct. In the example, 
+The following example demonstrates the \kcode{single} construct. In the example, 
 only one thread prints each of the progress messages. All other threads will skip 
-the \code{single} region and stop at the barrier at the end of the \code{single} 
+the \kcode{single} region and stop at the barrier at the end of the \kcode{single} 
 construct until all threads in the team have reached the barrier. If other threads 
-can proceed without waiting for the thread executing the \code{single} region, 
-a \code{nowait} clause can be specified, as is done in the third \code{single} 
+can proceed without waiting for the thread executing the \kcode{single} region, 
+a \kcode{nowait} clause can be specified, as is done in the third \kcode{single} 
 construct in this example. The user must not make any assumptions as to which thread 
-will execute a \code{single} region.
+will execute a \kcode{single} region.
 
 \cexample{single}{1}
 

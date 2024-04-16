@@ -1,4 +1,4 @@
-\pagebreak
+%\pagebreak
 \section{Task Dependences}
 \label{sec:task_depend}
 \index{dependences!task dependences}
@@ -6,21 +6,21 @@
 \subsection{Flow Dependence}
 \label{subsec:task_flow_depend}
 \index{task dependences!flow dependence}
-\index{task construct@\code{task} construct!depend clause@\code{depend} clause}
-\index{task construct@\code{task} construct}
-\index{constructs!task@\code{task}}
-\index{depend clause@\code{depend} clause}
-\index{clauses!depend@\code{depend}}
+\index{task construct@\kcode{task} construct!depend clause@\kcode{depend} clause}
+\index{task construct@\kcode{task} construct}
+\index{constructs!task@\kcode{task}}
+\index{depend clause@\kcode{depend} clause}
+\index{clauses!depend@\kcode{depend}}
 
-This example shows a simple flow dependence using a \code{depend} 
-clause on the \code{task} construct.
+This example shows a simple flow dependence using a \kcode{depend} 
+clause on the \kcode{task} construct.
 
 \cexample[4.0]{task_dep}{1}
 
 \ffreeexample[4.0]{task_dep}{1}
 
-The program will always print ``x = 2'', because the \code{depend} 
-clauses enforce the ordering of the tasks. If the \code{depend} clauses had been 
+The program will always print \pout{x = 2}, because the \kcode{depend} 
+clauses enforce the ordering of the tasks. If the \kcode{depend} clauses had been 
 omitted, then the tasks could execute in any order and the program and the program 
 would have a race condition.
 
@@ -28,15 +28,15 @@ would have a race condition.
 \label{subsec:task_anti_depend}
 \index{task dependences!anti dependence}
 
-This example shows an anti-dependence using the \code{depend} 
-clause on the \code{task} construct.
+This example shows an anti-dependence using the \kcode{depend} 
+clause on the \kcode{task} construct.
 
 \cexample[4.0]{task_dep}{2}
 
 \ffreeexample[4.0]{task_dep}{2}
 
-The program will always print ``x = 1'', because the \code{depend} 
-clauses enforce the ordering of the tasks. If the \code{depend} clauses had been 
+The program will always print \pout{x = 1}, because the \kcode{depend} 
+clauses enforce the ordering of the tasks. If the \kcode{depend} clauses had been 
 omitted, then the tasks could execute in any order and the program would have a 
 race condition.
 
@@ -44,15 +44,15 @@ race condition.
 \label{subsec:task_out_depend}
 \index{task dependences!output dependence}
 
-This example shows an output dependence using the \code{depend} 
-clause on the \code{task} construct.
+This example shows an output dependence using the \kcode{depend} 
+clause on the \kcode{task} construct.
 
 \cexample[4.0]{task_dep}{3}
 
 \ffreeexample[4.0]{task_dep}{3}
 
-The program will always print ``x = 2'', because the \code{depend} 
-clauses enforce the ordering of the tasks. If the \code{depend} clauses had been 
+The program will always print \pout{x = 2}, because the \kcode{depend} 
+clauses enforce the ordering of the tasks. If the \kcode{depend} clauses had been 
 omitted, then the tasks could execute in any order and the program would have a 
 race condition.
 
@@ -62,28 +62,28 @@ race condition.
 \index{task dependences!concurrent execution with}
 
 In this example we show potentially concurrent execution of tasks using multiple 
-flow dependences expressed using the \code{depend} clause on the \code{task} 
+flow dependences expressed using the \kcode{depend} clause on the \kcode{task} 
 construct.
 
 The last two tasks are dependent on the first task. However, there is no dependence 
 between the last two tasks, which may execute in any order (or concurrently if 
-more than one thread is available). Thus, the possible outputs are ``x 
-+ 1 = 3. x + 2 = 4.'' and ``x + 2 = 4. x + 1 = 3.''. 
-If the \code{depend} clauses had been omitted, then all of the tasks could execute 
+more than one thread is available). Thus, the possible outputs are 
+\pout{x + 1 = 3. x + 2 = 4.} and \pout{x + 2 = 4. x + 1 = 3.}. 
+If the \kcode{depend} clauses had been omitted, then all of the tasks could execute 
 in any order and the program would have a race condition.
 
 \cexample[4.0]{task_dep}{4}
 
 \ffreeexample[4.0]{task_dep}{4}
 
-The following example illustrates the semantic difference between \scode{inout}
-and \scode{inoutset} dependence types.  In CASE 1, tasks generated at T1
+The following example illustrates the semantic difference between \kcode{inout}
+and \kcode{inoutset} dependence types.  In Case 1, tasks generated at T1
 inside the loop have dependences among themselves due to 
-the \scode{inout} dependence type and with task T2.
+the \kcode{inout} dependence type and with task T2.
 As a result, these tasks are executed sequentially before the print
 statement from task T2.
-In CASE 2, tasks generated at T3 inside the loop have no dependences
-among themselves from the \scode{inoutset} dependence type, but have 
+In Case 2, tasks generated at T3 inside the loop have no dependences
+among themselves from the \kcode{inoutset} dependence type, but have 
 dependences with task T4.
 As a result, these tasks are executed concurrently before the print
 statement from task T4.
@@ -97,61 +97,62 @@ statement from task T4.
 \index{task dependences!matrix multiplication}
 
 This example shows a task-based blocked matrix multiplication. Matrices are of 
-NxN elements, and the multiplication is implemented using blocks of BSxBS elements.
+\ucode{N}x\ucode{N} elements, and the multiplication is implemented using blocks
+of \ucode{BS}x\ucode{BS} elements.
 
 \cexample[4.0]{task_dep}{5}
 
 \ffreeexample[4.0]{task_dep}{5}
 
-\subsection{\code{taskwait} with Dependences}
+\subsection{\kcode{taskwait} with Dependences}
 \label{subsec:taskwait_depend}
-\index{task dependences!taskwait construct with@\code{taskwait} construct with}
-\index{taskwait construct@\code{taskwait} construct}
-\index{constructs!taskwait@\code{taskwait}}
-\index{taskwait construct@\code{taskwait} construct!depend clause@\code{depend} clause}
-\index{depend clause@\code{depend} clause}
-\index{clauses!depend@\code{depend}}
+\index{task dependences!taskwait construct with@\kcode{taskwait} construct with}
+\index{taskwait construct@\kcode{taskwait} construct}
+\index{constructs!taskwait@\kcode{taskwait}}
+\index{taskwait construct@\kcode{taskwait} construct!depend clause@\kcode{depend} clause}
+\index{depend clause@\kcode{depend} clause}
+\index{clauses!depend@\kcode{depend}}
 
 In this subsection three examples illustrate how the
-\code{depend} clause can be applied to a \code{taskwait} construct to make the
+\kcode{depend} clause can be applied to a \kcode{taskwait} construct to make the
 generating task wait for specific child tasks to complete. This is an OpenMP 5.0 feature.
  In the same manner that
-dependences can order executions among child tasks with \code{depend} clauses on
-\code{task} constructs, the generating task can be scheduled to wait on child tasks
-at a \code{taskwait} before it can proceed.
+dependences can order executions among child tasks with \kcode{depend} clauses on
+\kcode{task} constructs, the generating task can be scheduled to wait on child tasks
+at a \kcode{taskwait} before it can proceed.
 
-Note: Since the \code{depend} clause on a \code{taskwait} construct relaxes the
+Note: Since the \kcode{depend} clause on a \kcode{taskwait} construct relaxes the
 default synchronization behavior (waiting for all children to finish), it is important to
-realize that child tasks that are not predecessor tasks, as determined by the \code{depend}
-clause of the \code{taskwait} construct, may be running concurrently while the
+realize that child tasks that are not predecessor tasks, as determined by the \kcode{depend}
+clause of the \kcode{taskwait} construct, may be running concurrently while the
 generating task is executing after the taskwait.
 
-In the first example the generating task waits at the \code{taskwait} construct
+In the first example the generating task waits at the \kcode{taskwait} construct
 for the completion of the first child task because a dependence on the first task
-is produced by \plc{x} with an \code{in} dependence type within the \code{depend}
-clause of the \code{taskwait} construct.
-Immediately after the first \code{taskwait} construct it is safe to access the
-\plc{x} variable by the generating task, as shown in the print statement.
+is produced by \ucode{x} with an \kcode{in} dependence type within the \kcode{depend}
+clause of the \kcode{taskwait} construct.
+Immediately after the first \kcode{taskwait} construct it is safe to access the
+\ucode{x} variable by the generating task, as shown in the print statement.
 There is no completion restraint on the second child task.
-Hence, immediately after the first \code{taskwait} it is unsafe to access the
-\plc{y} variable since the second child task may still be executing.
-The second \code{taskwait} ensures that the second child task has completed; hence
-it is safe to access the \plc{y} variable in the following print statement.
+Hence, immediately after the first \kcode{taskwait} it is unsafe to access the
+\ucode{y} variable since the second child task may still be executing.
+The second \kcode{taskwait} ensures that the second child task has completed; hence
+it is safe to access the \ucode{y} variable in the following print statement.
 
 \cexample[5.0]{task_dep}{6}
 
 \ffreeexample[5.0]{task_dep}{6}
 
 In this example the first two tasks are serialized, because a dependence on
-the first child is produced by \plc{x} with the \code{in} dependence type
-in the \code{depend} clause of the second task.
-However, the generating task at the first \code{taskwait} waits only on the
+the first child is produced by \ucode{x} with the \kcode{in} dependence type
+in the \kcode{depend} clause of the second task.
+However, the generating task at the first \kcode{taskwait} waits only on the
 first child task to complete, because a dependence on only the first child task
-is produced by \plc{x} with an \code{in} dependence type within the
-\code{depend} clause of the \code{taskwait} construct.
-The second \code{taskwait} (without a \code{depend} clause) is included
-to guarantee completion of the second task before \plc{y} is accessed.
-(While unnecessary, the \code{depend(inout:} \code{y)} clause on the  2nd child task is
+is produced by \ucode{x} with an \kcode{in} dependence type within the
+\kcode{depend} clause of the \kcode{taskwait} construct.
+The second \kcode{taskwait} (without a \kcode{depend} clause) is included
+to guarantee completion of the second task before \ucode{y} is accessed.
+(While unnecessary, the \kcode{depend(inout: \ucode{y})} clause on the 2nd child task is
 included to illustrate how the child task dependences can be completely annotated
 in a data-flow model.)
 
@@ -165,21 +166,21 @@ in a data-flow model.)
 This example is similar to the previous one, except the generating task is
 directed to also wait for completion of the second task.
 
-The \code{depend} clause of the \code{taskwait} construct now includes an
-\code{in} dependence type for \plc{y}.  Hence the generating task must now
-wait on completion of any child task having \plc{y} with an \code{out}
-(here \code{inout}) dependence type in its \code{depend} clause.
-So, the \code{depend} clause of the \code{taskwait} construct now constrains
-the second task to complete at the \code{taskwait}, too.
+The \kcode{depend} clause of the \kcode{taskwait} construct now includes an
+\kcode{in} dependence type for \ucode{y}.  Hence the generating task must now
+wait on completion of any child task having \ucode{y} with an \kcode{out}
+(here \kcode{inout}) dependence type in its \kcode{depend} clause.
+So, the \kcode{depend} clause of the \kcode{taskwait} construct now constrains
+the second task to complete at the taskwait, too.
 %--both tasks must now complete execution at the \code{taskwait}. 
-(This change makes the second \code{taskwait} of the previous example unnecessary--
+(This change makes the second taskwait of the previous example unnecessary--
 it has been removed in this example.)
 
-Note: While a taskwait construct ensures that all child tasks have completed; a depend clause on a taskwait
+Note: While a \kcode{taskwait} construct ensures that all child tasks have completed; a depend clause on a \kcode{taskwait}
 construct only waits for specific child tasks (prescribed by the dependence type and list
-items in the \code{taskwait}'s \code{depend} clause).
+items in the \kcode{taskwait}'s \kcode{depend} clause).
 This and the previous example illustrate the need to carefully determine
-the dependence type of variables in the \code{taskwait} \code{depend} clause
+the dependence type of variables in the \kcode{depend} clause of the \kcode{taskwait} construct.
 when selecting child tasks that the generating task must wait on, so that its execution after the
 taskwait does not produce race conditions on variables accessed by non-completed child tasks.
 
@@ -193,13 +194,13 @@ taskwait does not produce race conditions on variables accessed by non-completed
 \index{task dependences!mutually exclusive execution}
 
 In this example we show a series of tasks, including mutually exclusive
-tasks, expressing dependences using the \code{depend} clause on the
-\code{task} construct.
+tasks, expressing dependences using the \kcode{depend} clause on the
+\kcode{task} construct.
 
-The program will always print~6. Tasks T1, T2 and T3 will be scheduled first,
+The program will always print \pout{6}. Tasks T1, T2 and T3 will be scheduled first,
 in any order. Task T4 will be scheduled after tasks T1 and T2 are
 completed. T5 will be scheduled after tasks T1 and T3 are completed. Due
-to the \code{mutexinoutset} dependence type on \code{c}, T4 and T5 may be
+to the \kcode{mutexinoutset} dependence type on \ucode{c}, T4 and T5 may be
 scheduled in any order with respect to each other, but not at the same
 time. Tasks T6 will be scheduled after both T4 and T5 are completed.
 
@@ -207,10 +208,10 @@ time. Tasks T6 will be scheduled after both T4 and T5 are completed.
 
 \ffreeexample[5.0]{task_dep}{9}
 
-The following example demonstrates a situation where the \code{mutexinoutset}
-dependence type is advantageous. If \code{shortTaskB} completes
-before \code{longTaskA}, the runtime can take advantage of this by
-scheduling \code{longTaskBC} before \code{shortTaskAC}.
+The following example demonstrates a situation where the \kcode{mutexinoutset}
+dependence type is advantageous. If \ucode{shortTaskB} completes
+before \ucode{longTaskA}, the runtime can take advantage of this by
+scheduling \ucode{longTaskBC} before \ucode{shortTaskAC}.
 
 \cexample[5.0]{task_dep}{10}
 
@@ -219,35 +220,35 @@ scheduling \code{longTaskBC} before \code{shortTaskAC}.
 \subsection{Multidependences Using Iterators}
 \label{subsec:depend_iterator}
 \index{task dependences!using iterators}
-\index{depend clause@\code{depend} clause!iterator modifier@\code{iterator} modifier}
-\index{iterator modifier@\code{iterator} modifier}
+\index{depend clause@\kcode{depend} clause!iterator modifier@\kcode{iterator} modifier}
+\index{iterator modifier@\kcode{iterator} modifier}
 
 The following example uses an iterator to define a dynamic number of
 dependences.
 
-In the \code{single} construct of a parallel region a loop generates n tasks
-and each task has an \code{out} dependence specified through an element of
-the \plc{v} array.  This is followed by a single task that defines an \code{in}
+In the \kcode{single} construct of a parallel region a loop generates \ucode{n} tasks
+and each task has an \kcode{out} dependence specified through an element of
+the \ucode{v} array.  This is followed by a single task that defines an \kcode{in}
 dependence on each element of the array.  This is accomplished by
-using the \code{iterator} modifier in the \code{depend} clause, supporting a dynamic number
-of dependences (\plc{n} here).
+using the \kcode{iterator} modifier in the \kcode{depend} clause, supporting a dynamic number
+of dependences (\ucode{n} here).
 
-The task for the \plc{print\_all\_elements} function is not executed until all dependences
+The task for the \ucode{print_all_elements} procedure is not executed until all dependences
 prescribed (or registered) by the iterator are fulfilled; that is,
 after all the tasks generated by the loop have completed.
 
-Note, one cannot simply use an array section in the \code{depend} clause
-of the second task construct because this would violate the \code{depend} clause restriction:
+Note, one cannot simply use an array section in the \kcode{depend} clause
+of the second task construct because this would violate the \kcode{depend} clause restriction:
 
-``List items used in \code{depend} clauses of the same task or sibling tasks
+``List items used in \kcode{depend} clauses of the same task or sibling tasks
 must indicate identical storage locations or disjoint storage locations''.
 
 In this case each of the loop tasks use a single disjoint (different storage)
-element in their \code{depend} clause; however,
+element in their \kcode{depend} clause; however,
 the array-section storage area prescribed in the commented directive is neither
 identical nor disjoint to the storage prescribed by the elements of the
 loop tasks.  The iterator overcomes this restriction by effectively
-creating n disjoint storage areas.
+creating \ucode{n} disjoint storage areas.
 
 \cexample[5.0]{task_dep}{11}
 
@@ -258,20 +259,20 @@ creating n disjoint storage areas.
 \index{task dependences!undeferred tasks}
 
 In the following example, we show that even if a task is undeferred as specified
-by an \code{if} clause that evaluates to \plc{false}, task dependences are
+by an \kcode{if} clause that evaluates to \vcode{false}, task dependences are
 still honored.
 
-The \code{depend} clauses of the first and second explicit tasks specify that
+The \kcode{depend} clauses of the first and second explicit tasks specify that
 the first task is completed before the second task.
 
-The second explicit task has an \code{if} clause that evaluates to \plc{false}.
+The second explicit task has an \kcode{if} clause that evaluates to \vcode{false}.
 This means that the execution of the generating task (the implicit task of
-the \code{single} region) must be suspended until the second explicit task
+the \kcode{single} region) must be suspended until the second explicit task
 is completed.
 But, because of the dependence, the first explicit task must complete first,
 then the second explicit task can execute and complete, and only then 
 the generating task can resume to the print statement.
-Thus, the program will always print ``\texttt{x = 2}''.
+Thus, the program will always print \pout{x = 2}.
 
 \cexample[4.0]{task_dep}{12}
 \clearpage
@@ -279,11 +280,11 @@ Thus, the program will always print ``\texttt{x = 2}''.
 \ffreeexample[4.0]{task_dep}{12}
 
 
-In OpenMP 5.1 the \scode{omp_all_memory} \splc{reserved locator} was introduced
+In OpenMP 5.1 the \kcode{omp_all_memory} \plc{reserved locator} was introduced
 to specify storage of all objects in memory. In the following example,
 it is used in Task 4 as a convenient way to specify that the locator
 (list item) denotes the storage of all objects (locations) in memory, and 
-will therefore match the \splc{a} and \splc{d} locators of Task 2, Task 3 and Task 6.
+will therefore match the \ucode{a} and \ucode{d} locators of Task 2, Task 3 and Task 6.
 The dependences guarantee the ordered execution of Tasks 2 and 3 before 4, and
 Task 4 before Task 6.
 Since there are no dependences imposed on Task 1 and Task 5, they can be

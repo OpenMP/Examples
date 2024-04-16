@@ -1,0 +1,45 @@
+%\pagebreak
+\section{Passing Shared Variable to Procedure in Fortran}
+\fortranspecificstart
+\label{sec:fort_shared_var}
+\index{clauses!shared@\kcode{shared}}
+\index{shared clause@\kcode{shared} clause!storage association, Fortran}
+
+Passing a shared variable to a procedure in Fortran may result in the use of
+temporary storage in place of the actual argument when the corresponding dummy 
+argument does not have the \bcode{VALUE} or \bcode{CONTIGUOUS} attribute and 
+its data-sharing attribute is implementation-defined as per the rules in 
+Section \docref{Variables Referenced in a Region but not in a Construct} of
+the OpenMP Specification. 
+These conditions effectively result in references to, and definitions of, the 
+temporary storage during the procedure reference. Furthermore, the value of the 
+shared variable is copied into the intervening temporary storage before the 
+procedure reference when the dummy argument does not have the 
+\bcode{INTENT(OUT)} attribute, and is copied out of the temporary storage into 
+the shared variable when the dummy argument does not have the 
+\bcode{INTENT(IN)} attribute. Any references to (or definitions of) the shared 
+storage that is associated with the dummy argument by any other task must be 
+synchronized with the procedure reference to avoid possible data races.
+
+The following examples illustrate the implications of passing a shared 
+variable \ucode{a} to subroutine \ucode{sub1} or \ucode{sub2} in
+a \kcode{parallel} region.
+For \ucode{sub1}, an implementation may or may not generate a copy-in/copy-out 
+for the temporary storage associated with variable \ucode{b}. 
+If there is a copy-in/copy-out, the code for copy-in/copy-out will result in 
+a race condition, even though there is an \kcode{atomic}
+directive for the update of variable \ucode{b(i)} in the subroutine. 
+If the implementation can create a temporary descriptor for \ucode{a(::2)} 
+with the correct stride and passed it to subroutine \ucode{sub1}, 
+the same memory is accessed inside the subroutine and the result 
+(\ucode{sum1}) is then well defined.
+For \ucode{sub2}, there is the \bcode{CONTIGUOUS} attribute for 
+variable \ucode{b} and the implementation will generate a copy-in/copy-out 
+for the temporary storage.
+The code will have a race condition and the result (\ucode{sum2}) is
+not well defined.
+
+\topmarker{Fortran}
+\ffreenexample{fort_shared_var}{1}
+\fortranspecificend
+

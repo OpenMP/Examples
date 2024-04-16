@@ -1,21 +1,23 @@
-\pagebreak
-\section{\code{taskloop} Construct}
+%\pagebreak
+\section{\kcode{taskloop} Construct}
 \label{sec:taskloop}
-\index{constructs!taskloop@\code{taskloop}}
-\index{taskloop construct@\code{taskloop} construct}
-\index{taskloop construct@\code{taskloop} construct!grainsize clause@\code{grainsize} clause}
-\index{taskloop construct@\code{taskloop} construct!nogroup clause@\code{nogroup} clause}
-\index{clauses!grainsize@\code{grainsize}}
-\index{grainsize clause@\code{grainsize} clause}
-\index{clauses!nogroup@\code{nogroup}}
-\index{nogroup clause@\code{nogroup} clause}
+\index{constructs!taskloop@\kcode{taskloop}}
+\index{taskloop construct@\kcode{taskloop} construct}
+\index{taskloop construct@\kcode{taskloop} construct!grainsize clause@\kcode{grainsize} clause}
+\index{taskloop construct@\kcode{taskloop} construct!nogroup clause@\kcode{nogroup} clause}
+\index{clauses!grainsize@\kcode{grainsize}}
+\index{grainsize clause@\kcode{grainsize} clause}
+\index{clauses!nogroup@\kcode{nogroup}}
+\index{nogroup clause@\kcode{nogroup} clause}
 
 The following example illustrates how to execute a long running task concurrently with tasks created
-with a \code{taskloop} directive for a loop having unbalanced amounts of work for its iterations.
+with a \kcode{taskloop} directive for a loop having unbalanced amounts of work for its iterations.
 
-The \code{grainsize} clause specifies that each task is to execute at least 500 iterations of the loop. 
+The \kcode{grainsize} clause specifies that each task is to execute at least \ucode{500} iterations of the loop. 
 
-The \code{nogroup} clause removes the implicit taskgroup of the \code{taskloop} construct; the explicit \code{taskgroup} construct in the example ensures that the function is not exited before the long-running task and the loops have finished execution.
+The \kcode{nogroup} clause removes the implicit taskgroup of the \kcode{taskloop} construct; 
+the explicit \kcode{taskgroup} construct in the example ensures that the function is not exited 
+before the long-running task and the loops have finished execution.
 
 \cexample[4.5]{taskloop}{1}
 
@@ -23,24 +25,24 @@ The \code{nogroup} clause removes the implicit taskgroup of the \code{taskloop} 
 
 %\clearpage
 
-Because a \code{taskloop} construct encloses a loop, it is often incorrectly 
+Because a \kcode{taskloop} construct encloses a loop, it is often incorrectly 
 perceived as a worksharing construct (when it is directly nested in 
-a \code{parallel} region).
+a \kcode{parallel} region).
 
 While a worksharing construct distributes the loop iterations across all threads in a team,
-the entire loop of a \code{taskloop} construct is executed by every thread of the team.
+the entire loop of a \kcode{taskloop} construct is executed by every thread of the team.
 
 In the example below the first taskloop occurs closely nested within 
-a \code{parallel} region and the entire loop is executed by each of the \plc{T} threads; 
-hence the reduction sum is executed \plc{T}*\plc{N} times.
+a \kcode{parallel} region and the entire loop is executed by each of the \ucode{T} threads; 
+hence the reduction sum is executed \ucode{T}*\ucode{N} times.
  
-The loop of the second taskloop is within a \code{single} region and is executed
-by a single thread so that only \plc{N} reduction sums occur.  (The other
-\plc{N}-1 threads of the \code{parallel} region will participate in executing the 
-tasks. This is the common use case for the \code{taskloop} construct.)
+The loop of the second taskloop is within a \kcode{single} region and is executed
+by a single thread so that only \ucode{N} reduction sums occur.  (The other
+\ucode{N}-1 threads of the \kcode{parallel} region will participate in executing the 
+tasks. This is the common use case for the \kcode{taskloop} construct.)
 
-In the example, the code thus prints \code{x1 = 16384} (\plc{T}*\plc{N}) and 
-\code{x2 = 1024} (\plc{N}).
+In the example, the code thus prints \pout{x1 = 16384} (\ucode{T}*\ucode{N}) and 
+\pout{x2 = 1024} (\ucode{N}).
 
 \cexample[4.5]{taskloop}{2}
 

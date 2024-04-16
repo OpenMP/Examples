@@ -11,7 +11,7 @@ subroutine foo(a, n, use_gpu)
 
    !$omp metadirective &
    !$omp&            when(user={condition(use_gpu)}:           &
-   !$omp&                 target teams distribute parallel for &
+   !$omp&                 target teams distribute parallel do  &
    !$omp&                 private(b) map(from:a(1:n)) )        &
    !$omp&            otherwise(                                &
    !$omp&                 parallel do)
@@ -33,8 +33,8 @@ subroutine bar (a, n, run_parallel, unbalanced)
 
     !$omp metadirective &
     !$omp&  when(construct={parallel}, user={condition(unbalanced)}: &
-    !$omp&         for schedule(guided) private(b)) &
-    !$omp&  when(construct={parallel}: for schedule(static))
+    !$omp&         do schedule(guided) private(b)) &
+    !$omp&  when(construct={parallel}: do schedule(static))
     do i = 1,n; a(i)=i; if(i==n) b=1; end do
 
    !$omp end metadirective 

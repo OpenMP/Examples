@@ -33,6 +33,6 @@ end program
 subroutine init(s)
   use my_structures
   type(myvec_t) :: s
-
+  !$omp declare target
   s%data = [ (i, i=1,s%len) ]
 end subroutine

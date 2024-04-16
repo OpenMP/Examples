@@ -3,7 +3,7 @@
 * @@type:	C
 * @@operation:	run
 * @@expect:	success
-* @@version:	omp_5.0
+* @@version:	omp_5.2
 */
 #include <stdlib.h>
 #include <stdio.h>
@@ -11,7 +11,6 @@
 
 int main(){
   typedef struct S_struct { int s; int A[N]; } S_struct_t;
-  
   
   int         s;       //scalar int variable (scalar)
   int         A[N];    //aggregate variable  (array)
@@ -29,8 +28,8 @@ int main(){
                    // Uses defaultmap to set scalars, aggregates & 
                    // pointers to normal defaults.  
     #pragma omp target \
-            defaultmap(firstprivate: scalar)   /* could also be default */ \
-            defaultmap(tofrom:       aggregate)/* could also be default */ \
+            defaultmap(firstprivate: scalar)   /* may also be default */ \
+            defaultmap(tofrom:       aggregate)/* may also be default */ \
             defaultmap(default:      pointer)  /* must be default */
     {
         s       = 3;            //SCALAR firstprivate, value not returned
@@ -43,10 +42,9 @@ int main(){
 
         ptr = &A[0];            //POINTER is private
         ptr[0] = 2;   ptr[1] = 2;
-
     }
    if(s==2 && A[0]==2 && S.s==2 && S.A[0]==2) 
-      printf(" PASSED 1 of 4\n");
+      printf(" PASSED 1 of 5\n");
   
     
 // Target Region 2
@@ -59,7 +57,7 @@ int main(){
         S.A[0]+=5; S.A[1]+=5; 
     }
     if(s==7 && A[0]==7 && S.s==7 && S.A[0]==7)
-        printf(" PASSED 2 of 4\n");
+        printf(" PASSED 2 of 5\n");
    
   
 // Target Region 3
@@ -72,7 +70,7 @@ int main(){
         s2 += 5;         // firstprivate (s2 value not returned to host)
         s3 += s1 + s2;   // mapped as tofrom
     }
-    if(s1==1 && s2==1 && s3==13 ) printf(" PASSED 3 of 4\n");
+    if(s1==1 && s2==1 && s3==13 ) printf(" PASSED 3 of 5\n");
  
  
 // Target Region 4        
@@ -83,12 +81,24 @@ int main(){
     #pragma omp target defaultmap(firstprivate: aggregate) \
                        map(from: s1, s2)
     {
-
         A[0]+=1; S.A[0]+=1; //Aggregate changes not returned to host
         A[1]+=1; S.A[1]+=1; //Aggregate changes not returned to host
         s1 = A[0]+S.A[0]; //s1 value returned to host
         s2 = A[1]+S.A[1]; //s1 value returned to host
     }
-    if( A[0]==0 && S.A[0]==0 && s1==2 ) printf(" PASSED 4 of 4\n");
+    if( A[0]==0 && S.A[0]==0 && s1==2 ) printf(" PASSED 4 of 5\n");
+
+// Target Region 5
+            // defaultmap using all variable category
+
+    s1=s2=s3=1;
+
+    #pragma omp target defaultmap(to: all) map(from: s3)
+    {
+        s1 += 5;        // mapped as to
+        s2 += 5;        // mapped as to
+        s3 = s1 + s2;   // mapped as from
+    }
+    if(s1==1 && s2==1 && s3==12 ) printf(" PASSED 5 of 5\n");
  
 }

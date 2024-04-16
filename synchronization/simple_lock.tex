@@ -1,18 +1,18 @@
 \subsection{Simple Lock Routines}
 \label{subsec:simple_lock}
 
-\index{routines!omp_set_lock@\scode{omp_set_lock}}
-\index{omp_set_lock routine@\scode{omp_set_lock} routine}
-\index{routines!omp_test_lock@\scode{omp_test_lock}}
-\index{omp_test_lock routine@\scode{omp_test_lock} routine}
+\index{routines!omp_set_lock@\kcode{omp_set_lock}}
+\index{omp_set_lock routine@\kcode{omp_set_lock} routine}
+\index{routines!omp_test_lock@\kcode{omp_test_lock}}
+\index{omp_test_lock routine@\kcode{omp_test_lock} routine}
 In the following example, the lock routines cause the threads to be idle while 
 waiting for entry to the first critical section, but to do other work while waiting 
-for entry to the second. The \code{omp\_set\_lock} function blocks, but the \scode{omp_test_lock} 
-function does not, allowing the work in \code{skip} to be done. 
+for entry to the second. The \kcode{omp_set_lock} function blocks, but the \kcode{omp_test_lock} 
+function does not, allowing the work in \ucode{skip} to be done. 
 
 Note that the argument to the lock routines should have type 
-\scode{omp_lock_t} (or \scode{omp_lock_kind} in Fortran), 
-and that there is no need to flush the lock variable (\plc{lck}). 
+\kcode{omp_lock_t} (or \kcode{omp_lock_kind} in Fortran), 
+and that there is no need to flush the lock variable (\ucode{lck}). 
 
 \cexample{simple_lock}{1}
 

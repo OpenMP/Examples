@@ -1,19 +1,19 @@
 \newpage
 \section{Affinity Query Functions}
 \label{sec: affinity_query}
-\index{affinity query!omp_get_num_places routine@\scode{omp_get_num_places} routine}
-\index{routines!omp_get_num_places@\scode{omp_get_num_places}}
-\index{omp_get_num_places routine@\scode{omp_get_num_places} routine}
-\index{affinity query!omp_get_place_num routine@\scode{omp_get_place_num} routine}
-\index{routines!omp_get_place_num@\scode{omp_get_place_num}}
-\index{omp_get_place_num routine@\scode{omp_get_place_num} routine}
-\index{affinity query!omp_get_place_num_procs routine@\scode{omp_get_place_num_procs} routine}
-\index{routines!omp_get_place_num_procs@\scode{omp_get_place_num_procs}}
-\index{omp_get_place_num_procs routine@\scode{omp_get_place_num_procs} routine}
-\index{affinity!spread policy@\code{spread} policy}
-\index{spread policy@\code{spread} policy}
-\index{environment variables!OMP_PLACES@\scode{OMP_PLACES}}
-\index{OMP_PLACES@\scode{OMP_PLACES}}
+\index{affinity query!omp_get_num_places routine@\kcode{omp_get_num_places} routine}
+\index{routines!omp_get_num_places@\kcode{omp_get_num_places}}
+\index{omp_get_num_places routine@\kcode{omp_get_num_places} routine}
+\index{affinity query!omp_get_place_num routine@\kcode{omp_get_place_num} routine}
+\index{routines!omp_get_place_num@\kcode{omp_get_place_num}}
+\index{omp_get_place_num routine@\kcode{omp_get_place_num} routine}
+\index{affinity query!omp_get_place_num_procs routine@\kcode{omp_get_place_num_procs} routine}
+\index{routines!omp_get_place_num_procs@\kcode{omp_get_place_num_procs}}
+\index{omp_get_place_num_procs routine@\kcode{omp_get_place_num_procs} routine}
+\index{affinity!spread policy@\kcode{spread} policy}
+\index{spread policy@\kcode{spread} policy}
+\index{environment variables!OMP_PLACES@\kcode{OMP_PLACES}}
+\index{OMP_PLACES@\kcode{OMP_PLACES}}
 
 In the example below a team of threads is generated on each socket of
 the system, using nested parallelism. Several query functions are used
@@ -23,25 +23,25 @@ socket and thread numbers.
 For proper execution of the code, the user must create a place partition, such that
 each place is a listing of the core numbers for a socket. For example,
 in a 2 socket system with 8 cores in each socket, and sequential numbering
-in the socket for the core numbers, the \code{OMP\_PLACES} variable would be set
-to "\{0:8\},\{8:8\}", using the place syntax \{\plc{lower\_bound}:\plc{length}:\plc{stride}\},
+in the socket for the core numbers, the \kcode{OMP_PLACES} variable would be set
+to "\{0:8\},\{8:8\}", using the place syntax \{\splc{lower_bound:length:stride}\},
 and the default stride of 1.
 
-The code determines the number of sockets (\plc{n\_sockets})
-using the \code{omp\_get\_num\_places()} query function.
+The code determines the number of sockets (\ucode{n_sockets})
+using the \kcode{omp_get_num_places()} query function.
 In this example each place is constructed with a list of 
 each socket's core numbers, hence the number of places is equal
 to the number of sockets. 
 
 The outer parallel region forms a team of threads, and each thread 
-executes on a socket (place) because the \code{proc\_bind} clause uses 
-\code{spread} in the outer \code{parallel} construct.
-Next, in the \plc{socket\_init} function, an inner parallel region creates a team 
+executes on a socket (place) because the \kcode{proc_bind} clause uses 
+\kcode{spread} in the outer \kcode{parallel} construct.
+Next, in the \ucode{socket_init} function, an inner parallel region creates a team 
 of threads equal to the number of elements (core numbers) from the place
-of the parent thread. Because the outer \code{parallel} construct uses 
-a \code{spread} affinity policy, each of its threads inherits a subpartition of 
-the original partition.  Hence, the \code{omp\_get\_place\_num\_procs} query function
-returns the number of elements (here procs = cores) in the subpartition of the thread.  
+of the parent thread. Because the outer \kcode{parallel} construct uses 
+a \kcode{spread} affinity policy, each of its threads inherits a sub-partition of 
+the original partition.  Hence, the \kcode{omp_get_place_num_procs} query function
+returns the number of elements (here procs = cores) in the sub-partition of the thread.  
 After each parent thread creates its nested parallel region on the section,
 the socket number and thread number are reported.
 

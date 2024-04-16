@@ -1,33 +1,34 @@
-\pagebreak
-\section{\code{threadprivate} Directive}
+%\pagebreak
+\section{\kcode{threadprivate} Directive}
 \label{sec:threadprivate}
-\index{directives!threadprivate@\code{threadprivate}}
-\index{threadprivate directive@\code{threadprivate} directive}
+\index{directives!threadprivate@\kcode{threadprivate}}
+\index{threadprivate directive@\kcode{threadprivate} directive}
 
-The following examples demonstrate how to use the \code{threadprivate} directive 
+The following examples demonstrate how to use the \kcode{threadprivate} directive 
  to give each thread a separate counter.
 
 \cexample{threadprivate}{1}
 
 \fexample{threadprivate}{1}
 
+\pagebreak
 \ccppspecificstart
-The following example uses \code{threadprivate} on a static variable:
+The following example uses \kcode{threadprivate} on a static variable:
 
 \cnexample{threadprivate}{2}
 
 The following example demonstrates unspecified behavior for the initialization 
-of a \code{threadprivate} variable. A \code{threadprivate}  variable is initialized 
-once at an unspecified point before its first reference. Because \code{a} is 
-constructed using the value of \code{x}  (which is modified by the statement 
-\code{x++}), the value of \code{a.val}  at the start of the \code{parallel} 
-region could be either 1 or 2. This problem is avoided for \code{b}, which uses 
-an auxiliary \code{const} variable and a copy-constructor.
+of a \kcode{threadprivate} variable. A \kcode{threadprivate}  variable is initialized 
+once at an unspecified point before its first reference. Because \ucode{a} is 
+constructed using the value of \ucode{x}  (which is modified by the statement 
+\ucode{x++}), the value of \ucode{a.val}  at the start of the \kcode{parallel} 
+region could be either 1 or 2. This problem is avoided for \ucode{b}, which uses 
+an auxiliary \bcode{const} variable and a copy-constructor.
 
 \cppnexample{threadprivate}{3}
 \ccppspecificend
 
-The following examples show non-conforming uses and correct uses of the \code{threadprivate} 
+The following examples show non-conforming uses and correct uses of the \kcode{threadprivate} 
 directive. 
 
 \fortranspecificstart
@@ -45,62 +46,56 @@ The following example is a correct rewrite of the previous example:
 
 \fnexample{threadprivate}{4}
 
-The following is an example of the use of \code{threadprivate} for local variables:
-% blue line floater at top of this page for "Fortran, cont."
-\begin{figure}[t!]
-\linewitharrows{-1}{dashed}{Fortran (cont.)}{8em}
-\end{figure}
+The following is an example of the use of \kcode{threadprivate} for local variables:
+\topmarker{Fortran}
 
 \fnexample{threadprivate}{5}
 
 The above program, if executed by two threads, will print one of the following 
 two sets of output: 
 
-\code{a = 11 12 13}
+\pout{a = 11 12 13}
 \\
-\code{ptr = 4}
+\pout{ptr = 4}
 \\
-\code{i = 15}
+\pout{i = 15}
 
-\code{A is not allocated}
+\pout{A is not allocated}
 \\
-\code{ptr = 4}
+\pout{ptr = 4}
 \\
-\code{i = 5}
+\pout{i = 5}
 
 or
 
-\code{A is not allocated}
+\pout{A is not allocated}
 \\
-\code{ptr = 4}
+\pout{ptr = 4}
 \\
-\code{i = 15}
+\pout{i = 15}
 
-\code{a = 1 2 3}
+\pout{a = 1 2 3}
 \\
-\code{ptr = 4}
+\pout{ptr = 4}
 \\
-\code{i = 5}
+\pout{i = 5}
 
-The following is an example of the use of \code{threadprivate} for module variables:
-% blue line floater at top of this page for "Fortran, cont."
-\begin{figure}[t!]
-\linewitharrows{-1}{dashed}{Fortran (cont.)}{8em}
-\end{figure}
+The following is an example of the use of \kcode{threadprivate} for module variables:
+\topmarker{Fortran}
 
 \fnexample{threadprivate}{6}
 \fortranspecificend
 
 \cppspecificstart
-The following example illustrates initialization of \code{threadprivate} variables 
-for class-type \code{T}. \code{t1} is default constructed, \code{t2} is constructed 
-taking a constructor accepting one argument of integer type, \code{t3} is copy 
-constructed with argument \code{f()}:
+The following example illustrates initialization of \kcode{threadprivate} variables 
+for class-type \ucode{T}. \ucode{t1} is default constructed, \ucode{t2} is constructed 
+taking a constructor accepting one argument of integer type, \ucode{t3} is copy 
+constructed with argument \ucode{f()}:
 
 \cppnexample{threadprivate}{4}
 
-The following example illustrates the use of \code{threadprivate} for static 
-class members. The \code{threadprivate} directive for a static class member must 
+The following example illustrates the use of \kcode{threadprivate} for static 
+class members. The \kcode{threadprivate} directive for a static class member must 
 be placed inside the class definition.
 
 \cppnexample{threadprivate}{5}

@@ -6,16 +6,16 @@ This section contains examples of utility routines and features.
 %---------------------------
 \subsection{Timing Routines}
 \label{subsec:get_wtime}
-\index{routines!omp_get_wtime@\scode{omp_get_wtime}}
-\index{omp_get_wtime routine@\scode{omp_get_wtime} routine}
-\index{routines!omp_get_wtick@\scode{omp_get_wtick}}
-\index{omp_get_wtick routine@\scode{omp_get_wtick} routine}
+\index{routines!omp_get_wtime@\kcode{omp_get_wtime}}
+\index{omp_get_wtime routine@\kcode{omp_get_wtime} routine}
+\index{routines!omp_get_wtick@\kcode{omp_get_wtick}}
+\index{omp_get_wtick routine@\kcode{omp_get_wtick} routine}
 
-The \scode{omp_get_wtime} routine can be used to measure the elapsed wall
+The \kcode{omp_get_wtime} routine can be used to measure the elapsed wall
 clock time (in seconds) of code execution in a program.
 The routine is thread safe and can be executed by multiple threads concurrently.
 The precision of the timer can be obtained by a call to
-the \scode{omp_get_wtick} routine. The following example shows a use case.
+the \kcode{omp_get_wtick} routine. The following example shows a use case.
 
 \cexample{get_wtime}{1}
 
@@ -25,35 +25,35 @@ the \scode{omp_get_wtick} routine. The following example shows a use case.
 %---------------------------
 \subsection{Environment Display}
 \label{subsec:display_env}
-\index{environment display!OMP_DISPLAY_ENV@\scode{OMP_DISPLAY_ENV}}
-\index{environment variables!OMP_DISPLAY_ENV@\scode{OMP_DISPLAY_ENV}}
-\index{OMP_DISPLAY_ENV@\scode{OMP_DISPLAY_ENV}}
-\index{environment display!omp_display_env routine@\scode{omp_display_env} routine}
-\index{routines!omp_display_env@\scode{omp_display_env}}
-\index{omp_display_env routine@\scode{omp_display_env} routine}
+\index{environment display!OMP_DISPLAY_ENV@\kcode{OMP_DISPLAY_ENV}}
+\index{environment variables!OMP_DISPLAY_ENV@\kcode{OMP_DISPLAY_ENV}}
+\index{OMP_DISPLAY_ENV@\kcode{OMP_DISPLAY_ENV}}
+\index{environment display!omp_display_env routine@\kcode{omp_display_env} routine}
+\index{routines!omp_display_env@\kcode{omp_display_env}}
+\index{omp_display_env routine@\kcode{omp_display_env} routine}
 
 The OpenMP version number and the values of ICVs associated with the relevant
 environment variables can be displayed at runtime by setting 
-the \scode{OMP_DISPLAY_ENV} environment variable to either 
-\code{TRUE} or \code{VERBOSE}.
+the \kcode{OMP_DISPLAY_ENV} environment variable to either 
+\vcode{TRUE} or \vcode{VERBOSE}.
 The information is displayed once by the runtime.
 
 A more flexible or controllable approach is to call 
-the \scode{omp_display_env} API routine at any desired
+the \kcode{omp_display_env} API routine at any desired
 point of a code to display the same information.
-This OpenMP 5.1 API routine takes a single \plc{verbose} argument.
-A value of 0 or .false. (for C/C++ or Fortran) indicates
+This OpenMP 5.1 API routine takes a single \ucode{verbose} argument.
+A value of 0 or \bcode{.false.} (for C/C++ or Fortran) indicates
 the required OpenMP ICVs associated with environment variables be displayed,
-and a value of 1 or .true. (for C/C++ or Fortran) will include
+and a value of 1 or \bcode{.true.} (for C/C++ or Fortran) will include
 vendor-specific ICVs that can be modified by environment variables.
 
 The following example illustrates the conditional execution of the API
-\scode{omp_display_env} routine.  Typically it would be invoked in
+\kcode{omp_display_env} routine.  Typically it would be invoked in
 various debug modes of an application. 
 An important use case is to have a single MPI process (e.g., rank = 0) 
 of a hybrid (MPI+OpenMP) code execute the routine,
 instead of all MPI processes, as would be done by 
-setting the \scode{OMP_DISPLAY_ENV} to \code{TRUE} or \code{VERBOSE}.
+setting the \kcode{OMP_DISPLAY_ENV} to \vcode{TRUE} or \vcode{VERBOSE}.
 
 \cexample[5.1]{display_env}{1}
 
@@ -88,22 +88,22 @@ A sample output from the execution of the code might look like:
 
 
 %---------------------------
-\subsection{\code{error} Directive}
+\subsection{\kcode{error} Directive}
 \label{subsec:error}
-\index{directives!error@\code{error}}
-\index{error directive@\code{error} directive}
-\index{error directive@\code{error} directive!at clause@\code{at} clause}
-\index{clauses!at@\code{at}}
-\index{at clause@\code{at} clause}
-\index{error directive@\code{error} directive!severity clause@\code{severity} clause}
-\index{clauses!severity@\code{severity}}
-\index{severity clause@\code{severity} clause}
+\index{directives!error@\kcode{error}}
+\index{error directive@\kcode{error} directive}
+\index{error directive@\kcode{error} directive!at clause@\kcode{at} clause}
+\index{clauses!at@\kcode{at}}
+\index{at clause@\kcode{at} clause}
+\index{error directive@\kcode{error} directive!severity clause@\kcode{severity} clause}
+\index{clauses!severity@\kcode{severity}}
+\index{severity clause@\kcode{severity} clause}
 
-The \code{error} directive provides a consistent method for C, C++, and Fortran to emit a \plc{fatal} or
-\plc{warning} message at \plc{compilation} or \plc{execution} time, as determined by a \code{severity} 
-or an \code{at} clause, respectively. When \code{severity(fatal)} is present, the compilation 
-or execution is aborted. Without any clauses the default behavior is as if \code{at(compilation)} 
-and \code{severity(fatal)} were specified.
+The \kcode{error} directive provides a consistent method for C, C++, and Fortran to emit a \kcode{fatal} or
+\kcode{warning} message at \kcode{compilation} or \kcode{execution} time, as determined by a \kcode{severity}
+or an \kcode{at} clause, respectively. When \kcode{severity(fatal)} is present, the compilation 
+or execution is aborted. Without any clauses the default behavior is as if \kcode{at(compilation)} 
+and \kcode{severity(fatal)} were specified.
 
 The C, C++, and Fortran examples below show all the cases for reporting messages.
 

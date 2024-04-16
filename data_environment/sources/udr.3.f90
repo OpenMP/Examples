@@ -5,7 +5,6 @@
 ! @@version:	omp_4.0
 program max_loc
    implicit none
-
    type :: mx_s
       real value
       integer index

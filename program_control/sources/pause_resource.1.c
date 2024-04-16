@@ -38,7 +38,6 @@ int main()
          int myid = omp_get_thread_num();
          printf("child: myid %d of %d\n", myid, nt);
       }
-      exit(0);
    }
    else {
       /* parent process */

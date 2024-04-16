@@ -1,44 +1,44 @@
-\pagebreak
+%\pagebreak
 \section{Device Routines}
 \label{sec:device}
 
-\subsection{\code{omp\_is\_initial\_device} Routine}
+\subsection{\kcode{omp_is_initial_device} Routine}
 \label{subsec:device_is_initial}
-\index{routines!omp_is_initial_device@\scode{omp_is_initial_device}}
-\index{omp_is_initial_device routine@\scode{omp_is_initial_device} routine}
+\index{routines!omp_is_initial_device@\kcode{omp_is_initial_device}}
+\index{omp_is_initial_device routine@\kcode{omp_is_initial_device} routine}
 
-\index{directives!declare target@\code{declare}~\code{target}}
-\index{declare target directive@\code{declare}~\code{target} directive}
+\index{directives!declare target@\kcode{declare target}}
+\index{declare target directive@\kcode{declare target} directive}
 
-\index{directives!begin declare target@\code{begin}~\code{declare}~\code{target}}
-\index{begin declare target directive@\code{begin}~\code{declare}~\code{target} directive}
+\index{directives!begin declare target@\kcode{begin declare target}}
+\index{begin declare target directive@\kcode{begin declare target} directive}
 
-The following example shows how the \code{omp\_is\_initial\_device} runtime library routine 
+The following example shows how the \kcode{omp_is_initial_device} runtime library routine 
 can be used to query if a code is executing on the initial host device or on a 
-target device. The example then sets the number of threads in the \code{parallel} 
+target device. The example then sets the number of threads in the \kcode{parallel} 
 region based on where the code is executing.
 
 \cexample[5.1]{device}{1}
 
 \ffreeexample[4.0]{device}{1}
 
-\subsection{\code{omp\_get\_num\_devices} Routine}
+\subsection{\kcode{omp_get_num_devices} Routine}
 \label{subsec:device_num_devices}
 
-The following example shows how the \code{omp\_get\_num\_devices} runtime library routine 
+The following example shows how the \kcode{omp_get_num_devices} runtime library routine 
 can be used to determine the number of devices.
 
 \cexample[4.0]{device}{2}
 
 \ffreeexample[4.0]{device}{2}
 
-\subsection{\code{omp\_set\_default\_device} and \\
-\code{omp\_get\_default\_device} Routines}
+\subsection{\kcode{omp_set_default_device} and \\
+\kcode{omp_get_default_device} Routines}
 \label{subsec:device_is_set_get_default}
-\index{routines!omp_set_default_device@\scode{omp_set_default_device}}
-\index{omp_set_default_device routine@\scode{omp_set_default_device} routine}
+\index{routines!omp_set_default_device@\kcode{omp_set_default_device}}
+\index{omp_set_default_device routine@\kcode{omp_set_default_device} routine}
 
-The following example shows how the \code{omp\_set\_default\_device} and \code{omp\_get\_default\_device} 
+The following example shows how the \kcode{omp_set_default_device} and \kcode{omp_get_default_device} 
 runtime library routines can be used to set the default device and determine the 
 default device respectively.
 
@@ -53,102 +53,138 @@ default device respectively.
 
 \subsection{Target Memory and Device Pointers Routines}
 \label{subsec:target_mem_and_device_ptrs}
-\index{routines!omp_target_alloc@\scode{omp_target_alloc}}
-\index{omp_target_alloc routine@\scode{omp_target_alloc} routine}
-\index{routines!omp_target_memcpy@\scode{omp_target_memcpy}}
-\index{omp_target_memcpy routine@\scode{omp_target_memcpy} routine}
-\index{routines!omp_target_free@\scode{omp_target_free}}
-\index{omp_target_free routine@\scode{omp_target_free} routine}
+\index{routines!omp_target_alloc@\kcode{omp_target_alloc}}
+\index{omp_target_alloc routine@\kcode{omp_target_alloc} routine}
+\index{routines!omp_target_memcpy@\kcode{omp_target_memcpy}}
+\index{omp_target_memcpy routine@\kcode{omp_target_memcpy} routine}
+\index{routines!omp_target_free@\kcode{omp_target_free}}
+\index{omp_target_free routine@\kcode{omp_target_free} routine}
 
 The following example shows how to create space on a device, transfer data
 to and from that space, and free the space, using API calls. The API calls
 directly execute allocation, copy and free operations on the device, without invoking
-any mapping through a \code{target} directive. The \code{omp\_target\_alloc} routine allocates space
-and returns a device pointer for referencing the space in the \code{omp\_target\_memcpy}
-API routine on the host. The \code{omp\_target\_free} routine frees the space on the device.
+any mapping through a \kcode{target} directive. The \kcode{omp_target_alloc} routine allocates space
+and returns a device pointer for referencing the space in the \kcode{omp_target_memcpy}
+API routine on the host. The \kcode{omp_target_free} routine frees the space on the device.
 
-\index{target construct@\code{target} construct!is_device_ptr clause@\scode{is_device_ptr} clause}
-\index{is_device_ptr clause@\scode{is_device_ptr} clause}
-\index{clauses!is_device_ptr@\scode{is_device_ptr}}
+\index{target construct@\kcode{target} construct!is_device_ptr clause@\kcode{is_device_ptr} clause}
+\index{is_device_ptr clause@\kcode{is_device_ptr} clause}
+\index{clauses!is_device_ptr@\kcode{is_device_ptr}}
 The example also illustrates how to access that space
-in a \code{target} region by exposing the device pointer in an \code{is\_device\_ptr} clause.
+in a \kcode{target} region by exposing the device pointer in an \kcode{is_device_ptr} clause.
 
 The example creates an array of cosine values on the default device, to be used
 on the host device. The function fails if a default device is not available.
 
 \cexample[4.5]{device}{4}
 
-\index{routines!omp_target_is_present@\scode{omp_target_is_present}}
-\index{omp_target_is_present routine@\scode{omp_target_is_present} routine}
-\index{routines!omp_target_associate_ptr@\scode{omp_target_associate_ptr}}
-\index{omp_target_associate_ptr routine@\scode{omp_target_associate_ptr} routine}
-The following Fortran example illustrates how to use the \code{omp\_target\_alloc}
-and \code{omp\_target\_memcpy} functions to directly allocate device
+\index{routines!omp_target_is_present@\kcode{omp_target_is_present}}
+\index{omp_target_is_present routine@\kcode{omp_target_is_present} routine}
+\index{routines!omp_target_associate_ptr@\kcode{omp_target_associate_ptr}}
+\index{omp_target_associate_ptr routine@\kcode{omp_target_associate_ptr} routine}
+The following Fortran example illustrates how to use the \kcode{omp_target_alloc}
+and \kcode{omp_target_memcpy} functions to directly allocate device
 storage and transfer data to and from a device. It also shows how to check for
-the presence of device data with the \code{omp\_target\_is\_present} function and
-to associate host and device storage with the \code{omp\_target\_associate\_ptr} function.
+the presence of device data with the \kcode{omp_target_is_present} function and
+to associate host and device storage with the \kcode{omp_target_associate_ptr} function.
 
 In Section 1 of the code, 40 bytes of storage are allocated on the default device
-with the \code{omp\_target\_alloc} function, which returns a value (of type
-\texttt{C\_PTR}) that contains the device address of the storage.
-%A Fortran pointer (\texttt{fp}) is associated by the Fortran iso\_c\_binding
-%\texttt{c\_f\_pointer} routine with the target of the C pointer (\texttt{cp}).
-In the subsequent \code{target} construct, \texttt{cp} is specified on the
-\code{is\_device\_ptr} clause to instruct the compiler that \texttt{cp} is
+with the \kcode{omp_target_alloc} function, which returns a value (of type
+\bcode{C_PTR}) that contains the device address of the storage.
+%A Fortran pointer (\ucode{fp}) is associated by the Fortran \splc{iso_c_binding}
+%\bcode{c_f_pointer} routine with the target of the C pointer (\ucode{cp}).
+In the subsequent \kcode{target} construct, \ucode{cp} is specified on the
+\kcode{is_device_ptr} clause to instruct the compiler that \ucode{cp} is
 a device pointer.
-The device pointer (\texttt{cp}) is then associated with the Fortran pointer
-(\texttt{fp}) via the \texttt{c\_f\_pointer} routine inside the \code{target}
+The device pointer (\ucode{cp}) is then associated with the Fortran pointer
+(\ucode{fp}) via the \bcode{c_f_pointer} routine inside the \kcode{target}
 construct.
-As a result, \texttt{fp} points to the storage on the device that is allocated
-by the \code{omp\_target\_alloc} routine.
-In the \code{target} region, the value 4 is assigned to the storage on the device,
+As a result, \ucode{fp} points to the storage on the device that is allocated
+by the \kcode{omp_target_alloc} routine.
+In the \kcode{target} region, the value 4 is assigned to the storage on the device,
 using the Fortran pointer.
 A trivial test checks that all values were correctly assigned.
-The Fortran pointer (\texttt{fp}) is nullified before the end of the \code{target} region.
-After the \code{target} construct, the space on the device is freed with the
-\code{omp\_target\_free} function, using the device \texttt{cp} pointer
+The Fortran pointer (\ucode{fp}) is nullified before the end of the \kcode{target} region.
+After the \kcode{target} construct, the space on the device is freed with the
+\kcode{omp_target_free} function, using the device \ucode{cp} pointer
 which is set to null after the call.
 
 In Section 2, the content of the storage allocated on the host is directly copied
 to the OpenMP allocated storage on the device.
-First, storage is allocated for the device and host using \code{omp\_target\_alloc}.
+First, storage is allocated for the device and host using \kcode{omp_target_alloc}.
 Next, on the host the device pointer, returned from the allocation
-\code{omp\_target\_alloc} function, is associated with a Fortran pointer, and
+\kcode{omp_target_alloc} function, is associated with a Fortran pointer, and
 values are assigned to the storage. Similarly, values are assigned on the device
-to the device storage, after associating a Fortran pointer (\texttt{fp\_dst})
-with the device's storage pointer (\texttt{cp\_dst}).
+to the device storage, after associating a Fortran pointer (\ucode{fp_dst})
+with the device's storage pointer (\ucode{cp_dst}).
 
-Next the \code{omp\_target\_memcpy} function directly copies the host data
+Next the \kcode{omp_target_memcpy} function directly copies the host data
 to the device storage, specified by the respective host and device pointers.
 This copy will overwrite -1 values in the device storage, and is checked in the
-next \code{target} construct.
+next \kcode{target} construct.
 Keyword arguments are used here for clarity.
 (A positional argument list is used in the next Section.)
 
-In Section 3, space is allocated (with a Fortran ALLOCATE statement) and initialized using a
-host Fortran pointer (\texttt{h\_fp}), and the address of the storage is directly assigned to a
-host C pointer (\texttt{h\_cp}).
-The following \code{omp\_target\_is\_present} function returns \texttt{0} (false, of integer(C\_INT) type)
-to indicate that \texttt{h\_cp} does not have any corresponding storage on the default device.
+In Section 3, space is allocated (with a Fortran \bcode{ALLOCATE} statement) and initialized using a
+host Fortran pointer (\ucode{h_fp}), and the address of the storage is directly assigned to a
+host C pointer (\ucode{h_cp}).
+The following \kcode{omp_target_is_present} function returns \ucode{0} (\plc{false}, of \bcode{integer(C_INT)} type)
+to indicate that \ucode{h_cp} does not have any corresponding storage on the default device.
 
 Next, the same amount of space is allocated on the default device with
-the \code{omp\_target\_alloc} function, which returns a device pointer (\texttt{d\_cp}).
-The device pointer \texttt{d\_cp} and host pointer \texttt{h\_cp}
-are then associated using the \code{omp\_target\_associate\_ptr} function.
-The device storage to which \texttt{d\_cp} points becomes the corresponding storage of
-the host storage to which \texttt{h\_cp} points.
-The following \code{omp\_target\_is\_present} call confirms this, by returning
-a non-zero value of integer(C\_INT) type for true.
+the \kcode{omp_target_alloc} function, which returns a device pointer (\ucode{d_cp}).
+The device pointer \ucode{d_cp} and host pointer \ucode{h_cp}
+are then associated using the \kcode{omp_target_associate_ptr} function.
+The device storage to which \ucode{d_cp} points becomes the corresponding storage of
+the host storage to which \ucode{h_cp} points.
+The following \kcode{omp_target_is_present} call confirms this, by returning
+a non-zero value of \bcode{integer(C_INT)} type for true.
 
-After the association, the content of the  host storage
-is copied to the device using the \code{omp\_target\_memcpy} function.
-In the final \code{target} construct an array section of \texttt{h\_fp} 
+After the association, the content of the host storage
+is copied to the device using the \kcode{omp_target_memcpy} function.
+In the final \kcode{target} construct an array section of \ucode{h_fp} 
 is mapped to the device, and evaluated for correctness.
-The mapping establishes a connection of \texttt{h\_fp} with
-the corresponding device data in the \code{target} construct,
-but does not produce an update on the device because the previous \scode{omp_target_associate_ptr} routine sets the 
+The mapping establishes a connection of \ucode{h_fp} with
+the corresponding device data in the \kcode{target} construct,
+but does not produce an update on the device because the previous \kcode{omp_target_associate_ptr} routine sets the 
 reference count of the mapped object to infinity, meaning a mapping 
-without the \code{always} modifier will not 
+without the \kcode{always} modifier will not 
 update the device object.
 
 \ffreeexample[5.0]{device}{4}
+
+\index{routines!omp_target_memcpy_async@\kcode{omp_target_memcpy_async}}
+\index{omp_target_memcpy_async routine@\kcode{omp_target_memcpy_async} routine}
+The following example illustrates the use of the \kcode{omp_target_memcpy_async}
+routine to perform asynchronous memory copies.
+The routine acts as if it is a deferrable task so that
+a \kcode{taskwait} construct can be used to wait for the completion
+of the deferrable task.
+In the example the \kcode{omp_target_memcpy_async} routine copies host data 
+(\ucode{h_buf}) to device (\ucode{d_buf}).
+The Fortran code uses the intrinsic \bcode{c_loc} function to get
+the corresponding C pointer (\ucode{c_hbuf}) for
+passing to the \kcode{omp_target_memcpy_async} routine.
+The last two arguments (\ucode{0} and \ucode{NULL}) to the routine
+indicate that there is no specified dependence associated with the call.
+The Fortran code omits the unused last argument.
+
+\cexample[5.2]{device}{5}
+\ffreeexample[5.2]{device}{5}
+
+\index{directives!depobj@\kcode{depobj}}
+\index{depobj directive@\kcode{depobj} directive}
+The following is a more complicated example that shows the use of 
+the \kcode{omp_target_memcpy_async} routine with a depend object \ucode{obj} to 
+overlap the memory copy with computation performed by \ucode{do_work}.
+The depend object \ucode{obj} was created by the \kcode{depobj} directive
+and initialized to an \kcode{out} dependence on the data \ucode{d_buf[0:N]} 
+(or \ucode{d_buf(1:N)} for Fortran) in advance.
+The \kcode{depend(depobj: \ucode{obj})} (or alternatively 
+\kcode{depend(in: \ucode{d_buf[0:N]})}) clause on the \kcode{target} construct
+ensures the asynchronous memory copy is complete before the data \ucode{d_buf}
+can be used in the \kcode{target} region.
+
+\cexample[5.2]{device}{6}
+\ffreeexample[5.2]{device}{6}
+

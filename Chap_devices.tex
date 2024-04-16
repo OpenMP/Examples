@@ -1,9 +1,9 @@
 \cchapter{Devices}{devices}
 \label{chap:devices}
 
-The \code{target} construct consists of a \code{target} directive 
-and an execution region. The \code{target} region is executed on
-the default device or the device specified in the \code{device} 
+The \kcode{target} construct consists of a \kcode{target} directive 
+and an execution region. The \kcode{target} region is executed on
+the default device or the device specified in the \kcode{device} 
 clause. 
 
 In OpenMP version 4.0, by default, all variables within the lexical
@@ -16,39 +16,39 @@ data to the device storage.
 The constructs that explicitly
 create storage, transfer data, and free storage on the device
 are categorized as structured and unstructured. The
-\code{target} \code{data} construct is structured. It creates
-a data region around \code{target} constructs, and is
+\kcode{target data} construct is structured. It creates
+a data region around \kcode{target} constructs, and is
 convenient for providing persistent data throughout multiple
-\code{target} regions. The \code{target} \code{enter} \code{data} and 
-\code{target} \code{exit} \code{data} constructs are unstructured, because 
+\kcode{target} regions. The \kcode{target enter data} and 
+\kcode{target exit data} constructs are unstructured, because 
 they can occur anywhere and do not support a ``structure''
-(a region) for enclosing \code{target} constructs, as does the
-\code{target} \code{data} construct. 
+(a region) for enclosing \kcode{target} constructs, as does the
+\kcode{target data} construct. 
 
-The \code{map} clause is used on \code{target} 
+The \kcode{map} clause is used on \kcode{target} 
 constructs and the data-type constructs to map host data. It 
-specifies the device storage and data movement \code{to} and \code{from}
+specifies the device storage and data movement \plc{to} and \plc{from}
 the device, and controls on the storage duration.
 
 There is an important change in the OpenMP 4.5 specification
 that alters the data model for scalar variables and C/C++ pointer variables.
 The default behavior for scalar variables and C/C++ pointer variables
-in a 4.5 compliant code is \code{firstprivate}. Example
+in a 4.5 compliant code is \kcode{firstprivate}. Example
 codes that have been updated to reflect this new behavior are
 annotated with a description that describes changes required
 for correct execution. Often it is a simple matter of mapping
-the variable as \code{tofrom} to obtain the intended 4.0 behavior.
+the variable as \kcode{tofrom} to obtain the intended 4.0 behavior.
 
 In OpenMP version 4.5 the mechanism for target
 execution is specified as occurring through a \plc{target task}. 
-When the \code{target} construct is encountered a new 
-\plc{target task} is generated. The \plc{target task} 
-completes after the \code{target} region has executed and all data 
+When the \kcode{target} construct is encountered a new 
+target task is generated. The target task 
+completes after the \kcode{target} region has executed and all data 
 transfers have finished.
 
 This new specification does not affect the execution of 
 pre-4.5 code; it is a necessary element for asynchronous 
-execution of the \code{target} region when using the new \code{nowait} 
+execution of the \kcode{target} region when using the new \kcode{nowait} 
 clause introduced in OpenMP 4.5.
 
 
@@ -59,6 +59,7 @@ clause introduced in OpenMP 4.5.
 \input{devices/target_structure_mapping}
 \input{devices/target_fort_allocatable_array_mapping}
 \input{devices/array_sections}
+\input{devices/usm}
 \input{devices/C++_virtual_functions}
 \input{devices/array_shaping}
 \input{devices/target_mapper}

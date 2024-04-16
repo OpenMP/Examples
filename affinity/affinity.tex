@@ -1,12 +1,12 @@
 \pagebreak
-\section{\code{proc\_bind} Clause}
+\section{\kcode{proc_bind} Clause}
 \label{sec:affinity}
-\index{affinity!proc_bind clause@\scode{proc_bind} clause}
-\index{clauses!proc_bind@\scode{proc_bind}}
-\index{proc_bind clause@\scode{proc_bind} clause}
+\index{affinity!proc_bind clause@\kcode{proc_bind} clause}
+\index{clauses!proc_bind@\kcode{proc_bind}}
+\index{proc_bind clause@\kcode{proc_bind} clause}
 
-The following examples demonstrate how to use the \code{proc\_bind} clause to 
-control the thread binding for a team of threads in a \code{parallel} region. 
+The following examples demonstrate how to use the \kcode{proc_bind} clause to 
+control the thread binding for a team of threads in a \kcode{parallel} region. 
 The machine architecture is depicted in Figure~\ref{fig:mach_arch}. It consists of two sockets, 
 each equipped with a quad-core processor and configured to execute two hardware 
 threads simultaneously on each core. These examples assume a contiguous core numbering 
@@ -24,19 +24,19 @@ starting from 0, such that the hardware threads 0,1 form the first physical core
 The following equivalent place list declarations consist of eight places (which 
 we designate as p0 to p7):
 
-\code{OMP\_PLACES=\texttt{"}\{0,1\},\{2,3\},\{4,5\},\{6,7\},\{8,9\},\{10,11\},\{12,13\},\{14,15\}\texttt{"}}
+\kcode{OMP_PLACES}=\verb+"{0,1},{2,3},{4,5},{6,7},{8,9},{10,11},{12,13},{14,15}"+
 
 or
 
-\code{OMP\_PLACES=\texttt{"}\{0:2\}:8:2\texttt{"}}
+\kcode{OMP_PLACES}=\verb+"{0:2}:8:2"+
 
 \subsection{Spread Affinity Policy}
 \label{subsec:affinity_spread}
-\index{affinity!spread policy@\code{spread} policy}
-\index{spread policy@\code{spread} policy}
+\index{affinity!spread policy@\kcode{spread} policy}
+\index{spread policy@\kcode{spread} policy}
 
 
-The following example shows the result of the \code{spread} affinity policy on 
+The following example shows the result of the \kcode{spread} affinity policy on 
 the partition list when the number of threads is less than or equal to the number 
 of places in the parent's place partition, for the machine architecture depicted 
 above. Note that the threads are bound to the first place of each subpartition.
@@ -73,13 +73,13 @@ and distribution of the place partition would be as follows:
 \item thread 3 executes on p0 with the place partition p0,p1
 \end{compactitem}
 
-The following example illustrates the \code{spread} thread affinity policy when 
+The following example illustrates the \kcode{spread} thread affinity policy when 
 the number of threads is greater than the number of places in the parent's place 
 partition.
 
-Let \plc{T} be the number of threads in the team, and \plc{P} be the number of places in the 
-parent's place partition. The first \plc{T/P} threads of the team (including the primary
-thread) execute on the parent's place. The next \plc{T/P} threads execute on the next 
+Let \ucode{T} be the number of threads in the team, and \ucode{P} be the number of places in the 
+parent's place partition. The first \ucode{T/P} threads of the team (including the primary
+thread) execute on the parent's place. The next \ucode{T/P} threads execute on the next 
 place in the place partition, and so on, with wrap around. 
 
 \cexample[4.0]{affinity}{2}
@@ -131,13 +131,13 @@ and distribution of the place partition would be as follows:
 
 \subsection{Close Affinity Policy}
 \label{subsec:affinity_close}
-\index{affinity!close policy@\code{close} policy}
-\index{close policy@\code{close} policy}
+\index{affinity!close policy@\kcode{close} policy}
+\index{close policy@\kcode{close} policy}
 
-The following example shows the result of the \code{close} affinity policy on 
+The following example shows the result of the \kcode{close} affinity policy on 
 the partition list when the number of threads is less than or equal to the number 
 of places in parent's place partition, for the machine architecture depicted above. 
-The place partition is not changed by the \code{close} policy.
+The place partition is not changed by the \kcode{close} policy.
 
 \cexample[4.0]{affinity}{3}
 
@@ -145,7 +145,7 @@ The place partition is not changed by the \code{close} policy.
 
 It is unspecified on which place the primary thread is initially started. If the 
 primary thread is initially started on p0, the following placement of threads will 
-be applied in the \code{parallel} region:
+be applied in the \kcode{parallel} region:
 
 \begin{compactitem}
 \item thread 0 executes on p0 with the place partition p0-p7
@@ -170,15 +170,15 @@ and distribution of the place partition would be as follows:
 \item thread 3 executes on p5 with the place partition p0-p7
 \end{compactitem}
 
-The following example illustrates the \code{close} thread affinity policy when 
+The following example illustrates the \kcode{close} thread affinity policy when 
 the number of threads is greater than the number of places in the parent's place 
 partition.
 
-Let \plc{T} be the number of threads in the team, and \plc{P} be the number of places in the 
-parent's place partition. The first \plc{T/P} threads of the team (including the primary
-thread) execute on the parent's place. The next \plc{T/P} threads execute on the next 
+Let \ucode{T} be the number of threads in the team, and \ucode{P} be the number of places in the 
+parent's place partition. The first \ucode{T/P} threads of the team (including the primary
+thread) execute on the parent's place. The next \ucode{T/P} threads execute on the next 
 place in the place partition, and so on, with wrap around. The place partition 
-is not changed by the \code{close} policy.
+is not changed by the \kcode{close} policy.
 
 \cexample[4.0]{affinity}{4}
 
@@ -229,10 +229,10 @@ and distribution of the place partition would be as follows:
 
 \subsection{Primary Affinity Policy}
 \label{subsec:affinity_primary}
-\index{affinity!primary policy@\code{primary} policy}
-\index{primary policy@\code{primary} policy}
+\index{affinity!primary policy@\kcode{primary} policy}
+\index{primary policy@\kcode{primary} policy}
 
-The following example shows the result of the \code{primary} affinity policy on 
+The following example shows the result of the \kcode{primary} affinity policy on 
 the partition list for the machine architecture depicted above. The place partition 
 is not changed by the primary policy.
 

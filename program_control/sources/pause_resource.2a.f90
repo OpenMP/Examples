@@ -10,9 +10,9 @@ program relinquish
 
    write (*,*) 'In relinquish'
 
-!$omp parallel
+   !$omp parallel
    write (*,*) 'In parallel region 1'
-!$omp end parallel
+   !$omp end parallel
 
    err = omp_pause_resource_all(omp_pause_soft)
 
@@ -21,7 +21,8 @@ program relinquish
                              cmdstat=err)
    if (err /= 0) write (*,*) 'Warning: subprogram failed to execute'
 
-!$omp parallel
+   !$omp parallel
    write (*,*) 'In parallel region 2'
-!$omp end parallel
+   !$omp end parallel
+
 end program relinquish

@@ -1,4 +1,4 @@
-Copyright (c) 1997-2022 OpenMP Architecture Review Board.
+Copyright (c) 1997-2024 OpenMP Architecture Review Board.
 All rights reserved.
 
 Permission to redistribute and use without fee all or part of the source

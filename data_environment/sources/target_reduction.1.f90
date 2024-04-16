@@ -31,9 +31,11 @@ end program
 
 integer function f(res)
    integer :: res
+   !$omp declare target enter(f)
    f = res*2
 end function
 integer function g(res)
    integer :: res
+   !$omp declare target enter(g)
    g = res*3
 end function

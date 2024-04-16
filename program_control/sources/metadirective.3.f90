@@ -9,7 +9,6 @@ module params
                                      ! 3.1415926535897932_8
 end module
 
-
 subroutine exp_pi_diff(d,    my_pi)
   use params
   implicit none
@@ -20,7 +19,6 @@ subroutine exp_pi_diff(d,    my_pi)
   !$omp   metadirective &
   !$omp&      when( construct={target}: distribute parallel do )  &
   !$omp&      otherwise(                parallel do simd )
-
   do i = 1,size(d)
      d(i) = exp( (M_PI-my_pi)*i )
   end do

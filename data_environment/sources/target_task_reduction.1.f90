@@ -31,6 +31,7 @@ end program
 
 subroutine device_compute(sum)
    integer :: sum
+   !$omp declare target enter(device_compute)
    sum = 1
 end subroutine
 subroutine host_compute(sum)

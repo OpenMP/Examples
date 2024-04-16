@@ -1,17 +1,17 @@
-\pagebreak
-\section{Interaction Between the \code{num\_threads} Clause and \code{omp\_set\_dynamic}}
+%\pagebreak
+\section{Interaction Between the \kcode{num_threads} Clause and \kcode{omp_set_dynamic}}
 \label{sec:nthrs_dynamic}
-\index{clauses!num_threads@\scode{num_threads}}
-\index{num_threads clause@\scode{num_threads} clause}
-\index{routines!omp_set_dynamic@\scode{omp_set_dynamic}}
-\index{omp_set_dynamic routine@\scode{omp_set_dynamic} routine}
+\index{clauses!num_threads@\kcode{num_threads}}
+\index{num_threads clause@\kcode{num_threads} clause}
+\index{routines!omp_set_dynamic@\kcode{omp_set_dynamic}}
+\index{omp_set_dynamic routine@\kcode{omp_set_dynamic} routine}
 
-The following example demonstrates the \code{num\_threads} clause  and the effect 
+The following example demonstrates the \kcode{num_threads} clause  and the effect 
 of the \\
-\code{omp\_set\_dynamic} routine  on it.
+\kcode{omp_set_dynamic} routine  on it.
 
-The call to the \code{omp\_set\_dynamic} routine with argument \code{0} in 
-C/C++, or \code{.FALSE.} in Fortran, disables the dynamic adjustment of the number 
+The call to the \kcode{omp_set_dynamic} routine with argument \ucode{0} in 
+C/C++, or \ucode{.FALSE.} in Fortran, disables the dynamic adjustment of the number 
 of threads in OpenMP implementations that support it. In this case, 10 threads 
 are provided. Note that in case of an error the OpenMP implementation is free to 
 abort the program or to supply any number of threads available.
@@ -20,16 +20,16 @@ abort the program or to supply any number of threads available.
 
 \fexample{nthrs_dynamic}{1}
 
-\pagebreak
-The call to the \code{omp\_set\_dynamic} routine with a non-zero argument in 
-C/C++, or \code{.TRUE.} in Fortran, allows the OpenMP implementation to choose 
+%\pagebreak
+The call to the \kcode{omp_set_dynamic} routine with a non-zero argument in 
+C/C++, or \ucode{.TRUE.} in Fortran, allows the OpenMP implementation to choose 
 any number of threads between 1 and 10.
 
 \cexample{nthrs_dynamic}{2}
 
 \fexample{nthrs_dynamic}{2}
 
-It is good practice to set the \plc{dyn-var} ICV explicitly by calling the \code{omp\_set\_dynamic} 
+It is good practice to set the \plc{dyn-var} ICV explicitly by calling the \kcode{omp_set_dynamic} 
 routine, as its default setting is implementation defined.
 
 

@@ -1,8 +1,8 @@
-\pagebreak
+%\pagebreak
 \section{Declare Target Directive}
 \label{sec:declare_target}
 
-%\index{declare target directive@\code{declare}~\code{target} directive!enter clause@\code{enter} clause}
+%\index{declare target directive@\code{declare target} directive!enter clause@\code{enter} clause}
 %\index{enter clause@\code{enter} clause}
 %\index{clauses!enter@\code{enter}}
 
@@ -10,96 +10,126 @@
 
 \label{subsec:declare_target_function}
 
-\index{directives!declare target@\code{declare}~\code{target}}
-\index{declare target directive@\code{declare}~\code{target} directive}
+\index{directives!declare target@\kcode{declare target}}
+\index{declare target directive@\kcode{declare target} directive}
 
-\index{directives!begin declare target@\code{begin}~\code{declare}~\code{target}}
-\index{begin declare target directive@\code{begin}~\code{declare}~\code{target} directive}
+\index{directives!begin declare target@\kcode{begin declare target}}
+\index{begin declare target directive@\kcode{begin declare target} directive}
 
 The following example shows how the declare target directive 
-is used to indicate that the corresponding call inside a \code{target} region 
-is to a \code{fib} function that can execute on the default target device.
+is used to indicate that the corresponding call inside a \kcode{target} region 
+is to a \ucode{fib} procedure that can execute on the default target device.
 
-A version of the function is also available on the host device. When the \code{if} 
-clause conditional expression on the \code{target} construct evaluates to \plc{false}, 
-the \code{target} region (thus \code{fib}) will execute on the host device.
+A version of the function is also available on the host device. When the \kcode{if} 
+clause conditional expression on the \kcode{target} construct evaluates to \plc{false}, 
+the \kcode{target} region (thus \ucode{fib}) will execute on the host device.
 
-For the following C/C++ code the declaration of the function \code{fib} appears between the 
-\code{begin}~\code{declare}~\code{target} and \code{end}~\code{declare}~\code{target} directives. 
-In the corresponding Fortran code, the \code{declare}~\code{target} directive appears at the
+For the following C/C++ code the declaration of the function \ucode{fib} appears between the 
+\kcode{begin declare target} and \kcode{end declare target} directives. 
+In the corresponding Fortran code, the \kcode{declare target} directive appears at the
 end of the specification part of the subroutine.
 
 \cexample[5.1]{declare_target}{1}
 
-The Fortran \code{fib} subroutine contains a \code{declare} \code{target} declaration 
+The Fortran \ucode{fib} subroutine contains a \kcode{declare target} declaration 
 to indicate to the compiler to create an device executable version of the procedure. 
-The subroutine name has not been included on the \code{declare} \code{target} 
+The subroutine name has not been included on the \kcode{declare target} 
 directive and is, therefore, implicitly assumed.
 
-The program uses the \code{module\_fib} module, which presents an explicit interface to 
-the compiler with the \code{declare} \code{target} declarations for processing 
-the \code{fib} call.
+The program uses the \ucode{module_fib} module, which presents an explicit interface to 
+the compiler with the \kcode{declare target} declarations for processing 
+the \ucode{fib} call.
 
 \ffreeexample[4.0]{declare_target}{1}
 
+\pagebreak
 The next Fortran example shows the use of an external subroutine. As the subroutine
-is neither use associated nor an internal procedure, the \code{declare} \code{target}
+is neither use associated nor an internal procedure, the \kcode{declare target}
 declarations within a external subroutine are unknown to the main program unit; 
-therefore, a \code{declare} \code{target} must be provided within the program
+therefore, a \kcode{declare target} must be provided within the program
 scope for the compiler to determine that a target binary should be available.
 
 \ffreeexample[4.0]{declare_target}{2}
 
+\subsection{Declare Target Directive for Indirect Procedure Call}
+\label{subsec:indirect}
+
+\index{clauses!indirect@\kcode{indirect}}
+\index{indirect clause@\kcode{indirect} clause}
+
+In the OpenMP 5.1 Specification the \kcode{indirect} clause was added to allow
+indirect procedure calls, via function pointers, in a \kcode{target} region.
+The functions to be allowed indirect invocation are specified in an \kcode{enter} 
+clause of a declare target directive, along with the \kcode{indirect} clause.
+The clause has an optional enabling/disabling argument (default enabled). In the 
+absence of the indirect clause the function pointer would be mapped as a scalar 
+(firstprivate) that would point to the host versions of the functions. 
+Indirect clause informs the compiler that the function can potentially be 
+used via function pointers and to use device versions of the same within 
+the target region.
+
+Only with an enabled \kcode{indirect} clause and a function specification in an \kcode{enter} clause
+of a declare target directive may a function be called with an indirect invocation in a \kcode{target} region.
+(Note: this feature limits the number of functions that can be used by function 
+pointers in the \kcode{target} region to a restricted list for the compiler.)
+%% KFM should be "to a restricted...   -> to those listed in the \code{enter} clause.
+
+In the following example, the \kcode{declare target} \kcode{enter(\ucode{fun1,fun2})} 
+\kcode{indirect} directive specifies that the \ucode{fun1} and \ucode{fun2} functions may 
+be invoked with a function pointer in the \kcode{target} region.
+Either the \ucode{fun1} or \ucode{fun2} function is invoked by the \ucode{fptr} function 
+pointer in the \kcode{target} construct, as determined by the value of \ucode{count}.
+
+\cexample[5.2]{declare_target_indirect_call}{1}
+\ffreeexample[5.2]{declare_target_indirect_call}{1}
+
 \subsection{Declare Target Directive for Class Type}
 \label{subsec:declare_target_class}
 
-\index{directives!begin declare target@\code{begin}~\code{declare}~\code{target}}
-\index{begin declare target directive@\code{begin}~\code{declare}~\code{target} directive}
+\index{directives!begin declare target@\kcode{begin declare target}}
+\index{begin declare target directive@\kcode{begin declare target} directive}
 
-The following example shows the use of the \code{begin}~\code{declare}~\code{target}
-and \code{end}~\code{declare}~\code{target} pair to designate the beginning and
+The following example shows the use of the \kcode{begin declare target}
+and \kcode{end declare target} pair to designate the beginning and
 end of the affected declarations, as introduced in OpenMP 5.1.
-The \code{begin}~\code{declare}~\code{target} directive was defined
+The \kcode{begin declare target} directive was defined
 to symmetrically complement the terminating (``end'') directive.
 
 \cppspecificstart
 
-The example also shows 3 different ways to use a declare target directive for a 
-class and an external member-function definition (for the \plc{XOR1}, \plc{XOR2}, 
-and \plc{XOR3} classes and definitions for their corresponding \plc{foo} member functions).
+The example also shows 3 different ways to use a \kcode{declare target} directive for a 
+class and an external member-function definition (for the \ucode{XOR1}, \ucode{XOR2}, 
+and \ucode{XOR3} classes and definitions for their corresponding \ucode{foo()} member functions).
 
-For \plc{XOR1}, a \code{begin}~\code{declare}~\code{target} and 
-\code{end}~\code{declare}~\code{target} directive
+For \ucode{XOR1}, a \kcode{begin declare target} and 
+\kcode{end declare target} directive
 enclose both the class and its member function definition. The compiler immediately
-knows to create a device version of the function for execution in a \code{target} region.
+knows to create a device version of the function for execution in a \kcode{target} region.
 
-For \plc{XOR2}, the class member function definition is not specified with a
-declare target directive.
+For \ucode{XOR2}, the class member function definition is not specified with a
+\kcode{declare target} directive.
 An implicit declare target is created for the member function definition.
 The same applies if this declaration arrangement for the class and function 
 are included through a header file.
 
-For \plc{XOR3}, the class and its member function are not enclosed by \code{begin}~\code{declare}~\code{target}
-and \code{end}~\code{declare}~\code{target} directives,
+For \ucode{XOR3}, the class and its member function are not enclosed by \kcode{begin declare target}
+and \kcode{end declare target} directives,
 but there is an implicit declare target since the class, its function
-and the \code{target} construct are in the same file scope. That is, the class
-and its function are treated as if delimited by a declare target directive.
+and the \kcode{target} construct are in the same file scope. That is, the class
+and its function are treated as if delimited by a \kcode{declare target} directive.
 The same applies if the class and function are included through a header file.
 
 \cppnexample[5.1]{declare_target}{2a}
 
-% blue line floater at top of this page for "C++, cont."
-\begin{figure}[t!]
-\linewitharrows{-1}{dashed}{C++ (cont.)}{8em}
-\end{figure}
+\topmarker{C++}
 
 Often class definitions and their function definitions are included in separate files,
-as shown in \splc{declare_target.2b_classes.hpp} and \splc{declare_target.2b_functions.cpp} below.
-In this case, it is necessary to specify in a declare target directive for the classes.
-However, as long as the \splc{2b_functions.cpp} file includes the corresponding declare target classes,
+as shown in \example{declare_target.2b_classes.hpp} and \example{declare_target.2b_functions.cpp} example code files below.
+In this case, it is necessary to specify a declare target directive for the classes.
+However, as long as the \example{2b_functions.cpp} file includes the corresponding declare target classes,
 there is no need to specify the functions with a declare target directive.
 The functions are treated as if they are specified with a declare target directive.
-Compiling the \splc{declare_target.2b_functions.cpp} and \splc{declare_target.2b_main.cpp} files 
+Compiling the \example{declare_target.2b_functions.cpp} and \example{declare_target.2b_main.cpp} files 
 separately and linking them, will create appropriate executable device functions for the target device.
 
 \srcnexample[5.1]{declare_target}{2b_classes}{hpp}
@@ -109,23 +139,19 @@ separately and linking them, will create appropriate executable device functions
 \cppnexample[5.1]{declare_target}{2b_main}[1]
 
 %\cppspecificend
-% blue line floater at top of this page for "C++, cont."
-\begin{figure}[t!]
-\linewitharrows{-1}{dashed}{C++ (cont.)}{8em}
-\end{figure}
+\topmarker{C++}
 
 %\cppspecificstart
-The following example shows how the \code{begin}~\code{declare} \code{target} and \code{end} 
-\code{declare} \code{target} directives are used to enclose the declaration 
-of a variable \plc{varY} with a class type \code{typeY}. 
+The following example shows how the \kcode{begin declare target} and \kcode{end declare target} directives are used to enclose the declaration 
+of a variable \ucode{varY} with a class type \ucode{typeY}. 
 %Prior to OpenMP 5.0, the member function \code{typeY::foo()} cannot 
-%be accessed on a target device because its declaration did not appear between \code{begin}~\code{declare} 
-%\code{target} and \code{end} \code{declare} \code{target} directives.
+%be accessed on a target device because its declaration did not appear between \code{begin declare} 
+%\code{target} and \code{end declare target} directives.
 
-This example shows pre-OpenMP 5.0 behavior for the \plc{varY.foo()} function call (an error).
-The member function \code{typeY::foo()} cannot be accessed on a target device because its 
-declaration does not appear between \code{begin}~\code{declare}~\code{target} and 
-\code{end}~\code{declare}~\code{target} directives. As of OpenMP 5.0, the
+This example shows pre-OpenMP 5.0 behavior for the \ucode{varY.foo()} function call (an error).
+The member function \ucode{typeY::foo()} cannot be accessed on a target device because its 
+declaration does not appear between \kcode{begin declare target} and 
+\kcode{end declare target} directives. As of OpenMP 5.0, the
 function is implicitly declared with a declare target directive 
 and will successfully execute the function on the device.  See previous examples.
 %as if it were included in list or block of a declare target directive,
@@ -136,76 +162,78 @@ and will successfully execute the function on the device.  See previous examples
 \subsection{Declare Target Directive for Variables}
 \label{subsec:declare_target_variables}
 
-\index{directives!declare target@\code{declare}~\code{target}}
-\index{declare target directive@\code{declare}~\code{target} directive}
+\index{directives!declare target@\kcode{declare target}}
+\index{declare target directive@\kcode{declare target} directive}
 
-\index{directives!begin declare target@\code{begin}~\code{declare}~\code{target}}
-\index{begin declare target directive@\code{begin}~\code{declare}~\code{target} directive}
+\index{directives!begin declare target@\kcode{begin declare target}}
+\index{begin declare target directive@\kcode{begin declare target} directive}
 
 The following examples show how the declare target directive is used to indicate that
 global variables are mapped to the implicit device data environment of each target device.
 
-In the following example, the declarations of the variables \plc{p}, \plc{v1}, and \plc{v2} appear 
-between \code{begin}~\code{declare}~\code{target} and \code{end}~\code{declare}~\code{target} 
+In the following example, the declarations of the variables \ucode{p}, \ucode{v1}, and \ucode{v2} appear 
+between \kcode{begin declare target} and \kcode{end declare target} 
 directives indicating that the variables are mapped to the implicit device data 
-environment of each target device. The \code{target} \code{update} directive 
-is then used to manage the consistency of the variables \plc{p}, \plc{v1}, and \plc{v2} between the 
+environment of each target device. The \kcode{target update} directive 
+is then used to manage the consistency of the variables \ucode{p}, \ucode{v1}, and \ucode{v2} between the 
 data environment of the encountering host device task and the implicit device data 
 environment of the default target device.
 
 \cexample[5.1]{declare_target}{3}
 
 The Fortran version of the above C code uses a different syntax. Fortran modules 
-use a list syntax on the \code{declare} \code{target} directive to declare 
+use a list syntax on the \kcode{declare target} directive to declare 
 mapped variables.
 
 \ffreeexample[4.0]{declare_target}{3}
 
-The following example also indicates that the function \plc{Pfun()} is available on the 
-target device, as well as the variable \plc{Q}, which is mapped to the implicit device 
-data environment of each target device. The \code{target} \code{update} directive 
-is then used to manage the consistency of the variable \plc{Q} between the data environment 
+\pagebreak
+The following example also indicates that the function \ucode{Pfun()} is available on the 
+target device, as well as the variable \ucode{Q}, which is mapped to the implicit device 
+data environment of each target device. The \kcode{target update} directive 
+is then used to manage the consistency of the variable \ucode{Q} between the data environment 
 of the encountering host device task and the implicit device data environment of 
 the default target device.
 
 In the following example, the function and variable declarations appear between 
-the \code{begin}~\code{declare}~\code{target} and \code{end}~\code{declare}~\code{target} 
+the \kcode{begin declare target} and \kcode{end declare target} 
 directives.
 
 \cexample[5.1]{declare_target}{4}
 
 The Fortran version of the above C code uses a different syntax. In Fortran modules 
-a list syntax on the \code{declare} \code{target} directive is used to declare 
-mapped variables and procedures. The \plc{N} and \plc{Q} variables are declared as a comma 
-separated list. When the \code{declare} \code{target} directive is used to 
+a list syntax on the \kcode{declare target} directive is used to declare 
+mapped variables and procedures. The \ucode{N} and \ucode{Q} variables are declared as a comma 
+separated list. When the \kcode{declare target} directive is used to 
 declare just the procedure, the procedure name need not be listed -- it is implicitly 
-assumed, as illustrated in the \plc{Pfun()} function.
+assumed, as illustrated in the \ucode{Pfun()} function.
 
 \ffreeexample[4.0]{declare_target}{4}
 
-\subsection{Declare Target Directive with \code{declare}~\code{simd}}
+\subsection{Declare Target Directive with \kcode{declare simd}}
 \label{subsec:declare_target_simd}
 
-\index{directives!declare target@\code{declare}~\code{target}}
-\index{declare target directive@\code{declare}~\code{target} directive}
+\index{directives!declare target@\kcode{declare target}}
+\index{declare target directive@\kcode{declare target} directive}
 
-\index{directives!begin declare target@\code{begin}~\code{declare}~\code{target}}
-\index{begin declare target directive@\code{begin}~\code{declare}~\code{target} directive}
+\index{directives!begin declare target@\kcode{begin declare target}}
+\index{begin declare target directive@\kcode{begin declare target} directive}
 
-\index{directives!declare simd@\code{declare}~\code{simd}}
-\index{declare simd directive@\code{declare}~\code{simd} directive}
+\index{directives!declare simd@\kcode{declare simd}}
+\index{declare simd directive@\kcode{declare simd} directive}
 
-The following example shows how the \code{begin}~\code{declare}~\code{target} and 
-\code{end}~\code{declare}~\code{target} directives are used to indicate that a function 
-is available on a target device. The \code{declare} \code{simd} directive indicates 
-that there is a SIMD version of the function \plc{P()} that is available on the target 
+The following example shows how the \kcode{begin declare target} and 
+\kcode{end declare target} directives are used to indicate that a function 
+is available on a target device. The \kcode{declare simd} directive indicates 
+that there is a SIMD version of the function \ucode{P()} that is available on the target 
 device as well as one that is available on the host device.
 
 \cexample[5.1]{declare_target}{5}
 
 The Fortran version of the above C code uses a different syntax. Fortran modules 
-use a list syntax of the \code{declare} \code{target} declaration for the mapping. 
-Here the \plc{N} and \plc{Q} variables are declared in the list form as a comma separated list. 
+use a list syntax of the \kcode{declare target} declaration for the mapping. 
+%%KFM use a list syntax in the \kcode{declare target} directive for the mapping. 
+Here the \ucode{N} and \ucode{Q} variables are declared in the list form as a comma separated list. 
 The function declaration does not use a list and implicitly assumes the function 
 name. In this Fortran example row and column indices are reversed relative to the 
 C/C++ example, as is usual for codes optimized for memory access.
@@ -213,57 +241,58 @@ C/C++ example, as is usual for codes optimized for memory access.
 \ffreeexample[4.0]{declare_target}{5}
 
 
-\subsection{Declare Target Directive with \code{link} Clause}
+\subsection{Declare Target Directive with \kcode{link} Clause}
 \label{subsec:declare_target_link}
 
-\index{directives!declare target@\code{declare}~\code{target}}
-\index{declare target directive@\code{declare}~\code{target} directive}
+\index{directives!declare target@\kcode{declare target}}
+\index{declare target directive@\kcode{declare target} directive}
 
-\index{directives!begin declare target@\code{begin}~\code{declare}~\code{target}}
-\index{begin declare target directive@\code{begin}~\code{declare}~\code{target} directive}
+\index{directives!begin declare target@\kcode{begin declare target}}
+\index{begin declare target directive@\kcode{begin declare target} directive}
 
-\index{clauses!link@\code{link}}
-\index{link clause@\code{link} clause}
+\index{clauses!link@\kcode{link}}
+\index{link clause@\kcode{link} clause}
 
-In the OpenMP 4.5 standard the declare target directive was extended to allow static
-data to be mapped, \emph{when needed}, through a \code{link} clause.
+In the OpenMP 4.5 standard the \kcode{declare target} directive was extended to allow static
+data to be mapped, \emph{when needed}, through a \kcode{link} clause.
 
-Data storage for items listed in the \code{link} clause becomes available on the device
-when it is mapped implicitly or explicitly in a \code{map} clause, and it persists for the scope of
-the mapping (as specified by a \code{target} construct, 
-a \code{target}~\code{data} construct, or 
-\code{target}~\code{enter/exit}~\code{data} constructs).
+Data storage for items listed in the \kcode{link} clause becomes available on the device
+when it is mapped implicitly or explicitly in a \kcode{map} clause, and it persists for the scope of
+the mapping (as specified by a \kcode{target} construct, 
+a \kcode{target data} construct, or 
+\kcode{target enter/exit data} constructs).
 
 Tip: When all the global data items will not fit on a device and are not needed
-simultaneously, use the \code{link} clause and map the data only when it is needed.
+simultaneously, use the \kcode{link} clause and map the data only when it is needed.
+%%KFM simultaneously, use the \kcode{link} clause and map sections of the data only when it is needed.
 
 The following C and Fortran examples show two sets of data (single precision and double precision)
 that are global on the host for the entire execution on the host; but are only used
 globally on the device for part of the program execution. The single precision data
-are allocated and persist only for the first \code{target} region. Similarly, the
-double precision data are in scope on the device only for the second \code{target} region.
+are allocated and persist only for the first \kcode{target} region. Similarly, the
+double precision data are in scope on the device only for the second \kcode{target} region.
 
 \cexample[5.1]{declare_target}{6}
 \ffreeexample[4.5]{declare_target}{6}
 
 
-\subsection{Declare Target Directive with \code{device\_type} Clause}
+\subsection{Declare Target Directive with \kcode{device_type} Clause}
 \label{subsec:declare_target_device_type}
 
-\index{directives!declare target@\code{declare}~\code{target}}
-\index{declare target directive@\code{declare}~\code{target} directive}
+\index{directives!declare target@\kcode{declare target}}
+\index{declare target directive@\kcode{declare target} directive}
 
-\index{directives!begin declare target@\code{begin}~\code{declare}~\code{target}}
-\index{begin declare target directive@\code{begin}~\code{declare}~\code{target} directive}
+\index{directives!begin declare target@\kcode{begin declare target}}
+\index{begin declare target directive@\kcode{begin declare target} directive}
 
-\index{clauses!device_type@\code{device\_type}}
-\index{device_type clause@\code{device\_type} clause}
+\index{clauses!device_type@\kcode{device_type}}
+\index{device_type clause@\kcode{device_type} clause}
 
-The \code{declare}~\code{target} directives apply to procedures to ensure that they can be executed or accessed on a device. 
-The \code{device\_type} clause specifies whether a version of the procedure or variable should be made available on the host, device or both. 
-This example uses  \code{nohost} for a procedure \plc{foo}. Only a device version of the procedure \plc{foo} is made available. 
-If the variant function \plc{foo\_onhost} is not specified for the host fallback execution, the call to \plc{foo} from the \code{target} region will result in a link time error due to the code generated for host execution of the target region.
-This is because host symbol for the device routine \plc{foo} marked as \code{nohost} is not required to be present in the host environment.
+The \kcode{declare target} directives apply to procedures to ensure that they can be executed or accessed on a device. 
+The \kcode{device_type} clause specifies whether a version of the procedure or variable should be made available on the host, device or both. 
+This example uses \kcode{nohost} for a procedure \ucode{foo()}. Only a device version of the procedure \ucode{foo()} is made available. 
+If the variant function \ucode{foo_onhost()} is not specified for the host fallback execution, the call to \ucode{foo()} from the \kcode{target} region will result in a link time error due to the code generated for host execution of the target region.
+This is because host symbol for the device routine \ucode{foo()} marked as \kcode{nohost} is not required to be present in the host environment.
 
 \cexample[5.2]{declare_target}{7}
 \ffreeexample[5.2]{declare_target}{7}

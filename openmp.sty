@@ -302,15 +302,42 @@
 
 % Enable \alltt{} for formatting blocks of code:
 \usepackage{alltt}
+\usepackage{toolbox}         % for \toolboxMakeSplit
 
 % This sets the default \code{} font to tt (monospace) and bold:
 \newcommand\code[1]{\texttt{\textbf{#1}}}
 \newcommand\scode[1]{\protect\textbf{\protect\texttt{\protect\detokenize{#1}}}}
-\newcommand\nspace[1]{\textrm{\textmd{ }}}
 
 % This defines the \plc{} placeholder font to be tt normal slanted:
 \newcommand\plc[1]{\textrm{\textmd{\itshape{#1}}}}
 \newcommand\splc[1]{\protect\textit{\protect\textrm{\protect\detokenize{#1}}}}
+
+% This is an updated set of macros for code style work
+% kcode - keywords, vcode - value, bcode - base language,
+% pvar - variables, pout - program outputs
+\toolboxMakeSplit*{ }{DoSplitS}\toolboxMakeSplit*{_}{DoSplitU}
+\protected\def\DoReplaceU#1{\DoSplitU{#1}\leftutext\rightutext
+   \leftutext%
+   \ifthenelse{\isundefined{\rightutext}}{}%
+      {\_\expandafter\DoReplaceU\expandafter{\rightutext}}}
+\protected\def\DoReplaceS#1{\DoSplitS{#1}\leftstext\rightstext
+   \expandafter\DoReplaceU\expandafter{\leftstext}%
+   \ifthenelse{\isundefined{\rightstext}}{}%
+      {\textrm{~}\expandafter\DoReplaceS\expandafter{\rightstext}}}
+\newcommand{\myreplacedmt}[1]{\protect\DoReplaceS{#1}}
+\newcommand\kcode[1]{\texttt{\bfseries\upshape\myreplacedmt{#1}}}
+\newcommand\bcode[1]{\texttt{\mdseries\upshape\myreplacedmt{#1}}}
+\newcommand\vcode[1]{\bcode{#1}}
+\newcommand\ucode[1]{\texttt{\mdseries\slshape\myreplacedmt{#1}}}
+\newcommand\pvar[1]{\ucode{#1}}
+\newcommand\pout[1]{\vcode{#1}}
+\newcommand\docref[1]{\textrm{\mdseries\itshape{#1}}}
+\newcommand\example[1]{\splc{#1}}
+
+\newcommand\examplesrepo{https://github.com/OpenMP/Examples}
+\newcommand\examplestree[2]{\href{\examplesrepo/tree/v#1}{#2}}
+\newcommand\examplesref[1]{\examplestree{#1}{#1}}
+\newcommand\examplesblob[1]{\href{\examplesrepo/blob/#1}{#1}}
 
 % Environment for a paragraph of literal code, single-spaced, no outline, no indenting:
 \newenvironment{codepar}[1]
@@ -417,6 +444,12 @@
 % convenience macro for formatting the word "Note:" at the beginning of note blocks:
 \newcommand{\noteheader}{{\textrm{\textsf{\textbf\textup\normalsize{{{{Note }}}}}}}}
 
+% blue line floater at top of a page for "Name (cont.)"
+\newcommand{\topmarker}[1]{%
+  \begin{figure}[t!]
+  \linewitharrows{-1}{dashed}{#1 (cont.)}{8em}
+  \end{figure}}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Glossary formatting
@@ -471,19 +504,11 @@
 % Thanks to Jin, Haoqiang H. for the original definitions of the following:
 
 \usepackage{color,fancyvrb}  % for \VerbatimInput
-\usepackage{toolbox}         % for \toolboxMakeSplit
 \usepackage{xargs}           % for optional args
 
 \renewcommand\theFancyVerbLine{\normalfont\footnotesize\sffamily S-\arabic{FancyVerbLine}}
 
-\newcommand{\myreplace}[3]{\bgroup\toolboxMakeSplit*{#1}{DoSplit}%
-   \long\def\DoReplace##1{\DoSplit{##1}\lefttext\righttext
-   \lefttext
-   \toolboxIfElse{\ifx\righttext\undefined}{}%
-      {#2\expandafter\DoReplace\expandafter{\righttext}}}%
-   \DoReplace{#3}\egroup}
-
-\newcommand{\escstr}[1]{\myreplace{_}{\_}{#1}}
+\newcommand{\escstr}[1]{\DoReplaceU{#1}}
 \newcommandx*\verlabel[2][1=]{(\code{\small{}#1omp\_#2})}
 
 \newcommand{\exampleheader}[6]{%

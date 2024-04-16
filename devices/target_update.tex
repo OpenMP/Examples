@@ -1,70 +1,82 @@
-\pagebreak
-\section{\code{target} \code{update} Construct}
+%\pagebreak
+\section{\kcode{target update} Construct}
 \label{sec:target_update}
 
-\subsection{Simple \code{target} \code{data} and \code{target} \code{update} Constructs}
+\subsection{Simple \kcode{target data} and \kcode{target update} Constructs}
 \label{subsec:target_data_and_update}
-\index{constructs!target data@\code{target}~\code{data}}
-\index{target data construct@\code{target}~\code{data} construct}
-\index{constructs!target update@\code{target}~\code{update}}
-\index{target update construct@\code{target}~\code{update} construct}
-\index{target update construct@\code{target}~\code{update} construct!to clause@\code{to} clause}
-\index{target update construct@\code{target}~\code{update} construct!from clause@\code{from} clause}
-\index{target update construct@\code{target}~\code{update} construct!motion-clause@\plc{motion-clause}}
+\index{constructs!target data@\kcode{target data}}
+\index{target data construct@\kcode{target data} construct}
+\index{constructs!target update@\kcode{target update}}
+\index{target update construct@\kcode{target update} construct}
+\index{target update construct@\kcode{target update} construct!to clause@\kcode{to} clause}
+\index{target update construct@\kcode{target update} construct!from clause@\kcode{from} clause}
+\index{target update construct@\kcode{target update} construct!motion-clause@\plc{motion-clause}}
 \index{clauses!motion-clause@\plc{motion-clause}}
-\index{clauses!to@\code{to}}
-\index{clauses!from@\code{from}}
-\index{motion-clause@\plc{motion-clause}!to clause@\code{to} clause}
-\index{motion-clause@\plc{motion-clause}!from clause@\code{from} clause}
+\index{clauses!to@\kcode{to}}
+\index{clauses!from@\kcode{from}}
+\index{motion-clause@\plc{motion-clause}!to clause@\kcode{to} clause}
+\index{motion-clause@\plc{motion-clause}!from clause@\kcode{from} clause}
 
-The following example shows how the \code{target} \code{update} construct updates 
+The following example shows how the \kcode{target update} construct updates 
 variables in a device data environment.
 
-The \code{target} \code{data} construct maps array sections \plc{v1[:N]} and \plc{v2[:N]} 
-(arrays \plc{v1} and \plc{v2} in the Fortran code) into a device data environment.
+The \kcode{target data} construct maps array sections \ucode{v1[:N]} and \ucode{v2[:N]} 
+(arrays \ucode{v1} and \ucode{v2} in the Fortran code) into a device data environment.
 
-The task executing on the host device encounters the first \code{target} region 
+The task executing on the host device encounters the first \kcode{target} region 
 and waits for the completion of the region.
 
-After the execution of the first \code{target} region, the task executing on 
-the host device then assigns new values to \plc{v1[:N]} and \plc{v2[:N]} (\plc{v1} and \plc{v2} arrays 
-in Fortran code) in the task's data environment by calling the function \code{init\_again()}.
+After the execution of the first \kcode{target} region, the task executing on 
+the host device then assigns new values to \ucode{v1[:N]} and \ucode{v2[:N]} (\ucode{v1} and \ucode{v2} arrays 
+in Fortran code) in the task's data environment by calling the function \ucode{init_again()}.
 
-The \code{target} \code{update} construct assigns the new values of \plc{v1} and 
-\plc{v2} from the task's data environment to the corresponding mapped array sections 
-in the device data environment of the \code{target} \code{data} construct.
+The \kcode{target update} construct assigns the new values of \ucode{v1} and 
+\ucode{v2} from the task's data environment to the corresponding mapped array sections 
+in the device data environment of the \kcode{target data} construct.
 
-The task executing on the host device then encounters the second \code{target} 
+The task executing on the host device then encounters the second \kcode{target} 
 region and waits for the completion of the region.
 
-The second \code{target} region uses the updated values of \plc{v1[:N]} and \plc{v2[:N]}.
+The second \kcode{target} region uses the updated values of \ucode{v1[:N]} and \ucode{v2[:N]}.
 
 \cexample[4.0]{target_update}{1}
 
 \ffreeexample[4.0]{target_update}{1}
 
-\subsection{\code{target} \code{update} Construct with \code{if} Clause}
+\subsection{\kcode{target update} Construct with \kcode{if} Clause}
 \label{subsec:target_update_if}
-\index{target update construct@\code{target}~\code{update} construct!if clause@\code{if} clause}
-\index{clauses!if@\code{if}}
-\index{if clause@\code{if} clause}
+\index{target update construct@\kcode{target update} construct!if clause@\kcode{if} clause}
+\index{clauses!if@\kcode{if}}
+\index{if clause@\kcode{if} clause}
 
-The following example shows how the \code{target} \code{update} construct updates 
+The following example shows how the \kcode{target update} construct updates 
 variables in a device data environment.
 
-The \code{target} \code{data} construct maps array sections \plc{v1[:N]} and \plc{v2[:N]} 
-(arrays \plc{v1} and \plc{v2} in the Fortran code) into a device data environment. In between 
-the two \code{target} regions, the task executing on the host device conditionally 
-assigns new values to \plc{v1} and \plc{v2} in the task's data environment. The function \code{maybe\_init\_again()} 
-returns \plc{true} if new data is written.
+The \kcode{target data} construct maps array sections \ucode{v1[:N]} and \ucode{v2[:N]} 
+(arrays \ucode{v1} and \ucode{v2} in the Fortran code) into a device data environment. In between 
+the two \kcode{target} regions, the task executing on the host device conditionally 
+assigns new values to \ucode{v1} and \ucode{v2} in the task's data environment. The function \ucode{maybe_init_again()} 
+returns \vcode{true} if new data is written.
 
-When the conditional expression (the return value of \code{maybe\_init\_again()}) in the 
-\code{if} clause is \plc{true}, the \code{target} \code{update} construct 
-assigns the new values of \plc{v1} and \plc{v2} from the task's data environment to the corresponding 
-mapped array sections in the \code{target} \code{data} construct's device data 
+When the conditional expression (the return value of \ucode{maybe_init_again()}) in the 
+\kcode{if} clause is \plc{true}, the \kcode{target update} construct 
+assigns the new values of \ucode{v1} and \ucode{v2} from the task's data environment to the corresponding 
+mapped array sections in the \kcode{target data} construct's device data 
 environment.
 
 \cexample[4.0]{target_update}{2}
 
 \ffreeexample[4.0]{target_update}{2}
+
+\subsection{\kcode{target update} Construct with Mapper}
+\label{subsec:target_update_mapper}
+\index{target update construct@\kcode{target update} construct!modifier@mapper}
+
+The following example shows how the \kcode{target update} construct can be used with a \kcode{mapper} (\ucode{custom}). 
+The \ucode{custom} mapper maps members of structure \ucode{T} with different map-type modifiers. Inside the 
+\kcode{target data} region the \kcode{target update} with the \kcode{to} \plc{motion-clause} is equivalent to an update of \ucode{x} on the device. After the \kcode{target} region the \kcode{target update} with the \kcode{from} motion-clause is equivalent to an update of \ucode{y} on the host.
+
+\cexample[5.1]{target_update}{3}
+
+\ffreeexample[5.1]{target_update}{3}
 

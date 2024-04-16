@@ -1,56 +1,55 @@
-%begin 
-\pagebreak
-\section{\code{target} \code{enter} \code{data} and \code{target} \code{exit} \code{data} Constructs}
+%\pagebreak
+\section{\kcode{target enter data} and \kcode{target exit data} Constructs}
 \label{sec:target_enter_exit_data}
 %\section{Simple target enter data and target exit data Constructs}
-\index{constructs!target enter data@\code{target} \code{enter} \code{data}}
-\index{constructs!target exit data@\code{target} \code{exit} \code{data}}
-\index{target enter data construct@\code{target} \code{enter} \code{data} construct}
-\index{target exit data construct@\code{target} \code{exit} \code{data} construct}
+\index{constructs!target enter data@\kcode{target enter data}}
+\index{constructs!target exit data@\kcode{target exit data}}
+\index{target enter data construct@\kcode{target enter data} construct}
+\index{target exit data construct@\kcode{target exit data} construct}
 
-The structured data construct (\code{target}~\code{data}) provides persistent data on a
-device for subsequent \code{target} constructs as shown in the 
-\code{target}~\code{data} examples above. This is accomplished by creating a single
-\code{target}~\code{data} region containing \code{target} constructs.
+The structured data construct (\kcode{target data}) provides persistent data on a
+device for subsequent \kcode{target} constructs as shown in the 
+\kcode{target data} examples above. This is accomplished by creating a single
+\kcode{target data} region containing \kcode{target} constructs.
 
 The unstructured data constructs allow the creation and deletion of data on
 the device at any appropriate point within the host code, as shown below 
-with the \code{target}~\code{enter}~\code{data} and \code{target}~\code{exit}~\code{data} constructs.
+with the \kcode{target enter data} and \kcode{target exit data} constructs.
 
-\index{map clause@\code{map} clause!alloc map-type@\code{alloc} map-type}
-\index{map clause@\code{map} clause!delete map-type@\code{delete} map-type}
-\index{alloc map-type@\code{alloc} map-type}
-\index{delete map-type@\code{delete} map-type}
+\index{map clause@\kcode{map} clause!alloc map-type@\kcode{alloc} map-type}
+\index{map clause@\kcode{map} clause!delete map-type@\kcode{delete} map-type}
+\index{alloc map-type@\kcode{alloc} map-type}
+\index{delete map-type@\kcode{delete} map-type}
 The following C++ code creates/deletes a vector in a constructor/destructor 
-of a class. The constructor creates a vector with \code{target}~\code{enter}~\code{data}
-and uses an \code{alloc} modifier in the \code{map} clause to avoid copying values
-to the device. The destructor deletes the data (\code{target}~\code{exit}~\code{data})
-and uses the \code{delete} modifier in the \code{map} clause to avoid copying data
-back to the host. Note, the stand-alone \code{target}~\code{enter}~\code{data} occurs 
-after the host vector is created, and the \code{target}~\code{exit}~\code{data}
+of a class. The constructor creates a vector with \kcode{target enter data}
+and uses an \kcode{alloc} modifier in the \kcode{map} clause to avoid copying values
+to the device. The destructor deletes the data (\kcode{target exit data})
+and uses the \kcode{delete} modifier in the \kcode{map} clause to avoid copying data
+back to the host. Note, the stand-alone \kcode{target enter data} occurs 
+after the host vector is created, and the \kcode{target exit data}
 construct occurs before the host data is deleted.
 
 \cppexample[4.5]{target_unstructured_data}{1}
 
-\pagebreak
-The following C code allocates and frees the data member of a Matrix structure.
-The \code{init\_matrix} function allocates the memory used in the structure and
-uses the \code{target}~\code{enter}~\code{data} directive to map it to the target device. The
-\code{free\_matrix} function removes the mapped array from the target device
+%\pagebreak
+The following C code allocates and frees the data member of a \ucode{Matrix} structure.
+The \ucode{init_matrix} function allocates the memory used in the structure and
+uses the \kcode{target enter data} directive to map it to the target device. The
+\ucode{free_matrix} function removes the mapped array from the target device
 and then frees the memory on the host.  Note, the stand-alone 
-\code{target}~\code{enter}~\code{data} occurs after the host memory is allocated, and the 
-\code{target}~\code{exit}~\code{data} construct occurs before the host data is freed.
+\kcode{target enter data} occurs after the host memory is allocated, and the 
+\kcode{target exit data} construct occurs before the host data is freed.
 
 \cexample[4.5]{target_unstructured_data}{1}
 
-\pagebreak
-The following Fortran code allocates and deallocates a module array.  The
-\code{initialize} subroutine allocates the module array and uses the
-\code{target}~\code{enter}~\code{data} directive to map it to the target device. The
-\code{finalize} subroutine removes the mapped array from the target device and
+%\pagebreak
+The following Fortran code allocates and deallocates a module array, \ucode{A}.  The
+\ucode{initialize} subroutine allocates the module array and uses the
+\kcode{target enter data} directive to map it to the target device. The
+\ucode{finalize} subroutine removes the mapped array from the target device and
 then deallocates the array on the host.  Note, the stand-alone 
-\code{target}~\code{enter}~\code{data} occurs after the host memory is allocated, and the 
-\code{target}~\code{exit}~\code{data} construct occurs before the host data is deallocated.
+\kcode{target enter data} occurs after the host memory is allocated, and the 
+\kcode{target exit data} construct occurs before the host data is deallocated.
 
 \ffreeexample[4.5]{target_unstructured_data}{1}
 %end

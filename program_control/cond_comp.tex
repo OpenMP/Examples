@@ -1,12 +1,12 @@
-\pagebreak
+%\pagebreak
 \section{Conditional Compilation}
 \label{sec:cond_comp}
-\index{conditional compilation!_OPENMP macro@\scode{_OPENMP} macro}
+\index{conditional compilation!_OPENMP macro@\kcode{_OPENMP} macro}
 \index{conditional compilation!sentinel}
 
 \ccppspecificstart
 The following example illustrates the use of conditional compilation using the 
-OpenMP macro \code{\_OPENMP}. With OpenMP compilation, the \code{\_OPENMP} 
+OpenMP macro \kcode{_OPENMP}. With OpenMP compilation, the \kcode{_OPENMP} 
 macro becomes defined.
 
 \cnexample{cond_comp}{1}
@@ -14,7 +14,7 @@ macro becomes defined.
 
 \fortranspecificstart
 The following example illustrates the use of the conditional compilation sentinel. 
-With OpenMP compilation, the conditional compilation sentinel \code{!\$} is recognized 
+With OpenMP compilation, the conditional compilation sentinel \scode{!$} is recognized 
 and treated as two spaces. In fixed form source, statements guarded by the sentinel 
 must start after column 6.
 

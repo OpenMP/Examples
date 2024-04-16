@@ -1,13 +1,13 @@
-\pagebreak
-\section{\code{copyin} Clause}
+%\pagebreak
+\section{\kcode{copyin} Clause}
 \label{sec:copyin}
-\index{clauses!copyin@\code{copyin}}
-\index{copyin clause@\code{copyin} clause}
-\index{directives!threadprivate@\code{threadprivate}}
-\index{threadprivate directive@\code{threadprivate} directive}
+\index{clauses!copyin@\kcode{copyin}}
+\index{copyin clause@\kcode{copyin} clause}
+\index{directives!threadprivate@\kcode{threadprivate}}
+\index{threadprivate directive@\kcode{threadprivate} directive}
 
-The \code{copyin} clause is used to initialize threadprivate data upon entry 
-to a \code{parallel} region. The value of the threadprivate variable in the primary
+The \kcode{copyin} clause is used to initialize threadprivate data upon entry 
+to a \kcode{parallel} region. The value of the threadprivate variable in the primary
 thread is copied to the threadprivate variable of each other team member.
 
 \cexample{copyin}{1}

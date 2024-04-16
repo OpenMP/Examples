@@ -21,12 +21,14 @@ int main()
    omp_allocator_handle_t xy_alloc    = 
                            omp_init_allocator(xy_memspace,1,xy_traits);
 
-
    x=(float *)omp_alloc(N*sizeof(float), xy_alloc); 
    y=(float *)omp_alloc(N*sizeof(float), xy_alloc); 
 
    if( ((intptr_t)(y))%64 != 0 || ((intptr_t)(x))%64 != 0 )
-   { printf("ERROR: x|y not 64-Byte aligned\n"); exit(1); }
+   {
+      printf("ERROR: x|y not 64-Byte aligned\n");
+      exit(1);
+   }
 
    #pragma omp parallel
    { 

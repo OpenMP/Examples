@@ -1,7 +1,7 @@
 \cchapter{OpenMP Affinity}{affinity}
 \label{chap:openmp_affinity}
 
-OpenMP Affinity consists of a \code{proc\_bind} policy (thread affinity policy) and a specification of
+OpenMP Affinity consists of a \kcode{proc_bind} policy (thread affinity policy) and a specification of
 places (``location units'' or \plc{processors} that may be cores, hardware
 threads, sockets, etc.).  
 OpenMP Affinity enables users to bind computations on specific places.
@@ -11,13 +11,13 @@ to different cores (hardware threads, sockets, etc.) prescribed within a given p
 if two or more cores (hardware threads, sockets, etc.) have been assigned to a given place.
 
 Often the binding can be managed without resorting to explicitly setting places.
-Without the specification of places in the \code{OMP\_PLACES} variable, 
+Without the specification of places in the \kcode{OMP_PLACES} variable, 
 the OpenMP runtime will distribute and bind threads using the entire range of processors for 
-the OpenMP program, according to the \code{OMP\_PROC\_BIND} environment variable
-or the \code{proc\_bind} clause.  When places are specified, the OMP runtime
+the OpenMP program, according to the \kcode{OMP_PROC_BIND} environment variable
+or the \kcode{proc_bind} clause.  When places are specified, the OMP runtime
 binds threads to the places according to a default distribution policy, or
-those specified in the \code{OMP\_PROC\_BIND} environment variable or the
-\code{proc\_bind} clause.
+those specified in the \kcode{OMP_PROC_BIND} environment variable or the
+\kcode{proc_bind} clause.
 
 In the OpenMP Specifications document a processor refers to an execution unit that
 is enabled for an OpenMP thread to use.  A processor is a core when there is
@@ -31,7 +31,7 @@ binding locations (unless an ``abstract name'' is used.)
 
 The processors available to a process may be a subset of the system's
 processors.  This restriction may be the result of a 
-wrapper process controlling the execution (such as \code{numactl} on Linux systems), 
+wrapper process controlling the execution (such as \plc{numactl} on Linux systems), 
 compiler options, library-specific environment variables, or default
 kernel settings.  For instance, the execution of multiple MPI processes,
 launched on a single compute node, will each have a subset of processors as
@@ -53,20 +53,20 @@ variables for the MPI library.  %Forked threads within an MPI process
 
 Threads of a team are positioned onto places in a compact manner, a 
 scattered distribution, or onto the primary thread's place, by setting the 
-\code{OMP\_PROC\_BIND} environment variable or the \code{proc\_bind} clause  to 
-\code{close}, \code{spread}, or \code{primary} (\code{master} has been deprecated), respectively.  When 
-\code{OMP\_PROC\_BIND} is set to FALSE no binding is enforced; and 
+\kcode{OMP_PROC_BIND} environment variable or the \kcode{proc_bind} clause  to 
+\kcode{close}, \kcode{spread}, or \kcode{primary} (\kcode{master} has been deprecated), respectively.  When 
+\kcode{OMP_PROC_BIND} is set to FALSE no binding is enforced; and 
 when the value is TRUE, the binding is implementation defined to 
-a set of places in the \code{OMP\_PLACES} variable or to places 
-defined by the implementation if the \code{OMP\_PLACES} variable 
+a set of places in the \kcode{OMP_PLACES} variable or to places 
+defined by the implementation if the \kcode{OMP_PLACES} variable 
 is not set. 
 
-The \code{OMP\_PLACES} variable can also be set to an abstract name 
-(\code{threads}, \code{cores}, \code{sockets}) to specify that a place is
+The \kcode{OMP_PLACES} variable can also be set to an abstract name 
+(\kcode{threads}, \kcode{cores}, \kcode{sockets}) to specify that a place is
 either a single hardware thread, a core, or a socket, respectively. 
-This description of the \code{OMP\_PLACES} is most useful when the 
+This description of the \kcode{OMP_PLACES} is most useful when the 
 number of threads is equal to the number of hardware thread, cores
-or sockets.  It can also be used with a \code{close} or \code{spread} 
+or sockets.  It can also be used with a \kcode{close} or \kcode{spread} 
 distribution policy when the equality doesn't hold.
 
 

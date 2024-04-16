@@ -1,60 +1,68 @@
-\pagebreak
-\section{\code{defaultmap} Clause}
+%\pagebreak
+\section{\kcode{defaultmap} Clause}
 \label{sec:defaultmap}
-\index{target construct@\code{target} construct!defaultmap clause@\code{defaultmap} clause}
-\index{clauses!defaultmap@\code{defaultmap}}
-\index{defaultmap clause@\code{defaultmap} clause}
-\index{defaultmap clause@\code{defaultmap} clause!implicit behavior}
-\index{defaultmap clause@\code{defaultmap} clause!variable category}
+\index{target construct@\kcode{target} construct!defaultmap clause@\kcode{defaultmap} clause}
+\index{clauses!defaultmap@\kcode{defaultmap}}
+\index{defaultmap clause@\kcode{defaultmap} clause}
+\index{defaultmap clause@\kcode{defaultmap} clause!implicit behavior}
+\index{defaultmap clause@\kcode{defaultmap} clause!variable category}
 
 The implicitly determined data-mapping and data-sharing attribute
-rules of variables referenced in a \code{target} construct can be
-changed by the \code{defaultmap} clause. 
+rules of variables referenced in a \kcode{target} construct can be
+changed by the \kcode{defaultmap} clause. 
 As of OpenMP 5.0, the implicit behavior is specified as
-\code{alloc}, \code{to}, \code{from}, \code{tofrom},
-\code{firstprivate}, \code{none}, \code{default} or \code{present},
-and is optionally applied to a variable category specified as \code{scalar}, \code{aggregate}, \code{allocatable},
-or \code{pointer}. 
+\kcode{alloc}, \kcode{to}, \kcode{from}, \kcode{tofrom},
+\kcode{firstprivate}, \kcode{none}, \kcode{default} or \kcode{present},
+and is optionally applied to a variable category specified as \kcode{scalar}, \kcode{aggregate}, \kcode{allocatable},
+or \kcode{pointer}. 
 
-A referenced variable that is in a specified ``category`` is treated as having
-the specified implicit behavior. In C/C++, \code{scalar} refers to
+A referenced variable that is in a specified ``category'' is treated as having
+the specified implicit behavior. In C/C++, \kcode{scalar} refers to
 base-language scalar variables, except pointers.  In Fortran it refers to a
 scalar variable, as defined by the base language, of intrinsic type but
-excluding the character type. The \code{aggregate} category refers to arrays and
+excluding the character type. The \kcode{aggregate} category refers to arrays and
 structures (which includes variables of any derived type and of character type for Fortran). Fortran
-has the additional category of \code{allocatable} for variables that have the
-allocatable attribute. The \code{pointer} category refers to pointers, which
+has the additional category of \kcode{allocatable} for variables that have the
+allocatable attribute. The \kcode{pointer} category refers to pointers, which
 for Fortran are variables that have the pointer attribute.
 
-In the example below, the first \code{target} construct uses  \code{defaultmap}
+In the example below, the first \kcode{target} construct uses  \kcode{defaultmap}
 clauses to set data-mapping and possibly data-sharing attributes that reproduce 
 the default rules for implicitly determined data-mapping and data-sharing
-attributes for variables in the construct. That is, if the \code{defaultmap}
-clauses were removed, the results would be identical.
+attributes for variables in the construct. That is, if the \kcode{defaultmap}
+clauses were removed, the results would be identical. As of OpenMP 5.2 
+the same effect can now be achieved by \kcode{defaultmap(default)} with 
+the \kcode{target} construct.
 
-In the second \code{target} construct all implicit behavior is removed
-by specifying the \code{none} implicit behavior in the \code{defaultmap} clause.
+In the second \kcode{target} construct all implicit behavior is removed
+by specifying the \kcode{none} implicit behavior in the \kcode{defaultmap} clause.
 Hence, all variables that don't have predetermined attributes must be given an
-explicit data-mapping or data-sharing attribute. A scalar (\texttt{s}), an
-array (\texttt{A}) and a structure (\texttt{S} for the C/C++ example and
-\texttt{D} for the Fortran example) are explicitly mapped with the
-\code{tofrom} map type.
+explicit data-mapping or data-sharing attribute. A scalar (\ucode{s}), an
+array (\ucode{A}) and a structure (\ucode{S} for the C/C++ example and
+\ucode{D} for the Fortran example) are explicitly mapped with the
+\kcode{tofrom} map type.
 
-The third \code{target} construct shows another usual case for using the
-\code{defaultmap} clause.  The default mapping for (non-pointer) scalar
-variables is specified.  Here, the default implicit mapping for \texttt{s3} is
-\code{tofrom} as specified in the \code{defaultmap} clause, while \texttt{s1}
-and \texttt{s2} are instead explicitly treated as \code{firstprivate}.
+The third \kcode{target} construct shows another usual case for using the
+\kcode{defaultmap} clause.  The default mapping for (non-pointer) scalar
+variables is specified.  Here, the default implicit mapping for \ucode{s3} is
+\kcode{tofrom} as specified in the \kcode{defaultmap} clause, while \ucode{s1}
+and \ucode{s2} are instead explicitly treated as \kcode{firstprivate}.
 
-In the fourth \code{target} construct all arrays and structures are given
-\code{firstprivate} implicit behavior by default with the use of the
-\code{aggregate} variable category.  For the Fortran example, the
-\code{allocatable} category is used in a separate \code{defaultmap} clause to
-specify default \code{firstprivate} implicit behavior for referenced
-allocatable variables (in this case, \texttt{H}).
+In the fourth \kcode{target} construct all arrays and structures are given
+\kcode{firstprivate} implicit behavior by default with the use of the
+\kcode{aggregate} variable category.  For the Fortran example, the
+\kcode{allocatable} category is used in a separate \kcode{defaultmap} clause to
+specify default \kcode{firstprivate} implicit behavior for referenced
+allocatable variables (in this case, \ucode{H}).
 % (Common use cases for C/C++ heap storage can be found in
 % \specref{sec:pointer_mapping}.)
 
-\cexample[5.0]{target_defaultmap}{1}
+The fifth \kcode{target} construct shows a case for using the
+\kcode{defaultmap} clause with the \kcode{all} variable category which was introduced in 
+OpenMP 5.2. The scalar variables \ucode{s1} and \ucode{s2} are mapped \kcode{to}. 
+\ucode{s3} is only mapped \kcode{from} due to the explicit map specified.
 
-\ffreeexample[5.0]{target_defaultmap}{1}
+%\pagebreak
+\cexample[5.2]{target_defaultmap}{1}
+
+\ffreeexample[5.2]{target_defaultmap}{1}

@@ -7,19 +7,19 @@ The following examples illustrate two major concerns for concurrent thread
 execution: ordering of thread execution and memory accesses that may or may not
 lead to race conditions.
 
-In the following example, at Print 1, the value of \code{xval} could be either 2
-or 5, depending on the timing of the threads. The \code{atomic} directives are
-necessary for the accesses to \code{x} by threads 1 and 2 to avoid a data race.
+In the following example, at Print 1, the value of \ucode{xval} could be either 2
+or 5, depending on the timing of the threads. The \kcode{atomic} directives are
+necessary for the accesses to \ucode{x} by threads 1 and 2 to avoid a data race.
 If the atomic write completes before the atomic read, thread 1 is guaranteed to
-see 5 in \code{xval}. Otherwise, thread 1 is guaranteed to see 2 in \code{xval}.
+see 5 in \ucode{xval}. Otherwise, thread 1 is guaranteed to see 2 in \ucode{xval}.
 
 \index{flushes!implicit}
-\index{atomic construct@\code{atomic} construct}
-\index{constructs!atomic@\code{atomic}}
+\index{atomic construct@\kcode{atomic} construct}
+\index{constructs!atomic@\kcode{atomic}}
 The barrier after Print 1 contains implicit flushes on all threads, as well as
 a thread synchronization, so the programmer is guaranteed that the value 5 will
 be printed by both Print 2 and Print 3. Since neither Print 2 or Print 3 are modifying
-\code{x}, they may concurrently access \code{x} without requiring \code{atomic}
+\ucode{x}, they may concurrently access \ucode{x} without requiring \kcode{atomic}
 directives to avoid a data race.
 
 \cexample[3.1]{mem_model}{1}
@@ -27,16 +27,16 @@ directives to avoid a data race.
 \ffreeexample[3.1]{mem_model}{1}
 
 \pagebreak
-\index{flushes!flush construct@\code{flush} construct}
-\index{flush construct@\code{flush} construct}
-\index{constructs!flush@\code{flush}}
+\index{flushes!flush construct@\kcode{flush} construct}
+\index{flush construct@\kcode{flush} construct}
+\index{constructs!flush@\kcode{flush}}
 The following example demonstrates why synchronization is difficult to perform
-correctly through variables. The write to \code{flag} on thread 0 and the read
-from \code{flag} in the loop on thread 1 must be atomic to avoid a data race.
-When thread 1 breaks out of the loop, \code{flag} will have the value of 1.
-However, \code{data} will still be undefined at the first print statement. Only
-after the flush of both \code{flag} and \code{data} after the first print
-statement will \code{data} have the well-defined value of 42.
+correctly through variables. The write to \ucode{flag} on thread 0 and the read
+from \ucode{flag} in the loop on thread 1 must be atomic to avoid a data race.
+When thread 1 breaks out of the loop, \ucode{flag} will have the value of 1.
+However, \ucode{data} will still be undefined at the first print statement. Only
+after the flush of both \ucode{flag} and \ucode{data} after the first print
+statement will \ucode{data} have the well-defined value of 42.
 
 \cexample[3.1]{mem_model}{2}
 
@@ -46,13 +46,13 @@ statement will \code{data} have the well-defined value of 42.
 \index{flushes!flush with a list}
 The next example demonstrates why synchronization is difficult to perform
 correctly through variables. As in the preceding example, the updates to
-\code{flag} and the reading of \code{flag} in the loops on threads 1 and 2 are
-performed atomically to avoid data races on \code{flag}. However, the code still
+\ucode{flag} and the reading of \ucode{flag} in the loops on threads 1 and 2 are
+performed atomically to avoid data races on \ucode{flag}. However, the code still
 contains data race due to the incorrect use of ``flush with a list'' after the
-assignment to \code{data1} on thread 1. By not including \code{flag} in the
-flush-set of that \code{flush} directive, the assignment can be reordered with
-respect to the subsequent atomic update to \code{flag}. Consequentially,
-\code{data1} is undefined at the print statement on thread 2.
+assignment to \ucode{data1} on thread 1. By not including \ucode{flag} in the
+flush-set of that \kcode{flush} directive, the assignment can be reordered with
+respect to the subsequent atomic update to \ucode{flag}. Consequentially,
+\ucode{data1} is undefined at the print statement on thread 2.
 
 \cexample[3.1]{mem_model}{3}
 
@@ -62,20 +62,20 @@ respect to the subsequent atomic update to \code{flag}. Consequentially,
 The following two examples illustrate the ordering properties of 
 the \plc{flush} operation. The \plc{flush} operations are strong flushes 
 that are applied to the specified flush lists. 
-However, use of a \code{flush} construct with a list is extremely error 
+However, use of a \kcode{flush} construct with a list is extremely error 
 prone and users are strongly discouraged from attempting it. 
 In the codes the programmer intends to prevent simultaneous 
 execution of the protected section by the two threads.
 The atomic directives in the codes ensure that the accesses to shared
-variables \plc{a} and \plc{b} are atomic write and atomic read operations. Otherwise both examples would contain data races and automatically result 
+variables \ucode{a} and \ucode{b} are atomic write and atomic read operations. Otherwise both examples would contain data races and automatically result 
 in unspecified behavior. 
 
-In the following incorrect code example, operations on variables \plc{a} and
-\plc{b} are not ordered with respect to each other. For instance, nothing
-prevents the compiler from moving the flush of \plc{b} on thread 0 or the
-flush of \plc{a} on thread 1 to a position completely after the protected
+In the following incorrect code example, operations on variables \ucode{a} and
+\ucode{b} are not ordered with respect to each other. For instance, nothing
+prevents the compiler from moving the flush of \ucode{b} on thread 0 or the
+flush of \ucode{a} on thread 1 to a position completely after the protected
 section (assuming that the protected section on thread 0 does not reference
-\plc{b} and the protected section on thread 1 does not reference \plc{a}).
+\ucode{b} and the protected section on thread 1 does not reference \ucode{a}).
 If either re-ordering happens, both threads can simultaneously execute the
 protected section.
 Any shared data accessed in the protected section is not guaranteed to 
@@ -88,11 +88,11 @@ be current or consistent during or after the protected section.
 The following code example correctly ensures that the protected section
 is executed by only one thread at a time. Execution of the protected section
 by neither thread is considered correct in this example. This occurs if both
-flushes complete prior to either thread executing its \code{if} statement
+flushes complete prior to either thread executing its \bcode{if} statement
 for the protected section.
 The compiler is prohibited from moving the flush at all for either thread,
 ensuring that the respective assignment is complete and the data is flushed
-before the \code{if} statement is executed.
+before the \bcode{if} statement is executed.
 
 \cexample[3.1]{mem_model}{4b}
 \ffreeexample[3.1]{mem_model}{4b}

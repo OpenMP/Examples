@@ -4,20 +4,20 @@
 \index{directive syntax!pragma, C/C++}
 \index{pragma syntax, C/C++}
 
-OpenMP C and C++ directives can be specified with the C/C++ \code{\#pragma} directive.
-An OpenMP directive begins with \code{\#pragma}~\code{omp} and is followed by the 
+OpenMP C and C++ directives can be specified with the C/C++ \kcode{\#pragma} directive.
+An OpenMP directive begins with \kcode{\#pragma omp} and is followed by the 
 OpenMP directive name, and required and optional clauses. Lines are continued in the 
 usual manner, and comments may be included at the end.
 Directives are case sensitive.
 
 The example below illustrates the use of the OpenMP pragma form.
-The first pragma (PRAG 1) specifies a combined \code{parallel}~\code{for} 
-directive, with a \code{num\_threads} clause, and a comment. 
+The first pragma (PRAG 1) specifies a combined \kcode{parallel for} 
+directive, with a \kcode{num_threads} clause, and a comment. 
 %The NT macro is expanded in the clause. 
 The second pragma (PRAG 2) shows the same directive split
 across two lines. The next nested pragmas (PRAG 3 and 4) show the previous combined directive as 
 two separate directives. The executable directives above all apply to the next 
-statement. The \code{parallel} directive can be applied to a \plc{structured}~\plc{block}
+statement. The \kcode{parallel} directive can be applied to a \plc{structured block}
 as shown in PRAG 5.
 
 \cexample{directive_syntax_pragma}{1}

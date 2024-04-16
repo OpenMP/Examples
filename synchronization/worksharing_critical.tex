@@ -1,18 +1,18 @@
-\pagebreak
-\section{Worksharing Constructs Inside a \code{critical} Construct}
+%\pagebreak
+\section{Worksharing Constructs Inside a \kcode{critical} Construct}
 \label{sec:worksharing_critical}
 \index{constructs!worksharing}
-\index{constructs!critical@\code{critical}}
-\index{critical construct@\code{critical} construct}
+\index{constructs!critical@\kcode{critical}}
+\index{critical construct@\kcode{critical} construct}
 
-The following example demonstrates using a worksharing construct inside a \code{critical} 
-construct. This example is conforming because the worksharing \code{single}  
-region is not closely nested inside the \code{critical} region. A single thread 
-executes the one and only section in the \code{sections} region, and executes 
-the \code{critical} region. The same thread encounters the nested \code{parallel} 
+The following example demonstrates using a worksharing construct inside a \kcode{critical} 
+construct. This example is conforming because the worksharing \kcode{single}  
+region is not closely nested inside the \kcode{critical} region. A single thread 
+executes the one and only section in the \kcode{sections} region, and executes 
+the \kcode{critical} region. The same thread encounters the nested \kcode{parallel} 
 region, creates a new team of threads, and becomes the primary thread of the new team. 
-One of the threads in the new team enters the \code{single} region and increments 
-\code{i} by \code{1}. At the end of this example \code{i} is equal to \code{2}.
+One of the threads in the new team enters the \kcode{single} region and increments 
+\ucode{i} by 1. At the end of this example \ucode{i} is equal to 2.
 
 \cexample{worksharing_critical}{1}
 

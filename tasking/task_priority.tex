@@ -1,21 +1,21 @@
-\pagebreak
+%\pagebreak
 \section{Task Priority}
 \label{sec:task_priority}
-\index{task construct@\code{task} construct!priority clause@\code{priority} clause}
-\index{priority clause@\code{priority} clause}
-\index{clauses!priority@\code{priority}}
+\index{task construct@\kcode{task} construct!priority clause@\kcode{priority} clause}
+\index{priority clause@\kcode{priority} clause}
+\index{clauses!priority@\kcode{priority}}
 
 
 %\subsection{Task Priority}
 %\label{subsec:task_priority}
 
-In this example we compute arrays in a matrix through a \plc{compute\_array} routine.
-Each task has a priority value equal to the value of the loop variable \plc{i} at the
+In this example we compute arrays in a matrix through a \ucode{compute_array} routine.
+Each task has a priority value equal to the value of the loop variable \ucode{i} at the
 moment of its creation. A higher priority on a task means that a task is a candidate
 to run sooner.
 
 The creation of tasks occurs in ascending order (according to the iteration space of
-the loop) but a hint, by means of the \code{priority} clause, is provided to reverse
+the loop) but a hint, by means of the \kcode{priority} clause, is provided to reverse
 the execution order.
 
 \cexample[4.5]{task_priority}{1}

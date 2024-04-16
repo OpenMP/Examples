@@ -31,6 +31,9 @@
 #define T_PNAME  0x02
 #define T_MTAGS  0x04
 
+#define LLN_DEF  75
+#define PRE_OMP  "pre_omp_3.0"
+
 #define skipspc(ic, cp) \
    for (cp += ic; *cp == ' ' || *cp == '\t'; cp++)
 
@@ -49,7 +52,7 @@ static struct tags_s {
    {"type", "", 4, 0, 0},
    {"operation", "view|compile|link|run", 9, 0, 0},
    {"expect", "success|error|ct-error|rt-error"
-      "|undefined|unspecified", 6, 0, 0},
+              "|undefined|unspecified", 6, 0, 0},
    {"version", "omp_*", 7, 0, 0},
    {"env",    "", 3, 0, 0},
    {"depend", "", 6, 0, 0},
@@ -142,29 +145,21 @@ int check_type(char *ttype, char *fext, int *iext)
 }
 
 /* check validity of a tag value.
-   return 0 - unexpected, >= 1 - OK */
+   return 0 - OK, 1 - unexpected */
 int check_tvalue(char *tvalue, int itag)
 {
-   int s = 1;
+   int s = 0;
    if (*tvalue == '\0')
-      s = 0;
+      s = 1;
    else if (itag == vtag_idx) {
-      if (strncasecmp(tvalue, "pre_omp", 7) == 0)
+      if (strncasecmp(tvalue, "pre_omp", 7) != 0 &&
+          strncasecmp(tvalue, tags[itag].tvals, 4) != 0)
          s = 1;
-      else
-         s = (strncasecmp(tvalue, tags[itag].tvals, 4) == 0)? 1 : 0;
    }
    else if (itag > 1 && itag < etag_idx) {
       char *cp = strcasestr(tags[itag].tvals, tvalue);
       if (!cp)
-         s = 0;
-      else {
-         char *vp = tags[itag].tvals;
-         while (vp != cp) {
-            if (*vp == '|') s++;
-            vp++;
-         }
-      }
+         s = 1;
    }
    return s;
 }
@@ -207,7 +202,7 @@ int fix_tags(char *fname, char *mname, char *fext, int iext)
          if (tcnt == 1) {
             if (!tags[vtag_idx].c) {
                fprintf(fou, "%c", (iext>1)? '!':'*');
-               fprintf(fou, " @@version:\tpre_omp_3.0\n");
+               fprintf(fou, " @@version:\t%s\n", PRE_OMP);
             }
             tcnt = 2;
          }
@@ -366,7 +361,7 @@ int proc_file(char *fname, int vflg)
             ic++;
          else if (!ctag) {
             prn_fname(&tcnt, fname, vflg);
-            fprintf(stderr, "\tmissing (:) after @@%s\n", tags[i].name);
+            fprintf(stderr, "  missing (:) after @@%s\n", tags[i].name);
             tags[i].c = ic;
             tcnt |= T_MTAGS;
          }
@@ -390,14 +385,14 @@ int proc_file(char *fname, int vflg)
                if (tags[i].c == 0) tags[i].c = ic;
                prn_fname(&tcnt, fname, vflg);
                tcnt |= T_MTAGS;
-               fprintf(stderr, "\tmis-matched @@%s: %s\n", tags[i].name, cp);
+               fprintf(stderr, "  mis-matched @@%s: %s\n", tags[i].name, cp);
             }
          }
          else {
             s = check_tvalue(cp, i);
-            if (!s) {
+            if (s) {
                prn_fname(&tcnt, fname, vflg);
-               fprintf(stderr, "\t*** unknown value for @@%s: %s\n",
+               fprintf(stderr, "  *** unknown value for @@%s: %s\n",
                        tags[i].name, cp);
             }
          }
@@ -408,10 +403,10 @@ int proc_file(char *fname, int vflg)
       else if (i < etag_idx || i >= max_tags) {
          prn_fname(&tcnt, fname, vflg);
          if (tags[i].c != 0)
-            fprintf(stderr, "\t*** duplicated tag - @@%.*s (lines %d, %d)\n",
+            fprintf(stderr, "  *** duplicated tag - @@%.*s (lines %d, %d)\n",
                     ic, cp, tags[i].r, lineno);
          else
-            fprintf(stderr, "\t*** unrecognized tag - @@%.*s\n", ic, cp);
+            fprintf(stderr, "  *** unrecognized tag - @@%.*s\n", ic, cp);
       }
    }
    fclose(fp);
@@ -419,7 +414,7 @@ int proc_file(char *fname, int vflg)
    if (ctag) return cnt;
    if (!tags[0].c || !tags[1].c) {
       prn_fname(&tcnt, fname, vflg);
-      fprintf(stderr, "\t*** no");
+      fprintf(stderr, "  *** no");
       if (!tags[0].c) fprintf(stderr, " @@%s", tags[0].name);
       if (!tags[0].c && !tags[1].c) fprintf(stderr, " or");
       if (!tags[1].c) fprintf(stderr, " @@%s", tags[1].name);
@@ -428,7 +423,7 @@ int proc_file(char *fname, int vflg)
    if ((vflg&F_STRICT) && !tags[vtag_idx].c) {
       tcnt |= T_MTAGS;
       prn_fname(&tcnt, fname, vflg);
-      fprintf(stderr, "\t*** no @@%s tag found\n", tags[vtag_idx].name);
+      fprintf(stderr, "  *** no @@%s tag found\n", tags[vtag_idx].name);
    }
 
    /* fix tag values when required */
@@ -466,7 +461,7 @@ int get_mkeys(char *kbuf, char *sname, char *tag)
          n = 0;
       tag[n] = '\0';
       if (*cp == ']') cp++;
-      while (*cp == ' ' || *cp == '\t') cp++;
+      skipspc(0, cp);
    }
    else
       tag[0] = '\0';
@@ -617,17 +612,17 @@ void usage(char *pgnam)
    printf("options:\n\
   -sc      ; strictly check for \"@@<tag>:\"\n\
   -vtag    ; check version tags in tex file\n\
-  -clen<n> ; check line length over a limit (def <n>=75)\n\
+  -clen<n> ; check line length over a limit (def <n>=%d)\n\
   -fix     ; apply tag fix if needed (to <filename>_fix)\n\
   -list    ; list tags (with -vtag to list version tags)\n\
-  -v       ; view filenames\n");
+  -v       ; view filenames\n", LLN_DEF);
    exit(0);
 }
 
 /* the driver */
 int main(int argc, char *argv[])
 {
-   int cnt, fcnt = -1, bcnt = -1, scnt = 0, tcnt = 0, vflg = 0, lln = 75;
+   int cnt, fcnt = -1, bcnt = -1, scnt = 0, tcnt = 0, vflg = 0, lln = LLN_DEF;
    char *pgnam = strrchr(argv[0], '/');
    pgnam = pgnam? (pgnam+1) : argv[0];
    while (--argc > 0) {
@@ -648,7 +643,7 @@ int main(int argc, char *argv[])
          if (*cp == '=') cp++;
          if (*cp) {
             lln = atoi(cp);
-            if (lln < 2) lln = 75;
+            if (lln < 2) lln = LLN_DEF;
          }
       }
       else if (strcmp(cp, "-h") == 0)

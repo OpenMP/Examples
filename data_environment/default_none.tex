@@ -1,17 +1,17 @@
-\pagebreak
-\section{\code{default(none)} Clause}
+%\pagebreak
+\section{\kcode{default(none)} Clause}
 \label{sec:default_none}
-\index{clauses!default(none)@\code{default(none)}}
-\index{default(none) clause@\code{default(none)} clause}
+\index{clauses!default(none)@\kcode{default(none)}}
+\index{default(none) clause@\kcode{default(none)} clause}
 
-The following example distinguishes the variables that are affected by the \code{default(none)} 
+The following example distinguishes the variables that are affected by the \kcode{default(none)} 
 clause from those that are not. 
 
 \ccppspecificstart
-Beginning with OpenMP 4.0, variables with \code{const}-qualified type and no mutable member 
-are no longer predetermined shared.  Thus, these variables (variable \plc{c} in the example) 
+Beginning with OpenMP 4.0, variables with \bcode{const}-qualified type and no mutable member 
+are no longer predetermined shared.  Thus, these variables (variable \ucode{c} in the example) 
 need to be explicitly listed
-in data-sharing attribute clauses when the \code{default(none)} clause is specified.
+in data-sharing attribute clauses when the \kcode{default(none)} clause is specified.
 
 \cnexample{default_none}{1}
 \ccppspecificend

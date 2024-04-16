@@ -1,19 +1,19 @@
-\pagebreak
-\section{\code{taskgroup} Construct}
+%\pagebreak
+\section{\kcode{taskgroup} Construct}
 \label{sec:taskgroup}
-\index{constructs!taskgroup@\code{taskgroup}}
-\index{taskgroup construct@\code{taskgroup} construct}
+\index{constructs!taskgroup@\kcode{taskgroup}}
+\index{taskgroup construct@\kcode{taskgroup} construct}
 
-In this example, tasks are grouped and synchronized using the \code{taskgroup} 
+In this example, tasks are grouped and synchronized using the \kcode{taskgroup} 
 construct.
 
-Initially, one task (the task executing the \code{start\_background\_work()} 
-call) is created in the \code{parallel} region, and later a parallel tree traversal 
-is started (the task executing the root of the recursive \code{compute\_tree()} 
+Initially, one task (the task executing the \ucode{start_background_work()} 
+routine) is created in the \kcode{parallel} region, and later a parallel tree traversal 
+is started (the task executing the root of the recursive \ucode{compute_tree()} 
 calls). While synchronizing tasks at the end of each tree traversal, using the 
-\code{taskgroup} construct ensures that the formerly started background task 
+\kcode{taskgroup} construct ensures that the formerly started background task 
 does not participate in the synchronization and is left free to execute in parallel. 
-This is opposed to the behavior of the \code{taskwait} construct, which would 
+This is opposed to the behavior of the \kcode{taskwait} construct, which would 
 include the background tasks in the synchronization.
 
 \cexample[4.0]{taskgroup}{1}

@@ -1,0 +1,393 @@
+%\pagebreak
+\section{Context-based Variant Selection}
+\label{sec:context_based_variants}
+
+\index{directives!declare variant@\kcode{declare variant}}
+\index{directives!metadirective@\kcode{metadirective}}
+
+\index{OpenMP context@OpenMP context}
+\index{context selector@context selector}
+\index{trait selector set@trait selector set}
+\index{trait selector@trait selector}
+\index{trait property@trait property}
+
+Certain directives, including \kcode{declare variant},
+\kcode{begin declare variant}, and \kcode{metadirective}
+directives, specify function or directive variants for callsite or directive
+substitution. They use \plc{context selectors} to specify the contexts in which
+the variant may be selected for substitution. A context selector specifies
+various \plc{trait selectors}, grouped into \plc{trait selector sets}. A trait
+selector, for a given trait selector set, identifies a corresponding trait
+(and, in some cases, its trait properties) that may or may not be active in an
+\plc{OpenMP context}. A context selector is considered to be \plc{compatible}
+with a given OpenMP context if all traits and trait properties corresponding to
+trait selectors are active in that context. 
+
+Each context selector is a comma-separated list of trait selector sets and each
+trait selector set has the form \plc{trait-selector-name}~\kcode{=\{}~
+\plc{trait-selector-list}~\kcode{\}}, where \plc{trait-selector-list} is a
+comma-separated list of trait selectors. Some trait selectors may in turn
+specify one or more \plc{trait properties}. Additionally, a trait selector may
+optionally specify a \plc{trait score} for explicit control over variant
+selection.
+
+Consider this context selector: \kcode{construct=\{teams,parallel,for\},} 
+\kcode{device=\{arch(nvptx)\},} \kcode{user=\{condition(\ucode{N>32})\}}. 
+
+The context selector specifies three distinct trait selector sets, a
+\kcode{construct} trait selector set, a \kcode{device} trait selector set, and
+a \kcode{user} trait selector set. The \kcode{construct} trait selector set
+specifies three trait selectors: \kcode{teams}, \kcode{parallel}, and
+\kcode{for}. The \kcode{device} trait selector set specifies one trait
+selector: \kcode{arch(nvptx)}. And the \kcode{user} trait selector set
+specifies one trait selector: \kcode{condition(\ucode{N>32})}. 
+
+The \kcode{teams}, \kcode{parallel}, and \kcode{for} trait selectors
+respectively require that the \plc{teams}, \plc{parallel}, and \plc{for} traits
+are active in the \plc{construct} trait set of the OpenMP context (i.e., the
+\kcode{teams}, \kcode{parallel}, and \kcode{for} constructs are enclosing
+constructs that do not appear outside any enclosing \kcode{target} construct at
+the program point of interest). The \kcode{arch} trait selector specifies the
+\kcode{nvptx} trait property, requiring that \plc{nvptx} is one of the
+supported architectures per the \plc{arch} trait of the \plc{device} trait set
+of the OpenMP context. Finally, the \kcode{condition} trait selector specifies
+the \ucode{N>32} expression as a trait property, requiring that \ucode{N>32}
+evaluates to \plc{true} in the OpenMP context.
+
+The remainder of this section presents examples that make use of context
+selectors for function and directive variant selection. Sections
+\ref{subsec:declare_variant} and \ref{subsec:metadirective} cover cases where
+only one context selector is compatible. 
+Section \ref{subsec:context_selector_scoring} covers cases where 
+multiple compatible context selectors exist and a scoring algorithm 
+determines which one of the variants is selected.
+
+\subsection{\kcode{declare variant} Directive}
+\label{subsec:declare_variant}
+\index{directives!declare variant@\kcode{declare variant}}
+\index{declare variant directive@\kcode{declare variant} directive}
+\index{declare variant directive@\kcode{declare variant} directive!match clause@\kcode{match} clause}
+\index{clauses!match@\kcode{match}}
+\index{match clause@\kcode{match} clause}
+
+A \kcode{declare variant} directive specifies an alternate function, 
+\plc{function variant}, to be used in place of the \plc{base function} 
+%when the trait within the \kcode{match} clause has a valid context.
+when the trait within the \kcode{match} clause matches the OpenMP context at a given callsite.
+The base function follows the directive in the C and C++ languages.
+In Fortran, either a subroutine or function may be used as the base function,
+and the \kcode{declare variant} directive must be in the specification 
+part of a subroutine or function (unless a \plc{base-proc-name}
+modifier is used, as in the case of a procedure declaration statement). See
+the OpenMP 5.0 Specification for details on the modifier.
+
+When multiple \kcode{declare variant} directives are used 
+a function variant becomes a candidate for replacing the base function if the
+%base function call context matches the traits of all selectors in the \kcode{match} clause.
+context at the base function call matches the traits of all selectors in the \kcode{match} clause.
+If there are multiple candidates, a score is assigned with rules for each
+of the selector traits. 
+See Section \ref{subsec:context_selector_scoring} for details.
+%The scoring algorithm can be found in the OpenMP 5.0 Specification.
+
+In the first example the \ucode{vxv()} function is called within a \kcode{parallel} region,
+a \kcode{target} region, and in a sequential part of the program.  Two function variants, \ucode{p_vxv()} and \ucode{t_vxv()},
+are defined for the first two regions by using \kcode{parallel} and \kcode{target} selectors (within
+the \plc{construct} trait set) in a \kcode{match} clause.  The \ucode{p_vxv()} function variant includes
+a \kcode{for} construct (\kcode{do} construct for Fortran) for the \kcode{parallel} region, 
+while \ucode{t_vxv()} includes a \kcode{distribute simd} construct for the \kcode{target} region.
+The \ucode{t_vxv()} function is explicitly compiled for the device using a declare target directive.
+
+Since the two \kcode{declare variant} directives have no selectors that match traits for the context
+of the base function call in the sequential part of the program, the base \ucode{vxv()} function is used there, 
+as expected.
+(The vectors in the \ucode{p_vxv} and \ucode{t_vxv} functions have been multiplied
+by 3 and 2, respectively, for checking the validity of the replacement. Normally
+the purpose of a function variant is to produce the same results by a different method.)
+
+%Note: a \code{target teams} construct is used to direct execution onto a device, with a
+%\code{distribute simd} construct in the function variant. As of the OpenMP 5.0 implementation
+%no intervening code is allowed between a \code{target} and \code{teams} construct. So
+%using a \code{target} construct to direct execution onto a device, and including 
+%\code{teams distribute simd} in the variant function would produce non conforming code.
+
+\cexample[5.1]{declare_variant}{1}
+
+\ffreeexample[5.0]{declare_variant}{1}
+
+In this example, traits from the \plc{device} set are used to select a function variant.
+In the \kcode{declare variant} directive, an \kcode{isa} trait selector
+specifies that if the implementation of the ``\vcode{core-avx512}''
+instruction set is detected at compile time the \ucode{avx512_saxpy()}
+variant function is used for the call to \ucode{base_saxpy()}.  
+
+A compilation of \ucode{avx512_saxpy()} is aware of
+the AVX-512 instruction set that supports 512-bit vector extensions.
+Within \ucode{avx512_saxpy()}, the \kcode{parallel for simd} construct performs parallel execution, and
+takes advantage of 64-byte data alignment. 
+When the \ucode{avx512_saxpy()} function variant is not selected, the base \ucode{base_saxpy()} function variant
+containing only a basic \kcode{parallel for} construct is used for the call to \ucode{base_saxpy()}.
+
+%Note:
+%An allocator is used to set the alignment to 64 bytes when an OpenMP compilation is performed.  
+%Details about allocator variable declarations and functions
+%can be found in the allocator example of the Memory Management Chapter.
+
+\cexample[5.0]{declare_variant}{2}
+
+\ffreeexample[5.0]{declare_variant}{2}
+
+The \kcode{begin declare variant} with a paired \kcode{end declare variant} directive was introduced 
+for C/C++ in the OpenMP 5.1 to allow nesting of declare variant directives. 
+This example shows a practical situation where nested declare variant directives can be used 
+to include the correct specialized user function based on the underlying vendor \kcode{isa} trait. 
+The function name \ucode{my_fun()} is identical in all the header files and the version called will 
+differ based on the calling context. The example assumes that either NVIDIA or AMD target devices are used. 
+
+\index{directives!begin declare variant@\kcode{begin declare variant}}
+\index{begin declare variant directive@\kcode{begin declare variant} directive}
+
+\cexample[5.1]{declare_variant}{3}
+
+%%%%%%%%%%%%%
+\subsection{Metadirectives}
+\label{subsec:metadirective}
+\index{directives!metadirective@\kcode{metadirective}}
+\index{metadirective directive@\kcode{metadirective} directive}
+
+\index{metadirective directive@\kcode{metadirective} directive!when clause@\kcode{when} clause}
+\index{metadirective directive@\kcode{metadirective} directive!otherwise clause@\kcode{otherwise} clause}
+\index{clauses!when@\kcode{when}}
+\index{when clause@\kcode{when} clause}
+\index{clauses!otherwise@\kcode{otherwise}}
+\index{otherwise clause@\kcode{otherwise} clause}
+A \kcode{metadirective} directive provides a mechanism to select a directive in
+a \kcode{when} clause to be used, depending upon one or more contexts:  
+implementation, available devices and the present enclosing construct. 
+The directive in an \kcode{otherwise} clause is used when a directive of the 
+\kcode{when} clause is not selected.
+
+\index{context selector!construct@\plc{construct}}
+In the \kcode{when} clause the \plc{context selector} (or just \plc{selector}) defines traits that are
+evaluated for selection of the directive that follows the selector. 
+This ``selectables'' directive is called a \plc{directive variant}.
+%Traits are grouped by \plc{construct}, \plc{implementation} and 
+%\plc{device} \plc{sets} to be used by a selector of the same name.
+
+\index{context selector!device@\plc{device}}
+In the first example the \plc{arch} trait of the
+\kcode{device} selector set specifies that if an \ucode{nvptx} architecture is
+active in the OpenMP context, then the \kcode{teams loop}
+directive variant is selected as the directive; otherwise, the \kcode{parallel loop}
+directive variant of the \kcode{otherwise} clause is selected as the directive.
+That is, if a device of \ucode{nvptx} architecture is supported by the implementation within
+the enclosing \kcode{target} construct, its directive variant is selected.
+The architecture names, such as \ucode{nvptx}, are implementation defined.
+Also, note that the \kcode{device} clause specified in a \kcode{target} construct specifies
+a device number, while \kcode{device}, as used in the \kcode{metadirective}
+directive as selector set, has traits of \plc{kind}, \plc{isa} and \plc{arch}.
+
+
+\cexample[5.2]{metadirective}{1}
+
+\ffreeexample[5.2]{metadirective}{1}
+\pagebreak
+
+\index{context selector!implementation@\plc{implementation}}
+In the second example, the \kcode{implementation} selector set is specified
+in the \kcode{when} clause to distinguish between platforms. 
+Additionally, specific architectures are specified with the \kcode{device}
+selector set.
+
+In the code, different \kcode{teams} constructs are employed as determined
+by the \kcode{metadirective} directive.
+The number of teams is restricted by a \kcode{num_teams} clause
+and a thread limit is also set by a \kcode{thread_limit} clause for 
+vendor platforms and specific architecture
+traits.  Otherwise, just the \kcode{teams} construct is used without
+any clauses, as prescribed by the \kcode{otherwise} clause.
+
+
+\cexample[5.2]{metadirective}{2}
+
+\ffreeexample[5.2]{metadirective}{2}
+
+\index{context selector!construct@\plc{construct}}
+
+\index{directives!declare target@\kcode{declare target}}
+\index{declare target directive@\kcode{declare target} directive}
+
+\index{directives!begin declare target@\kcode{begin declare target}}
+\index{begin declare target directive@\kcode{begin declare target} directive}
+
+In the third example, a \kcode{construct} selector set is specified in the \kcode{when} clause.
+Here, a \kcode{metadirective} directive is used within a function that is also
+compiled as a function for a target device as directed by a declare target directive.
+The \kcode{target} directive name of the \kcode{construct} selector ensures that the
+\kcode{distribute parallel for/do} construct is employed for the target compilation.
+Otherwise, for the host-compiled version the \kcode{parallel for/do simd} construct is used.
+
+In the first call to the \ucode{exp_pi_diff()} routine the context is a
+\kcode{target teams} construct and the \kcode{distribute parallel for/do}
+construct version of the function is invoked,
+while in the second call the \kcode{parallel for/do simd} construct version is used.
+
+%%%%%%%%
+This case illustrates an important point for users that may want to hoist the 
+\kcode{target} directive out of a function that contains the usual 
+\kcode{target teams distribute parallel for/do} construct
+(for providing alternate constructs through the \kcode{metadirective} directive as here).
+While this combined construct can be decomposed into a \kcode{target} and
+\kcode{teams distribute parallel for/do} constructs, the OpenMP 5.0 specification has the restriction:
+``If a \kcode{teams} construct is nested within a \kcode{target} construct, that \kcode{target} construct must
+contain no statements, declarations or directives outside of the \kcode{teams} construct''.
+So, the \kcode{teams} construct must immediately follow the \kcode{target} construct without any intervening
+code statements (which includes function calls).  
+Since the \kcode{target} construct alone cannot be hoisted out of a function, 
+the \kcode{target teams} construct has been hoisted out of the function, and 
+the \kcode{distribute parallel for/do} construct is used
+as the variant directive of the \kcode{metadirective} directive within the function.
+%%%%%%%%
+
+\cexample[5.2]{metadirective}{3}
+
+\ffreeexample[5.2]{metadirective}{3}
+\pagebreak
+
+\index{context selector!user@\plc{user}}
+\index{context selector!condition selector@\kcode{condition} selector}
+
+The \kcode{user} selector set can be used in a \kcode{metadirective}
+to select directives at execution time when the 
+\kcode{condition( \plc{boolean-expr} )} selector expression is not a constant expression.
+In this case it is a \plc{dynamic} trait set, and the selection is made at run time, rather
+than at compile time.
+
+In the following example the \ucode{foo} function employs the \kcode{condition}
+selector to choose a device for execution at run time. 
+In the \ucode{bar} routine metadirectives are nested.
+At the outer level a selection between serial and parallel execution in performed
+at run time, followed by another run time selection on the schedule kind in the inner
+level when the active \plc{construct} trait is \kcode{parallel}.
+
+(Note, the variable \ucode{b} in two of the ``selected'' constructs is declared private for the sole purpose 
+of detecting and reporting that the construct is used. Since the variable is private, its value 
+is unchanged outside of the construct region, whereas it is changed if the ``unselected'' construct
+is used.)
+
+%(Note: The value of \plc{b} after the \code{parallel} region remains 0 for the 
+%\code{guided} scheduling case, because its \code{parallel} construct also contains
+%the \code{private(}~\plc{b}~\code{)} clause. 
+%The variable \plc{b} is employed for the sole purpose of distinguishing which 
+%\code{parallel} construct is selected-- for testing.)
+
+%While there might be other ways to make these decisions at run time, such as using 
+%an \code{if} clause on a \code{parallel} construct, this mechanism is much more general.  
+%For instance, an input ``gpu\_type'' string could be used and tested in boolean expressions 
+%to select from one of several possible \code{target} constructs.
+%Also, setting the scheduling variable (\plc{unbalanced}) within the execution through a 
+%``work balance'' function might be a more practical approach for setting the schedule kind.
+
+
+\cexample[5.2]{metadirective}{4}
+
+\ffreeexample[5.2]{metadirective}{4}
+\pagebreak
+
+Metadirectives can be used in conjunction with templates as shown in the C++ code below.
+Here the template definition generates two versions of the Fibonacci function.
+The \ucode{tasking} boolean is used in the \kcode{condition} selector to enable tasking.
+The true form implements a parallel version with \kcode{task} and \kcode{taskwait}
+constructs as in the \example{tasking.4.c} code in Section~\ref{sec:task_taskwait}. 
+The false form implements a serial version without any tasking constructs.
+Note that the serial version is used in the parallel function for optimally
+processing numbers less than 8.
+
+\cppexample[5.0]{metadirective}{5}
+
+%\pagebreak
+\subsection{Context Selector Scoring}
+
+\label{subsec:context_selector_scoring}
+\index{context selector scoring@context selector scoring}
+
+Each context selector for which all specified traits are active in the current
+\plc{OpenMP context} is a \plc{compatible context selector}, and the associated
+function variant or directive variant for such a context selector is a
+\plc{replacement candidate}. The final \plc{score} of each of the compatible
+context selectors determine which of the replacement candidates is selected for
+substitution. 
+
+For a given compatible context selector, the score is calculated according
+to the specified trait selectors and their corresponding traits. If the trait
+selectors are a strict subset of the trait selectors specified by another
+compatible context selector then the score of the context selector is zero.
+Otherwise, the final score is one plus the sum of the score values of each
+specified trait selector.
+
+A replacement candidate is selected if no other candidate has a higher scoring
+context selector. If multiple replacement candidates have a context selector
+with the same highest score, the one specified first on the metadirective is
+selected. If multiple function variants are replacement candidates that have
+context selectors with the same highest score, the one that is selected is
+implementation defined.
+
+If a \kcode{construct} selector set is specified in the context selector, each
+active construct trait that is named in that selector set contributes a score
+of $2^{p-1}$, where $p$ is the position of that trait in the current
+\plc{construct} trait set (the set of traits in the OpenMP context). If a
+\kcode{device} or \kcode{target_device} selector set is specified in the
+selector, then an active \plc{kind}, \plc{arch}, or \plc{isa} trait that is
+named in the selector set contributes a score of $2^l$, $2^{l+1}$, and
+$2^{l+2}$, respectively, where $l$ is the number of traits in the
+\plc{construct} trait set. For any other active traits that are named in the
+context selector that are not implementation-defined extensions, the
+contributed score, by default, is zero. 
+
+The default score for any active traits other than \plc{construct} traits and 
+the \plc{kind}, \plc{arch}, or \plc{isa} traits may be overridden with an
+explicit score expression. Specifying an explicit score is only recommended
+for prioritizing replacement candidates for which a selection is not 
+dependent on construct traits. That is, none of the compatible context
+selectors specify a \kcode{construct} trait selector or a \kcode{kind},
+\kcode{arch}, or \kcode{isa} trait selector. 
+
+In the following example, four function variants are declared for the procedure
+\ucode{f}: \ucode{fx1}, \ucode{fx2}, \ucode{fx3}, and \ucode{fx4}. Suppose that
+the target device for the \kcode{target} region has the \plc{gpu} device kind,
+has the \plc{nvptx} architecture, and supports the \splc{sm_70} instruction set
+architecture. Hence, the context selectors for all function variants are
+compatible with the context at the callsite for \ucode{f} inside the
+\kcode{target} region. The \plc{construct} trait set at the callsite,
+consisting of all enclosing constructs and having a count of \plc{l=6}, is:
+\{\plc{target}, \plc{teams}, \plc{distribute}, \plc{parallel},
+\plc{for}/\plc{do}, \plc{task}\}. Note that only \plc{context-matching}
+constructs, which does not include \kcode{distribute} or \kcode{task}, may be
+named by a \kcode{construct} trait selector as of OpenMP 5.2. The score for
+\ucode{fx1} is $1+2^0=2$, for \ucode{fx2} is $1+2^1+2^3+2^4=27$,
+for \ucode{fx3} is $1+2^6+2^8=321$, and for \ucode{fx4} is $1+2^7+2^8=385$.
+Since \ucode{fx4} is the function variant that has the highest scoring
+selector, it is selected by the implementation at the callsite.
+
+\cexample[5.0]{selector_scoring}{1}
+
+\ffreeexample[5.0]{selector_scoring}{1}
+
+In the next example, three function variants are declared for the procedure
+\ucode{kernel}: \ucode{kernel_target_ua}, \ucode{kernel_target_usm}, and 
+\ucode{kernel_target_usm_v2}. Suppose that the implementation supports the 
+\splc{unified_address} and \splc{unified_shared_memory} requirements, so that
+the context selectors for all function variants are compatible. The score for 
+\ucode{kernel_target_ua} is 1, which is one plus the zero score associated with
+the active \splc{unified_address} requirement. The score for 
+\ucode{kernel_target_usm} is 0, as the selector is a strict subset of the 
+selector for \ucode{kernel_target_usm_v2}. The score for 
+\ucode{kernel_target_usm_v2} is 2, which is one plus the explicit score of 1
+for the \plc{condition} trait and the zero score associated with the acive
+\splc{unified_shared_memory} requirement . Since \ucode{kernel_target_usm_v2}
+is the function variant that has the highest scoring selector, it is selected
+by the implementation at the callsite.
+
+\cexample[5.0]{selector_scoring}{2}
+
+\ffreeexample[5.0]{selector_scoring}{2}

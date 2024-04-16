@@ -1,4 +1,4 @@
-\pagebreak
+%\pagebreak
 \section{Restrictions on Nesting of Regions}
 \label{sec:nesting_restrict}
 
@@ -18,32 +18,33 @@ The following orphaned version of the preceding example is also non-conforming:
 
 \fexample{nesting_restrict}{2}
 
-The following example is non-conforming because the loop and \code{single} regions 
+The following example is non-conforming because the loop and \kcode{single} regions 
 are closely nested:
 
 \cexample{nesting_restrict}{3}
+\pagebreak
 
 \fexample{nesting_restrict}{3}
 
-The following example is non-conforming because a \code{barrier} region cannot 
+The following example is non-conforming because a \kcode{barrier} region cannot 
 be closely nested inside a loop region:
 
 \cexample{nesting_restrict}{4}
 
 \fexample{nesting_restrict}{4}
 
-The following example is non-conforming because the \code{barrier} region cannot 
-be closely nested inside the \code{critical} region. If this were permitted, 
+The following example is non-conforming because the \kcode{barrier} region cannot 
+be closely nested inside the \kcode{critical} region. If this were permitted, 
 it would result in deadlock due to the fact that only one thread at a time can 
-enter the \code{critical} region:
+enter the \kcode{critical} region:
 
 \cexample{nesting_restrict}{5}
 
 \fexample{nesting_restrict}{5}
 
-The following example is non-conforming because the \code{barrier} region cannot 
-be closely nested inside the \code{single} region. If this were permitted, it 
-would result in deadlock due to the fact that only one thread executes the \code{single} 
+The following example is non-conforming because the \kcode{barrier} region cannot 
+be closely nested inside the \kcode{single} region. If this were permitted, it 
+would result in deadlock due to the fact that only one thread executes the \kcode{single} 
 region:
 
 \cexample{nesting_restrict}{6}

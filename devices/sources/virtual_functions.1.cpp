@@ -6,7 +6,6 @@
 * @@version:	omp_5.2
 */
 #include <iostream>
-#pragma omp requires unified_shared_memory
 
 #pragma omp begin declare target
 class A {  
@@ -22,39 +21,24 @@ class D: public A {
 
 int main(){
 
-   // Section 1 --------------------------------------------------------
-   D d;               // D derives from A, and A::vf() is virtual
-   A &ar = d;         // reference to Derived object d
+   D d;               // D derives from A, and vf() is virtual
 
-   #pragma omp target // implicit map of ar is illegal here
-   {
-      ar.vf();        // unspecified whether A::vf() or D::vf() is called
-   }
-   
-   A *ap = &d;        // pointer to derived object d
-   #pragma omp target // No need for mapping with Unified Share Memory
-   {                  // implicit ap[:0] map is fine 
-      ap->vf();       // calls D::vf()
-   }
+ #pragma omp target data map(d)
+ {
+    // Case 1
+    A *ap = &d;        // pointer to derived object d
+    #pragma omp target // ap is firstprivate
+    {
+       ap->vf();       // calls D::vf()
+    }
 
-   // Section 2 --------------------------------------------------------
-   ap = nullptr;
-   #pragma omp target map(ap)
-   {
-        ap = new A();
-   }
-   
-   ap->vf();     // illegal
-
-   #pragma omp target
-   {
-      delete ap;
-   }
-   ap = new A();
-   #pragma omp target  // No need for mapping with Unified Share Memory
-   {
-      ap->vf();  // ok
-   }
+    // Case 2
+    A &ar = d;         // reference to Derived object d
+    #pragma omp target // ar is implicitly mapped
+    {
+       ar.vf();        // unspecified behavior
+    }
+ }
 
    return 0;
 }

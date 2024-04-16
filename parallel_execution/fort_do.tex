@@ -1,19 +1,20 @@
 \pagebreak
-\section{Fortran Restrictions on the \code{do} Construct}
+\section{Fortran Restrictions on the \kcode{do} Construct}
 \label{sec:fort_do}
-\index{constructs!do@\code{do}}
-\index{do construct@\code{do} construct}
+\index{constructs!do@\kcode{do}}
+\index{do construct@\kcode{do} construct}
 \fortranspecificstart
 
-If an \code{end do} directive follows a \plc{do-construct}  in which several 
-\code{DO} statements share a \code{DO} termination statement, then a  \code{do} 
-directive can only be specified for the outermost of these \code{DO} statements. 
-The following example contains correct usages of loop constructs:
+If an \kcode{end do} directive follows a \plc{do-construct} in which several 
+\bcode{DO} statements share a \bcode{DO} termination statement, then a  \kcode{do} 
+directive can only be specified for the outermost of these \bcode{DO} statements. 
+The following example contains correct usages of 
+\kcode{do} constructs:
 
 \fnexample{fort_do}{1}
 
-The following example is non-conforming because the matching \code{do} directive 
-for the \code{end do} does not precede the outermost loop:
+The following example is non-conforming because the matching \kcode{do} directive 
+for the \kcode{end do} does not precede the outermost loop:
 
 \fnexample{fort_do}{2}
 \fortranspecificend

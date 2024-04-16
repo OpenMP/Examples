@@ -1,0 +1,31 @@
+%\pagebreak
+\section{Atomic Hint}
+\label{sec:atomic_hint}
+\index{constructs!atomic@\kcode{atomic}}
+\index{atomic construct@\kcode{atomic} construct}
+\index{atomic construct@\kcode{atomic} construct!hint clause@\kcode{hint} clause}
+\index{clauses!hint@\kcode{hint}}
+\index{hint clause@\kcode{hint} clause}
+
+The atomic \kcode{hint} clause can be used to specify the
+expected access to an atomic operation; thereby providing a hint
+to be used for optimizing the synchronization of the atomic operation.
+
+In the example below the \kcode{omp_sync_hint_uncontended} constant
+in the \kcode{hint} clause specifies that few threads are expected
+to attempt to perform the atomic operation at the same time.
+This is justified in this case if \ucode{calc_vals} takes considerably
+more time than the atomic operations, and the subsequent time of
+arrival to execute the \kcode{atomic} region is varied about a mean time
+and by times (much) greater than the execution time of the atomic
+operation.
+
+In the case where the execution time for \ucode{calc_vals} is short
+compared to the atomic operation time, the \kcode{omp_sync_hint_contended}
+hint parameter might be used. 
+
+\cexample[5.0]{atomic}{4}
+
+\ffreeexample[5.0]{atomic}{4}
+
+
