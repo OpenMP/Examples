@@ -158,8 +158,18 @@ The following describes LaTeX macros defined specifically for examples.
    \cppspecificstart, \cppspecificend
    \ccppspecificstart, \ccppspecificend
    \fortranspecificstart, \fortranspecificend
+   \begin{cspecific}[s] ... \end{cspecific}
+   \begin{cppspecific}[s] ... \end{cppspecific}
+   \begin{ccppspecific}[s] ... \end{ccppspecific}
+   \begin{fortranspecific}[s] ... \end{fortranspecific}
    \topmarker{Lang}
 ```
+
+   Use of the structured `\begin{} .. \end{}` environments is the preferred 
+   way of specifying language-dependent text over the unstructured approach
+   of using `\*specificstart` and `\*specificend`.
+   The option `[s]` to each of the environments can specify a vertical shift 
+   for the beginning rule, such as when followed by a section header.
 
    The macro `\topmarker` puts a dashed blue line floater at top of a page for 
    "Lang (cont.)" where `Lang` can be `C/C++`, `C++`, `Fortran`.

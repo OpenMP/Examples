@@ -3,8 +3,8 @@
 \index{directive syntax}
 
 OpenMP \plc{directives} use base-language mechanisms to specify OpenMP program behavior.
-In C code, the directives are formed exclusively with pragmas, whereas in C++
-code, directives are formed from either pragmas or attributes.
+In C/C++ code, the directives are formed with 
+either pragmas or attributes.
 Fortran directives are formed with comments in free form and fixed form sources (codes).
 All of these mechanisms allow the compilation to ignore the OpenMP directives if
 OpenMP is not supported or enabled.
@@ -20,18 +20,27 @@ The formats for combining a base-language mechanism and a \plc{directive-specifi
 
 C/C++ pragmas
 \begin{indentedcodelist}
-\kcode{\#pragma omp} \plc{directive-specification}
+#pragma omp \plc{directive-specification}
 \end{indentedcodelist}
 
-C++ attributes
+C/C++ attribute specifiers
 \begin{indentedcodelist}
-\kcode{[[omp :: directive( \plc{directive-specification} )]]}
-\kcode{[[using omp : directive( \plc{directive-specification} )]]}
+[[omp :: directive( \plc{directive-specification} )]]
+[[omp :: decl( \plc{directive-specification} )]]
 \end{indentedcodelist}
+
+C++ attribute specifiers
+\begin{indentedcodelist}
+[[using omp : directive( \plc{directive-specification} )]]
+[[using omp : decl( \plc{directive-specification} )]]
+\end{indentedcodelist}
+
+where the \kcode{decl} attribute may be used for declarative
+directives alternatively.
 
 Fortran comments
 \begin{indentedcodelist}
-\scode{!$omp} \plc{directive-specification}
+!$omp \plc{directive-specification}
 \end{indentedcodelist}
 
 where \scode{c$omp} and \scode{*$omp} may be used in Fortran fixed form sources.

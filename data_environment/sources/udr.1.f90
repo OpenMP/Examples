@@ -2,7 +2,7 @@
 ! @@type:	F-free
 ! @@operation:	compile
 ! @@expect:	success
-! @@version:	omp_4.0
+! @@version:	omp_6.0
 module data_type
 
   type :: point
@@ -18,10 +18,12 @@ subroutine find_enclosing_rectangle ( n, points )
   integer :: n
   type(point) :: points(*)
 
-  !$omp declare reduction(min : point : minproc(omp_out, omp_in)) &
+  !$omp declare reduction(min : point) &
+  !$omp&  combiner( minproc(omp_out, omp_in) ) &
   !$omp&  initializer( omp_priv = point( HUGE(0), HUGE(0) ) )
 
-  !$omp declare reduction(max : point : maxproc(omp_out, omp_in)) &
+  !$omp declare reduction(max : point) &
+  !$omp&  combiner( maxproc(omp_out, omp_in) ) &
   !$omp&  initializer( omp_priv = point( 0, 0 ) )
 
   type(point) :: minp = point( HUGE(0), HUGE(0) ), maxp = point( 0, 0 )

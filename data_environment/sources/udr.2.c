@@ -3,7 +3,7 @@
 * @@type:	C
 * @@operation:	compile
 * @@expect:	success
-* @@version:	omp_4.0
+* @@version:	omp_6.0
 */
 #include <stdio.h>
 #include <limits.h>
@@ -13,15 +13,15 @@ struct point {
   int y;
 };
 
-#pragma omp declare reduction(min : struct point : \
-        omp_out.x = omp_in.x > omp_out.x  ? omp_out.x : omp_in.x, \
-        omp_out.y = omp_in.y > omp_out.y  ? omp_out.y : omp_in.y ) \
-        initializer( omp_priv = { INT_MAX, INT_MAX } )
+#pragma omp declare reduction(min : struct point)  \
+      combiner( omp_out.x = omp_in.x > omp_out.x ? omp_out.x : omp_in.x,  \
+                omp_out.y = omp_in.y > omp_out.y ? omp_out.y : omp_in.y ) \
+      initializer( omp_priv = { INT_MAX, INT_MAX } )
 
-#pragma omp declare reduction(max : struct point : \
-        omp_out.x = omp_in.x < omp_out.x  ? omp_out.x : omp_in.x,  \
-        omp_out.y = omp_in.y < omp_out.y  ? omp_out.y : omp_in.y ) \
-        initializer( omp_priv = { 0, 0 } )
+#pragma omp declare reduction(max : struct point)  \
+      combiner( omp_out.x = omp_in.x < omp_out.x ? omp_out.x : omp_in.x,  \
+                omp_out.y = omp_in.y < omp_out.y ? omp_out.y : omp_in.y ) \
+      initializer( omp_priv = { 0, 0 } )
 
 void find_enclosing_rectangle ( int n, struct point points[] )
 {

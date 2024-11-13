@@ -1,4 +1,4 @@
-! @@name:       usm_scalar_ptr_ref_ax.1
+! @@name:       usm_scalar_ptr_ref_asc.1
 ! @@type:       F-free
 ! @@operation:  compile
 ! @@expect:     success

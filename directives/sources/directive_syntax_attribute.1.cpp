@@ -3,7 +3,7 @@
 * @@type:	C++
 * @@operation:	run
 * @@expect:	success
-* @@version:	omp_5.1
+* @@version:	omp_6.0
 */
 #include <stdio.h>
 #include <omp.h>
@@ -77,5 +77,5 @@ int main() {
 //    OUTPUT: thrd no  2
 //    OUTPUT: thrd no  3
 
-//    repeated 3 time:
+//    repeated 3 times:
 //    OUTPUT: 656700.000000

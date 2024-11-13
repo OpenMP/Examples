@@ -18,7 +18,9 @@
 
 Assumption directives provide additional information about the expected properties of 
 the program that may be used by an implementation for optimization. 
-Ignoring this information should not alter the behavior of the program. The C/C++ example 
+Ignoring this information should not alter the behavior of the program. 
+
+The C/C++ example 
 shows the use of delimited scope (Case 1) and block-associated (Case 2) assumption directives.
 A similar effect is shown for Fortran where the \kcode{assumes} directive is used in the module (Case 1)
 and the block-associated directive uses an \kcode{end assume} termination (Case 2). 
@@ -32,3 +34,19 @@ could eliminate additional checks.
 
 \cexample[5.1]{assumption}{1}
 \ffreeexample[5.1]{assumption}{1}
+
+\pagebreak
+In the following example the \kcode{no_openmp} and \kcode{no_parallelism} assumption clauses are used.
+The \kcode{no_openmp} clause is shorthand for the \kcode{no_openmp_contructs} and \kcode{no_openmp_routines} clauses.
+
+In Case 1 the \kcode{assume} directive with the \kcode{no_openmp} clause is applied to an external function call \ucode{init}.
+Independent of the compiler's ability to derive necessary information about \ucode{init}, the \kcode{assume} directive guarantees 
+the absence of OpenMP constructs or OpenMP runtime calls so that the compiler may manage hardware and the runtime in a more optimal manner.
+
+In Case 2, the \kcode{assume} directive with \kcode{no_parallelism} is nested inside the \kcode{target teams loop} directive. By providing the information 
+that no other OpenMP parallelism generating constructs are going to be encountered in the function, 
+the implementation of \ucode{element_transform} may have an opportunity to optimize the code in the \kcode{loop} construct, 
+which may now be implemented using all additional threads available or via some other concurrency mechanism.
+
+\cexample[6.0]{assumption}{2}
+\ffreeexample[6.0]{assumption}{2}

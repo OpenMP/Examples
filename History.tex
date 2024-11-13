@@ -2,6 +2,74 @@
 \label{chap:history}
 
 %=====================================
+\section{Changes from 5.2.2 to 6.0}
+\label{sec:history_522_to_60}
+
+\begin{itemize}
+\item General changes:
+\begin{itemize}
+  \item Added a set of structured LaTeX environments for specifying
+    language-dependent text.  This allows extracting language-specific
+    content of the Examples document.  Refer to the content of
+    \examplesblob{v6.0/Contributions.md} for details.
+\end{itemize}
+
+\item Added the following examples for the 6.0 features:
+\begin{itemize}
+  \item \kcode{omp::decl} attribute for declarative directives in C/C++
+    (\specref{sec:attributes})
+  \item \kcode{transparent} clause on the \kcode{task} construct to enable dependences
+     between non-sibling tasks (\specref{subsec:depend_trans_task})
+  \item Task dependences for \kcode{taskloop} construct
+    (\specref{sec:taskloop_depend})
+  \item \kcode{num_threads} clause that appears inside \kcode{target} region
+    (\specref{subsec:target_teams_num_teams})
+  \item \kcode{nowait} clause with argument on the \kcode{target} construct to control deferment 
+     of target task (\specref{subsec:async_target_nowait_arg})
+  \item Traits for specifying devices (\specref{sec:device_env_traits})
+  \item \kcode{apply} clause with modifier argument to 
+    support selective loop transformations
+    (\specref{sec:apply_clause})
+  \item Reduction on private variables in a \kcode{parallel} region
+    (\specref{subsec:priv_reduction})
+  \item \kcode{induction} clause (\specref{subsec:induction})
+    and user-defined induction (\specref{subsec:user-defined-induction})
+  \item \kcode{init_complete} clause for \kcode{scan} directive to 
+    support initialization phase in scan operation
+    (\specref{sec:scan})
+  \item \kcode{assume} construct with \kcode{no_openmp} and \kcode{no_parallelism} clauses (\specref{sec:assumption})
+  \item \kcode{num_threads} clause with a list
+    (\specref{subsec:icv_nthreads})
+  \item \kcode{dispatch} construct to control variant substitution
+    for a procedure call (\specref{sec:dispatch})
+\end{itemize}
+
+\item Other changes:
+\begin{itemize}
+  \item Changed attribute specifier as a directive form from C++ only to C/C++
+    (\specref{chap:directive_syntax})
+  \item Added missing \bcode{include <omp.h>} in Example \example{atomic.4.c}
+    and \bcode{use omp_lib} in Example \example{atomic.4.f90}
+    (\specref{sec:atomic_hint})
+  \item Fixed the function declaration order for variant functions in
+    Examples \example{selector_scoring.[12].c} and Fortran pointer
+    initialization in Example \example{selector_scoring.2.f90}
+    (\specref{subsec:context_selector_scoring})
+  \item Replaced the deprecated use of \plc{combiner-exp} 
+    in \kcode{declare reduction} directive with \kcode{combiner} clause
+    (\specref{subsec:UDR} and \specref{sec:Updated Examples})
+  \item Fixed the initialization of Fortran pointers 
+    in Example \example{cancellation.2.f90} and changed to
+    use \kcode{atomic write} for performing atomic writes
+    (\specref{sec:cancellation})
+  \item Added missing \kcode{declare target} directive for external procedure
+    called inside \kcode{target} region in Example 
+    \example{requires.1.f90} (\specref{sec:requires})
+\end{itemize}
+
+\end{itemize}
+
+%=====================================
 \section{Changes from 5.2.1 to 5.2.2}
 \label{sec:history_521_to_522}
 

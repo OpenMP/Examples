@@ -3,7 +3,6 @@
 ! @@operation:  compile
 ! @@expect:     success
 ! @@version:    omp_5.1
-
 module m
   !$omp assumes no_parallelism
   interface
@@ -32,14 +31,12 @@ program main
    end do
 
 !! Case 1: Delimited scope, see module interface
-    
    !$omp target teams distribute parallel do map(tofrom: A)
    do i = 1, N
      call fun(A,i)
    end do
     
 !! Case 2: Block associated
-
    !$omp assume holds (8*(N/8) == N .and. N>0)  !! N is multiple of 8
    !$omp simd    
    do i = 1, N

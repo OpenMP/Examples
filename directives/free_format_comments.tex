@@ -1,4 +1,5 @@
 %\pagebreak
+\begin{fortranspecific}[4ex]
 \section{Fortran Comments (Free Source Form)}
 \label{sec:fortran_free_format_comments}
 \index{directive syntax!free form, Fortran}
@@ -18,7 +19,7 @@ two separate directives.
 Here, an \kcode{end} directive (\kcode{end parallel}) must be specified to demarcate the range (region)
 of the \kcode{parallel} directive. 
 
-\ffreeexample{directive_syntax_F_free_comment}{1}
+\ffreenexample{directive_syntax_F_free_comment}{1}
 \clearpage
 
 As of OpenMP 5.1, \bcode{block} and \bcode{end block} statements can be used to designate 
@@ -28,7 +29,8 @@ block structure and are hence private.
 It was necessary to explicitly declare the \ucode{i} variable, due to the \bcode{implicit none} statement; 
 it could have also been declared outside the structured block.
 
-\ffreeexample[5.1]{directive_syntax_F_block}{1}
+\topmarker{Fortran}
+\ffreenexample[5.1]{directive_syntax_F_block}{1}
 
 A Fortran \bcode{BLOCK} construct may eliminate the need for a paired \kcode{end} directive for an OpenMP construct, 
 as illustrated in the following example.
@@ -48,4 +50,6 @@ a strictly structured block of an OpenMP construct is treated as the terminating
 of that construct. 
 The next \kcode{end parallel} directive is required to terminate the outer \kcode{parallel} construct.
 
-\ffreeexample[5.1]{directive_syntax_F_block}{2}
+\topmarker{Fortran}
+\ffreenexample[5.1]{directive_syntax_F_block}{2}
+\end{fortranspecific}

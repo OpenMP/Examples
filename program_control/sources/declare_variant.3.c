@@ -2,7 +2,7 @@
 * @@name:	declare_variant.3
 * @@type:	C
 * @@operation:	view
-* @@expect:	
+* @@expect:	none
 * @@version:	omp_5.1
 */
 

@@ -5,6 +5,7 @@
 * @@expect:	success
 * @@version:	omp_5.0
 */
+#include <omp.h>
 
 void calc_val(float *val);
 

@@ -28,8 +28,10 @@ the rectangle that encloses a set of 2-D points.
 
 Each \kcode{declare reduction} directive defines new reduction identifiers,
 \ucode{min} and \ucode{max}, to be used in a \kcode{reduction} clause. The next item in the
-declaration list is the data type (\ucode{struct point}) used in the reduction,
-followed by the combiner, here the functions \ucode{minproc} and \ucode{maxproc} perform
+declaration list is the data type (\ucode{struct point}) used in the
+reduction.
+The \kcode{combiner} clause specifies the functions \ucode{minproc} and
+\ucode{maxproc} to perform
 the min and max operations, respectively, on the user data (of type \ucode{struct point}).
 In the function argument list are two special OpenMP variable identifiers, \kcode{omp_in} and \kcode{omp_out},
 that denote the two values to be combined in the ``real'' function;
@@ -39,7 +41,7 @@ The initializer of the \kcode{declare reduction} directive specifies
 the initial value for the private variable of each implicit task.
 The \kcode{omp_priv} identifier is used to denote the private variable.
 
-\cexample[4.0]{udr}{1}
+\cexample[6.0]{udr}{1}
 %\clearpage
 
 The following example shows the corresponding code in Fortran. 
@@ -47,49 +49,53 @@ The \kcode{declare reduction} directives are specified as part of
 the declaration in subroutine \ucode{find_enclosing_rectangle} and 
 the procedures that perform the min and max operations are specified as subprograms.
 
-\ffreeexample[4.0]{udr}{1}
+\ffreeexample[6.0]{udr}{1}
 
 
 The following example shows the same computation as \example{udr.1} but it illustrates that you can craft complex expressions in the user-defined 
 reduction declaration. In this case, instead of calling the \ucode{minproc} 
 and \ucode{maxproc} functions we inline the code in a single expression.
 
-\cexample[4.0]{udr}{2}
+\cexample[6.0]{udr}{2}
 
 The corresponding code of the same example in Fortran is very similar
-except that the assignment expression in the \kcode{declare reduction}
+except that the assignment expression in the \kcode{combiner} clause for
+the \kcode{declare reduction}
 directive can only be used for a single variable, in this case through
 a type structure constructor \ucode{point($\ldots$)}.
 
-\ffreeexample[4.0]{udr}{2}
+\ffreeexample[6.0]{udr}{2}
 
 
 \index{OpenMP variable identifiers!omp_orig@\kcode{omp_orig}}
 The following example shows the use of special variables in arguments for 
-combiner (\kcode{omp_in} and \kcode{omp_out}) and initializer (\kcode{omp_priv} 
-and \kcode{omp_orig}) routines.  This example returns the maximum value of an 
-array and the corresponding index value. The \kcode{declare reduction} 
-directive specifies a user-defined reduction operation \ucode{maxloc} for 
-data type \ucode{struct mx_s}. The function \ucode{mx_combine} is the combiner 
-and the function \ucode{mx_init} is the initializer.
+combiner (\kcode{omp_in} and \kcode{omp_out}) and initializer 
+(\kcode{omp_priv} and \kcode{omp_orig}) routines.  This example returns 
+the maximum value of an array and the corresponding index value. The 
+\kcode{declare reduction} directive specifies a user-defined 
+reduction operation \ucode{maxloc} for data type \ucode{struct mx_s}. 
+The function \ucode{mx_combine} is the combiner and the function \ucode{mx_init} 
+is the initializer.
 
-\cexample[4.0]{udr}{3}
+\cexample[6.0]{udr}{3}
 
-Below is the corresponding Fortran version of the above example.  The 
-\kcode{declare reduction} directive specifies the user-defined operation 
-\ucode{maxloc} for user-derived type \ucode{mx_s}.  The combiner 
-\ucode{mx_combine} and the initializer \ucode{mx_init} are specified as 
-subprograms.
+Below is the corresponding Fortran version of the above example.  
+The \kcode{declare reduction} directive specifies the user-defined 
+operation \ucode{maxloc} for user-derived type \ucode{mx_s}.  
+The combiner \ucode{mx_combine} and the initializer \ucode{mx_init} are 
+specified as subprograms.
 
-\ffreeexample[4.0]{udr}{3}
+\ffreeexample[6.0]{udr}{3}
 
 
 The following example explains a few details of the user-defined reduction 
-in Fortran through modules. The \kcode{declare reduction} directive is declared in a module (\ucode{data_red}). 
+in Fortran through modules. The \kcode{declare reduction} directive 
+is declared in a module (\ucode{data_red}). 
 The reduction-identifier \ucode{.add.} is a user-defined operator that is
 to allow accessibility in the scope that performs the reduction
 operation.
-The user-defined operator \ucode{.add.} and the subroutine \ucode{dt_init} specified in the \kcode{initializer} clause are defined in the same subprogram.
+The user-defined operator \ucode{.add.} and the subroutine \ucode{dt_init} 
+specified in the \kcode{initializer} clause are defined in the same subprogram.
 
 The reduction operation (that is, the \kcode{reduction} clause) is in the main program.
 The reduction identifier \ucode{.add.} is accessible by use association.
@@ -101,28 +107,27 @@ has the \kcode{initializer} clause, the subroutine specified on the clause
 must be accessible in the current scoping unit.  In this case,
 the subroutine \ucode{dt_init} is accessible by use association.
 
-\ffreeexample[4.0]{udr}{4}
+\ffreeexample[6.0]{udr}{4}
 
 
 The following example uses user-defined reductions to declare a plus (\kcode{+}) 
-reduction for a C++ class. As the \kcode{declare reduction} directive is inside 
-the context of the \ucode{V} class the expressions in the \kcode{declare 
-reduction} directive are resolved in the context of the class. Also, note that 
-the \kcode{initializer} clause uses a copy constructor to initialize the 
-private variables of the reduction and it uses as parameter to its original 
-variable by using the special variable \kcode{omp_orig}.
+reduction for a C++ class. As the \kcode{declare reduction} directive 
+is inside the context of the \ucode{V} class the expressions in the 
+\kcode{declare reduction} directive are resolved in the context of 
+the class. Also, note that the \kcode{initializer} clause uses a copy 
+constructor to initialize the private variables of the reduction and it uses 
+as parameter to its original variable by using the special variable 
+\kcode{omp_orig}.
 
-\cppexample[4.0]{udr}{5}
+\cppexample[6.0]{udr}{5}
 
 The following examples shows how user-defined reductions can be defined for 
-some STL containers. The first \kcode{declare reduction} defines the plus
-(\kcode{+}) 
-operation for \ucode{std::vector<int>} by making use of the 
-\ucode{std::transform} algorithm. The second and third define the merge 
-(or concatenation) operation for \ucode{std::vector<int>} and 
-\ucode{std::list<int>}. 
-%It shows how the same user-defined reduction operation can be defined to be done differently depending on the specified data type.
-It shows how the user-defined reduction operation can be applied to specific data types of an STL.
+some STL containers. The first \kcode{declare reduction} defines the 
+plus (\kcode{+}) operation for \ucode{std::vector<int>} by making use of the 
+\ucode{std::transform} algorithm. The second and third define the merge (or 
+concatenation) operation for \ucode{std::vector<int>} and \ucode{std::list<int>}. 
+It shows how the user-defined reduction operation can be applied to specific 
+data types of an STL.
 
-\cppexample[4.0]{udr}{6}
+\cppexample[6.0]{udr}{6}
 

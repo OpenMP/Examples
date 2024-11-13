@@ -1,4 +1,5 @@
 %\pagebreak
+\begin{fortranspecific}[4ex]
 \section{Fortran Allocatable Array Mapping}
 \label{sec:fort_allocatable_array_mapping}
 \index{mapping!allocatable array, Fortran}
@@ -36,8 +37,8 @@ or disassociated status, and associated storage can be mapped and attached as ne
 For allocatable variables, the update of the allocation status to allocated (allowing
 reference to allocated storage) on the device, is similar to pointer attachment.
 
-
-\ffreeexample[5.1]{target_fort_allocatable_map}{1}
+\topmarker{Fortran}
+\ffreenexample[5.1]{target_fort_allocatable_map}{1}
 
 Once an allocatable variable has been allocated on the host,
 its allocation status may not be changed in a \kcode{target} region, either
@@ -48,7 +49,8 @@ and allocation) in a \kcode{target} region is not conforming.
 Also, an initial intrinsic assignment of an allocatable variable 
 requires deallocation before the \kcode{target} region ends.
 
-\ffreeexample[5.1]{target_fort_allocatable_map}{2}
+\topmarker{Fortran}
+\ffreenexample[5.1]{target_fort_allocatable_map}{2}
 
 \newpage
 The next example illustrates a corner case of this restriction (allocatable status
@@ -62,4 +64,5 @@ the compiler will deallocate the associated actual argument when the subroutine 
 (However, the allocation on procedure entry can be avoided by specifying the intent 
 as \bcode{intent(inout)}, making the intended use conforming.)
 
-\ffreeexample[5.1]{target_fort_allocatable_map}{3}
+\ffreenexample[5.1]{target_fort_allocatable_map}{3}
+\end{fortranspecific}

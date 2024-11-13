@@ -1,0 +1,60 @@
+\pagebreak
+\section{\kcode{dispatch} Construct}
+\label{sec:dispatch}
+
+\index{construct!dispatch@\kcode{dispatch}}
+\index{dispatch construct@\kcode{dispatch} construct}
+
+\index{dispatch construct@\kcode{dispatch} construct!novariants clause@\kcode{novariants} clause}
+\index{clauses!novariants@\kcode{novariants}}
+\index{novariants clause@\kcode{novariants} clause}
+
+\index{dispatch construct@\kcode{dispatch} construct!nocontext clause@\kcode{nocontext} clause}
+\index{clauses!nocontext@\kcode{nocontext}}
+\index{nocontext clause@\kcode{nocontext} clause}
+
+The \kcode{dispatch} directive can be applied to a statement that performs a
+procedure call to control variant substitution for the called procedure.
+
+In the example below, the \ucode{foo_variant1()} and \ucode{foo_variant2()}
+procedures are declared as variants for \ucode{foo()} using the
+\kcode{declare variant} directive, with matching requirements specified
+by the \kcode{match} clause's context selector. To be selected for
+substitution, both variants require that the condition \ucode{foo_sub} evaluates
+to \plc{true}.
+
+In Cases 1 and 2, the calls to \ucode{foo()} are not controlled by a
+\kcode{dispatch} construct. Hence, there can be no match for the
+\ucode{foo_variant2()} variant. A \ucode{foo_variant1()} call is substituted for
+the call to \ucode{foo()} in Case 1, as the matching requirement
+is satisfied by \ucode{foo_sub} being \plc{true}. In Case 2, there is
+no variant substitution as \ucode{foo_sub} is \plc{false}.
+
+Cases 3 through 6 illustrate some uses of the \kcode{dispatch} construct,
+including uses of the \kcode{novariants} and \kcode{nocontext} clauses on the
+directive.
+
+In Case 3, variant substitution does not occur as \ucode{foo_sub} is \plc{false}.
+
+In Case 4, \ucode{foo_sub} is \plc{true} and the \kcode{dispatch} construct is
+part of the OpenMP context; therefore, the matching requirements for both
+variants to \ucode{foo()} are satisfied. As the matching requirements for the
+\ucode{foo_variant1()} variant are a subset of the matching requirements for the
+\ucode{foo_variant2()} variant (per the OpenMP specification, its computed score
+for matching purposes is smaller), \ucode{foo_variant2()} is selected for
+variant substitution. (Note that prior to OpenMP 6.0, which of the two variants
+are selected for substitution is implementation defined since the earlier
+specifications did not require an implementation to treat the \kcode{dispatch}
+construct as part of the OpenMP context at the call site.)
+
+In Case 5, the \kcode{novariants} clause disables variant
+substitution for the call to \ucode{foo()}, despite the matching requirements
+being satisfied for both variants.
+
+In Case 6, the  \kcode{nocontext} clause directs the implementation to not
+include the \kcode{dispatch} construct in the OpenMP context at the call site
+for \ucode{foo()}. Hence, the \ucode{foo_variant2()} variant is not considered
+and \ucode{foo_variant1()} is instead selected for variant substitution.
+
+      \cexample[6.0]{dispatch}{1}
+  \ffreeexample[6.0]{dispatch}{1}

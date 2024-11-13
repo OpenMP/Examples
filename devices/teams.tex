@@ -64,7 +64,7 @@ each primary thread's private copy of \ucode{sum} is reduced into the final \uco
 implicitly mapped into the \kcode{target} region.
 
 \cexample[4.0]{teams}{2}
-\clearpage
+%\clearpage
 
 \ffreeexample[4.0]{teams}{2}
 
@@ -143,4 +143,14 @@ thread uses SIMD parallelism.
 \cexample[4.0]{teams}{6}
 
 \ffreeexample[4.0]{teams}{6}
+
+\subsection{Evaluation of \kcode{num_teams} Clause that Appears inside \kcode{target} Region}
+\label{subsec:target_teams_num_teams}
+
+The following example shows the evaluation of the \kcode{num_teams} clause when the \kcode{teams} construct is closely nested inside \kcode{target} construct. The code is non-conforming since value of \ucode{x} for the clause may be different from different devices. As of OpenMP 6.0, it is the user's responsibility to ensure identical values for the clause expression for nested as well as combined directive cases for \kcode{target} and \kcode{teams} constructs. This permits implementations to evaluate the \kcode{num_teams} argument on the host rather than the target device. For the program to be conforming, the program must update the host value so that \ucode{x} will have the same value when evaluated on the host or target device.
+
+\cexample[6.0]{teams}{7}
+
+\ffreeexample[6.0]{teams}{7}
+
 

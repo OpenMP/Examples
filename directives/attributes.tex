@@ -1,22 +1,23 @@
-\section{C++ Attributes}
+\begin{ccppspecific}[4ex]
+\section{C/C++ Attributes}
 \label{sec:attributes}
-\index{directive syntax!attribute, C++}
-\index{attribute syntax, C++}
+\index{directive syntax!attribute, C/C++}
+\index{attribute syntax, C/C++}
 
-OpenMP directives for C++ can also be specified with 
-%the implementation-defined 
-the \kcode{directive} extension for the C++11 standard \plc{attributes}.
+OpenMP directives for C/C++ can also be specified with 
+the \kcode{directive} extension for the C23 and C++11 standard \plc{attributes}.
 %https://en.cppreference.com/w/cpp/language/attributes
 
-The C++ example below shows two ways to parallelize a \bcode{for} loop using the \kcode{\#pragma} syntax.
+The example below shows two ways to parallelize a \bcode{for} loop using the \kcode{\#pragma} syntax.
 The first pragma uses the combined \kcode{parallel for} directive, and the second
 applies the uncombined closely nested directives, \kcode{parallel} and \kcode{for}, directly to the same statement. 
 These are labeled PRAG 1-3.
 
 Using the attribute syntax, the same construct in PRAG 1
-is applied two different ways in attribute form, as shown in the ATTR 1 and ATTR 2 sections.
+is applied in two different ways in attribute form, as shown in the ATTR 1 and ATTR 2 sections.
 In ATTR 1 the attribute syntax is used with the \kcode{omp ::} namespace form.
-In ATTR 2 the attribute syntax is used with the \kcode{using omp :} namespace form.
+In ATTR 2 the attribute syntax is used with the \kcode{using omp :} namespace
+form available for C++ only.
 
 Next, parallelization is attempted by applying directives using two different syntaxes.
 For ATTR 3 and PRAG 4, the loop parallelization will fail to compile because multiple directives that
@@ -53,4 +54,33 @@ form of the \kcode{simd} directive is used for loops calling the \ucode{Q} funct
 in combination with the attribute form of the \kcode{declare simd} 
 directives declaring the variants for \ucode{Q}.
 
-\cppexample[5.1]{directive_syntax_attribute}{1}
+\topmarker{C/C++}
+\cppnexample[6.0]{directive_syntax_attribute}{1}
+
+\topmarker{C/C++}
+The following code snippets show how to use the \kcode{omp::decl} attribute
+as an alternative way for specifying declarative directives.
+The \kcode{omp::decl} attribute can be embedded in the base
+language declarations as shown for variables in Cases 1 and 2, 
+for function in Case 3, and for C++ template in Case 4.
+The variable and function name lists are implied from where
+the attributes are specified.
+
+In Case 1, the prefix attribute applies
+to all variables (\ucode{u} and \ucode{v}) in the declaration;
+in Case 2, the postfix attribute applies to the associated variable
+(\ucode{a} as the directive argument for the \kcode{declare_target} directive,
+and \ucode{b} as the clause argument for the \kcode{link} clause
+on \kcode{declare_target});
+in Case 3, the prefix attribute applies to the function (\ucode{f}).
+The comma to separate directive name (\kcode{declare_target}) and 
+clause name (\kcode{link}) in
+the \kcode{omp::decl} attribute specifier in Case 2 is optional.
+
+Case 4 shows the use of \kcode{omp::decl(declare_target)} for 
+a C++ template function definition
+and its equivalent using the delimited
+\kcode{begin}/\kcode{end declare_target} pragma form.
+
+\cppnexample[6.0]{directive_syntax_attribute}{2}
+\end{ccppspecific}

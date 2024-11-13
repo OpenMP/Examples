@@ -4,7 +4,6 @@
 ! @@expect:	ct-error
 ! @@version:	omp_3.1
 SUBROUTINE STANDALONE_WRONG()
-
   INTEGER  A
 
   A = 1

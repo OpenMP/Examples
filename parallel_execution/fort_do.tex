@@ -1,9 +1,9 @@
 \pagebreak
+\begin{fortranspecific}[4ex]
 \section{Fortran Restrictions on the \kcode{do} Construct}
 \label{sec:fort_do}
 \index{constructs!do@\kcode{do}}
 \index{do construct@\kcode{do} construct}
-\fortranspecificstart
 
 If an \kcode{end do} directive follows a \plc{do-construct} in which several 
 \bcode{DO} statements share a \bcode{DO} termination statement, then a  \kcode{do} 
@@ -17,6 +17,6 @@ The following example is non-conforming because the matching \kcode{do} directiv
 for the \kcode{end do} does not precede the outermost loop:
 
 \fnexample{fort_do}{2}
-\fortranspecificend
+\end{fortranspecific}
 
 

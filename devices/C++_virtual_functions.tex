@@ -1,4 +1,5 @@
 %\pagebreak
+\begin{cppspecific}[4ex]
 \section{C++ Virtual Functions}
 \label{sec:virtual_functions}
 
@@ -31,7 +32,8 @@ That is, the behavior of the implicit map of \ucode{ar}
 is non-conforming -- its static type \ucode{A} doesn't match its dynamic type \ucode{D}.  
 Hence the behavior of the access to the virtual functions is unspecified.
 
-\cppexample[5.2]{virtual_functions}{1}
+\topmarker{C++}
+\cppnexample[5.2]{virtual_functions}{1}
 
 The second example illustrates the restriction:
 
@@ -47,4 +49,6 @@ In the second case, the object \ucode{ap} is instantiated on the host; access of
 the next \kcode{target} region is permitted. (Unified Shared Memory is
 used here to minimize mapping concerns.)
 
-\cppexample[5.2]{virtual_functions}{2}
+\topmarker{C++}
+\cppnexample[5.2]{virtual_functions}{2}
+\end{cppspecific}

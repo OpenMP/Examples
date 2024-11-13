@@ -1,0 +1,65 @@
+\pagebreak
+\section{Traits for Specifying Devices}
+\label{sec:device_env_traits}
+
+\index{environment variables!OMP_AVAILABLE_DEVICES@\kcode{OMP_AVAILABLE_DEVICES}}
+\index{OMP_AVAILABLE_DEVICES@\kcode{OMP_AVAILABLE_DEVICES}}
+\index{environment variables!OMP_DEFAULT_DEVICE@\kcode{OMP_DEFAULT_DEVICE}}
+\index{OMP_DEFAULT_DEVICE@\kcode{OMP_DEFAULT_DEVICE}}
+
+Environment variables \kcode{OMP_AVAILABLE_DEVICES} and
+\kcode{OMP_DEFAULT_DEVICE} can take traits to specify the available
+devices and the default device, respectively.
+In addition, \kcode{OMP_DEFAULT_DEVICE} can also take an integer
+as a device number to specify the default device.
+
+The following examples show how traits are used to specify devices
+for these environment variables.
+
+Only GPU non-host devices are available to program:
+\begin{boxedcode}
+export OMP_AVAILABLE_DEVICES=\ucode{"kind(gpu)"} 
+\end{boxedcode}
+
+Order of available devices would be all vendor \ucode{A} GPUs, then 
+the rest of the non-host devices as specified by "\ucode{*}":
+\begin{boxedcode}
+export OMP_AVAILABLE_DEVICES=\ucode{"kind(gpu)&&vendor(A),*"}
+\end{boxedcode}
+
+Available devices would be all non-gpu devices from vendor \ucode{A}:
+\begin{boxedcode}
+export OMP_AVAILABLE_DEVICES=\ucode{"!kind(gpu)&&vendor(A)"}
+\end{boxedcode}
+
+Available devices start with 1 vendor \ucode{A} GPU device, then 
+2 vendor \ucode{B} GPU devices, and then the rest of the non-host devices:
+\begin{boxedcode}
+export OMP_AVAILABLE_DEVICES=\ucode{"(kind(gpu)&&vendor(A))[0],}
+                              \ucode{(kind(gpu)&&vendor(B))[0:2],*"}
+\end{boxedcode}
+The device number range is specified by the C/C++ array section syntax
+\ucode{[0:2]} where "\ucode{0}" is the first index and "\ucode{2}"
+is the length.
+
+Three available devices are re-ordered with "\ucode{uid-gpu3}" corresponding 
+to device 0, "\ucode{uid-gpu2}" to device 1 and "\ucode{uid-gpu1}"
+to device 2:
+\begin{boxedcode}
+export OMP_AVAILABLE_DEVICES=\ucode{"uid(uid-gpu3),uid(uid-gpu2),}
+                              \ucode{uid(uid-gpu1)"}
+\end{boxedcode}
+
+The default device will be some visible vendor \ucode{A} GPU device. 
+If not available, then set to initial device:
+\begin{boxedcode}
+export OMP_DEFAULT_DEVICE=\ucode{"kind(gpu)&&vendor(A),initial"}
+\end{boxedcode}
+
+The default device will be some visible vendor \ucode{A} GPU device. 
+If not available, then set to invalid device so that upon first use of default 
+device the program will error out:
+\begin{boxedcode}
+export OMP_DEFAULT_DEVICE=\ucode{"kind(gpu)&&vendor(A),invalid"}
+\end{boxedcode}
+

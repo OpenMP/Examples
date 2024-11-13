@@ -3,7 +3,7 @@
 * @@type:	C
 * @@operation:	run
 * @@expect:	success
-* @@version:	omp_4.0
+* @@version:	omp_6.0
 */
 #include <stdio.h>
 #define N 100
@@ -18,9 +18,9 @@ struct mx_s {
 void mx_combine(struct mx_s *out, struct mx_s *in);
 void mx_init(struct mx_s *priv, struct mx_s *orig);
 
-#pragma omp declare reduction(maxloc: struct mx_s: \
-        mx_combine(&omp_out, &omp_in)) \
-        initializer(mx_init(&omp_priv, &omp_orig))
+#pragma omp declare reduction(maxloc: struct mx_s) \
+        combiner( mx_combine(&omp_out, &omp_in) )  \
+        initializer( mx_init(&omp_priv, &omp_orig) )
 
 void mx_combine(struct mx_s *out, struct mx_s *in)
 {

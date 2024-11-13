@@ -5,7 +5,6 @@
 * @@expect:     success
 * @@version:    omp_5.1
 */
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -35,7 +34,6 @@ int main() {
     }
 
 // Case 2: Block associated
-
     #pragma omp assume holds (N % 8 == 0 && N > 0)
     #pragma omp simd
     for (int i = 0; i < N; ++i){
@@ -44,4 +42,3 @@ int main() {
 
     return 0;
 }
-

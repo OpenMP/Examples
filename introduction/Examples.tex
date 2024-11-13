@@ -29,15 +29,18 @@ prior to OpenMP version 3.0, such as
 
 Language markers may be used to indicate text or codes that are specific 
 to a particular base language.
-\ccppspecificstart
+\begin{ccppspecific}
 This is C/C++ specific: 
 A statement following a directive is compound only when necessary, and a 
 non-compound statement is indented with respect to a directive preceding it.
-\ccppspecificend
-\fortranspecificstart
+\end{ccppspecific}
+\begin{fortranspecific}
 This is Fortran specific...
-\fortranspecificend
+\end{fortranspecific}
+\linewitharrows{-1}{dashed}{Fortran (cont.)}{8em}
+This marks the continuation of language specific page.
 
+\medskip
 Throughout the examples document we assume that the number of threads 
 used for a \kcode{parallel} region is the same as 
 the number of threads requested, unless explicitly specified otherwise.

@@ -14,6 +14,7 @@ unified shared memory (USM) is required throughout the scope of the program by t
 \kcode{unified_shared_memory} clause in a \kcode{requires} directive.
 USM assumes a unified address space.
 
+\begin{cppspecific}
 In the C++ code of the first example, a scalar (\ucode{x}), a pointer 
 (\ucode{ptr}), and a reference (\ucode{ref}) are used in a \kcode{target} construct in Cases 1, 2 and 3, respectively.
 For the scalar variable \ucode{x}, the predetermined data-sharing attribute is still
@@ -24,6 +25,10 @@ the \kcode{target} construct, as seen in Case 2.
 For the reference \ucode{ref}, the object to which it refers is mapped for  
 the \kcode{target} construct, as seen in Case 3. 
 
+\cppnexample[5.2]{usm_scalar_ptr_ref_asc}{1}
+\end{cppspecific}
+
+\begin{fortranspecific}
 In Case 1 of the Fortran example, the scalar \ucode{x} is firstprivate under the USM requirement
 in the \kcode{target} construct, and modification of the local variable on the device is 
 never updated to the host data environment.
@@ -35,5 +40,5 @@ but implicitly mapped.  Hence, updates to the value of \ucode{y} appear in the h
 %Hence, updates to \ucode{y} in the \kcode{target} construct appear in the data environment of the host.
 
 %\pagebreak
-\cppexample[5.2]{usm_scalar_ptr_ref_asc}{1}
-\ffreeexample[5.2]{usm_scalar_ptr_ref_asc}{1}
+\ffreenexample[5.2]{usm_scalar_ptr_ref_asc}{1}
+\end{fortranspecific}

@@ -11,7 +11,7 @@
 \index{directives!begin declare target@\kcode{begin declare target}}
 \index{begin declare target directive@\kcode{begin declare target} directive}
 
-\ccppspecificstart
+\begin{ccppspecific}
 A pointer variable can be shaped to a multi-dimensional array to facilitate
 data access. This is achieved by a \plc{shape-operator} casted in front of 
 a pointer (lvalue expression):
@@ -35,13 +35,15 @@ around the shape-operator and \ucode{a} to ensure the correct precedence
 over array-section operations.
 
 \cnexample[5.1]{array_shaping}{1}
-\ccppspecificend
+\end{ccppspecific}
 %\clearpage
 
+\begin{fortranspecific}
 The shape operator is not defined for Fortran.  Explicit array shaping
 of procedure arguments can be used instead to achieve a similar goal.
 Below is the Fortran equivalent of the above example that illustrates
 the support of transferring two rows of noncontiguous boundary
 data in the \kcode{target update} directive.
  
-\ffreeexample[5.2]{array_shaping}{1}
+\ffreenexample[5.2]{array_shaping}{1}
+\end{fortranspecific}

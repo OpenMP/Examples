@@ -23,12 +23,14 @@ starting from 0, such that the hardware threads 0,1 form the first physical core
 
 The following equivalent place list declarations consist of eight places (which 
 we designate as p0 to p7):
-
-\kcode{OMP_PLACES}=\verb+"{0,1},{2,3},{4,5},{6,7},{8,9},{10,11},{12,13},{14,15}"+
-
+\begin{boxeducode}
+\kcode{export OMP_PLACES=}"{0,1},{2,3},{4,5},{6,7},{8,9},{10,11},{12,13},
+{14,15}"
+\end{boxeducode}
 or
-
-\kcode{OMP_PLACES}=\verb+"{0:2}:8:2"+
+\begin{boxeducode}
+\kcode{export OMP_PLACES=}"{0:2}:8:2"
+\end{boxeducode}
 
 \subsection{Spread Affinity Policy}
 \label{subsec:affinity_spread}

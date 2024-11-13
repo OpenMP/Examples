@@ -514,7 +514,7 @@ foreach $diff ( @difffiles ) {
 
     # final compilation
     system("$CFG{LATEX} --interaction=batchmode \"$diff\";"); # needed if cross-refs
-    system("$CFG{LATEX} \"$diff\";"); # final, with possible error messages
+    system("$CFG{LATEX} --interaction=batchmode \"$diff\";");
 
     if ( $rundvi2 ) {
       my $dvi="$diffbase.dvi";

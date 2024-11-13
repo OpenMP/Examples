@@ -9,15 +9,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#pragma omp declare variant(fx1) match(construct={target})
-#pragma omp declare variant(fx2) match(construct={teams,parallel,for})
-#pragma omp declare variant(fx3) match(device={kind(gpu),isa(sm_70)})
-#pragma omp declare variant(fx4) match(device={arch(nvptx),isa(sm_70)})
-void f(int *a, int i)
-{
-  *a = i;
-}
-
 void fx1(int *a, int i)
 {
   *a = i;
@@ -36,6 +27,15 @@ void fx3(int *a, int i)
 void fx4(int *a, int i)
 {
    *a = 4*i;
+}
+
+#pragma omp declare variant(fx1) match(construct={target})
+#pragma omp declare variant(fx2) match(construct={teams,parallel,for})
+#pragma omp declare variant(fx3) match(device={kind(gpu),isa(sm_70)})
+#pragma omp declare variant(fx4) match(device={arch(nvptx),isa(sm_70)})
+void f(int *a, int i)
+{
+  *a = i;
 }
 
 int main()

@@ -26,7 +26,7 @@ written as follows:
 
 \cexample{reduction}{2}
 
-\fortranspecificstart
+\begin{fortranspecific}
 \ffreenexample{reduction}{2}
 
 The following program is non-conforming because the reduction is on the 
@@ -47,7 +47,7 @@ The following conforming program performs the reduction using
 to \ucode{MIN}.
 
 \ffreenexample{reduction}{5}
-\fortranspecificend
+\end{fortranspecific}
 
 %\pagebreak
 The following example is non-conforming because the initialization (\ucode{a = 
@@ -395,3 +395,34 @@ without using a worksharing-loop construct.
 
 \ffreeexample[5.1]{scope_reduction}{1}
 
+\subsection{Reduction on Private Variables in a \kcode{parallel} Region}
+\label{subsec:priv_reduction}
+\index{reduction clause@\kcode{reduction} clause!on private variables}
+\index{reduction clause@\kcode{reduction} clause!original(private) modifier@\kcode{original(private)} modifier}
+
+The following example shows reduction on a private variable (\ucode{sum_v})
+for an orphaned worksharing loop in routine \ucode{do_red},
+which is called in a \kcode{parallel} region.
+At the end of the loop, private variable of each thread should have the same combined value.
+\cexample[6.0]{priv_reduction}{1}
+\ffreeexample[6.0]{priv_reduction}{1}
+
+The following example is slightly modified from the previous example 
+where the \kcode{original(private)} modifier is explicitly specified
+for variable \ucode{sum_v} in the \kcode{reduction} clause.
+This modifier indicates that variable \ucode{sum_v} is private
+for reduction as opposed to shared by default for a variable
+passed as a procedure argument.
+\cppexample[6.0]{priv_reduction}{2}
+\ffreeexample[6.0]{priv_reduction}{2}
+
+The following example shows the effect of nested \kcode{reduction} constructs.
+For the \kcode{parallel} construct, the reduction is on the shared variable
+\ucode{x}.  For the worksharing loop nested inside the \kcode{parallel}
+region, the reduction is performed on the private copy of \ucode{x}
+for each thread.
+With 4 threads assigned for the \kcode{parallel} region
+(enforced by the \kcode{strict} modifier in the \kcode{num_threads} clause),
+the code should print 40 at the end.
+\cexample[6.0]{priv_reduction}{3}
+\ffreeexample[6.0]{priv_reduction}{3}

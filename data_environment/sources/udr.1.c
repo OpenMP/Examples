@@ -3,7 +3,7 @@
 * @@type:	C
 * @@operation:	compile
 * @@expect:	success
-* @@version:	omp_4.0
+* @@version:	omp_6.0
 */
 #include <stdio.h>
 #include <limits.h>
@@ -25,12 +25,12 @@ void maxproc ( struct point *out, struct point *in )
   if ( in->y > out->y ) out->y = in->y;
 }
 
-#pragma omp declare reduction(min : struct point : \
-        minproc(&omp_out, &omp_in)) \
+#pragma omp declare reduction(min : struct point) \
+        combiner( minproc(&omp_out, &omp_in) ) \
 	initializer( omp_priv = { INT_MAX, INT_MAX } )
 
-#pragma omp declare reduction(max : struct point : \
-        maxproc(&omp_out, &omp_in)) \
+#pragma omp declare reduction(max : struct point) \
+        combiner( maxproc(&omp_out, &omp_in) ) \
 	initializer( omp_priv = { 0, 0 } )
 
 void find_enclosing_rectangle ( int n, struct point points[] )

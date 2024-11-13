@@ -46,3 +46,20 @@ of the prefix sum \ucode{b[k]} (\ucode{b(k)} in Fortran) for iteration \ucode{k}
 \cexample[5.0]{scan}{2}
 
 \ffreeexample[5.0]{scan}{2}
+
+In OpenMP 6.0, the \kcode{scan} directive was extended to support 
+the concept of an \plc{initialization} phase where a private variable 
+can be set for later use in the \plc{input} phase of
+an \plc{exclusive} scan operation.
+The following example is a rewrite of the previous exclusive scan
+example, which uses the \kcode{scan init_complete} directive to separate
+the initialization phase from the other phases of the scan operation.
+The private variable \ucode{tmp} is set in the initialization phase
+and used later in the input phase to update the prefix sum stored
+in variable \ucode{x}.
+This case allows the same array \ucode{c} to be used for
+both input and output of the scan results.
+
+\cexample[6.0]{scan}{3}
+
+\ffreeexample[6.0]{scan}{3}

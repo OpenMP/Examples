@@ -3,7 +3,7 @@
 * @@type:	C++
 * @@operation:	compile
 * @@expect:	success
-* @@version:	omp_4.0
+* @@version:	omp_6.0
 */
 class V {
    float *p;
@@ -16,6 +16,6 @@ public:
     
    V& operator+= ( const V& );
     
-   #pragma omp declare reduction( + : V : omp_out += omp_in ) \
+   #pragma omp declare reduction( + : V ) combiner( omp_out += omp_in ) \
            initializer(omp_priv(omp_orig))
 };

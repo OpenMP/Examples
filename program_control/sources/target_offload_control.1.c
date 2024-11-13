@@ -6,11 +6,12 @@
 * @@version:	omp_5.0
 * @@env:	OMP_TARGET_OFFLOAD=default
 */
-#include    <omp.h>
-#include  <stdio.h>
-#include  <ctype.h>
-#include <stdlib.h>
-#include <string.h>
+#include     <omp.h>
+#include   <stdio.h>
+#include   <ctype.h>
+#include  <stdlib.h>
+#include  <string.h>
+#include <strings.h>
 
 typedef enum offload_policy
 {MANDATORY, DISABLED, DEFAULT, UNKNOWN, NOTSET} offload_policy_t;

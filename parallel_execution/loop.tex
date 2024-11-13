@@ -21,10 +21,8 @@ from where the function \ucode{foo} is called. Binding to \kcode{teams} allows t
 parallelism to be available for the second \kcode{loop} construct.
 The loop iterations can be executed concurrently, 
 thus allowing implementations to perform various loop nest optimizations including
-reordering of the \ucode{i}  and \ucode{j} loops. The \kcode{loop} construct can be
-implemented using any parallelism-generating mechanism, which allows better use
-of hardware resources while also allowing sequential optimizations, reordering,
-tiling etc.
+reordering of the \ucode{i}  and \ucode{j} loops. The \kcode{loop} construct can be implemented 
+with the use of additional threads or some other concurrency mechanism, which allows better use of hardware resources while also allowing sequential optimizations, reordering, tiling etc.
 
 For example, the first \kcode{loop} construct could be implemented as if it was specified as 
 \kcode{distribute parallel for} and the second \kcode{loop} construct as if it was specified as 

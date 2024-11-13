@@ -21,7 +21,7 @@ contains
       !$omp     match(implementation={requires(unified_shared_memory)}, &
       !$omp           user={condition(score(1): version==2)})
 
-      integer :: a(*)
+      integer, target :: a(n)
       integer, value :: n
       integer :: i
       !$omp parallel do
@@ -32,25 +32,27 @@ contains
 
    subroutine kernel_target_ua(a, n)
       use iso_c_binding
-      integer, target :: a(*)
+      integer, target :: a(n)
       integer, value :: n
       type(c_ptr) :: c_ap
       integer, pointer :: ap(:)
       integer :: i
       c_ap = c_loc(a)
+      ap => null()
       !$omp target data map(a(:n)) use_device_ptr(c_ap)
-      !$omp target 
-         call c_f_pointer(c_ap, ap)
+      !$omp target
+         call c_f_pointer(c_ap, ap, [n])
          !$omp parallel do
          do i = 1, n
             ap(i) = 2*i*i
          end do
+         ap => null() ! reset pointer association status
       !$omp end target
       !$omp end target data
    end subroutine
 
    subroutine kernel_target_usm(a, n)
-      integer :: a(*)
+      integer, target :: a(n)
       integer, value :: n
       integer :: i
       !$omp target parallel do
@@ -60,7 +62,7 @@ contains
    end subroutine
 
    subroutine kernel_target_usm_v2(a, n)
-      integer :: a(*)
+      integer, target :: a(n)
       integer, value :: n
       integer :: i
       !$omp target teams loop

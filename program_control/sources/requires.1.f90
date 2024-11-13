@@ -27,6 +27,7 @@ end program
 
 subroutine do_something_with_p(p,q)
   use data
+  !$omp declare target
   type(mypoints) :: p
   integer        :: q
  

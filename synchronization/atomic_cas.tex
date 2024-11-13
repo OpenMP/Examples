@@ -1,4 +1,5 @@
 %\pagebreak
+\begin{ccppspecific}[4ex]
 \section{Atomic Compare}
 \label{sec:cas}
 
@@ -21,7 +22,7 @@ The ``greater than'' and ``less than'' forms are not available with the Fortran 
 clause.  One can use the \vcode{max} and \vcode{min} functions with the \kcode{atomic update}
 construct to perform the C/C++ example operations.
 
-\cexample[5.1]{cas}{1}
+\cnexample[5.1]{cas}{1}
 %\ffreeexample[5.1]{cas}{1}
 
 In OpenMP 5.1 the \kcode{compare} clause was also added to support \emph{Compare And
@@ -38,5 +39,6 @@ Since the equivalence of Fortran pointers can be determined only with a function
 no Fortran version is provided here. The use of the associated function in an \kcode{atomic compare} syntax is
 being considered in a future release.
 
-\cexample[5.1]{cas}{2}
+\cnexample[5.1]{cas}{2}
 %\ffreeexample[5.1]{cas}{2}
+\end{ccppspecific}

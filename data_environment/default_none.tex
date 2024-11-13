@@ -7,14 +7,14 @@
 The following example distinguishes the variables that are affected by the \kcode{default(none)} 
 clause from those that are not. 
 
-\ccppspecificstart
+\begin{ccppspecific}
 Beginning with OpenMP 4.0, variables with \bcode{const}-qualified type and no mutable member 
 are no longer predetermined shared.  Thus, these variables (variable \ucode{c} in the example) 
 need to be explicitly listed
 in data-sharing attribute clauses when the \kcode{default(none)} clause is specified.
 
 \cnexample{default_none}{1}
-\ccppspecificend
+\end{ccppspecific}
 
 \fexample{default_none}{1}
 

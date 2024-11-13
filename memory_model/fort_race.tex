@@ -1,6 +1,6 @@
-%\pagebreak
+\pagebreak
+\begin{fortranspecific}[4ex]
 \section{Race Conditions Caused by Implied Copies of Shared Variables in Fortran}
-\fortranspecificstart
 \label{sec:fort_race}
 \index{shared variables!race conditions}
 
@@ -12,6 +12,6 @@ the call and copy from the temporary location into the original variable when th
 subroutine returns. This copying would cause races in the \kcode{parallel} region.
 
 \ffreenexample{fort_race}{1}
-\fortranspecificend
+\end{fortranspecific}
 
 

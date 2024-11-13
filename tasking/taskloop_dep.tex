@@ -1,0 +1,51 @@
+\section{Task Dependences for \kcode{taskloop} Construct}
+\label{sec:taskloop_depend}
+\index{dependences!taskloop dependences}
+
+\index{task_iteration directive@\kcode{task_iteration} directive!depend clause@\kcode{depend} clause}
+\index{task_iteration directive@\kcode{task_iteration} directive}
+\index{directives!task_iteration@\kcode{task_iteration}}
+\index{taskloop construct@\kcode{taskloop} construct}
+\index{constructs!taskloop@\kcode{taskloop}}
+\index{depend clause@\kcode{depend} clause}
+\index{clauses!depend@\kcode{depend}}
+
+Dependences for tasks generated from a \kcode{taskloop} construct can
+be specified using the \kcode{task_iteration} directive nested in
+the beginning of the associated loop body.
+
+In the following example, taskloop TL1 contains
+a \kcode{task_iteration} directive with the \kcode{depend} clauses
+that specify task dependences across loop iterations on variable \ucode{A}
+(\ucode{A[i] $\rightarrow$ A[i-1]}).
+The \kcode{nogroup} clause for the \kcode{taskloop} construct removes 
+the implicit taskgroup for a taskloop so that dependences across taskloops and 
+with other tasks can be specified.
+For taskloop TL2, the dependence (\ucode{A[i] $\rightarrow$ A[i-4]})
+is specified for every 4 loop iterations
+as defined by the \kcode{if} clause that matches with
+the chunk size 4 specified in the \kcode{grainsize} clause for taskloop tasks.
+The dependences are generated only for those iterations where
+the \kcode{if} condition evaluates to \plc{true}.
+For instance, the first task generated from TL2 will update elements
+\ucode{A[1:4]} with depend clauses \kcode{depend(inout: \ucode{A[4]})} 
+and \kcode{depend(in: \ucode{A[0]})}. This ensures element \ucode{A[4]}
+(thus elements \ucode{A[1:3]}) will be available from TL1 before executing
+the task.
+The last task T3 will wait for the availability of \ucode{A[n-1]}
+(or \ucode{A(n)} in Fortran) before printing the result.
+
+\cexample[6.0]{taskloop_dep}{1}
+
+\ffreeexample[6.0]{taskloop_dep}{1}
+
+The following example shows the use of the \kcode{task_iteration}
+directive for specifying task dependences in a multi-dimensional loop nest
+from multiple loop iterations in taskloop TL4.
+Similar to the previous example, the \kcode{nogroup} clause removes
+the implicit taskgroup for the \kcode{taskloop} construct so that 
+dependences with other tasks (T5 in this case) can be specified.
+
+\cexample[6.0]{taskloop_dep}{2}
+
+\ffreeexample[6.0]{taskloop_dep}{2}

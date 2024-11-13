@@ -47,12 +47,13 @@ a nested parallel region runs half of the available threads on each socket.
 
 These OpenMP environment variables have been set:
 
-\begin{compactitem}
-\item \kcode{OMP_PROC_BIND}=\verb+"TRUE"+
-\item \kcode{OMP_NUM_THREADS}=\verb+"2,4"+
-\item \kcode{OMP_PLACES}=\verb+"{0,2,4,6},{1,3,5,7}"+
-\item \kcode{OMP_AFFINITY_FORMAT}=\verb+"nest_level= %L, parent_thrd_num= %a,+ \verb+thrd_num= %n, thrd_affinity= %A"+
-\end{compactitem}
+\begin{boxeducode}
+\kcode{export OMP_PROC_BIND=}"TRUE"
+\kcode{export OMP_NUM_THREADS=}"2,4"
+\kcode{export OMP_PLACES=}"{0,2,4,6},{1,3,5,7}"
+\kcode{export OMP_AFFINITY_FORMAT=}"nest_level= %L, parent_thrd_num= %a,
+thrd_num= %n, thrd_affinity= %A"
+\end{boxeducode}
 
 where the numbers correspond to core ids for the system. Note, \kcode{OMP_DISPLAY_AFFINITY} is not
 set and is \vcode{FALSE} by default.  This example shows how to use API routines to

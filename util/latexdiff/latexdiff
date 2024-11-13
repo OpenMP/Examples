@@ -2791,8 +2791,8 @@ sub postprocess {
     # add basicstyle color{blue} to added lstinline commands
     # finally add the comment to the ones not having an optional argument before
     ###s/\\DIFaddlstinline(?!\[)/\\lstinline\n[basicstyle=\\color{blue}]$AUXCMD\n/g;
-    s/(%DIF < )([^\n]*?\n)/"${1}" . escape_command(${2}, "(?:plc|textnormal|textsubscript|textsl)", "@\\DIFdel{", "}@")/esg;
-    s/(%DIF > )([^\n]*?\n)/"${1}" . escape_command(${2}, "(?:plc|textnormal|textsubscript|textsl)", "@\\DIFadd{", "}@")/esg;
+    s/(%DIF < )([^\n]*?\n)/"${1}" . escape_command(${2}, "(?:plc|textnormal|textsubscript|textsl|ucode|kcode)", "@\\DIFdel{", "}@")/esg;
+    s/(%DIF > )([^\n]*?\n)/"${1}" . escape_command(${2}, "(?:plc|textnormal|textsubscript|textsl|ucode|kcode)", "@\\DIFadd{", "}@")/esg;
     s/}\\glossarydef(start|end)/}\n\\glossarydef\1\n/g;
     s/\\\\\s+\\DIFaddend\s+\\end\{supertabular\}/\\DIFaddend \\\\\n\\end{supertabular}/gm;
 

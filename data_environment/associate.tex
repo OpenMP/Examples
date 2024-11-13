@@ -1,6 +1,6 @@
 %\pagebreak
+\begin{fortranspecific}[4ex]
 \section{Fortran \bcode{ASSOCIATE} Construct}
-\fortranspecificstart
 \label{sec:associate}
 \index{ASSOCIATE construct, Fortran@\bcode{ASSOCIATE} construct, Fortran}
 
@@ -12,14 +12,13 @@ name \ucode{b} is associated with the shared variable \ucode{a}. With the predet
 attribute rule, the associate name \ucode{b} is not allowed to be specified on the \kcode{private} 
 clause.
 
-\pagebreak
+%\pagebreak
 \fnexample[4.0]{associate}{1}
 
 In next example, within the \kcode{parallel} construct, the association name \ucode{thread_id} 
 is associated with the private copy of \ucode{i}. The print statement should output the 
 unique thread number.
 
-\topmarker{Fortran}
 \fnexample[4.0]{associate}{2}
 
 The following example illustrates the effect of specifying a selector name on a data-sharing 
@@ -30,9 +29,10 @@ The association between \ucode{u} and the original \ucode{v} is retained (see th
 Attribute Rules} section in the OpenMP 4.0 API Specification). Inside the \kcode{parallel}
 region, \ucode{v} has the value of -1 and \ucode{u} has the value of the original \ucode{v}.
 
+\topmarker{Fortran}
 \ffreenexample[4.0]{associate}{3}
 
-\topmarker{Fortran}
+%\topmarker{Fortran}
 \label{sec:associate_target}
 
 \bigskip
@@ -63,5 +63,5 @@ an explicit mapping for the same \kcode{target} construct,
 hence the code block is non-conforming.
 
 \ffreenexample[5.1]{associate}{4}
-\fortranspecificend
+\end{fortranspecific}
 

@@ -2,7 +2,7 @@
 ! @@type:	F-free
 ! @@operation:	compile
 ! @@expect:	success
-! @@version:	omp_5.1
+! @@version:	omp_6.0
 module parallel_search
   type binary_tree
     integer :: value
@@ -11,34 +11,34 @@ module parallel_search
   end type
 
 contains
-  recursive subroutine search_tree(tree, value, level, found)
+  recursive function search_tree(tree, value, level) result(found)
     type(binary_tree), intent(in), pointer :: tree
     integer, intent(in) :: value, level
     type(binary_tree), pointer :: found
-    type(binary_tree), pointer :: found_left => NULL(), &
-                                  found_right => NULL()
+    type(binary_tree), pointer :: found_left, found_right
 
+    found => NULL()
     if (associated(tree)) then
       if (tree%value .eq. value) then
         found => tree
       else
 !$omp task shared(found) if(level<10)
-        call search_tree(tree%left, value, level+1, found_left)
+        found_left => search_tree(tree%left, value, level+1)
         if (associated(found_left)) then
-!$omp critical
+!$omp atomic write
           found => found_left
-!$omp end critical
+!$omp end atomic
 
 !$omp cancel taskgroup
         endif
 !$omp end task
 
 !$omp task shared(found) if(level<10)
-        call search_tree(tree%right, value, level+1, found_right)
+        found_right => search_tree(tree%right, value, level+1)
         if (associated(found_right)) then
-!$omp critical
+!$omp atomic write
           found => found_right
-!$omp end critical
+!$omp end atomic
 
 !$omp cancel taskgroup
         endif
@@ -47,7 +47,7 @@ contains
 !$omp taskwait
       endif
     endif
-  end subroutine
+  end function
 
   subroutine search_tree_parallel(tree, value, found)
     type(binary_tree), intent(in), pointer :: tree
@@ -58,7 +58,7 @@ contains
 !$omp parallel shared(found, tree, value)
 !$omp masked
 !$omp taskgroup
-    call search_tree(tree, value, 0, found)
+    found => search_tree(tree, value, 0)
 !$omp end taskgroup
 !$omp end masked
 !$omp end parallel

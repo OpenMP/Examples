@@ -1,0 +1,67 @@
+%\pagebreak
+
+\section{Induction}
+\label{sec:induction}
+
+This section covers ways to perform inductions in \kcode{distribute}, worksharing-loop, \kcode{taskloop}, and SIMD regions.
+
+\subsection{\kcode{induction} Clause}
+\label{subsec:induction}
+\index{clauses!induction@\kcode{induction}}
+\index{induction clause@\kcode{induction} clause}
+\index{inductions!induction clause@\kcode{induction} clause}
+\index{inductions!closed form}
+
+The following example demonstrates the basic use of the \kcode{induction} clause
+in Case 1 for variable \ucode{xi} in a loop in routine \ucode{comp_poly} to 
+evaluate the polynomial of variable \ucode{x}.  
+For this case, the induction operation is 
+with the inductor `\scode{*}' and induction step \ucode{x}.
+The intermediate value of \ucode{xi} is used in producing
+the reduction sum \ucode{result}.
+The last value of \ucode{xi} is well defined after the loop and 
+is printed out together with the final value of \ucode{result}.
+An alternative approach is to use an \plc{inscan} reduction
+as illustrated in Case 2, but this may not be as optimal as Case 1.
+An equivalent code without the \kcode{induction} clause is given in Case 3
+where a non-recursive closed form of the induction operation is used to 
+compute the intermediate value of \ucode{xi}. 
+The last value of \ucode{xi} is returned with the \kcode{lastprivate} clause
+for this case.
+
+\cexample[6.0]{induction}{1}
+
+\ffreeexample[6.0]{induction}{1}
+
+\subsection{User-defined Induction}
+\label{subsec:user-defined-induction}
+
+\index{directives!declare induction@\kcode{declare induction}}
+\index{declare induction directive@\kcode{declare induction} directive}
+\index{inductions!declare induction directive@\kcode{declare induction} directive}
+\index{inductions!inductor clause@\kcode{inductor} clause}
+\index{inductions!collector clause@\kcode{collector} clause}
+\index{inductions!user-defined}
+\index{OpenMP variable identifiers!omp_var@\kcode{omp_var}}
+\index{OpenMP variable identifiers!omp_step@\kcode{omp_step}}
+\index{OpenMP variable identifiers!omp_idx@\kcode{omp_idx}}
+
+The following is a user-defined induction example that uses the 
+\kcode{declare induction} directive and the \kcode{induction} clause.
+The example processes in parallel $N$ points along a line of a given slope 
+starting from a given point, and where adjacent points are separated by 
+a fixed distance. 
+The induction variable \ucode{P} represents a point, and 
+the step expression is the distance.  The induction identifier \ucode{next}
+is defined in the \kcode{declare induction} directive with an
+appropriate \plc{inductor} via the \kcode{inductor} clause and 
+\plc{collector} via the \kcode{collector} clause.
+This identifier together with the \kcode{step(\ucode{Separation})} 
+modifier is specified in the \kcode{induction} clause
+for the \kcode{parallel for}/\kcode{do} construct
+in routine \ucode{processPointsInLine}.
+
+\cppexample[6.0]{induction}{2}
+
+\ffreeexample[6.0]{induction}{2}
+

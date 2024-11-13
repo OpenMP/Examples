@@ -2,7 +2,7 @@
 ! @@type:	F-free
 ! @@operation:	run
 ! @@expect:	success
-! @@version:	omp_4.0
+! @@version:	omp_6.0
 program max_loc
    implicit none
    type :: mx_s
@@ -10,9 +10,9 @@ program max_loc
       integer index
    end type
 
-   !$omp declare reduction(maxloc: mx_s: &
-   !$omp&        mx_combine(omp_out, omp_in)) &
-   !$omp&        initializer(mx_init(omp_priv, omp_orig))
+   !$omp declare reduction(maxloc: mx_s)  &
+   !$omp&        combiner( mx_combine(omp_out, omp_in) )  &
+   !$omp&        initializer( mx_init(omp_priv, omp_orig) )
 
    integer, parameter :: N = 100
    type(mx_s) :: mx

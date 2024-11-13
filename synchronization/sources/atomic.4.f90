@@ -3,8 +3,8 @@
 ! @@operation:	compile
 ! @@expect:	success
 ! @@version:	omp_5.0
-
 subroutine boxster(box_totals, vals, box, N)
+  use omp_lib
   external calc_val
   real,    intent(inout) :: box_totals(:)
   real,    intent(in)    :: vals(:)

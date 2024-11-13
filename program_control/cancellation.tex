@@ -5,10 +5,16 @@
 \index{constructs!cancel@\kcode{cancel}}
 \index{cancel construct@\kcode{cancel} construct}
 
+The examples in this section show how the \kcode{cancel} directive can be used to terminate 
+an OpenMP region. Cancellation of the binding region is activated only if the \plc{cancel-var} ICV 
+is true, in which case the \kcode{cancel} construct (except \kcode{taskgroup}) causes the encountering 
+\kcode{task} to continue execution at the end of the binding. If the \plc{cancel-var} ICV is false, the 
+\kcode{cancel} construct is ignored.
+
 \index{cancellation!for parallel region@for \kcode{parallel} region}
 \index{cancellation!for worksharing region}
-The following example shows how the \kcode{cancel} directive can be used to terminate 
-an OpenMP region. Although the \kcode{cancel} construct terminates the OpenMP 
+
+In the following example although the \kcode{cancel} construct terminates the OpenMP 
 worksharing region, programmers must still track the exception through the pointer 
 \ucode{ex} and issue a cancellation for the \kcode{parallel} region if an exception has
 been raised. The primary thread checks the exception pointer to make sure that the 
@@ -45,7 +51,11 @@ levels of the tree.
 
 
 The following is the equivalent parallel search example in Fortran.
+The code uses the \kcode{atomic write} directive for atomically
+updating pointer variables -- a feature defined in OpenMP 6.0.
+For earlier versions of OpenMP, the \kcode{critical} directive could 
+be used instead.
 
-\ffreeexample[5.1]{cancellation}{2}
+\ffreeexample[6.0]{cancellation}{2}
 
 

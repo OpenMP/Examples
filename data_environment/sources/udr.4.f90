@@ -2,7 +2,7 @@
 ! @@type:	F-free
 ! @@operation:	run
 ! @@expect:	success
-! @@version:	omp_4.0
+! @@version:	omp_6.0
 module data_red
 ! Declare data type.
   type dt
@@ -16,8 +16,9 @@ module data_red
   end interface
 
 ! Declare the user-defined reduction operator .add.
-!$omp declare reduction(.add.:dt:omp_out=omp_out.add.omp_in) &
-!$omp& initializer(dt_init(omp_priv))
+!$omp declare reduction(.add. : dt)  &
+!$omp&  combiner( omp_out=omp_out.add.omp_in ) &
+!$omp&  initializer( dt_init(omp_priv) )
 
  contains
 ! Declare the initialization routine.

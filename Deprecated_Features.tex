@@ -58,6 +58,9 @@ accordingly and listed in Section~\ref{sec:Updated Examples}.
 \tablelasttail{\hline\\[-2ex]}
 \tablecaption{Deprecated Features and Their Replacements\label{tab:Deprecated Features}}
 \begin{supertabular}{p{0.4in} p{2.3in} p{2.2in}}
+6.0 & \kcode{declare reduction(}\plc{reduction-id}: \plc{typename-list}: \plc{combiner}\kcode{)} 
+    & \kcode{declare reduction(}\plc{reduction-id}: \plc{typename-list}\kcode{)} \kcode{combiner(\plc{combiner-exp})} \\ 
+\hline
 5.2 & \kcode{default} clause on metadirectives 
     & \kcode{otherwise} clause \\
 5.2 & delimited \kcode{declare target} directive for C/C++ 
@@ -98,6 +101,32 @@ the tables shows the version tag of the earlier version. It also shows
 the prior name of an example when it has been renamed.
 
 
+Table~\ref{tab:Updated Examples 6.0} lists the updated examples for 
+features deprecated in OpenMP 6.0
+in the Examples Document Version
+\href{https://github.com/OpenMP/Examples/tree/v6.0}{6.0}.
+The \emph{Earlier Version} column of the table lists the earlier version
+tags of the examples that can be found in 
+the Examples Document Version 
+\href{https://github.com/OpenMP/Examples/tree/v5.2}{5.2}.
+
+\index{clauses!combiner@\kcode{combiner}}
+\index{combiner clause@\kcode{combiner} clause}
+
+\nolinenumbers
+\dpftable{6.0}
+\begin{supertabular}{p{1.7in} p{1.1in} p{2.2in}}
+  \hexentry{udr.1}[f90]{4.0} &
+    \plc{combiner} expression in \kcode{declare} \\
+  \hexentry{udr.2}[f90]{4.0} & 
+    \kcode{reduction} directive changed to use \\
+  \hexentry{udr.3}[f90]{4.0} & \kcode{combiner} clause \\
+  \hexentry[f90]{udr.4}{4.0} & \\
+  \hexentry[cpp]{udr.5}{4.0} & \\
+  \hexentry[cpp]{udr.6}{4.0} & \\[2pt]
+\end{supertabular}
+
+\linenumbers
 Table~\ref{tab:Updated Examples 5.2} lists the updated examples for
 features deprecated in OpenMP 5.2
 in the Examples Document Version \examplesref{5.2}.
@@ -195,6 +224,7 @@ the Examples Document Version \examplesref{5.1}.
 \end{supertabular}
 
 \linenumbers
+\newpage
 Table~\ref{tab:Updated Examples 5.1} lists the updated examples for
 features deprecated in OpenMP 5.1
 in the Examples Document Version \examplesref{5.1}.

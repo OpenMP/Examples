@@ -95,7 +95,7 @@ end of the affected declarations, as introduced in OpenMP 5.1.
 The \kcode{begin declare target} directive was defined
 to symmetrically complement the terminating (``end'') directive.
 
-\cppspecificstart
+\begin{cppspecific}
 
 The example also shows 3 different ways to use a \kcode{declare target} directive for a 
 class and an external member-function definition (for the \ucode{XOR1}, \ucode{XOR2}, 
@@ -138,10 +138,10 @@ separately and linking them, will create appropriate executable device functions
 \smallskip
 \cppnexample[5.1]{declare_target}{2b_main}[1]
 
-%\cppspecificend
+%\end{cppspecific}
 \topmarker{C++}
 
-%\cppspecificstart
+%\begin{cppspecific}
 The following example shows how the \kcode{begin declare target} and \kcode{end declare target} directives are used to enclose the declaration 
 of a variable \ucode{varY} with a class type \ucode{typeY}. 
 %Prior to OpenMP 5.0, the member function \code{typeY::foo()} cannot 
@@ -157,7 +157,7 @@ and will successfully execute the function on the device.  See previous examples
 %as if it were included in list or block of a declare target directive,
 
 \cppnexample[5.1]{declare_target}{2c}
-\cppspecificend
+\end{cppspecific}
 
 \subsection{Declare Target Directive for Variables}
 \label{subsec:declare_target_variables}

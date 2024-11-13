@@ -21,7 +21,7 @@ binary_tree_t *search_tree(binary_tree_t *tree, int value, int level) {
         else {
 #pragma omp task shared(found) if(level < 10)
             {
-                binary_tree_t *found_left = NULL;
+                binary_tree_t *found_left;
                 found_left = search_tree(tree->left, value, level + 1);
                 if (found_left) {
 #pragma omp atomic write
@@ -31,7 +31,7 @@ binary_tree_t *search_tree(binary_tree_t *tree, int value, int level) {
             }
 #pragma omp task shared(found) if(level < 10)
             {
-                binary_tree_t *found_right = NULL;
+                binary_tree_t *found_right;
                 found_right = search_tree(tree->right, value, level + 1);
                 if (found_right) {
 #pragma omp atomic write
@@ -44,6 +44,7 @@ binary_tree_t *search_tree(binary_tree_t *tree, int value, int level) {
     }
     return found;
 }
+
 binary_tree_t *search_tree_parallel(binary_tree_t *tree, int value) {
     binary_tree_t *found = NULL;
 #pragma omp parallel shared(found, tree, value)

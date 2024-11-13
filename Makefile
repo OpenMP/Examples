@@ -4,14 +4,20 @@
 include versioninfo
 
 default: openmp-examples.pdf
-diff: openmp-diff-abridged.pdf
+diff: clean openmp-diff-abridged.pdf
 
-book: BOOK_BUILD="\\\\def\\\\bookbuild{1}"
-book: VERSIONSTR="$(version_date)"
-book: clean openmp-examples.pdf
-	mv openmp-examples-${version}.pdf openmp-examples-${version}-book.pdf
 release: VERSIONSTR="$(version_date)"
 release: clean openmp-examples.pdf
+
+book: BOOK_BUILD="\\\\def\\\\bookbuild{1}"
+book: clean release
+	mv openmp-examples-${version}.pdf openmp-examples-${version}-book.pdf
+
+ccpp-only: LANG_OPT="\\\\ccpptrue\\\\fortranfalse"
+ccpp-only: clean release
+
+fortran-only: LANG_OPT="\\\\ccppfalse\\\\fortrantrue"
+fortran-only: clean release
 
 CHAPTERS=Title_Page.tex \
 	Foreword_Chapt.tex \
@@ -41,8 +47,9 @@ LATEXDCMD=$(LATEXCMD) -draftmode
 
 # check for branches names with "name_XXX"
 DIFF_TICKET_ID=$(shell git rev-parse --abbrev-ref HEAD)
-GITREV=$(shell git rev-parse --short HEAD)
+GITREV=$(shell git rev-parse --short HEAD || echo "??")
 VERSIONSTR="GIT rev $(GITREV)"
+LANG_OPT="\\\\ccpptrue\\\\fortrantrue"
 
 openmp-examples.pdf: $(CHAPTERS) $(SOURCES) openmp.sty openmp-examples.tex openmp-logo.png generated-include.tex
 	rm -f $(INTERMEDIATE_FILES)
@@ -75,15 +82,15 @@ endif
 ifdef DIFF_FROM
     VC_DIFF_FROM := -r ${DIFF_FROM}
 else
-    VC_DIFF_FROM := -r main
+    VC_DIFF_FROM := -r work_6.0
 endif
 
 DIFF_TO:=HEAD
-DIFF_FROM:=main
+DIFF_FROM:=work_6.0
 DIFF_TYPE:=UNDERLINE
 
 COMMON_DIFF_OPTS:=--math-markup=whole  \
-                  --append-safecmd=plc,code,hcode,scode,pcode,splc \
+                  --append-safecmd=plc,code,kcode,scode,ucode,vcode,splc,bcode,pvar,pout,example \
                   --append-textcmd=subsubsubsection
 
 VC_DIFF_OPTS:=${COMMON_DIFF_OPTS} --force -c latexdiff.cfg --flatten --type="${DIFF_TYPE}" --git --pdf  ${VC_DIFF_FROM} ${VC_DIFF_TO}  --subtype=ZLABEL --graphics-markup=none
@@ -94,8 +101,10 @@ generated-include.tex:
 	echo "$(BOOK_BUILD)"
 	echo "$(BOOK_BUILD)" > $@
 	echo "\def\VER{${version}}" >> $@
-	echo "\def\PVER{${version_spec}}" >> $@
+	echo "\def\SVER{${version_spec}}" >> $@
 	echo "\def\VERDATE{${VERSIONSTR}}" >> $@
+	echo "\\\\newif\ifccpp\\\\newif\iffortran" >> $@
+	echo "$(LANG_OPT)" >> $@
 	util/list_tags -vtag */sources/* >> $@
 
 %.tmpdir: $(wildcard *.sty) $(wildcard *.png) $(wildcard *.aux) openmp-examples.pdf

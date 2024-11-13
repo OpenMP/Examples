@@ -52,20 +52,20 @@
 %
 %    \specref{}                 % formats the cross-reference "Section X on page Y"
 %    
-%    \notestart                 % black horizontal rule for Notes
-%    \noteend
+%    \begin{note}               % black horizontal rule for Notes
+%    \end{note}
 %    
-%    \cspecificstart            % blue horizontal rule for C-specific text
-%    \cspecificend
+%    \begin{cspecific}          % blue horizontal rule for C-specific text
+%    \end{cspecific}
 %    
-%    \cppspecificstart          % blue horizontal rule for C++ -specific text
-%    \cppspecificend
+%    \begin{cppspecific}        % blue horizontal rule for C++ -specific text
+%    \end{cppspecific}
 %    
-%    \ccppspecificstart         % blue horizontal rule for C / C++ -specific text
-%    \ccppspecificend
+%    \begin{ccppspecific}       % blue horizontal rule for C/C++ -specific text
+%    \end{ccppspecific}
 %    
-%    \fortranspecificstart      % blue horizontal rule for Fortran-specific text
-%    \fortranspecificend
+%    \begin{fortranspecific}    % blue horizontal rule for Fortran-specific text
+%    \end{fortranspecific}
 %    
 %    \glossaryterm              % for use in formatting glossary entries
 %    \glossarydefstart
@@ -302,7 +302,7 @@
 
 % Enable \alltt{} for formatting blocks of code:
 \usepackage{alltt}
-\usepackage{toolbox}         % for \toolboxMakeSplit
+\usepackage{toolbox}         % for \toolboxReplace
 
 % This sets the default \code{} font to tt (monospace) and bold:
 \newcommand\code[1]{\texttt{\textbf{#1}}}
@@ -315,20 +315,16 @@
 % This is an updated set of macros for code style work
 % kcode - keywords, vcode - value, bcode - base language,
 % pvar - variables, pout - program outputs
-\toolboxMakeSplit*{ }{DoSplitS}\toolboxMakeSplit*{_}{DoSplitU}
-\protected\def\DoReplaceU#1{\DoSplitU{#1}\leftutext\rightutext
-   \leftutext%
-   \ifthenelse{\isundefined{\rightutext}}{}%
-      {\_\expandafter\DoReplaceU\expandafter{\rightutext}}}
-\protected\def\DoReplaceS#1{\DoSplitS{#1}\leftstext\rightstext
-   \expandafter\DoReplaceU\expandafter{\leftstext}%
-   \ifthenelse{\isundefined{\rightstext}}{}%
-      {\textrm{~}\expandafter\DoReplaceS\expandafter{\rightstext}}}
-\newcommand{\myreplacedmt}[1]{\protect\DoReplaceS{#1}}
-\newcommand\kcode[1]{\texttt{\bfseries\upshape\myreplacedmt{#1}}}
-\newcommand\bcode[1]{\texttt{\mdseries\upshape\myreplacedmt{#1}}}
-\newcommand\vcode[1]{\bcode{#1}}
-\newcommand\ucode[1]{\texttt{\mdseries\slshape\myreplacedmt{#1}}}
+\protected\def\DoReplaceU#1{\def\utexttmp{#1}%
+   \toolboxReplace{_}{\_}\utexttmp\utexttmp}
+\protected\def\myreplacedmt#1#2{\def\stexttmp{#1}%
+   \toolboxReplace{_}{\_}\stexttmp%
+   \toolboxReplace{ }{\rmfamily{ }\ttfamily#2}\stexttmp%
+   {\ttfamily#2\stexttmp}}
+\newcommand\kcode[1]{\myreplacedmt{#1}{\bfseries\upshape}}
+\newcommand\vcode[1]{\myreplacedmt{#1}{\mdseries\upshape}}
+\newcommand\bcode[1]{\kcode{#1}}
+\newcommand\ucode[1]{\myreplacedmt{#1}{\mdseries\slshape}}
 \newcommand\pvar[1]{\ucode{#1}}
 \newcommand\pout[1]{\vcode{#1}}
 \newcommand\docref[1]{\textrm{\mdseries\itshape{#1}}}
@@ -340,14 +336,24 @@
 \newcommand\examplesblob[1]{\href{\examplesrepo/blob/#1}{#1}}
 
 % Environment for a paragraph of literal code, single-spaced, no outline, no indenting:
-\newenvironment{codepar}[1]
-{\begin{alltt}\bfseries #1}
-{\end{alltt}}
+\usepackage{listings}
+\lstnewenvironment{codepar}{%
+  }{}
+%\newenvironment{codepar}[1]
+%{\begin{alltt}\bfseries #1}
+%{\end{alltt}}
 
 % For blocks of code inside a box frame:
-\newenvironment{boxedcode}[1]
-{\vspace{0.25em plus 5em minus 0.25em}\begin{framed}\begin{minipage}[t]{\textwidth}\begin{alltt}\bfseries #1}
-{\end{alltt}\end{minipage}\end{framed}\vspace{0.25em plus 5em minus 0.25em}}
+\lstnewenvironment{boxedcode}{%
+  \lstset{framesep=1.2ex,frame=l,framerule=3pt,
+          backgroundcolor=\color{white!90!black}}}{}
+\lstnewenvironment{boxeducode}{%
+  \lstset{framesep=1.2ex,frame=l,framerule=3pt,
+          basicstyle=\ttfamily\mdseries\slshape,
+          backgroundcolor=\color{white!90!black}}}{}
+%\newenvironment{boxedcode}[1]
+%{\vspace{0.25em plus 5em minus %0.25em}\begin{framed}\begin{minipage}[t]{\textwidth}\begin{alltt}\bfseries #1}
+%{\end{alltt}\end{minipage}\end{framed}\vspace{0.25em plus 5em minus 0.25em}}
 
 % This sets the margins in the framed box:
 \setlength{\FrameSep}{0.6em}
@@ -355,9 +361,39 @@
 % For indented lists of verbatim code at a relaxed line spacing,
 % e.g., for use after "where clause is one of the following:"
 \usepackage{setspace}
-\newenvironment{indentedcodelist}{%
-    \begin{adjustwidth}{0.25in}{}\begin{spacing}{1.5}\begin{alltt}\bfseries}
-    {\end{alltt}\end{spacing}\vspace{-0.25\baselineskip}\end{adjustwidth}}
+\lstnewenvironment{indentedcodelist}{%
+  \lstset{xleftmargin=0.25in}}{}
+%\newenvironment{indentedcodelist}{%
+%\begin{adjustwidth}{0.25in}{}\vspace{-0.2\baselineskip}\begin{spacing}{1.2}\beg%in{alltt}\bfseries}
+%    {\end{alltt}\end{spacing}\vspace{-0.2\baselineskip}\end{adjustwidth}}
+
+\lstdefinestyle{openmp}{
+  showstringspaces=false,
+  basicstyle=\ttfamily\bfseries,
+  linewidth=.99\linewidth,
+  xleftmargin=0.01\linewidth,
+  columns=fullflexible,
+  keepspaces=true,
+  escapechar=@,
+  belowskip=\smallskipamount,
+  aboveskip=\smallskipamount,
+  morecomment=[l][\color{red}\sout]{\%DIF\ <},         % deleted empty lines
+  morecomment=[l][\color{blue}\uwave]{\%DIF\ >},       % added empty lines
+  moredelim=[il][\color{red}\sout]{\%DIF\ <\ },        % deleted lines
+  moredelim=[il][\color{blue}\uwave]{\%DIF\ >\ },      % added lines
+  moredelim=**[is][\rmfamily\mdseries\itshape]{\\plc\{}{\}},
+  moredelim=**[is][\textsubscript]{\\textsubscript\{}{\}},
+  moredelim=**[is][]{\\textnormal\{}{\}},
+  moredelim=**[is][\rmfamily\mdseries\itshape]{\\textsl\{}{\}},
+  moredelim=**[is][\ttfamily\mdseries\slshape]{\\ucode\{}{\}},
+  moredelim=**[is][\ttfamily\bfseries\upshape]{\\kcode\{}{\}},
+  moredelim=**[is][]{\\code\{}{\}},
+  moredelim=**[is][]{\\scode\{}{\}},
+  moredelim=*[is][\color{red}\sout]{*!----}{----!*},
+  moredelim=*[is][\color{blue}\uwave]{*!++++}{++++!*},
+  moredelim=**[is][\mdseries\rmfamily]{\\text\{}{\}},
+}
+\lstset{style=openmp}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -413,31 +449,61 @@
 \newcommand{\VSPb}{\vspace{0.5ex plus 5ex minus 0.25ex}}
 \newcommand{\VSPa}{\vspace{0.25ex plus 5ex minus 0.25ex}}
 
+% remove language marker definition if either ccpp or fortran is undefined
+\ifthenelse{\boolean{ccpp}\and\boolean{fortran}}{}%
+{\renewcommand{\linewitharrows}[4]{\par}}
+\newcommand{\langselect}{}
+\ifccpp\else\renewcommand{\langselect}{Fortran~}\fi
+\iffortran\else\renewcommand{\langselect}{C/C++~}\fi
+
 % C
+\ifccpp
+\newenvironment{cspecific}[1][0ex]{\vspace{#1}\cspecificstart\vspace{-#1}}{\cspecificend}
+\else
+\excludecomment{cspecific}
+\fi
 \newcommand{\cspecificstart}{\needspace{\sbns}\linewitharrows{-1}{solid}{C}{3em}}
 \newcommand{\cspecificend}{\linewitharrows{1}{solid}{C}{3em}\bigskip}
 
 % C/C++
+\ifccpp
+\newenvironment{ccppspecific}[1][0ex]{\vspace{#1}\ccppspecificstart\vspace{-#1}}{\ccppspecificend}
+\else
+\excludecomment{ccppspecific}
+\fi
 \newcommand{\ccppspecificstart}{\VSPb\linewitharrows{-1}{solid}{C / C++}{6em}\VSPa}
 \newcommand{\ccppspecificend}{\VSPb\linewitharrows{1}{solid}{C / C++}{6em}\VSPa}
 
 % C++
+\ifccpp
+\newenvironment{cppspecific}[1][0ex]{\vspace{#1}\cppspecificstart\vspace{-#1}}{\cppspecificend}
+\else
+\excludecomment{cppspecific}
+\fi
 \newcommand{\cppspecificstart}{\needspace{\sbns}\linewitharrows{-1}{solid}{C++}{6em}}
 \newcommand{\cppspecificend}{\linewitharrows{1}{solid}{C++}{6em}\bigskip}
 
 % C90
+\newenvironment{cNinetyspecific}{\cNinetyspecificstart}{\cNinetyspecificend}
 \newcommand{\cNinetyspecificstart}{\needspace{\sbns}\linewitharrows{-1}{solid}{C90}{4em}}
 \newcommand{\cNinetyspecificend}{\linewitharrows{1}{solid}{C90}{4em}\bigskip}
 
 % C99
+\newenvironment{cNinetyNinespecific}{\cNinetyNinespecificstart}{\cNinetyNinespecificend}
 \newcommand{\cNinetyNinespecificstart}{\needspace{\sbns}\linewitharrows{-1}{solid}{C99}{4em}}
 \newcommand{\cNinetyNinespecificend}{\linewitharrows{1}{solid}{C99}{4em}\bigskip}
 
 % Fortran
+\iffortran
+\newenvironment{fortranspecific}[1][0ex]{\vspace{#1}\fortranspecificstart\vspace{-#1}}{\fortranspecificend}
+\else
+\excludecomment{fortranspecific}
+\fi
 \newcommand{\fortranspecificstart}{\VSPb\linewitharrows{-1}{solid}{Fortran}{6em}\VSPa}
 \newcommand{\fortranspecificend}{\VSPb\linewitharrows{1}{solid}{Fortran}{6em}\VSPa}
 
 % Note
+\newenvironment{note}{\notestart}{\noteend}
 \newcommand{\notestart}{\VSPb\notelinewitharrows{-1}{solid}\VSPa}
 \newcommand{\noteend}{\VSPb\notelinewitharrows{1}{solid}\VSPa}
 
@@ -486,7 +552,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Formats a cross reference label as "Section X on page Y".
 
-\newcommand{\specref}[1]{Section~\ref{#1} on page~\pageref{#1}}
+\newcommand{\nspecref}[2]{#1~\ref{#2} on page~\pageref{#2}}
+\newcommand{\specref}[1]{\nspecref{Section}{#1}}
 
 % For caption for supertabular and figure, by yanyh15
 \captionsetup[table]{labelfont={sf,sc,bf},textfont=normalfont,singlelinecheck=off,labelformat=simple,labelsep=colon,aboveskip=00pt,belowskip=10pt}
@@ -501,7 +568,6 @@
 %     \cppexample     formats blue markers, caption, and code for C++ examples
 %     \fexample       formats blue markers, caption, and code for Fortran (fixed) examples
 %     \ffreeexample   formats blue markers, caption, and code for Fortran90 (free) examples
-% Thanks to Jin, Haoqiang H. for the original definitions of the following:
 
 \usepackage{color,fancyvrb}  % for \VerbatimInput
 \usepackage{xargs}           % for optional args
@@ -542,7 +608,7 @@
    \def\fcnt{\the\cnt}
 %   \def\fcnt{\stagcnt}
    \noindent
-   \hypertarget{ex:\cname}{\textit{Example \ename}}\vername
+   \underline{\hypertarget{ex:\cname}{\textit{Example \ename}}\vername}
    %\vspace*{-3mm}
    \code{\VerbatimInput[numbers=left,numbersep=5ex,firstnumber=1,firstline=\fcnt,fontsize=\small]%
       {\chapdirname/sources/\cname}} 
@@ -569,27 +635,37 @@
 }
 
 \newcommandx*\cexample[4][1=,4=0]{%
-\needspace{5\baselineskip}\ccppspecificstart
+\ifccpp
+\needspace{5\baselineskip}\begin{ccppspecific}
 \cnexample[#1]{#2}{#3}[#4]
-\ccppspecificend
+\end{ccppspecific}
+\fi
 }
 
 \newcommandx*\cppexample[4][1=,4=0]{%
-\needspace{5\baselineskip}\cppspecificstart
+\ifccpp
+\needspace{5\baselineskip}\begin{cppspecific}
 \cppnexample[#1]{#2}{#3}[#4]
-\cppspecificend
+\end{cppspecific}
+\fi
 }
 
 \newcommandx*\fexample[4][1=,4=0]{%
-\needspace{5\baselineskip}\fortranspecificstart
+\iffortran
+\needspace{5\baselineskip}
+\begin{fortranspecific}
 \fnexample[#1]{#2}{#3}[#4]
-\fortranspecificend
+\end{fortranspecific}
+\fi
 }
 
 \newcommandx*\ffreeexample[4][1=,4=0]{%
-\needspace{5\baselineskip}\fortranspecificstart
+\iffortran
+\needspace{5\baselineskip}
+\begin{fortranspecific}
 \ffreenexample[#1]{#2}{#3}[#4]
-\fortranspecificend
+\end{fortranspecific}
+\fi
 }
 
 \newcommandx*\hexentry[4][1=c,3=]{%

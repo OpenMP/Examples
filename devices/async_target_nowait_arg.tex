@@ -1,0 +1,11 @@
+\subsection{Conditionally Asynchronous \kcode{target} Using the \kcode{nowait} Clause}
+\label{subsec:async_target_nowait_arg}
+\index{target construct@\kcode{target} construct!nowait clause@\kcode{nowait} clause}
+\index{nowait clause@\kcode{nowait} clause}
+\index{clauses!nowait@\kcode{nowait}}
+
+In OpenMP 6.0, \kcode{nowait} takes an OpenMP logical type argument to specify if the generated \plc{task} is an included task or a deferred task. In the following example, the \kcode{nowait} clause is used with an argument on the \kcode{target} directive. In a practical situation, the value of \ucode{is_deferred} can be chosen based on the time taken for some work on host or device that can be performed asynchronously after the target task is scheduled. If the target task is deferred, it must be synchronized by a \kcode{taskwait} before the value of \ucode{x} is used. Prior to 6.0, the same effect would require the use of a \plc{metadirective} or an \bcode{if-else} statement that duplicates the \kcode{target} construct.
+
+\cexample[6.0]{async_target}{5}
+
+\ffreeexample[6.0]{async_target}{5}

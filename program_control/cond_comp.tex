@@ -4,20 +4,20 @@
 \index{conditional compilation!_OPENMP macro@\kcode{_OPENMP} macro}
 \index{conditional compilation!sentinel}
 
-\ccppspecificstart
+\begin{ccppspecific}
 The following example illustrates the use of conditional compilation using the 
 OpenMP macro \kcode{_OPENMP}. With OpenMP compilation, the \kcode{_OPENMP} 
 macro becomes defined.
 
 \cnexample{cond_comp}{1}
-\ccppspecificend
+\end{ccppspecific}
 
-\fortranspecificstart
+\begin{fortranspecific}
 The following example illustrates the use of the conditional compilation sentinel. 
 With OpenMP compilation, the conditional compilation sentinel \scode{!$} is recognized 
 and treated as two spaces. In fixed form source, statements guarded by the sentinel 
 must start after column 6.
 
 \fnexample{cond_comp}{1}
-\fortranspecificend
+\end{fortranspecific}
 
