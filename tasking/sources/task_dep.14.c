@@ -28,7 +28,7 @@ int main()
   for (int h = 0;  h < NUM_VS; h++) {
     // Generate transparent task to establish dependences
     // between child tasks that don't share the same parent.
-    #pragma omp task depend(inout:M[:]) transparent(omp_impex)
+    #pragma omp task depend(inout:h) transparent(omp_impex)
     my_func(M, v[h]);
   }
 

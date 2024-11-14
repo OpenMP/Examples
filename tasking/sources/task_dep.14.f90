@@ -20,7 +20,7 @@ program main
     do h = 0, NUM_VS-1
       ! Generate transparent task to establish dependences
       ! between child tasks that don't share the same parent.
-      !$omp task depend(inout:M) transparent(omp_impex)
+      !$omp task depend(inout:h) transparent(omp_impex)
         call my_func(M, v(:,h))
       !$omp end task
     end do
