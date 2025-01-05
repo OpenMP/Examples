@@ -1,5 +1,6 @@
 # Makefile for the OpenMP Examples document in LaTex format. 
 # For more information, see the main document, openmp-examples.tex.
+SHELL=bash
 
 include versioninfo
 
@@ -9,14 +10,14 @@ diff: clean openmp-diff-abridged.pdf
 release: VERSIONSTR="$(version_date)"
 release: clean openmp-examples.pdf
 
-book: BOOK_BUILD="\\\\def\\\\bookbuild{1}"
+book: BOOK_BUILD="\\def\\bookbuild{1}"
 book: clean release
 	mv openmp-examples-${version}.pdf openmp-examples-${version}-book.pdf
 
-ccpp-only: LANG_OPT="\\\\ccpptrue\\\\fortranfalse"
+ccpp-only: LANG_OPT="\\ccpptrue\\fortranfalse"
 ccpp-only: clean release
 
-fortran-only: LANG_OPT="\\\\ccppfalse\\\\fortrantrue"
+fortran-only: LANG_OPT="\\ccppfalse\\fortrantrue"
 fortran-only: clean release
 
 CHAPTERS=Title_Page.tex \
@@ -49,7 +50,7 @@ LATEXDCMD=$(LATEXCMD) -draftmode
 DIFF_TICKET_ID=$(shell git rev-parse --abbrev-ref HEAD)
 GITREV=$(shell git rev-parse --short HEAD || echo "??")
 VERSIONSTR="GIT rev $(GITREV)"
-LANG_OPT="\\\\ccpptrue\\\\fortrantrue"
+LANG_OPT="\\ccpptrue\\fortrantrue"
 
 openmp-examples.pdf: $(CHAPTERS) $(SOURCES) openmp.sty openmp-examples.tex openmp-logo.png generated-include.tex
 	rm -f $(INTERMEDIATE_FILES)
@@ -98,12 +99,11 @@ VC_DIFF_OPTS:=${COMMON_DIFF_OPTS} --force -c latexdiff.cfg --flatten --type="${D
 VC_DIFF_MINIMAL_OPTS:= --only-changes --force
 
 generated-include.tex:
-	echo "$(BOOK_BUILD)"
 	echo "$(BOOK_BUILD)" > $@
-	echo "\def\VER{${version}}" >> $@
-	echo "\def\SVER{${version_spec}}" >> $@
-	echo "\def\VERDATE{${VERSIONSTR}}" >> $@
-	echo "\\\\newif\ifccpp\\\\newif\iffortran" >> $@
+	echo "\\def\\VER{${version}}" >> $@
+	echo "\\def\\SVER{${version_spec}}" >> $@
+	echo "\\def\\VERDATE{${VERSIONSTR}}" >> $@
+	@echo "\\newif\\ifccpp\\newif\\iffortran" >> $@
 	echo "$(LANG_OPT)" >> $@
 	util/list_tags -vtag */sources/* >> $@
 
