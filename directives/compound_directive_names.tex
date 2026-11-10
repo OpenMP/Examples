@@ -47,7 +47,7 @@ construct, and where the leaf directives are \kcode{target}, \kcode{teams}, and
 \kcode{loop}.
 
 A composite directive is any compound directive that is not combined. In
-particular, it's not the case that the directive name can be split into a
+particular, it is not that the directive name can be split into a
 \plc{directive-name-A} and \plc{directive-name-B}, such that the semantics are
 a construct formed by \plc{directive-name-A} immediately enclosing a construct
 formed by \plc{directive-name-B}. Usually, composite directives are also
@@ -61,7 +61,7 @@ construct formed by \plc{directive-name-B}. An example of such a composite
 directive is \kcode{distribute simd}, which has the behavior of a
 \kcode{distribute} construct for which the loop body is a \kcode{simd}
 construct, and where the leaf directives are \kcode{distribute} and
-\kcode{simd}. Note that this is different than the \kcode{distribute} construct
+\kcode{simd}. Note that this is different from the \kcode{distribute} construct
 immediately enclosing a \kcode{simd} construct, which in fact would not be
 conforming OpenMP code. There are also composite directives that are not
 expressed as a concatenation of two or more directive names, but nevertheless
@@ -110,7 +110,7 @@ individual leaf directives according to certain properties they may have:
 
 The OpenMP specification defines a grammar and various restrictions for
 compound directive names that are composed of two or more explicitly named
-constituent directive names. The grammar allows for a handleful of such
+constituent directive names. The grammar allows for a handful of such
 directive names that are composite, and additionally permits two directive
 names to be concatenated into a combined directive name according to the
 following rules:
@@ -133,17 +133,17 @@ simd}, which conforms to the above rules as shown in the following diagram:
     masked target teams distribute simd (combined)
           ______________|_____________
          |                            |
-   A: masked       B: target teams distribute simd (combined)
-(thread-selecting)        ________|__________________
-                         |                           |
-                     A: target            B: teams distribute simd (combined)
-                 (parallelism-generating)  __________|____________
-                                          |                       |
-                                       A: teams         B: distribute simd (composite)
-                               (parallelism-generating)    _______|_______
-                                                          |               |
-                                                     A: distribute      B: simd
-                                                     (partitioned)
+   A: masked         B: target teams distribute simd (combined)
+(thread-selecting)        ____________|____________
+                         |                         |
+                   A: target          B: teams distribute simd (combined)
+             (parallelism-generating)  ____________|____________
+                                      |                         |
+                                 A: teams         B: distribute simd (composite)
+                           (parallelism-generating)      _______|_______
+                                                        |               |
+                                                  A: distribute      B: simd
+                                                   (partitioned)
 
 \end{Verbatim}
 
@@ -162,15 +162,15 @@ that a compound directive cannot have multiple leaf directives with the same
 name, such as repeated \kcode{parallel}. This avoids ambiguity when specifying a
 particular leaf directive to which a clause should be applied with the
 \plc{directive-name-modifier}. The \kcode{teams target} directive is invalid
-due a restriction that a combined directive name must specify an inner
+due to a restriction that a combined directive name must specify an inner
 construct formed by \plc{directive-name-B} that may be immediately nested
 inside an outer construct formed by \plc{directive-name-A}. Since a
 \kcode{target} construct may not be nested inside a \kcode{teams} construct,
 the combined directive is disallowed. The \kcode{teams sections} and
 \kcode{teams masked} directives are both invalid due to a restriction that
-worksharing and thread-selecting directive names may only combined with a
+worksharing and thread-selecting directive names may only be combined with a
 \kcode{parallel} \plc{directive-name-A}. Generally speaking, any other
-\plc{directive-name-A} would not form a useful combined consruct. The
+\plc{directive-name-A} would not form a useful combined construct. The
 \kcode{target_data parallel target} directive is invalid due to a restriction
 that at most one constituent construct may be map-entering (or map-exiting),
 and here the \kcode{target_data} and \kcode{target} constituent constructs are
@@ -237,7 +237,7 @@ other specifying a constituent compound directive name). Without the modifier,
 the \kcode{if} clause applies to all the constituent directives that accept the
 \kcode{if} clause (only the \kcode{parallel} here). With the \kcode{parallel}
 \plc{directive-name-modifier}, it applies explicitly to only the
-\kcode{parallel} directive. With \kcode{parallel for} (or \kcode{parallel do})
+\kcode{parallel} directive. With the \kcode{parallel for} (or \kcode{parallel do})
 \plc{directive-name-modifier}, it applies explicitly to the \kcode{parallel
 for} (or \kcode{parallel do}) directive, which has the effect of applying only
 to the \kcode{parallel} leaf directive.

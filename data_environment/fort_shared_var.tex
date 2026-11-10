@@ -30,7 +30,7 @@ If there is a copy-in/copy-out, the code for copy-in/copy-out will result in
 a race condition, even though there is an \kcode{atomic}
 directive for the update of variable \ucode{b(i)} in the subroutine. 
 If the implementation can create a temporary descriptor for \ucode{a(::2)} 
-with the correct stride and passed it to subroutine \ucode{sub1}, 
+with the correct stride and pass it to subroutine \ucode{sub1}, 
 the same memory is accessed inside the subroutine and the result 
 (\ucode{sum1}) is then well defined.
 For \ucode{sub2}, there is the \bcode{CONTIGUOUS} attribute for 

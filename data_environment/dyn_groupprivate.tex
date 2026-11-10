@@ -1,0 +1,41 @@
+\section{\kcode{dyn_groupprivate} Clause}
+\label{sec:dyn_groupprivate}
+\index{clauses!dyn_groupprivate@\kcode{dyn_groupprivate}}
+\index{dyn_groupprivate clause@\kcode{dyn_groupprivate} clause}
+\index{routines!omp_get_dyn_gprivate_ptr@\kcode{omp_get_dyn_gprivate_ptr}}
+\index{omp_get_dyn_gprivate_ptr routine@\kcode{omp_get_dyn_gprivate_ptr} routine}
+
+
+The following example shows the use of the \kcode{dyn_groupprivate} clause 
+and the \kcode{omp_get_dyn_gprivate_ptr} routine. The \kcode{dyn_groupprivate} 
+clause specifies the instantiation of dynamic \kcode{groupprivate} blocks in the \kcode{target teams} 
+region. The block holds \ucode{N} integer values followed by \ucode{M} integer 
+values, which total \ucode{N*sizeof(int)+M*sizeof(int)} bytes. Since the access-group 
+modifier is not specified, it defaults to contention group access (\kcode{omp_access_cgroup}). 
+Each contention group executing in the region will receive one of the uninitialized 
+\kcode{groupprivate} buffer copies, which, in this particular example, means that each 
+initiated team will effectively have its own copy.
+
+The absolute size limit of a \kcode{groupprivate} memory space on a specific device 
+can be obtained using the \kcode{omp_get_gprivate_limit} routine. The effective size 
+that can be used in a \kcode{dyn_groupprivate} clause for a particular \kcode{target teams} region 
+may be less than the absolute limit due to the use of the \kcode{groupprivate} directive 
+or the OpenMP implementation. If the memory requested in the \kcode{dyn_groupprivate} 
+clause exceeds the effective limit, the runtime will execute a fallback action. The fallback 
+can be runtime error termination (abort), using an alternative implementation-defined 
+memory space (\kcode{default_mem}), or continuing without instantiating the block (null). Since 
+the fallback modifier is not specified, the fallback behavior defaults to \kcode{default_mem}.
+
+The \kcode{omp_get_dyn_gprivate_ptr} routine returns a pointer to the dynamic 
+\kcode{groupprivate} block for the current contention group (and \kcode{team}) in the 
+\kcode{target teams} region, with an optional offset in bytes. The \kcode{omp_get_dyn_gprivate_ptr} calls used inside \ucode{foo} return pointers to the dynamic \kcode{groupprivate} block with 
+offsets of \ucode{0} and \ucode{N*sizeof(int)} bytes, which correspond to the memory used to store 
+the variables \ucode{x} and \ucode{y}, respectively. All threads belonging to the same contention group 
+(and in this case, the same team) will have access to the same memory buffers, allowing 
+the sharing of data within the same team. The lifetime of the copy is limited to the lifetime 
+of all members of the corresponding contention group.
+
+
+\cppexample[6.1]{dyn_groupprivate}{1}
+
+\ffreeexample[6.1]{dyn_groupprivate}{1}

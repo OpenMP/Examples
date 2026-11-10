@@ -53,7 +53,7 @@ in array \ucode{p} is copied back, the arrays \ucode{v1} and \ucode{v2} are not.
 \index{clauses!depend@\kcode{depend}}
 \index{depend clause@\kcode{depend} clause}
 A \kcode{depend} clause is used in the \kcode{task} directive to provide a wait at the beginning of the second 
-\kcode{target} region, to insure that there is no race condition with \ucode{v1} and \ucode{v2} in the two tasks.
+\kcode{target} region, to ensure that there is no race condition with \ucode{v1} and \ucode{v2} in the two tasks.
 It would be noncompliant to use \ucode{v1} and/or \ucode{v2} in lieu of \ucode{N} in the \kcode{depend} clauses, 
 because the use of non-allocated allocatable arrays as list items in a \kcode{depend} clause would 
 lead to unspecified behavior. 
@@ -62,7 +62,7 @@ lead to unspecified behavior.
 of allocatable arrays \ucode{v1} and \ucode{v2} is changed inside the \kcode{target} region, which is not allowed.
 (See the restrictions for the \kcode{map} clause in the \docref{Data-mapping Attribute Rules and Clauses} 
 section of the specification.)
-However, the intention is to relax the restrictions on mapping of allocatable variables in the next release
-of the specification so that the example will be compliant.
+%However, the intention is to relax the restrictions on mapping of allocatable variables in the next release
+%of the specification so that the example will be compliant.
 
 \ffreeexample[4.0]{async_target}{2}

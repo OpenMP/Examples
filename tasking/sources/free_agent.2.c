@@ -6,7 +6,7 @@
 * @@version:	omp_6.0
 */
 
-// export OMP_THREADS_RESERVE=”structured(64),free_agent(4)”
+// OMP_THREADS_RESERVE="structured(64),free_agent(4)"
 
 #include <stdio.h>
 #include <omp.h>
@@ -35,8 +35,8 @@ int main(void) {
    int val;
 
    val = fib(20);
-   printf(“fib(20) = %d\n”, val);
-   printf(“Number of tasks executed by free-agent threads = %d\n”, count);
+   printf("fib(20) = %d\n", val);
+   printf("Number of tasks executed by free-agent threads = %d\n", count);
 
    return 0;
 }

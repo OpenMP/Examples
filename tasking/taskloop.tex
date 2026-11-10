@@ -39,7 +39,7 @@ hence the reduction sum is executed \ucode{T$\times$N} times.
 
 The loop of the second taskloop is within a \kcode{single} region and is executed
 by a single thread so that only \ucode{N} reduction sums occur.  (The other
-\ucode{N}-1 threads of the \kcode{parallel} region will participate in executing the
+\ucode{T}-1 threads of the \kcode{parallel} region will participate in executing the
 tasks. This is the common use case for the \kcode{taskloop} construct.)
 
 In the example, the code thus prints \pout{x1 = 16384} (\ucode{T$\times$N}) and

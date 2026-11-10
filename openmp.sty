@@ -611,7 +611,7 @@
    \def\fcnt{\the\cnt}
 %   \def\fcnt{\stagcnt}
    \noindent
-   \underline{\hypertarget{ex:\cname}{\textit{Example \ename}}\vername}
+   \underline{\hypertarget{ex:\cname}{\textit{Example \ename}}\vername\label{ex_ptag:\cname}}
    %\vspace*{-3mm}
    \code{\VerbatimInput[numbers=left,numbersep=5ex,firstnumber=1,firstline=\fcnt,fontsize=\small]%
       {\chapdirname/sources/\cname}} 
@@ -671,6 +671,11 @@
 \fi
 }
 
+\newcommandx*\pexample[3][1=c,3=]{%
+  \hyperlink{ex:#2.#1}{\splc{#2.#1}}%
+    \ifthenelse{ \equal{#3}{} }{}{,~\hyperlink{ex:#2.#3}{\plc{#3}}}
+    (on page~\pageref{ex_ptag:#2.#1})
+}
 \newcommandx*\hexentry[4][1=c,3=]{%
   \hyperlink{ex:#2.#1}{\splc{#2.#1}}%
     \ifthenelse{ \equal{#3}{} }{}{,~\hyperlink{ex:#2.#3}{\plc{#3}}}%
@@ -686,5 +691,12 @@
 % Set default fonts:
 \rmfamily\mdseries\upshape\normalsize
 
+% Watermark for Comment Draft
+\ifcommentdraft
+\usepackage{draftwatermark}
+\SetWatermarkText{\textrm{\textmd{Comment Draft}}}
+\SetWatermarkScale{0.6}
+\SetWatermarkColor[gray]{0.85}
+\fi
 
 % This is the end of openmp.sty of the OpenMP specification.

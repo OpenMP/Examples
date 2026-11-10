@@ -13,7 +13,7 @@
 
 \begin{ccppspecific}
 A pointer variable can be shaped to a multi-dimensional array to facilitate
-data access. This is achieved by a \plc{shape-operator} casted in front of 
+data access. This is achieved by a \plc{shape-operator} cast in front of 
 a pointer (lvalue expression):
 \begin{description}
 \item[]\hspace*{5mm}\code{([$s_1$][$s_2$]...[$s_n$])}\plc{pointer}
@@ -35,7 +35,6 @@ over array-section operations.
 
 \cnexample[5.1]{array_shaping}{1}
 \end{ccppspecific}
-%\clearpage
 
 \begin{fortranspecific}
 The shape operator is not defined for Fortran.  Explicit array shaping
@@ -44,5 +43,6 @@ Below is the Fortran equivalent of the above example that illustrates
 the support of transferring two rows of noncontiguous boundary
 data in the \kcode{target_update} directive.
  
+\pagebreak
 \ffreenexample[5.2]{array_shaping}{1}
 \end{fortranspecific}

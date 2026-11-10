@@ -24,8 +24,8 @@ int main()
 {
    int n_sockets, socket_num;
 
-   omp_set_nested(1);              // or export OMP_NESTED=true
-   omp_set_max_active_levels(2);   // or export OMP_MAX_ACTIVE_LEVELS=2
+   omp_set_nested(1);              // or OMP_NESTED=true
+   omp_set_max_active_levels(2);   // or OMP_MAX_ACTIVE_LEVELS=2
 
    n_sockets = omp_get_num_places();
    #pragma omp parallel num_threads(n_sockets) private(socket_num) \

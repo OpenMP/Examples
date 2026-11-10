@@ -27,7 +27,7 @@ the \kcode{affinity} clause \kcode{affinity(\ucode{B[:N]})} on the second \kcode
 However, the storage behind \ucode{B} is created in the first task, and the 
 array section reference may not be valid when the second task is generated.
 The use of the \ucode{A} array is sufficient for this case, because one
-would expect the storage for \ucode{A} and \ucode{B} would be physically ``close''
+would expect the storage for \ucode{A} and \ucode{B} to be physically ``close''
 (as provided by the hint in the first task).
 
 \cexample[5.0]{affinity}{6}

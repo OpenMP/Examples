@@ -19,8 +19,9 @@ end module
 
 program main
    use mm
+   implicit none
    integer, parameter :: N=5
-   integer  :: arr(N), arr_bang(N)
+   integer :: i, arr(N), arr_bang(N)
 
 !!Case 1: Use in sequential code
    !$omp assume no_openmp

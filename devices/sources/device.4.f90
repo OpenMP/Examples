@@ -63,7 +63,7 @@ program device_mem
 
    !$omp target device(targ_dev) is_device_ptr(cp_dst)
      call c_f_pointer(cp_dst, fp_dst, [N])
-     if ( all(fp_dst == [(i,i=1,N)]) ) print*,"PASSED 2 of 5"
+     if ( all(fp_dst == [(i,i=2,N + 1)]) ) print*,"PASSED 2 of 5"
      nullify(fp_dst)
    !$omp end target
 

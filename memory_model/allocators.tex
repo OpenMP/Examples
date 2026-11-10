@@ -45,7 +45,7 @@ These declarations are followed by a call to the
 space (\ucode{xy_memspace}) and the traits (\ucode{xy_traits})
 to form an allocator (\ucode{xy_alloc}).
 
-In the C/C++ code the API  \kcode{omp_allocate()} function is used
+In the C/C++ code the API  \kcode{omp_alloc()} function is used
 to allocate space, similar to \bcode{malloc}, except that the allocator
 is specified as the second argument.
 In Fortran an \kcode{allocators} directive is used to specify an allocator
@@ -54,7 +54,7 @@ A variable list in the \kcode{allocate} clause may be supplied if the allocator
 is to be applied to a subset of variables in the Fortran allocate
 statement.
 Here, the \ucode{xy_alloc} allocator is specified
-in the modifier of the \kcode{allocator} clause,
+in the modifier of the \kcode{allocate} clause,
 and the set of all variables used in the \bcode{allocate} statement is specified in the list.
 
 %"for a following Fortran allocation statement" (no using "immediately" here)
@@ -72,7 +72,7 @@ users should be aware of the behavior of a reallocation.
 
 In the following example, the \ucode{a} variable is allocated with 64-byte
 alignment through the \kcode{align} clause of the \kcode{allocators} construct.
-The alignment of the newly allocated object, \ucode{a}, in the (reallocation)
+The alignment of the newly allocated object, \ucode{a}, in the reallocation
 assignment \ucode{a = b} will not be reallocated with the 64-byte alignment, but
 with the 32-byte alignment prescribed by the trait of the \ucode{my_alloctr} 
 allocator. It is best to avoid this problem by constructing and using an
@@ -83,17 +83,18 @@ deallocation of \ucode{a} the deallocation must precede the destruction
 of the allocator used in the allocation of \ucode{a}.
 
 \ffreeexample[5.2]{allocators}{2}
+\clearpage
 
 When creating and using an \kcode{allocators} construct within a Fortran procedure
-for allocating storage (and subsequently freeing the allocator storage with an 
-\kcode{omp_destroy_allocator} construct), users should be aware of the necessity
+for allocating storage and subsequently freeing the allocator storage with an 
+\kcode{omp_destroy_allocator} call, users should be aware of the necessity
 of using an explicit Fortran deallocation instead of relying on auto-deallocation.
 
 In the following example, a user-defined allocator is used in the allocation
 of the \ucode{c} variable, and then the allocator is destroyed.
 Auto-deallocation at the end of the \ucode{broken_auto_deallocation} procedure
 will fail without the allocator, hence an explicit deallocation should be used 
-(before the \kcode{omp_destroy_allocator} construct).
+before the \kcode{omp_destroy_allocator} call.
 Note that an allocator may be specified directly in the \kcode{allocate} clause
 without using the \kcode{allocator} complex modifier, so long as no other modifier 
 is specified in the clause.

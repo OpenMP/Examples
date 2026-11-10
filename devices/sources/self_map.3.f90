@@ -73,7 +73,7 @@ contains
    ! pointer attachment will result in a runtime error.
    subroutine self_map_pointer_with_attachment()
       integer, parameter :: n = 100
-      integer :: x(n)
+      integer, target :: x(n)
       integer, pointer :: p(:)
       logical :: self_mapped
 

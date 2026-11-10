@@ -186,6 +186,12 @@ A partial list:
 - `\ucode{}` - program variables, procedure names, or expression in examples codes. Support direct use of '_' (underscore) and ' ' (space).
 - `\pout{}` - program outputs
 
+Note: `\scode{}` should be used for OpenMP keywords in section or subsection
+titles. However, for multiple keywords, like combined constructs such as
+`target teams`, use `\scode` on each keyword separately, such as
+`\scode{target} \scode{teams}`, to get the desired space between keywords.
+An alternative approach is to use `\kcode{target teams}`. 
+
 Examples:
 - `\kcode{declare reduction}` for **declare reduction**
 - `\scode{!$omp}` sentinel, however, `\kcode{\#pragma omp}`

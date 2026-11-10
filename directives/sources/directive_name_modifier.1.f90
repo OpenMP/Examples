@@ -25,7 +25,7 @@ subroutine conditional_parallel(n, a, x, y, condition)
     y(i) = a*x(i)+y(i)
   end do
 
-  !! the if clause applies to the parallel for constituent directive,
+  !! the if clause applies to the parallel do constituent directive,
   !! which has the effect of only applying to the parallel leaf directive
   !$omp parallel do if(parallel do: condition)
   do i = 1,n 

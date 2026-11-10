@@ -13,6 +13,7 @@ end module
 
 program main
   use data
+  implicit none
   type(mypoints) :: p
   integer        :: q=0
 
@@ -27,11 +28,12 @@ end program
 
 subroutine do_something_with_p(p,q)
   use data
+  implicit none
   !$omp declare target
   type(mypoints) :: p
-  integer        :: q
+  integer        :: q, i
  
-  p%res = q;
+  p%res = q
   do i=1,size(p%data)
      p%data(i)=q*i
   enddo

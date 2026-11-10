@@ -5,7 +5,6 @@
 ! @@version:	omp_5.2
 program main
  use omp_lib
-
  integer, parameter :: N=1000
  real, allocatable  :: x(:),y(:)
  real               :: s = 2.0e0
@@ -22,7 +21,7 @@ program main
    allocate(x(N),y(N))
                          !! loc is non-standard, but found everywhere
                          !! remove these lines if not available
-   if(modulo(loc(x),64) /= 0 .and. modulo(loc(y),64) /=0 ) then
+   if(modulo(loc(x),64) /= 0 .or. modulo(loc(y),64) /= 0) then
       print*,"ERROR: x|y not 64-byte aligned"; stop
    endif
 

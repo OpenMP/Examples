@@ -30,8 +30,8 @@ subroutine async_memcpy
   h_buf = [(i*0.1, i = 1, N)]
 
   ! copy data from host to device asynchronously
-  if (omp_target_memcpy_async(c_dbuf, c_hbuf, dsize, 0, 0, &
-                              d_dev, h_dev, 0) /= 0) then
+  if (omp_target_memcpy_async(c_dbuf, c_hbuf, dsize, 0_c_size_t, &
+                              0_c_size_t, d_dev, h_dev, 0) /= 0) then
     stop
   endif
 

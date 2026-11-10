@@ -46,10 +46,10 @@ The following conforming program performs the reduction using
 the intrinsic procedure name \bcode{MAX} even though the intrinsic \bcode{MAX}
 has been renamed to \ucode{MIN}.
 
+\pagebreak
 \ffreenexample{reduction}{5}
 \end{fortranspecific}
 
-%\pagebreak
 The following example is non-conforming because the initialization (\ucode{a = 
 0}) of the original list item \ucode{a} is not synchronized with the update of 
 \ucode{a} as a result of the reduction computation in the \bcode{for} loop. Therefore, 
@@ -59,7 +59,7 @@ To avoid this problem, the initialization of the original list item \ucode{a}
 should complete before any update of \ucode{a} as a result of the \kcode{reduction} 
 clause. This can be achieved by adding an explicit barrier after the assignment 
 \ucode{a = 0}, or by enclosing the assignment \ucode{a = 0} in a \kcode{single} 
-directive (which has an implied barrier), or by initializing \ucode{a} before 
+construct (which has an implied barrier), or by initializing \ucode{a} before 
 the start of the \kcode{parallel} region.
 
 \cexample[5.1]{reduction}{6}
@@ -162,7 +162,7 @@ at the end of the \kcode{target} region.
 
 In the following example, the use of the \kcode{reduction} clause on \ucode{sum1}
 or \ucode{sum2} should, by default, result in an implicit \kcode{tofrom} map for
-that variable. So long as neither \ucode{sum1} nor \ucode{sum2} were already
+that variable. As long as neither \ucode{sum1} nor \ucode{sum2} is already
 present on the device, the mapping behavior ensures the value for
 \ucode{sum1} computed in the first \kcode{target} construct is used in the
 second \kcode{target} construct.
@@ -178,7 +178,7 @@ construct in which these functions are called.
 \ffreeexample[5.0]{target_reduction}{1}
 %\clearpage
 
-In next example,  the variables \ucode{sum1} and \ucode{sum2} remain on the
+In the next example,  the variables \ucode{sum1} and \ucode{sum2} remain on the
 device for the duration of the \kcode{target data} region so that it is
 their device copies that are updated by the reductions. Note the significance
 of mapping \ucode{sum1} on the second \kcode{target} construct; otherwise, it
@@ -256,16 +256,16 @@ was extended to support task reductions.
 The following two examples show how to implement a reduction over an array
 using a taskloop reduction in two different ways.
 In the first
-example we apply the \kcode{reduction} clause to the \kcode{taskloop} construct. As it was
+example we apply the \kcode{reduction} clause to the \kcode{taskloop} construct. As 
 explained above in the task reduction examples, a reduction over tasks is
-divided in two components: the scope of the reduction, which is defined by a
+divided into two components: the scope of the reduction, which is defined by a
 \kcode{taskgroup} region, and the tasks that participate in the reduction. In this
 example, the \kcode{reduction} clause defines both semantics. First, it specifies that
 the implicit \kcode{taskgroup} region associated with the \kcode{taskloop} construct is the scope of the
 reduction, and second, it defines all tasks created by the \kcode{taskloop} construct as
 participants of the reduction. About the first property, it is important to note
 that if we add the \kcode{nogroup} clause to the \kcode{taskloop} construct the code will be
-nonconforming, basically because we have a set of tasks that participate in a
+non-conforming, basically because we have a set of tasks that participate in a
 reduction that has not been defined.
 
 \cexample[5.0]{taskloop_reduction}{1}
@@ -284,7 +284,7 @@ is different from what is expressed with the \kcode{reduction} clause.
 In one case the generated tasks are specified to participate in a previously 
 declared reduction (\kcode{in_reduction} clause) whereas in the other case
 creation of a new reduction is specified and also all tasks generated 
-by the taskloop will participate on it.
+by the taskloop will participate in it.
 
 \cexample[5.0]{taskloop_reduction}{2}
 \ffreeexample[5.0]{taskloop_reduction}{2}
@@ -341,7 +341,7 @@ At the end of the taskloop region \ucode{asum} contains the combined result of a
 
 If a \kcode{taskloop simd} construct is to participate in a previously defined 
 reduction scope, the reduction participation should be specified with
-a \kcode{in_reduction} clause, as shown in the \kcode{parallel} region enclosing
+an \kcode{in_reduction} clause, as shown in the \kcode{parallel} region enclosing
 \example{task 4} and \example{taskloop simd 4} code sections.  
 
 Here the \kcode{taskloop simd} construct's 
@@ -393,7 +393,7 @@ without using a worksharing-loop construct.
 The following example shows reduction on a private variable (\ucode{sum_v})
 for an orphaned worksharing loop in routine \ucode{do_red},
 which is called in a \kcode{parallel} region.
-At the end of the loop, private variable of each thread should have the same combined value.
+At the end of the loop, the private variable of each thread should have the same combined value.
 \cexample[6.0]{priv_reduction}{1}
 \ffreeexample[6.0]{priv_reduction}{1}
 
@@ -417,3 +417,4 @@ With 4 threads assigned for the \kcode{parallel} region
 the code should print 40 at the end.
 \cexample[6.0]{priv_reduction}{3}
 \ffreeexample[6.0]{priv_reduction}{3}
+

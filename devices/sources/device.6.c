@@ -24,7 +24,7 @@ void async_work(int N, float *d_buf, float *h_buf)
    // initialize a depend object 'obj'
    #pragma omp depobj(obj) depend(out: d_buf[0:N])
 
-   // start the async memcpy of s_buf to d_buf on device
+   // start the async memcpy of h_buf to d_buf on device
    if (omp_target_memcpy_async(d_buf, h_buf, dsize, 0, 0, 
                                d_dev, h_dev, 1, &obj))
       abort();

@@ -26,7 +26,7 @@ float goo(float *p){
   return *p;
 }
  
-int myaddfloat(float *x, float *y, int n)
+float myaddfloat(float *x, float *y, int n)
 {
 #pragma omp simd
   for (int i=0; i<n; i++){

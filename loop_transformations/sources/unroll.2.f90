@@ -23,7 +23,7 @@ subroutine illegal_2b(A)
    !! Loop might be fully unrolled (or a partially unrolled loop 
    !! replacement).  Hence, no canonical do-loop will exist, 
    !! resulting in non-compliant code.
-   !! Implementations may suggest to adding a "partial" clause.
+   !! Implementations may suggest adding a "partial" clause.
 
    !$omp do           !!        Requires a canonical loop
    !$omp unroll       !! ERROR: may result in non-compliant code

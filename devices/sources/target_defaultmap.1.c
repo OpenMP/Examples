@@ -84,7 +84,7 @@ int main(){
         A[0]+=1; S.A[0]+=1; //Aggregate changes not returned to host
         A[1]+=1; S.A[1]+=1; //Aggregate changes not returned to host
         s1 = A[0]+S.A[0]; //s1 value returned to host
-        s2 = A[1]+S.A[1]; //s1 value returned to host
+        s2 = A[1]+S.A[1]; //s2 value returned to host
     }
     if( A[0]==0 && S.A[0]==0 && s1==2 ) printf(" PASSED 4 of 5\n");
 

@@ -38,10 +38,33 @@ non-compound statement is indented with respect to a directive preceding it.
 This is Fortran specific...
 \end{fortranspecific}
 \linewitharrows{-1}{dashed}{Fortran (cont.)}{8em}
-This marks the continuation of language specific page.
+This marks the continuation of a language-specific page.
 
 \medskip
 Throughout the examples document we assume that the number of threads 
 used for a \kcode{parallel} region is the same as 
 the number of threads requested, unless explicitly specified otherwise.
+
+\newpage
+An OpenMP environment variable can be set in different environments, such as:
+
+\begin{boxedcode}
+\ucode{# csh-like shells}
+setenv OMP_SCHEDULE "dynamic"
+\end{boxedcode}
+
+\begin{boxedcode}
+\ucode{# bash-like shells}
+export OMP_SCHEDULE="dynamic"
+\end{boxedcode}
+
+\begin{boxedcode}
+\ucode{# Windows command line}
+set OMP_SCHEDULE=dynamic
+\end{boxedcode}
+
+For simplicity, the following form is used in this document:
+\begin{boxeducode}
+\kcode{OMP_SCHEDULE}="dynamic"
+\end{boxeducode}
 

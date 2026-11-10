@@ -2,7 +2,7 @@
 ! @@type:	F-free
 ! @@operation:	link
 ! @@expect:	success
-! @@version:	omp_5.2
+! @@version:	omp_6.0
 program main
     use omp_lib
     implicit none
@@ -13,17 +13,18 @@ program main
 
     call init(a, N)
 
-    !$omp depobj(obj) depend(inout: a)
+    !$omp depobj init(inout(a): obj)
+    !! alternative syntax using the depend clause
+    !! !$omp depobj(obj) depend(inout: a)
 
     call driver(.true.,  a,b,N, obj)  !! updating occurs
 
-    !$omp depobj(obj) update(in)
+    !$omp depobj update(in: obj)
 
     call driver(.false., a,b,N, obj)  !! no updating
 
-    !$omp depobj(obj) destroy(obj)    !! obj is set to uninitialized
+    !$omp depobj destroy(obj)         !! obj is set to uninitialized
                                       !! state, resources are freed
-
 end program
 
 subroutine driver(update, a, b, n, obj)

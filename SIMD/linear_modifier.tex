@@ -9,7 +9,7 @@
 
 When generating vector functions from \kcode{declare simd} directives, 
 it is important for a compiler to know the proper types of function arguments in
-order to generate efficient codes.
+order to generate efficient code.
 This is especially true for C++ reference types and Fortran arguments.
 
 In the following example, the function \ucode{add_one2} has a C++ reference
@@ -29,7 +29,7 @@ When \kcode{linear(\ucode{p}: ref)} is applied to an argument passed by referenc
 it tells the compiler that the addresses in its vector argument are consecutive,
 and so the compiler can generate a single vector load or store instead of 
 a gather or scatter. This allows more efficient SIMD code to be generated with 
-less source changes.
+fewer source changes.
 
 \cppexample[5.2]{linear_modifier}{1}
 \ffreeexample[5.2]{linear_modifier}{1}
@@ -38,7 +38,7 @@ less source changes.
  
 The following example is a variant of the above example. The function \ucode{add_one2} 
 in the C++ code includes an additional C++ reference parameter \ucode{i}. 
-The loop index \ucode{i} of the caller loop \ucode{i} in the main program 
+The loop index \ucode{i} of the caller loop in the main program 
 is passed as a reference to the function \ucode{add_one2} call.   
 The loop index \ucode{i} has a uniform address with
 linear value of step 1 across SIMD lanes. 
@@ -47,7 +47,7 @@ to specify that the C++ reference-type parameter \ucode{i} is to match
 the property of loop index \ucode{i}.
 
 In the corresponding Fortran code the arguments \ucode{p} and
-\ucode{i} in the routine \ucode{add_on2} are passed by references. 
+\ucode{i} in the routine \ucode{add_one2} are passed by reference. 
 Similar modifiers are used for these variables in the \kcode{linear} clauses
 to match with the property at the caller loop in the main program.
 
@@ -55,7 +55,7 @@ When \kcode{linear(\ucode{i}: uval)} is applied to an argument passed by referen
 tells the compiler that its addresses in the vector argument are uniform 
 so that the compiler can generate a scalar load or scalar store and create 
 linear values. This allows more efficient SIMD code to be generated with 
-less source changes.
+fewer source changes.
 
 \cppexample[5.2]{linear_modifier}{2}
 \ffreeexample[5.2]{linear_modifier}{2}
@@ -72,10 +72,10 @@ Arrays \ucode{x} and \ucode{y} have uniform addresses across SIMD lanes.
 
 When \kcode{linear(\ucode{i}: val,step(\ucode{1}))} is applied to an argument, 
 it tells the compiler that its addresses in the vector argument may not be 
-consecutive, however, their values are linear (with stride 1 here). When the value of \ucode{i} is used 
-in subscript of array references (e.g., \ucode{x[i]}), the compiler can generate 
+consecutive; however, their values are linear (with stride 1 here). When the value of \ucode{i} is used 
+in a subscript of array references (e.g., \ucode{x[i]}), the compiler can generate 
 a vector load or store instead of a gather or scatter. This allows more 
-efficient SIMD code to be generated with less source changes.
+efficient SIMD code to be generated with fewer source changes.
 
 \cexample[5.2]{linear_modifier}{3}
 \ffreeexample[5.2]{linear_modifier}{3}

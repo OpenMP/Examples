@@ -12,9 +12,9 @@ OpenMP is not supported or enabled.
 
 The OpenMP directive is a combination of the base-language mechanism and a \plc{directive-specification},
 as shown below. The \plc{directive-specification} consists
-of the \plc{directive-name} which may seldomly have arguments, 
+of the \plc{directive-name}, which may seldom have arguments, 
 followed by optional \plc{clauses}. Full details of the syntax can be found in the OpenMP Specification.
-Illustrations of the syntax is given in the examples.
+Illustrations of the syntax are given in the examples.
 
 The formats for combining a base-language mechanism and a \plc{directive-specification} are:
 
@@ -35,8 +35,8 @@ C++ attribute specifiers
 [[using omp : decl( \plc{directive-specification} )]]
 \end{indentedcodelist}
 
-where the \kcode{decl} attribute may be used for declarative
-directives alternatively.
+where the \kcode{decl} attribute may alternatively be used for declarative
+directives.
 
 Fortran comments
 \begin{indentedcodelist}
@@ -57,7 +57,7 @@ as in \kcode{map(iterator(\ucode{i=0:n}), tofrom: \ucode{p[i]})}, or the \kcode{
 \kcode{linear(\ucode{x}: ref, step(\ucode{4}))}. 
 In the preceding examples, \kcode{tofrom} and \kcode{ref} are simple modifiers.
 
-For Fortran, a declarative directive (such as \kcode{declare reduction})
+For Fortran, a declarative directive (such as \kcode{declare_reduction})
 must appear after any \bcode{USE}, \bcode{IMPORT}, and \bcode{IMPLICIT} statements
 in the specification part.
 
@@ -66,11 +66,38 @@ underscores, but the old form is still supported.  For example,
 both \kcode{declare reduction} and \kcode{declare_reduction}
 are valid directive names.
 
+\begin{fortranspecific}
+The optional use of white space to separate adjacent keywords
+in the directive name or to separate directive name and clauses
+in fixed source form in Fortran has been deprecated in OpenMP 6.0.
+
+The following example shows the preferred form of using white space
+to separate keywords \kcode{parallel} and \kcode{do}, and
+clause \kcode{shared}.
+\begin{indentedcodelist}
+! white space to separate keywords
+!$omp parallel do shared(a,b,c)
+\end{indentedcodelist}
+
+The following forms are discouraged.
+\begin{indentedcodelist}
+! no white space between parallel and do (deprecated in 6.0)
+!$omp paralleldo shared(a,b,c)
+
+! no white space between directive name and clause
+!   in fixed source form (deprecated in 6.0)
+!$omp paralleldoshared(a,b,c)
+\end{indentedcodelist}
+\end{fortranspecific}
+
 
 %===== Examples Sections =====
 \input{directives/pragmas}
 \input{directives/attributes}
 \input{directives/fixed_format_comments}
 \input{directives/free_format_comments}
+\input{directives/cond_compilation}
 \input{directives/compound_directive_names}
+\input{directives/list_item_expressions}
+\input{directives/array_sections_syntax}
 

@@ -38,11 +38,11 @@ illustrates a code implementation that a compiler may generate to implement the
 % Only the product order will be maintained for such iterations.
 The order of tile execution relative to other tiles can be changed, but execution order of 
 iterations within the same tile must be preserved.
-Implementations must ensure that dependencies that are valid with any tile size need
+Implementations must ensure that dependences that are valid with any tile size need
 to be preserved (including tile size of 1 and tiles as large as the iteration space).
 
 Functions \ucode{func2} through \ucode{func6} are valid implementations of \ucode{func1}.
-In \ucode{func2} the unrolling is illustrated as a pair of nested loops with a simple
+In \ucode{func2} the tiling is illustrated as a pair of nested loops with a simple
 adjustment in the size of the final iteration block in the \ucode{j2} iteration space
 for the partial tile.
 
@@ -69,7 +69,7 @@ uses two sets of nested loops, the first iterates over the complete tiles and th
 second covers iterations from the partial tiles. When fissioning loops that
 are in a \kcode{parallel} worksharing-loop region, each iteration of each workshared loop
 must be executed on the same thread as in an un-fissioned loop. The \kcode{schedule(static)} clause in \ucode{func7}
-forces the implementation to use static scheduling and allows the fission in function \ucode{func8}.
+forces the implementation to use static scheduling and allows the fission in functions \ucode{func8} and \ucode{func9}.
 When dynamic scheduling is prescribed, fissioning is not allowed. When no scheduling is specified,
 the compiler implementation will select a scheduling \plc{kind} and adhere to its restrictions.
 

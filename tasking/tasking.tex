@@ -48,7 +48,7 @@ Fibonacci computations are desired.
 \clearpage
 
 Note: There are more efficient algorithms for computing Fibonacci numbers. This 
-classic recursion algorithm is for illustrative purposes.
+classic recursive algorithm is for illustrative purposes.
 
 The following example demonstrates a way to generate a large number of tasks with 
 one thread and execute them with the threads in the team. While generating these 
@@ -110,7 +110,7 @@ task scheduling point.
 \fexample[3.0]{tasking}{8}
 
 The following two examples demonstrate how the scheduling rules illustrated in 
-\docref{Task Scheduling} section of the OpenMP Specification affect the usage of locks
+the \docref{Task Scheduling} section of the OpenMP Specification affect the usage of locks
 and critical sections in tasks.  If a lock is held 
 across a task scheduling point, no attempt should be made to acquire the same lock 
 in any code that may be interleaved.  Otherwise, a deadlock is possible.

@@ -8,10 +8,10 @@ region consisting of an implicit task executed by the initial thread.
 A \kcode{parallel} construct encloses code, 
 forming a parallel region.  An initial thread encountering a \kcode{parallel} 
 region forks (creates) a team of threads at the beginning of the 
-\kcode{parallel} region, and joins them (removes from execution) at the 
+\kcode{parallel} region, and joins them (removes them from execution) at the 
 end of the region.  The initial thread becomes the \emph{primary} thread of the team in a 
-\kcode{parallel} region with a thread number equal to zero, the other 
-threads are numbered from 1 to number of threads minus 1. 
+\kcode{parallel} region with a thread number equal to zero. The other 
+threads are numbered from 1 to the number of threads minus 1. 
 A team may be comprised of just a single thread.
 
 Each thread of a team is assigned an implicit task consisting of code within the 
@@ -92,7 +92,7 @@ barrier at the end, unless the \kcode{nowait} clause is specified.
 
 
 The \kcode{workshare} construct is a Fortran feature that consists of a
-region with a single structure block (section of code). Statements in the
+region with a single structured block (section of code). Statements in the
 \kcode{workshare} region are divided into units of work, and executed (once)
 by threads of the team.  
 

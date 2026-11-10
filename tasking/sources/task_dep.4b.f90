@@ -6,7 +6,6 @@
 subroutine task_dep(N)
   implicit none
   integer :: N
-
   integer :: i, v, R
   integer, external :: f
 

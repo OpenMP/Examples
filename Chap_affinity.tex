@@ -11,35 +11,36 @@ that is assigned to a place for a given parallel region remains bound to that
 place for the duration of that region.
 
 The places available for thread affinity control (referred to as a \emph{place
-partition}) can be set via the \kcode{OMP_PLACES} environment variable. The
-binding of threads to places can be managed explicitly or handled implicitly.
-Without the \kcode{OMP_PLACES} variable being set, the initial place partition
-is implementation defined.  The method by which threads are assigned to places
-for a given parallel region is determined by the specified thread affinity
-policy. This policy can be set via the \kcode{OMP_PROC_BIND} environment
-variable or can be explicitly set for a particular \kcode{parallel} construct
-with the \kcode{proc_bind} clause.
+partition}, organized into a hierarchical \emph{place group}) can be set via the
+\kcode{OMP_PLACES} environment variable. The binding of threads to places can
+be managed explicitly or handled implicitly.  Without the \kcode{OMP_PLACES}
+variable being set, the initial place partition is implementation defined.  The
+method by which threads are assigned to places for a given parallel region is
+determined by the specified thread affinity policy. This policy can be set via
+the \kcode{OMP_PROC_BIND} environment variable or can be explicitly set for a
+particular \kcode{parallel} construct with the \kcode{proc_bind} clause.
 
 The OpenMP specification document defines a \emph{processor} as a hardware
 execution unit on which one or more OpenMP threads may execute. The actual
 hardware mechanism that a given processor ID represents depends on the
 implementation and architecture. For example, a processor could correspond to a
 core on the device that does not have simultaneous multi-threading (SMT)
-support or for which SMT is disabled. While for an SMT-enabled device, a
+support or for which SMT is disabled. For an SMT-enabled device, a
 processor could correspond to a hardware thread. Processor IDs are the
 resulting sequential numbering of processors, starting from 0. The initial
 place partition can be defined explicitly with processor IDs or using an
-\emph{abstract name}. For example, \pout{OMP_PLACES="\{0,1\},\{2,3\}"}
+\emph{abstract name}. For example, \kcode{OMP_PLACES}=\ucode{"\{0,1\},\{2,3\}"}
 defines two places in the initial place partition, the first place consisting
 of processors 0 and 1 from the device and the second place consisting of
-processors 2 and 3 from the device. Alternatively, \pout{OMP_PLACES="cores"}
+processors 2 and 3 from the device. Alternatively, 
+\kcode{OMP_PLACES}=\ucode{"cores"}
 defines there to be one place per core on the host device.
 
 The processors that are available to an OpenMP program process may be a subset
 of the processors on the system. This restriction may be the result of a
 wrapper process controlling the execution (such as \ucode{numactl} on Linux
 systems), compiler options, library-specific environment variables, or default
-kernel settings. For instance, the execution of multiple MPI processes, launched
+kernel settings. For instance, multiple MPI processes, launched
 on a single compute node, will each have a subset of processors as determined
 by the MPI launcher or set by MPI affinity environment variables for the MPI
 library.
@@ -62,8 +63,8 @@ or the \kcode{proc_bind} clause: \kcode{spread}, \kcode{close}, and
 %     Hyper-Threads on (2 hardware threads per core)
 %     1 socket x 4 cores x 2 HW-threads
 %   
-%     export OMP_NUM_THREADS=4
-%     export OMP_PLACES=threads
+%     OMP_NUM_THREADS=4
+%     OMP_PLACES=threads
 %     
 %          core #      0    1    2    3
 %     processor #     0,1  2,3  4,5  6,7  
@@ -77,8 +78,8 @@ or the \kcode{proc_bind} clause: \kcode{spread}, \kcode{close}, and
 %     Hyper-Threads on (2 hardware threads per core)
 %     1 socket x 4 cores x 2 HW-threads
 %    
-%     export OMP_NUM_THREADS=4
-%     export OMP_PLACES=cores
+%     OMP_NUM_THREADS=4
+%     OMP_PLACES=cores
 %     
 %          core #      0    1    2    3
 %     processor #     0,1  2,3  4,5  6,7  
@@ -92,8 +93,8 @@ or the \kcode{proc_bind} clause: \kcode{spread}, \kcode{close}, and
 %     No Hyper-Threads
 %     3 socket x 4 cores 
 %     
-%     export OMP_NUM_THREADS=3
-%     export OMP_PLACES=sockets
+%     OMP_NUM_THREADS=3
+%     OMP_PLACES=sockets
 %     
 %        socket #        0         1          2
 %     processor #     0,1,2,3   4,5,6,7   8,9,10,11
@@ -103,6 +104,7 @@ or the \kcode{proc_bind} clause: \kcode{spread}, \kcode{close}, and
 
 
 %===== Examples Sections =====
+\input{affinity/places}
 \input{affinity/affinity}
 \input{affinity/task_affinity}
 \input{affinity/affinity_display}

@@ -1,0 +1,334 @@
+\pagebreak
+
+\section{Place Groups}
+\label{sec: place_groups}
+\index{affinity!place groups}
+\index{environment variables!OMP_PLACES@\kcode{OMP_PLACES}}
+\index{OMP_PLACES@\kcode{OMP_PLACES}}
+
+The \kcode{OMP_PLACES} environment variable is used to define the initial place group
+and its associated place partition. Each place in the place group is an ordered
+set of indivisible execution units (typically hardware threads) and confines
+where a bound OpenMP thread is executed.
+
+The specification provides a grammar that defines the format of strings to which
+the environment variable can be set. The string can either be a numeric
+place-group specification, formed from non-negative numbers, or an abstracted
+place-group specification, formed from abstract names.
+
+A numeric place-group specification is built up from non-negative numbers that
+each represent the smallest unit of execution that the implementation supports,
+such as a hardware thread. Which specific execution unit a given number
+represents is implementation defined. Here are some examples where the numeric
+specification is a simple list of these numbers:
+
+\begin{boxeducode}
+# 4 places corresponding, in order, to execution units:
+# 0,1,2,3
+\kcode{OMP_PLACES}="0,1,2,3"
+
+# 4 places corresponding, in order, to execution units:
+# 2,1,0,3
+\kcode{OMP_PLACES}="2,1,0,3"
+
+# 4 places corresponding, in order, to execution units:
+# 0,2,4,6
+\kcode{OMP_PLACES}="0,2,4,6"
+\end{boxeducode}
+
+An interval notation
+\plc{lower-bound}\code{:}\plc{length}[\code{:}\plc{stride}] may be used
+express an ordered sequence of numbers:
+
+\begin{boxeducode}
+# 4 places corresponding, in order, to execution units:
+# 0,1,2,3
+\kcode{OMP_PLACES}="0:4"
+
+# 4 places corresponding, in order, to execution units:
+# 0,2,4,6
+\kcode{OMP_PLACES}="0:4:2"
+\end{boxeducode}
+
+An exclusion operator \code{!} may also be used to exclude a given number from a
+sequence otherwise specified. If no sequence is otherwise specified, then the
+exclusion operator is interpreted as expanding to all numbers that could be
+specified except for the one that is excluded.
+
+\begin{boxeducode}
+# 7 places corresponding, in order, to execution units:
+# 0,1,2,3,4,5,7 (6 excluded)
+\kcode{OMP_PLACES}="0:8,!6"
+
+# Assuming 16 total execution units, 15 places, corresponding,
+# in order, to execution units:
+# 0,1,2,3,4,5,7,8,9,10,11,12,13,14,15 (6 excluded)
+\kcode{OMP_PLACES}="!6"
+\end{boxeducode}
+
+In the above examples, each place in the specified place group corresponded to a
+single execution unit denoted by a non-negative number. A numeric specification
+may group a subsequence of non-negative numbers in curly braces to indicate that
+the subsequence collectively forms a place within the place group:
+
+\begin{boxeducode}
+# 4 places corresponding, in order, to ordered sets of
+# execution units: {0,1},{2,3},{4,5},{6,7}
+\kcode{OMP_PLACES}="{0,1},{2,3},{4,5},{6,7}"
+
+# 4 places corresponding, in order, to ordered sets of
+# execution units: {0},{1},{2,3,4},{5,6,7}
+\kcode{OMP_PLACES}="0,1,{2,3,4},{5,6,7}"
+\end{boxeducode}
+
+The interval notation and exclusion operator may also be used as shorthand to
+specify a subsequence of execution units that comprise a place:
+
+\begin{boxeducode}
+# 2 places corresponding, in order, to ordered sets
+# of execution units: {0,1,2,3},{4,5,6,7}
+\kcode{OMP_PLACES}="{0:4},{4:4}"
+
+# 2 places corresponding, in order, to ordereded sets
+# execution units: {0,2,4,6},{1,3,5,7}
+\kcode{OMP_PLACES}="{0:4:2},{1:4:2}"
+
+# 2 places corresponding, in order, to ordered sets
+# execution units: {0,2,6},{8,12,14}
+\kcode{OMP_PLACES}="{0:4:2,!4},{8:4:2,!10}"
+\end{boxeducode}
+
+In the above examples, the place groups were specified as a flat list of places
+(which each consist of one or more execution units corresponding to non-negative
+numbers). A place group may also consist of nested place groups, such that a
+place group can be visualized as a tree (nodes with children being place groups
+and leaf nodes being places). Angle brackets are used to specify nested place
+groups within a place group specification:
+
+\begin{boxeducode}
+# 8 places corresponding, in order, to execution units:
+# 0,1,2,3,4,5,6,7
+# place-group-var = group 1, group 2
+#         group 1 = 0,1,2,3
+#         group 2 = 4,5,6,7
+\kcode{OMP_PLACES}="<0,1,2,3>,<4,5,6,7>"
+
+# 5 places corresponding, in order, to ordered sets of
+# execution units: {0},{1,2},{4},{5},{6,7}
+# place-group-var = 0, {1,2}, group 1
+#         group 1 = 4,5,{6,7}
+\kcode{OMP_PLACES}="0,{1,2},<4,5,{6,7}>"
+
+# 7 places corresponding, in order, to ordered sets of
+# execution units: {0},{1},{2},{3},{4,5},{6},{7}
+# place-group-var = group 1, {4,5}, group 2
+#         group 1 = group 3, group 4
+#         group 2 = 6,7
+#         group 3 = 0,1
+#         group 4 = 2,3
+\kcode{OMP_PLACES}="<<0,1>,<2,3>>,{4,5},<6,7>"
+\end{boxeducode}
+
+The interval notation and exclusive operator may also be used to specify a list
+of place groups:
+
+\begin{boxeducode}
+# 16 places corresponding, in order, to execution units 
+# 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+# 10, 11, 12, 13, 14, and 15
+# place-group-var = group 1, group 2, group 3, group 4
+#         group 1 = 0,1,2,3
+#         group 2 = 4,5,6,7
+#         group 3 = 8,9,10,11
+#         group 4 = 12,13,14,15
+\kcode{OMP_PLACES}="<0:4>:4:4"
+
+# 16 places corresponding, in order, to execution units 
+# 0, 1, 2, 3, 4, 5, 6, 7, 12, 13,
+# 14, 15, 16, 17, 18, and 19
+# place-group-var = group 1, group 2, group 3, group 4
+#         group 1 = 0,1,2,3
+#         group 2 = 4,5,6,7
+#         group 3 = 12,13,14,15
+#         group 4 = 16,17,18,19
+\kcode{OMP_PLACES}="<0:4>:2:4,<12:4>:2:4"
+
+# 16 places corresponding, in order, to execution units 
+# 0, 1, 2, 3, 4, 5, 6, 7, 12, 13,
+# 14, 15, 16, 17, 18, and 19
+# place-group-var = group 1, group 2, group 3, group 4
+#         group 1 = 0,1,2,3
+#         group 2 = 4,5,6,7
+#         group 3 = 12,13,14,15
+#         group 4 = 16,17,18,19
+\kcode{OMP_PLACES}="<0:4>:5:4,!<8:4>"
+\end{boxeducode}
+
+An abstracted place-group specification uses place-group abstract names to
+specify a place group. Which specific execution units these abstract names
+represent is implementation defined. Predefined abstract names are available
+that have particular meanings (as interpreted by the implementation):
+
+\begin{compactitem}
+\item \kcode{threads}: each place is a hardware thread
+\item \kcode{cores}: each place is a core
+\item \kcode{ll_caches}: each place is a set of cores for a single last-level cache
+\item \kcode{numa_domains}: each place is a set of cores of a single NUMA domain
+\item \kcode{sockets}: each place is a set of cores for a single socket
+\end{compactitem}
+
+Here are some examples where a simple place-group abstract name is used to
+specify the place group:
+
+\begin{boxeducode}
+# Assuming the device supports 16 hardware threads,
+# 16 places corresponding, in some order, to execution
+# units that correspond to hardware threads:
+# 0,8,1,9,2,10,3,11,4,12,5,13,6,14,7,15
+\kcode{OMP_PLACES}="threads"
+
+# Assuming the device supports 8 cores of 2 hardware threads,
+# 8 places corresponding, in some order, to ordered sets
+# of execution units that correspond to cores:
+# {0,8},{1,9},{2,10},{3,11},{4,12},{5,13},{6,14},{7,15}
+\kcode{OMP_PLACES}="cores"
+
+# Assuming the device supports 2 sockets of 8 hardware threads,
+# 2 places corresponding, in some order, to ordered sets
+# of execution units that correspond to sockets:
+# {0,8,1,9,2,10,3,11},{4,12,5,13,6,14,7,15}
+\kcode{OMP_PLACES}="sockets"
+\end{boxeducode}
+
+An abstract name can be augmented with a length and optional stride enclosed in
+parentheses with the syntax \code{(}\plc{len}[\code{:}\plc{stride}]\code{)}
+to specify that only a subset of the execution units should be selected for
+inclusion in the place group:
+
+\begin{boxeducode}
+# Assuming the device supports at least 8 hardware threads,
+# the first 8 places of a list (0,8,1,9,...) corresponding,
+# in some order, to execution units that correspond to hardware
+# threads: 0,8,1,9,2,10,3,11
+\kcode{OMP_PLACES}="threads(8)"
+
+# Assuming the device supports at least 16 hardware threads,
+# the first 8 places with a stride of 2 of a list (0,8,1,9,...)
+# corresponding, in some order, to execution units that
+# correspond to hardware threads: 0,1,2,3,4,5,6,7
+\kcode{OMP_PLACES}="threads(8:2)"
+
+# Assuming the device supports at least 4 cores,
+# the first 4 places of a list ({0,8},{1,9},...) corresponding,
+# in some order, to ordered sets of execution units that
+# correspond to cores:
+# {0,8},{1,9},{2,10},{3,11}
+\kcode{OMP_PLACES}="cores(4)"
+
+# Assuming the device supports at least 8 cores,
+# the first 4 places with a stride of 2 of a list
+# ({0,8},{1,9},...) corresponding, in some order, to ordered
+# sets of execution units that correspond to cores:
+# {0,8},{2,10},{4,12},{6,14}
+\kcode{OMP_PLACES}="cores(4:2)"
+\end{boxeducode}
+
+The abstract name may alternatively be appended with an index list enclosed in
+square brackets. Each item of the index list is an index, an index interval, or
+an excluded index. An index refers to a place within the place group given by
+the abstract name.
+
+\begin{boxeducode}
+# 3 places corresponding, in order, to execution units
+# that correspond to some hardware threads: 0,2,3
+\kcode{OMP_PLACES}="threads[0,2,3]"
+
+# 7 places corresponding, in order, to execution units
+# that correspond to some hardware threads:
+# 0,2,4,6,1,5,7 (3 excluded)
+\kcode{OMP_PLACES}="threads[0:4:2,1:4:2,!3]"
+\end{boxeducode}
+
+An abstract name may also specify a nested abstract name for more control over
+execution unit selection. Of the predefined place-group abstract names, threads
+may be nested within cores, and both cores and threads may be nested within the
+other abstract names. No abstract name may be nested inside threads, and only
+threads may be nested inside cores. Whether any other nestings are allowed is
+considered implementation defined.
+
+Two types of nesting is possible with abstract names. The dot operator
+\ucode{.} treats the combined abstract name as referring to the sets of
+execution units given by the nested abstract name in the context of the outer
+abstract name. Examples:
+
+\begin{boxeducode}
+# Assuming the device supports 8 cores and at least 2 hardware
+# threads per core, 16 places corresponding to 2 hardware threads
+# within each of the 8 cores:
+# 0,8,1,9,2,10,3,11,4,12,5,13,6,14,7,15
+\kcode{OMP_PLACES}="cores.threads(2)"
+
+# Assuming the device supports 8 cores and at least 2 hardware
+# threads per core, 4 places corresponding to 2 hardware
+# threads within each of 2 cores:
+# 0,8,1,9
+\kcode{OMP_PLACES}="cores(2).threads(2)"
+
+# Assuming the device supports 8 cores and 4 hardware
+# threads per core, 8 places corresponding to the first 2
+# hardware threads on cores 1, 3, 5, and 7:
+# 1,9,3,11,5,13,7,15
+\kcode{OMP_PLACES}="cores[1:4:2].threads[0:2]"
+
+# Assuming the device supports 2 sockets, each with 8 cores
+# and 2 hardware threads per core, 16 places corresponding to
+# all hardware threads executing on cores of first socket:
+# 0,16,1,17,2,18,3,19,4,20,5,21,6,22,7,23,8,24
+\kcode{OMP_PLACES}="sockets[0].threads"
+
+# Assuming the device supports 2 sockets, each with 8 cores
+# and 2 hardware threads per core, 4 places corresponding,
+# in some order, to 4 cores of second socket:
+# {9,25},{10,26},{11,27},{12,28}
+\kcode{OMP_PLACES}="sockets[1].cores(4)"
+
+# Assuming the device supports 2 sockets, each with 8 cores
+# and 2 hardware threads per core, 8 places corresponding
+# to hardware threads of 4 cores of second socket:
+# 9,25,10,26,11,27,12,28
+\kcode{OMP_PLACES}="sockets[1].cores(4).threads"
+\end{boxeducode}
+
+An abstract name can also be specified with a nested abstract name enclosed in
+angle brackets. This indicates that each set of execution units given by the
+outer abstract name becomes a specified place group consisting of the sets of
+execution units given by the nested abstract name.
+
+\begin{boxeducode}
+# Assuming the device supports 8 cores each with 2
+# hardware threads, 16 places corresponding, in order,
+# to execution units:
+# 0,8,1,9,2,10,3,11,4,12,5,13,6,14,7,15
+# place-group-var = group 1, group 2, group 3, group 4,
+#                   group 5, group 6, group 7, group 8
+#         group 1 = 0,8
+#         group 2 = 1,9
+#         group 3 = 2,10
+#         group 4 = 3,11
+#         group 5 = 4,12
+#         group 6 = 5,13
+#         group 7 = 6,14
+#         group 8 = 7,15
+\kcode{OMP_PLACES}="cores<threads>"
+
+# Assuming the device supports 8 cores each with 2
+# hardware threads, 4 places corresponding to 
+# 2 hardware threads from 4 cores:
+# 0,8,1,9,2,10,3,11
+# place-group-var = group 1, group 2, group 3, group 4
+#         group 1 = 0,8
+#         group 2 = 1,9
+#         group 3 = 2,10
+#         group 4 = 3,11
+\kcode{OMP_PLACES}="cores(4)<threads(2)>"
+\end{boxeducode}

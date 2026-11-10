@@ -15,7 +15,7 @@ void foo()
     x++;                                          // 1st child task
 
     #pragma omp task depend(in: x) depend(inout: y) shared(x, y)
-    y -= x;                                       // 2st child task
+    y -= x;                                       // 2nd child task
 
     #pragma omp taskwait depend(in: x,y)
 

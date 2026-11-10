@@ -14,7 +14,7 @@ implicit none
     !$omp distribute
        do i0=1,N, block_size
           !$omp parallel do reduction(+:sum)
-          do i = i0, min(i0+block_size,N)
+          do i = i0, min(i0+block_size-1,N)
              sum = sum + B(i) * C(i)
           end do
        end do

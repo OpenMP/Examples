@@ -14,6 +14,9 @@ book: BOOK_BUILD="\\def\\bookbuild{1}"
 book: clean release
 	mv openmp-examples-${version}.pdf openmp-examples-${version}-book.pdf
 
+comment-draft: DRAFT_OPT="\\commentdrafttrue"
+comment-draft: clean release
+
 ccpp-only: LANG_OPT="\\ccpptrue\\fortranfalse"
 ccpp-only: clean release
 
@@ -43,21 +46,23 @@ INTERMEDIATE_FILES=openmp-examples.pdf \
 		openmp-examples.out \
 		openmp-examples.log
 
-LATEXCMD=pdflatex -interaction=batchmode -file-line-error
-LATEXDCMD=$(LATEXCMD) -draftmode
+LATEXDCMD=pdflatex -file-line-error
+LATEXCMD=$(LATEXDCMD) -interaction=batchmode
+#LATEXCMD=$(LATEXDCMD) -draftmode
 
 # check for branches names with "name_XXX"
 DIFF_TICKET_ID=$(shell git rev-parse --abbrev-ref HEAD)
 GITREV=$(shell git rev-parse --short HEAD || echo "??")
 VERSIONSTR="GIT rev $(GITREV)"
 LANG_OPT="\\ccpptrue\\fortrantrue"
+DRAFT_OPT="\\commentdraftfalse"
 
 openmp-examples.pdf: $(CHAPTERS) $(SOURCES) openmp.sty openmp-examples.tex openmp-logo.png generated-include.tex
 	rm -f $(INTERMEDIATE_FILES)
 	touch generated-include.tex
-	$(LATEXDCMD) openmp-examples.tex
+	$(LATEXCMD) openmp-examples.tex
 	makeindex -s openmp-index.ist openmp-examples.idx
-	$(LATEXDCMD) openmp-examples.tex
+	$(LATEXCMD) openmp-examples.tex
 	$(LATEXCMD) openmp-examples.tex
 	cp openmp-examples.pdf openmp-examples-${version}.pdf
 
@@ -104,7 +109,9 @@ generated-include.tex:
 	echo "\\def\\SVER{${version_spec}}" >> $@
 	echo "\\def\\VERDATE{${VERSIONSTR}}" >> $@
 	@echo "\\newif\\ifccpp\\newif\\iffortran" >> $@
+	@echo "\\newif\\ifcommentdraft" >> $@
 	echo "$(LANG_OPT)" >> $@
+	echo "$(DRAFT_OPT)" >> $@
 	util/list_tags -vtag */sources/* >> $@
 
 %.tmpdir: $(wildcard *.sty) $(wildcard *.png) $(wildcard *.aux) openmp-examples.pdf

@@ -6,7 +6,6 @@
 program main
    use omp_lib
    implicit none
-
    integer, parameter :: align_32=32
    real, allocatable  :: a(:,:)
    real               :: b(10,10)

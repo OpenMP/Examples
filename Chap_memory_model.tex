@@ -9,7 +9,7 @@ variable's data-sharing attribute indicates whether it is shared (the
 \emph{shared} attribute) or private (the \emph{private}, \emph{firstprivate},
 \emph{lastprivate}, \emph{linear}, and \emph{reduction} attributes) in the data
 environment of an OpenMP region. While private variables in an OpenMP region
-are new copies of the original variable (with same name) that may then be
+are new copies of the original variable (with the same name) that may then be
 concurrently accessed or modified by their respective threads or SIMD lanes, a
 shared variable in an OpenMP region is the same as the variable of the same
 name in the enclosing region. Concurrent accesses or modifications to a

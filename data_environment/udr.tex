@@ -86,8 +86,8 @@ specified as subprograms.
 The following example explains a few details of the user-defined reduction 
 in Fortran through modules. The \kcode{declare_reduction} directive 
 is declared in a module (\ucode{data_red}). 
-The reduction-identifier \ucode{.add.} is a user-defined operator that is
-to allow accessibility in the scope that performs the reduction
+The reduction-identifier \ucode{.add.} is a user-defined operator that
+allows accessibility in the scope that performs the reduction
 operation.
 The user-defined operator \ucode{.add.} and the subroutine \ucode{dt_init} 
 specified in the \kcode{initializer} clause are defined in the same subprogram.
@@ -97,11 +97,12 @@ The reduction identifier \ucode{.add.} is accessible by use association.
 Since \ucode{.add.} is a user-defined operator, the explicit interface
 should also be accessible by use association in the current
 program unit.
-Since the \kcode{declare_reduction} associated to this \kcode{reduction} clause
+Since the \kcode{declare_reduction} associated with this \kcode{reduction} clause
 has the \kcode{initializer} clause, the subroutine specified on the clause
 must be accessible in the current scoping unit.  In this case,
 the subroutine \ucode{dt_init} is accessible by use association.
 
+\pagebreak
 \ffreeexample[6.0]{udr}{4}
 
 
@@ -116,7 +117,7 @@ as parameter to its original variable by using the special variable
 
 \cppexample[6.0]{udr}{5}
 
-The following examples shows how user-defined reductions can be defined for 
+The following examples show how user-defined reductions can be defined for 
 some STL containers. The first \kcode{declare_reduction} defines the 
 plus (\kcode{+}) operation for \ucode{std::vector<int>} by making use of the 
 \ucode{std::transform} algorithm. The second and third define the merge (or 
@@ -126,3 +127,38 @@ data types of an STL.
 
 \cppexample[6.0]{udr}{6}
 
+A Fortran user-defined reduction that uses an array or array section requires 
+an elemental procedure or one defined with scalar arguments for the combiner.
+% The underlying OpenMP semantics require element by element processing 
+% on the array elements. 
+The following example illustrates this in
+reductions A and B where \ucode{procA} uses scalar variables and \ucode{procB}
+is an elemental procedure.
+
+In reduction C the \ucode{procC} generic procedure is invoked for the 
+user-defined reduction \ucode{addC}.
+The interface \ucode{procC} has an elemental procedure, \ucode{proc_elem},
+and an array procedure, \ucode{proc_array}.
+When a generic procedure is used in a Fortran statement with an array, 
+the Fortran standard requires that the array procedure be selected 
+(\ucode{proc_array}). However, the user-defined reduction \ucode{addC}
+selects an elemental procedure or a procedure with scalar arguments, i.e.,
+\ucode{proc_elem} for the combiner.
+
+\ffreeexample[6.0]{udr}{7}
+
+\subsection{Non-commutative Reduction}
+\label{subsec:noncommutative_reduction}
+\index{reduction clause@\kcode{reduction} clause!noncommutative modifier@\kcode{noncommutative} modifier}
+\index{noncommutative modifier@\kcode{noncommutative} modifier}
+In general matrix-matrix multiplication is non-commutative.
+In the following example matrix-matrix multiplications are calculated in 
+a parallel worksharing loop with reduction.
+To obtain correct results in the parallel reduction loop the
+\kcode{noncommutative} modifier must be specified in the 
+\kcode{reduction} clause. The implementation will maintain
+the sequential order, and is free to perform partial, ordered reductions
+and then combine the partial results in sequential order.
+
+\cppexample[6.1]{non-commutative_reduction}{1}
+\ffreeexample[6.1]{non-commutative_reduction}{1}

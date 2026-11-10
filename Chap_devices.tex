@@ -38,13 +38,15 @@ codes that have been updated to reflect this new behavior are
 annotated with a description that describes changes required
 for correct execution.
 
-In the OpenMP Specification version 4.5 the mechanism for target
+In OpenMP Specification 4.5 the mechanism for target
 execution is specified as occurring through a \emph{target task}.
 When the \kcode{target} construct is encountered a new 
 target task is generated. The target task 
 completes after the \kcode{target} region has executed and all data 
 transfers have finished. Using the \kcode{nowait} clause allows asynchronous
 execution of the \kcode{target} region.
+
+As of OpenMP Specification 6.1 the \kcode{omp_default_device} predefined identifier with constant property and an implementation defined value less than -1 was added. 
 
 
 %===== Examples Sections =====

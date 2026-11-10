@@ -10,17 +10,17 @@ subroutine matmul_depend (N, BS, A, B, C)
    real, dimension(N, N) :: A, B, C
    integer :: i, j, k, ii, jj, kk
    BM = BS - 1
-   do i = 1, N, BS
-      do j = 1, N, BS
+   do j = 1, N, BS
+      do i = 1, N, BS
          do k = 1, N, BS
 !$omp task shared(A,B,C) private(ii,jj,kk) & 
 !$omp depend ( in: A(i:i+BM, k:k+BM), B(k:k+BM, j:j+BM) ) &
 !$omp depend ( inout: C(i:i+BM, j:j+BM) )
 !  I,J,K are firstprivate by default
-            do ii = i, i+BM
-               do jj = j, j+BM
+            do jj = j, j+BM
+               do ii = i, i+BM
                   do kk = k, k+BM
-                     C(jj,ii) = C(jj,ii) + A(kk,ii) * B(jj,kk)
+                     C(ii, jj) = C(ii, jj) + A(ii, kk) * B(kk, jj)
                   end do
                end do
             end do

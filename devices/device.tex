@@ -2,7 +2,7 @@
 \section{Device Routines}
 \label{sec:device}
 
-\subsection{\kcode{omp\_is\_initial\_device} Routine}
+\subsection{\scode{omp_is_initial_device} Routine}
 \label{subsec:device_is_initial}
 \index{routines!omp_is_initial_device@\kcode{omp_is_initial_device}}
 \index{omp_is_initial_device routine@\kcode{omp_is_initial_device} routine}
@@ -22,7 +22,7 @@ region based on where the code is executing.
 
 \ffreeexample[4.0]{device}{1}
 
-\subsection{\kcode{omp\_get\_num\_devices} Routine}
+\subsection{\scode{omp_get_num_devices} Routine}
 \label{subsec:device_num_devices}
 
 The following example shows how the \kcode{omp_get_num_devices} runtime library routine 
@@ -32,8 +32,8 @@ can be used to determine the number of devices.
 
 \ffreeexample[4.0]{device}{2}
 
-\subsection{\kcode{omp\_set\_default\_device} and \\
-\kcode{omp\_get\_default\_device} Routines}
+\subsection{\scode{omp_set_default_device} and \\
+\scode{omp_get_default_device} Routines}
 \label{subsec:device_is_set_get_default}
 \index{routines!omp_set_default_device@\kcode{omp_set_default_device}}
 \index{omp_set_default_device routine@\kcode{omp_set_default_device} routine}
@@ -171,8 +171,8 @@ The Fortran code omits the unused last argument.
 \cexample[5.2]{device}{5}
 \ffreeexample[5.2]{device}{5}
 
-\index{directives!depobj@\kcode{depobj}}
-\index{depobj directive@\kcode{depobj} directive}
+\index{constructs!depobj@\kcode{depobj}}
+\index{depobj construct@\kcode{depobj} construct}
 The following is a more complicated example that shows the use of 
 the \kcode{omp_target_memcpy_async} routine with a depend object \ucode{obj} to 
 overlap the memory copy with computation performed by \ucode{do_work}.

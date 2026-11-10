@@ -15,7 +15,7 @@ and compiler-level optimizations for the concurrency.
 \ffreeexample[5.0]{loop}{1}
 
 The following example shows the use of the orphaned \kcode{loop} construct. Since the 
-function \ucode{foo()} is not lexically nested inside of the \kcode{teams} region it needs to specify 
+function \ucode{foo()} is not lexically nested inside of the \kcode{teams} region, it needs to specify 
 the \kcode{bind} clause. The first \kcode{loop} construct binds to the \kcode{teams} region 
 from where the function \ucode{foo} is called. Binding to \kcode{teams} allows thread-level 
 parallelism to be available for the second \kcode{loop} construct.
@@ -24,8 +24,8 @@ thus allowing implementations to perform various loop nest optimizations includi
 reordering of the \ucode{i}  and \ucode{j} loops. The \kcode{loop} construct can be implemented 
 with the use of additional threads or some other concurrency mechanism, which allows better use of hardware resources while also allowing sequential optimizations, reordering, tiling etc.
 
-For example, the first \kcode{loop} construct could be implemented as if it was specified as 
-\kcode{distribute parallel for} and the second \kcode{loop} construct as if it was specified as 
+For example, the first \kcode{loop} construct could be implemented as if it were specified as 
+\kcode{distribute parallel for} and the second \kcode{loop} construct as if it were specified as 
 \kcode{simd} if the hardware can support SIMD operations.
 % \\
 % OR

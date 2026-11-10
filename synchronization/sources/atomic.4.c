@@ -12,7 +12,7 @@ void calc_val(float *val);
 void boxster(float *box_totals, float *vals, int *box, int N)
 {
     #pragma omp parallel for
-    for(int idx=0; idx<=N; idx++)
+    for(int idx=0; idx<N; idx++)
     {
        calc_val(&vals[idx]);
        #pragma omp atomic hint(omp_sync_hint_uncontended)

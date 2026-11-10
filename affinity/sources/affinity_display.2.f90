@@ -11,7 +11,7 @@ program affinity_display
    use omp_lib
    implicit none
    character(len=0) :: null
-   integer          :: n_sockets, socket_num, n_thrds_on_socket;
+   integer          :: n_sockets, socket_num, n_thrds_on_socket
 
    call omp_set_nested(.true.)        ! or env var= OMP_NESTED=true
    call omp_set_max_active_levels(2)  ! or env var= OMP_MAX_ACTIVE_LEVELS=2

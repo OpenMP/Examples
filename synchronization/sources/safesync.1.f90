@@ -11,6 +11,11 @@ program safesync_1
    integer :: count1 = 0, count2 = 0
    integer :: i
 
+   do i = 1, N
+      a(i) = 0
+      b(i) = i
+   end do
+
    ! Rather than explicitly using the safesync clause below for a non-host
    ! device, the following requires directive can make the "safesync"
    ! behavior the default for parallel constructs encountered on a non-host
@@ -26,7 +31,7 @@ program safesync_1
       !$omp atomic capture
          t = count1
          count1 = count1 + 1
-      !$omp end atomic capture
+      !$omp end atomic
       do
          !$omp atomic read acquire
          u = count2

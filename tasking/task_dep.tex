@@ -92,15 +92,16 @@ statement from task T4.
 
 \ffreeexample[5.1]{task_dep}{4b}
 
-\subsection{Matrix multiplication}
-\label{subsec:task_matrix_mult}
-\index{task dependences!matrix multiplication}
+%\subsection{Matrix multiplication}
+%\label{subsec:task_matrix_mult}
+%\index{task dependences!matrix multiplication}
 
 This example shows a task-based blocked matrix multiplication. Matrices are of 
 \ucode{N$\times$N} elements, and the multiplication is implemented using blocks
 of \ucode{BS$\times$BS} elements.
 
 \cexample[4.0]{task_dep}{5}
+\clearpage
 
 \ffreeexample[4.0]{task_dep}{5}
 
@@ -173,11 +174,11 @@ wait on completion of any child task having \ucode{y} with an \kcode{out}
 So, the \kcode{depend} clause of the \kcode{taskwait} construct now constrains
 the second task to complete at the taskwait, too.
 
-Note: While a \kcode{taskwait} construct ensures that all child tasks have completed; a \kcode{depend} clause on a \kcode{taskwait}
+Note: While a \kcode{taskwait} construct ensures that all child tasks have completed, a \kcode{depend} clause on a \kcode{taskwait}
 construct only waits for specific child tasks (prescribed by the dependence type and list
 items in the \kcode{taskwait}'s \kcode{depend} clause).
 This and the previous example illustrate the need to carefully determine
-the dependence type of variables in the \kcode{depend} clause of the \kcode{taskwait} construct.
+the dependence type of variables in the \kcode{depend} clause of the \kcode{taskwait} construct
 when selecting child tasks that the generating task must wait on, so that its execution after the
 taskwait does not produce race conditions on variables accessed by non-completed child tasks.
 
@@ -199,7 +200,7 @@ in any order. Task T4 will be scheduled after tasks T1 and T2 are
 completed. T5 will be scheduled after tasks T1 and T3 are completed. Due
 to the \kcode{mutexinoutset} dependence type on \ucode{c}, T4 and T5 may be
 scheduled in any order with respect to each other, but not at the same
-time. Tasks T6 will be scheduled after both T4 and T5 are completed.
+time. Task T6 will be scheduled after both T4 and T5 are completed.
 
 \cexample[5.0]{task_dep}{9}
 
@@ -240,7 +241,7 @@ of the second task construct because this would violate the \kcode{depend} claus
 ``List items used in \kcode{depend} clauses of the same task or sibling tasks
 must indicate identical storage locations or disjoint storage locations''.
 
-In this case each of the loop tasks use a single disjoint (different storage)
+In this case each of the loop tasks uses a single disjoint (different storage)
 element in their \kcode{depend} clause; however,
 the array-section storage area prescribed in the commented directive is neither
 identical nor disjoint to the storage prescribed by the elements of the
@@ -317,7 +318,7 @@ variable \ucode{x} from task T1 visible to task T3 (importing) and
 the dependence on variable \ucode{x} from task T3 visible to task T4
 (exporting).  Without the \kcode{transparent} clause on T2, T3 would not
 wait on T1, T4 would not wait on T3, and the value of \ucode{x} in T4 
-would be undefined due to race condition.
+would be undefined due to a race condition.
 
 \cexample[6.0]{task_dep}{14}
 \ffreeexample[6.0]{task_dep}{14}
@@ -344,3 +345,22 @@ the task generated in the $i^{th}$ iteration of the \ucode{h}~=~$h_1$ instance o
 
 \cexample[6.0]{task_dep}{15}
 \ffreeexample[6.0]{task_dep}{15}
+
+The following example illustrates in three cases various ways in which task
+dependences may be established between the child task of a transparent exporting
+task and a subsequent sibling task of that exporting task. In all cases, a
+synchronization mechanism is employed to ensure that the exporting task
+completes prior to its subsequent sibling task, ensuring that its child task is
+generated before its sibling task. This then results in a task dependence
+between the child task and the sibling task with respect to \ucode{y}. In case
+1, the employed synchronization mechanism is a task dependence with respect to
+\ucode{x} between exporting task T0 and sibling task T2. In case 2, the
+mechanism is forcing exporting task U0 to be undeferred. In case 3, the
+mechanism is inserting a \kcode{taskwait} directive between the exporting task
+V0 and its sibling task V2. Cases 1 and 2 work as of OpenMP 6.0, but prior to
+OpenMP 6.1 case 3 does not result in a dependency between V1 and V2 and
+therefore has a data race on \ucode{y}. As of OpenMP 6.1, case 3 also works.
+
+\cexample[6.0]{task_dep}{16}
+\ffreeexample[6.0]{task_dep}{16}
+

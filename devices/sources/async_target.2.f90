@@ -21,7 +21,7 @@
       !$omp end target
    !$omp end task
 
-   call foo()  ! execute other work asychronously
+   call foo()  ! execute other work asynchronously
 
    !$omp task shared(v1,v2,p) depend(in: N)
       !$omp target device(idev) map(from: p)

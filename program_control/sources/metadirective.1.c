@@ -11,7 +11,10 @@
 int main()
 {
    int v1[N], v2[N], v3[N];
-   for(int i=0; i<N; i++){ v1[i]=(i+1); v2[i]=-(i+1); }
+   for(int i=0; i<N; i++){
+     v1[i] = (i+1);
+     v2[i] = -(i+1);
+   }
 
    #pragma omp target map(to:v1,v2) map(from:v3) device(0)
    #pragma omp metadirective \

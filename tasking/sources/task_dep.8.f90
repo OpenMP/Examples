@@ -4,7 +4,7 @@
 ! @@expect:	success
 ! @@version:	omp_5.0
 subroutine foo()
-implicit nonE
+implicit none
 integer :: x, y
     
     x = 0

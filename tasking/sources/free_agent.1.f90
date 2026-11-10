@@ -7,6 +7,7 @@ program openmp_task_example
   implicit none
 
   integer :: i
+  integer, parameter :: N = 100
 
   ! Declare external procedures
   external :: do_background_io

@@ -56,7 +56,7 @@ int main()
   #pragma omp target map(S2.p, S2.a, S2.b) // implicit map of S2
   saxpyfun(&S2);
 
-  // These print statement may not execute because the
+  // These print statements may not execute because the
   // above code is invalid
   printf(" %4.0f %4.0f\n", S1.p[0], S1.p[N-1]);
   printf(" %4.0f %4.0f\n", S2.p[0], S2.p[N-1]);

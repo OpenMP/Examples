@@ -1,0 +1,242 @@
+%\pagebreak
+\section{List Item Expressions}
+\label{sec:list_item_expressions}
+\index{directive syntax!list item expressions}
+\index{list item expressions}
+\index{containing array}
+\index{containing structure}
+\index{base variable}
+\index{base array}
+\index{base pointer}
+\index{named pointer}
+\index{array base}
+
+Directives, clauses, and modifiers may accept a list argument that consists of
+one or more comma-separated list items.  An expression that forms a list item must
+satisfy syntactic requirements defined by the specification. When the list item
+refers to a data object in memory, these requirements are often defined using
+terms that refer to various parts of the expression. These terms include:
+\emph{containing array}, \emph{containing structure}, \emph{base variable},
+\emph{base array}, \emph{base pointer}, \emph{named pointer}, and \emph{array
+base}.
+
+In the examples provided, identifiers starting with \ucode{p} are pointers,
+identifiers starting with \ucode{x} are arrays, identifiers starting with
+\ucode{s} are structures, and identifiers starting with \ucode{y} are scalars.
+For generality, we use a unified description for list item expressions in C,
+C++, and Fortran. To this end, we treat a Fortran array element or array
+section designator as composed of an array type subexpression (the array) to
+which an array subscript operator is applied that contains its subscript list,
+and we treat a Fortran structure component designator as composed of a
+structure type subexpression (the structure) to which a structure element
+operator is applied. We define a \emph{direct-selection operator} as an array
+subscript operator (\ucode{[...]} in C/C++ or \ucode{(...)} in Fortran) or a
+structure element operator (\ucode{.} in C/C++ or \ucode{\%} in Fortran) that
+is not applied to a pointer variable, after transforming (for C/C++)
+expressions of the form \ucode{p->x} to \ucode{(*p).x}.  And we define an
+\emph{indirect-selection operator} as an array subscript operator
+(\ucode{[...]} in C/C++ or \ucode{(...)} in Fortran) or structure element
+operator (\ucode{->} in C/C++ and \ucode{\%} in Fortran) that is applied to a
+pointer variable, after transforming (for C/C++) expressions of the form
+\ucode{*p} to \ucode{*(p+0)} and then expressions of the form \ucode{*(p+i)} to
+\ucode{p[i]}, where \ucode{p} is a pointer and \ucode{i} is an integer type.
+So, \ucode{x[i]} uses a direct-selection operator if \ucode{x} is an array and
+not a pointer, while \ucode{p[i]} uses an indirect-selection operator if
+\ucode{p} is a pointer.
+
+In the following explanations, a subexpression is assumed to be an expression
+that can produce a value; in particular, for structures the name of a structure
+component that follows a structure element operator is not considered a
+subexpression.
+
+\subsection{Containing Arrays}
+
+The containing array of an expression that represents a data object is any
+unsubscripted subexpression of array type to which a sequence of zero or more
+direct-selection operators are applied to yield the data object expression. So:
+
+\begin{itemize}
+\item the containing array of \ucode{x1} is \ucode{x1};
+
+\item the containing array of \ucode{x1[i]} is \ucode{x1} for C/C++ and of
+      \ucode{x1(i)} is \ucode{x1} for Fortran;
+
+\item the containing array of \ucode{x1[i:4]} is \ucode{x1} for C/C++ and of
+      \ucode{x1(i:i+3)} is \ucode{x1} for Fortran;
+
+\item the containing array of \ucode{p1->x1[i].y1} is \ucode{p1->x1} for C/C++
+      and of \ucode{p1\%x1(i)\%y1} is \ucode{p1\%x1} for Fortran;
+
+\item the containing arrays of \ucode{p1->x1[i].x2} are \ucode{p1->x1} and
+      \ucode{p1->x1[i].x2} for C/C++ and of \ucode{p1\%x1(i)\%x2} are
+      \ucode{p1\%x1} and \ucode{p1\%x1(i)\%x2} for Fortran;
+
+\item the containing arrays of \ucode{p1->x1[i].x2[j]} are \ucode{p1->x1} and
+      \ucode{p1->x1[i].x2} for C/C++ and of \ucode{p1\%x1(i)\%x2\%(j)} are
+      \ucode{p1\%x1} and \ucode{p1\%x1(i)\%x2} for Fortran;
+
+\item the containing arrays of \ucode{p1->x1[i].x2[j:4]} are \ucode{p1->x1} and
+      \ucode{p1->x1[i].x2} for C/C++ and of \ucode{p1\%x1(i)\%x2(j:j+3)} are
+      \ucode{p1\%x1} and \ucode{p1\%x1(i)\%x2} for Fortran;
+
+\item the containing array of \ucode{p1->p2[i]->x1} is \ucode{p1->p2[i]->x1}
+      for C/C++ and of \ucode{p1\%p2(i)\%x1} is \ucode{p1\%p2(i)\%x1} for Fortran;
+
+\item the containing array of \ucode{p1->p2[i]->x1[j]} is \ucode{p1->p2[i]->x1}
+      for C/C++ and of \ucode{p1\%p2(i)\%x1(j)} is \ucode{p1\%p2(i)\%x1} for
+      Fortran;
+
+\item the containing array of \ucode{p1->p2[i]->x1[j:4]} is
+      \ucode{p1->p2[i]->x1} for C/C++ and of \ucode{p1\%p2(i)\%x1(j:j+3)} is
+      \ucode{p1\%p2(i)\%x1} for Fortran.
+\end{itemize}
+
+
+\subsection{Containing Structures}
+
+The containing structure of an expression that represents a data object is any
+subexpression of structure type to which a sequence of zero or more
+direct-selection operators are applied to yield the data object expression.
+Additionally, for Fortran, the first operator may be an indirect-selection
+operator that is applied to a structure variable with the \bcode{POINTER} attribute, so
+that the containing structure is treated as the pointee of the variable. So:
+
+\begin{itemize}
+\item the containing structure of \ucode{s1} is \ucode{s1};
+
+\item the containing structure of \ucode{s1.y} is \ucode{s1} for C/C++ and of
+      \ucode{s1\%y} is \ucode{s1} for Fortran;
+
+\item the containing structures of \ucode{s1.x1[i].s2} are \ucode{s1.x1[i].s2},
+      \ucode{s1.x1[i]}, and \ucode{s1} for C/C++ and of \ucode{s1\%x1(i)\%s2}
+      are \ucode{s1\%x1(i)\%s2}, \ucode{s1\%x1(i)}, and \ucode{s1} for
+      Fortran;
+
+\item the containing structures of \ucode{p1->x1[i].y} are \ucode{p1->x1[i]} and
+      \ucode{*p1} for C/C++ and of \ucode{p1\%x1(i)\%y} are \ucode{p1\%x1(i)} and
+      \ucode{p1} for Fortran.
+\end{itemize}
+
+
+% <Add example illustrating one or more rules or restrictions pertaining to containing structures.>
+
+\subsection{Base Variables}
+
+If an expression that represents a data object or one of its containing arrays
+or containing structures is denoted by a variable that is a base language
+identifier, that variable is a base variable of that expression. So:
+
+\begin{itemize}
+\item the base variable of \ucode{y} is \ucode{y};
+
+\item the base variable of \ucode{s.y} is \ucode{s} for C/C++ and of
+      \ucode{s\%y} is \ucode{s} for Fortran;
+
+\item the base variable of \ucode{x[i].s.y} is \ucode{x} for C/C++ and of
+      \ucode{x(i)\%s\%y} is \ucode{x} for Fortran.
+\end{itemize}
+
+% <Add example illustrating rules or restrictions pertaining to base variables.>
+
+\subsection{Base Arrays}
+
+If an expression that represents a data object has one or more containing
+arrays, its base array is the containing array that is contained by all of
+its other containing arrays. So:
+
+\begin{itemize}
+\item the base array of \ucode{x1} is \ucode{x1};
+
+\item the base array of \ucode{x1[i]} is \ucode{x1} for C/C++ and of
+      \ucode{x1(i)} is \ucode{x1} for Fortran;
+
+\item the base array of \ucode{x1[i:4]} is \ucode{x1} for C/C++ and of
+      \ucode{x1(i:i+3)} is \ucode{x1} for Fortran;
+
+\item the base array of \ucode{p1->x1[i].y1} is \ucode{p1->x1} for C/C++ and of
+      \ucode{p1\%x1(i)\%y1} is \ucode{p1\%x1} for Fortran;
+
+\item the base array of \ucode{p1->x1[i].x2} is \ucode{p1->x1.x2} for C/C++ and of
+      \ucode{p1\%x1(i)\%x2} is \ucode{p1\%x1\%x2} for Fortran;
+
+\item the base array of \ucode{p1->x1[i].x2[j]} is \ucode{p1->x1.x2} for C/C++ and
+      of \ucode{p1\%x1(i)\%x2\%(j)} is \ucode{p1\%x1\%x2} for Fortran;
+
+\item the base array of \ucode{p1->x1[i].x2[j:4]} is \ucode{p1->x1.x2} for C/C++
+      and of \ucode{p1\%x1(i)\%x2(j:j+3)} is \ucode{p1\%x1\%x2} for Fortran;
+
+\item the base array of \ucode{p1->p2[i]->x1} is \ucode{p1->p2[i]->x1} for
+      C/C++ and of \ucode{p1\%p2(i)\%x1} is \ucode{p1\%p2(i)\%x1} for
+      Fortran;
+
+\item the base array of \ucode{p1->p2[i]->x1[j]} is \ucode{p1->p2[i]->x1} for
+      C/C++ and of \ucode{p1\%p2(i)\%x1(j)} is \ucode{p1\%p2(i)\%x1} for
+      Fortran;
+
+\item the base array of \ucode{p1->p2[i]->x1[j:4]} is \ucode{p1->p2[i]->x1} for
+      C/C++ and of \ucode{p1\%p2(i)\%x1(j:j+3)} is \ucode{p1\%p2(i)\%x1} for
+      Fortran.
+\end{itemize}
+
+% <Add example illustrating rules or restrictions pertaining to base arrays.>
+
+\subsection{Base Pointers}
+
+The base pointer of an expression that represents a data object is a
+subexpression that is a pointer to which an indirect-selection operator is
+applied to yield the data object expression or a containing array or containing
+structure of the data object expression. Additionally, for Fortran if the data
+object is expressed as an associated data pointer, then the data pointer is the
+base pointer of the data object. So:
+
+\begin{itemize}
+\item the base pointer of \ucode{*p} (equivalently \ucode{p[0]}) is \ucode{p}
+      for C/C+ and of \ucode{p} is \ucode{p} for Fortran;
+
+\item the base pointer of \ucode{*(p+i)} (equivalently \ucode{p[i]}) is
+      \ucode{p} for C/C++;
+
+\item the base pointer of \ucode{p[i]} is \ucode{p} for C/C++ and of
+      \ucode{p(i)} is \ucode{p} for Fortran;
+
+\item the base pointer of \ucode{p[i:4]} is \ucode{p} for C/C++ and of
+      \ucode{p(i:i+3)} is \ucode{p} for Fortran;
+
+\item the base pointer of \ucode{p1->p2->s1.y} is \ucode{p1->p2} for C/C++ and
+      of \ucode{p1\%p2\%s1\%y} is \ucode{p1\%p2} for Fortran.
+\end{itemize}
+
+% <Add example illustrating rules or restrictions pertaining to base pointers.>
+
+\subsection{Named Pointers}
+
+If an expression that represents a data object has a base pointer then its
+named pointers include that base pointer and any base pointers of its named
+pointers. So:
+
+\begin{itemize}
+\item the named pointers of \ucode{p1[i].p2->y} are \ucode{p1[i].p2} and
+      \ucode{p1} for C/C++ and of \ucode{p1(i)\%p2\%y} are \ucode{p1(i)\%p2}
+      and \ucode{p1} for Fortran;
+
+\item the named pointers of \ucode{\ucode{p}1[i][j]} for C/C++, where
+      \ucode{p1} is a pointer to an array pointers, is \ucode{p1[i]} and
+      \ucode{p1}.
+\end{itemize}
+
+% <Add example illustrating rules or restrictions pertaining to named pointers.>
+
+\subsection{Array Bases}
+
+The array base of an array section or array element is its base array if it has
+one, and otherwise it is its base pointer if it has one. So:
+
+\begin{itemize}
+\item the array base of \ucode{s1.x1[i].x2[j]} is \ucode{s1.x1} for C/C++ and 
+      of \ucode{s1\%x1(i)\%x2(j)} is \ucode{s1\%x1} for Fortran;
+
+\item the array base of \ucode{s1.x1[i].p1[j]} is \ucode{s1.x1[i].p1} for C/C++ and 
+      of \ucode{s1\%x1(i)\%p2(j)} is \ucode{s1\%x1(i)\%p1} for Fortran.
+\end{itemize}
+
+% <Add example illustrating rules or restrictions pertaining to array bases.>

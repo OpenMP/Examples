@@ -7,6 +7,7 @@
 */
 extern void do_background_io();
 extern void do_heavy_work();
+#define N 100
 
 int main()
 {

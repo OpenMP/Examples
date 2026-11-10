@@ -1,0 +1,69 @@
+%\pagebreak
+\section{\kcode{flatten} Construct}
+\label{sec:flatten}
+\index{constructs!flatten@\kcode{flatten}}
+\index{flatten construct@\kcode{flatten} construct}
+
+The \kcode{flatten} construct combines a (canonical) loop nest into a single flattened loop.
+The \kcode{depth} clause specifies the number of loops to be flattened. 
+When the \kcode{depth} clause is not present or no argument is specified,
+the default of 2 is used.  Its basic operation is similar to the \kcode{collapse} 
+clause used with work-sharing/work-distribution and parallelism generating directives.
+However, the \kcode{flatten} construct and its \kcode{apply} clause allow 
+it to be applied in a more generic way to loop-transforming constructs. 
+Also, flattening can be applied to non-rectangular loops.
+
+In the following example the \kcode{flatten} construct is applied to the outer two loops,
+in the \ucode{flatten} routine.  The innermost \ucode{k} loop is not affected.
+
+The \ucode{flatten_equivalent} routine is an illustration of how a user might 
+write simple code that flattens the loops.
+The specifics of the actual integer type used to represent the loop iteration variable 
+for the directive flattened loop is implementation defined.
+For instance, in C/C++ if \ucode{Ni} and \ucode{Nj} are \bcode{int} type and the loop 
+iteration variable ranges are positive integers, the compiler may choose 
+\bcode{unsigned int} to represent the loop iteration
+\ucode{ij} and trip count \ucode{tc_end} variables.
+
+\cexample[6.1]{flatten}{1}
+\ffreeexample[6.1]{flatten}{1} 
+
+The following example is to unroll flattened loops for instruction cache efficiency.
+Since the \kcode{unroll} construct only applies to a single loop, 
+the \kcode{flatten} construct is used to form a single loop.
+The \ucode{flatten_equivalent} routine shows how a user might code the single unrolled loop.
+
+\cexample[6.1]{flatten}{2}
+\ffreeexample[6.1]{flatten}{2} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%In a OpenMP loop nest, a non-rectangular loop has a loop bound that references the iteration
+%variable of an enclosing loop.
+
+The following example is to flatten a non-rectangular loop nest in which 
+the number of iterations in the inner loops depends on the value of 
+the outer loop iteration variable.
+
+The \ucode{flatten_equivalent_empty_iterations} routine illustrates
+how empty iterations are conditionally skipped when iterating
+over a simple direct product iteration space (\ucode{n*n}).
+Conditional checks and other methods 
+%(such as \texttt{recount}, \texttt{precompute} and \texttt{isqrt})
+might be used exclusively or in combination in compiler 
+optimization when flattening loops.
+
+
+\cexample[6.1]{flatten}{3}
+\ffreeexample[6.1]{flatten}{3} 
+
+In this example the flattened loops include a non-rectangular loop, as 
+above, and the resulting loop is made into a worksharing loop.
+
+Note, the flattened loop formed with a non-rectangular loop may use a 
+\kcode{schedule} clause with any schedule type.  This is unlike the 
+use of a \kcode{collapse} clause on a worksharing-loop construct that cannot 
+use a \kcode{schedule} clause when one of the affected loops is a 
+non-rectangular loop.
+
+\cexample[6.1]{flatten}{4}
+\ffreeexample[6.1]{flatten}{4} 

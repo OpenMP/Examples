@@ -25,7 +25,7 @@ program fort_shared_var
 
   a = [(i, i=1,N)]
   !$omp parallel shared(a) num_threads(2)
-    call sub2(a(::2))         ! copy-in/copy-out result in a data race
+    call sub2(a(::2))         ! copy-in/copy-out results in a data race
   !$omp end parallel
   print *, 'sum2 =', sum(a)   ! sum2 is not well defined
 end

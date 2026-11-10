@@ -56,12 +56,12 @@ region.
 \fexample{icv}{1}
 
 \pagebreak
-\subsection{\kcode{num_threads} Clause with a List}
+\subsection{\scode{num_threads} Clause with a List}
 \label{subsec:icv_nthreads}
 \index{clauses!num_threads@\kcode{num_threads}}
 \index{num_threads clause@\kcode{num_threads} clause}
 
-Prior to OpenMP 6.0, only a single argument can be specified in the 
+Prior to OpenMP 6.0, only a single argument could be specified in the 
 \kcode{num_threads} clause of a \kcode{parallel} construct. 
 In this case, the clause argument is used as the requested team size for 
 that \kcode{parallel} region only and does not affect the value of the
@@ -74,7 +74,7 @@ multiple integers.
 
 In OpenMP 6.0, the \kcode{num_threads} clause permits more than one argument.
 In this case, the first argument is still used as the requested team size for
-the \kcode{parallel} region. The difference is the \plc{nthreads-var} ICVs of
+the \kcode{parallel} region. The difference is that the \plc{nthreads-var} ICVs of
 the generated implicit tasks are set to the list of values given by the
 remaining clause arguments, rather than inheriting the value of the
 encountering task's \plc{nthreads-var} ICV. Consequentially, a
@@ -94,7 +94,7 @@ integer in the \plc{nthreads-var} ICV of the task that encounters the
 ICV contains only a single integer, at which point that value persists for any
 further nesting levels. In Case 2, a \kcode{num_threads(\ucode{8})} clause appears on
 the outermost \kcode{parallel} construct. This only has the effect of altering
-the requested team size for that \kcode{parallel} region. Note that the value of
+the requested team size for that \kcode{parallel} region. Note that the values of
 the \plc{nthreads-var} ICVs inside the \kcode{parallel} region are the same as
 for Case 1. In Case 3, the \kcode{num_threads} clause is specified with
 multiple arguments \kcode{(\ucode{8,2})}. This sets the \plc{nthreads-var} ICV value in each of

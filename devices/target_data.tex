@@ -1,56 +1,71 @@
 %\pagebreak
-\section{\kcode{target_data} Construct}
+\section{\scode{target_data} Construct}
 \label{sec:target_data}
 
-\subsection{Simple \kcode{target_data} Construct}
+The \kcode{target_data} construct defines a region of code in which storage is
+mapped to the device data environment of a target device. It can be used to map
+storage to the device data environment for access in enclosed \kcode{target}
+regions, thereby avoiding data-mapping overhead at each \kcode{target} region.
+The \kcode{target_data} construct implicitly behaves as a composite construct
+that includes the functionality of the \kcode{target_enter_data} and
+\kcode{target_exit_data} directives for data-mapping on entry to and exit from
+the region, respectively. The details of these composite semantics are described
+in \specref{subsec:composite_target_data}.
+
+Note that the directive name \kcode{target_data}, introduced in OpenMP 6.0, is
+used in the text that describes the examples in this section, while the old
+directive name \kcode{target data} continues to be used in code examples for
+versions prior to OpenMP 6.0.
+
+\subsection{Simple \scode{target_data} Construct}
 \label{subsec:target_data_simple}
 \index{constructs!target_data@\kcode{target_data}}
 \index{target_data construct@\kcode{target_data} construct}
 
-This example shows how the \kcode{target_data} construct maps variables
-to a device data environment. The \kcode{target_data} construct creates
-a new device data environment and maps the variables \ucode{v1}, \ucode{v2}, and \ucode{p} to the new device 
-data environment. The \kcode{target} construct enclosed in the 
-\kcode{target_data} region creates a new device data environment, which inherits the
-variables \ucode{v1}, \ucode{v2}, and \ucode{p} from the enclosing device data environment. The variable 
-\ucode{N} is mapped into the new device data environment from the encountering task's data 
-environment.
+This example shows how the \kcode{target_data} construct maps storage to the
+device data environment of a target device. Storage for the array sections
+\ucode{v1[0:N]}, \ucode{v2[0:N]}, and \ucode{p[0:N]} is mapped to the device data
+environment on entry to the \kcode{target_data} region. Inside the
+\kcode{target_data} region, \ucode{v1}, \ucode{v2}, and \ucode{p} still refer to
+the original storage of the array sections. However, inside the
+\kcode{target} region that is enclosed in the \kcode{target_data} region the
+variables refer to the storage of these array sections in the device data
+environment. The variable \ucode{N}, being scalar, is by default treated as
+firstprivate for the \kcode{target} construct, thereby getting its value from
+the encountering task's data environment.
+
 
 \cexample[4.0]{target_data}{1}
 
 %\pagebreak
-The Fortran code passes a reference and specifies the extent of the arrays in the 
-declaration. No length information is necessary in the map clause, as is required 
-with C/C++ pointers.
+The Fortran code specifies the extent of the \ucode{p}, \ucode{v1} and
+\ucode{v2} dummy arguments in their declarations. Therefore, array sections are
+not necessary in the \kcode{map} clauses for specifying length information, as is
+required with C/C++ pointers.
 
 \ffreeexample[4.0]{target_data}{1}
 
-\subsection{\kcode{target\_data} Region Enclosing Multiple \kcode{target} Regions}
+\subsection{\scode{target_data} Region Enclosing Multiple \kcode{target} Regions}
 \label{subsec:target_data_multiregion}
 
-The following examples show how the \kcode{target_data} construct maps
-variables to a device data environment of a \kcode{target} region. 
-The \kcode{target_data} construct creates a device data environment and encloses \kcode{target}
-regions, which have their own device data environments. The device data environment 
-of the \kcode{target_data} region is inherited by the device data environment
-of an enclosed \kcode{target} region. The \kcode{target_data} construct
-is used to create variables that will persist throughout the \kcode{target_data}
-region.
+The following examples show how the \kcode{target_data} construct maps storage
+to a device data environment that is referenced by multiple \kcode{target} regions. 
 
-In the following example the variables \ucode{v1} and \ucode{v2} are mapped at each \kcode{target} 
-construct. Instead of mapping the variable \ucode{p} twice, once at each \kcode{target} 
-construct, \ucode{p} is mapped once by the \kcode{target_data} construct.
+In the following example the storage for \ucode{v1[:N]} and \ucode{v2[:N]} is
+added to and then removed from the device data environment at each \kcode{target}
+construct. Instead of doing the same for \ucode{p[0:N]}, its storage is added
+once to the device data environment on entry to the \kcode{target_data}
+region and then removed on exit from the region.
 
 \cexample[4.0]{target_data}{2}
 
-
-The Fortran code uses reference and specifies the extent of the \ucode{p}, \ucode{v1} and \ucode{v2} arrays. 
-No length information is necessary in the \kcode{map} clause, as is required with 
-C/C++ pointers. The arrays \ucode{v1} and \ucode{v2} are mapped at each \kcode{target} construct. 
-Instead of mapping the array \ucode{p} twice, once at each target construct, \ucode{p} is mapped 
-once by the \kcode{target_data} construct.
+The Fortran code specifies the extent of the \ucode{p}, \ucode{v1} and
+\ucode{v2} dummy arguments in their declarations. Therefore, array sections are
+not necessary in the \kcode{map} clauses for specifying length information, as is
+required with C/C++ pointers.
 
 \ffreeexample[4.0]{target_data}{2}
+\clearpage
 
 \index{target_data construct@\kcode{target_data} construct!map clause@\kcode{map} clause}
 \index{target construct@\kcode{target} construct!map clause@\kcode{map} clause}
@@ -58,139 +73,99 @@ once by the \kcode{target_data} construct.
 \index{map clause@\kcode{map} clause!tofrom map-type@\kcode{tofrom} map-type}
 In the following example, the array \ucode{Q} is mapped once at the enclosing 
 \kcode{target_data} region instead of at each \kcode{target} construct.
-In the OpenMP Specification 4.0, a scalar variable is implicitly mapped with the \kcode{tofrom} map-type.
-But since OpenMP Specification 4.5, a scalar variable, such as the \ucode{tmp} variable, has to be explicitly mapped with
-the \kcode{tofrom} map-type at the first \kcode{target} construct in order to return 
-its reduced value from the parallel loop construct to the host.
-The variable defaults to firstprivate at the second \kcode{target} construct.
+In OpenMP 4.0, a scalar variable is implicitly mapped with the \kcode{tofrom} map-type.
+But since OpenMP 4.5, a scalar variable such as the \ucode{tmp} variable has to
+be explicitly mapped with the \kcode{tofrom} map-type at the first
+\kcode{target} construct in order to return its reduced value from the parallel
+loop construct to the host, since it otherwise defaults to firstprivate in
+\kcode{target} constructs.
 
-\cexample[4.0]{target_data}{3}
+\cexample[4.5]{target_data}{3}
 
-\ffreeexample[4.0]{target_data}{3}
+\ffreeexample[4.5]{target_data}{3}
 
-\subsection{\kcode{target\_data} Construct with Orphaned Call}
+\subsection{\scode{target_data} Construct with Orphaned Call}
 
-The following two examples show how the \kcode{target_data} construct
-maps variables to a device data environment. The \kcode{target_data}
-construct's device data environment encloses the \kcode{target} construct's device 
-data environment in the function \ucode{vec_mult()}.
-
-\index{map clause@\kcode{map} clause!alloc map-type@\kcode{alloc} map-type}
-When the type of the variable appearing in an array section is pointer, the pointer 
-variable and the storage location of the corresponding array section are mapped 
-to the device data environment. The pointer variable is treated as if it had appeared 
-in a \kcode{map} clause with a map-type of \kcode{alloc}. The array section's 
-storage location is mapped according to the map-type in the \kcode{map} clause 
-(the default map-type is \kcode{tofrom}).
-
-The \kcode{target} construct's device data environment inherits the storage locations 
-of the array sections \ucode{v1[0:N]}, \ucode{v2[:n]}, and \ucode{p0[0:N]} from the enclosing \kcode{target_data}
-construct's device data environment. Neither initialization nor assignment is performed 
-for the array sections in the new device data environment.
-
-The pointer variables \ucode{p1}, \ucode{v3}, and \ucode{v4} are mapped into the \kcode{target} construct's device 
-data environment with an implicit map-type of alloc and they are assigned the address 
-of the storage location associated with their corresponding array sections. Note 
-that the following pairs of array section storage locations are equivalent (\ucode{p0[:N]}, 
-\ucode{p1[:N]}), (\ucode{v1[:N]},\ucode{v3[:N]}), and (\ucode{v2[:N]},\ucode{v4[:N]}).
+The following two examples illustrate usage of the \kcode{target_data} region
+in conjunction with a nested \kcode{target} region that is not lexically nested.
+In \ucode{vec_mult}, the array sections \ucode{v3[0:N]}, \ucode{v4[0:N]}, and
+\ucode{p1[0:N]} that are mapped by the \kcode{target} construct
+respectively match the storage of the array sections \ucode{v3[0:N]},
+\ucode{v4[0:N]}, and \ucode{p1[0:N]} that are mapped by the \kcode{target_data}
+construct that encloses the call to \ucode{vec_mult}. Inside the \kcode{target}
+construct, the pointers \ucode{v3}, \ucode{v4}, and \ucode{p1} are treated as
+firstprivate and then translated to refer to the corresponding storage of the
+already mapped array sections.
 
 \cexample[4.0]{target_data}{4}
 
-The Fortran code maps the pointers and storage in an identical manner (same extent, 
-but uses indices from 1 to \ucode{N}).
-
-The \kcode{target} construct's device data environment inherits the storage locations 
-of the arrays \ucode{v1}, \ucode{v2} and \ucode{p0} from the enclosing \kcode{target data} constructs's 
-device data environment. However, in Fortran the associated data of the pointer 
-is known, and the shape is not required.
-
-The pointer variables \ucode{p1}, \ucode{v3}, and \ucode{v4} are mapped into the \kcode{target} construct's 
-device data environment with an implicit map-type of \kcode{alloc} and they are 
-assigned the address of the storage location associated with their corresponding 
-array sections. Note that the following pair of array storage locations are equivalent 
-(\ucode{p0},\ucode{p1}), (\ucode{v1},\ucode{v3}), and (\ucode{v2},\ucode{v4}).
+The Fortran code maps the storage for the array sections in an identical manner
+(same extent, but uses indices from 1 to \ucode{N}).
 
 \ffreeexample[4.0]{target_data}{4}
 
 
-In the following example, the variables \ucode{p1}, \ucode{v3}, and \ucode{v4} are references to the pointer 
-variables \ucode{p0}, \ucode{v1} and \ucode{v2} respectively. The \kcode{target} construct's device data 
-environment inherits the pointer variables \ucode{p0}, \ucode{v1}, and \ucode{v2} from the enclosing 
-\kcode{target data} construct's device data environment. Thus, \ucode{p1}, \ucode{v3}, and \ucode{v4} are already 
-present in the device data environment.
+In the following example, the variables \ucode{p1}, \ucode{v3}, and \ucode{v4}
+are references to the pointer variables \ucode{p0}, \ucode{v1} and \ucode{v2}
+respectively. The reference-to-pointer variables are treated as if they are
+pointers, and as in the prior example they are firstprivate in the
+\kcode{target} construct and translated to refer to the corresponding storage of
+the already mapped array sections.
 
 \cppexample[4.0]{target_data}{5}
 
-In the following example, the usual Fortran approach is used for dynamic memory. 
-The \ucode{p0}, \ucode{v1}, and \ucode{v2} arrays are allocated in the main program and passed as references 
-from one routine to another. In \ucode{vec_mult}, \ucode{p1}, \ucode{v3} and \ucode{v4} are references to the 
-\ucode{p0}, \ucode{v1}, and \ucode{v2} arrays, respectively. The \kcode{target} construct's device data 
-environment inherits the arrays \ucode{p0}, \ucode{v1}, and \ucode{v2} from the enclosing target data construct's 
-device data environment. Thus, \ucode{p1}, \ucode{v3}, and \ucode{v4} are already present in the device 
-data environment.
 
-\ffreeexample[4.0]{target_data}{5}
-
-\subsection{\kcode{target\_data} Construct with \kcode{if} Clause}
+\subsection{\scode{target_data} Construct with \kcode{if} Clause}
 \label{subsec:target_data_if}
 \index{target data construct@\kcode{target data} construct!if clause@\kcode{if} clause}
 \index{clauses!if@\kcode{if}}
 \index{if clause@\kcode{if} clause}
 
-The following two examples show how the \kcode{target data} construct 
-maps variables to a device data environment.
+The following example illustrates the use of the \kcode{if} clause on a
+\kcode{target_data} construct and a nested \kcode{target} construct.  For both
+constructs, the \kcode{if} clause sets the target device to the host device if
+the condition evaluates to \vcode{false}. The condition, variable \ucode{N}
+being smaller than a given threshold, is identical for both constructs, and so
+their target devices are guaranteed to match. If the target device is a non-host
+device, inside the \kcode{target} region the pointer variable \ucode{p} will
+reference the storage for \ucode{p[0:N]} in its device data environment. If the
+target device is the host device, then the \kcode{target} region executes on the
+host device and \ucode{p} will reference the original storage for \ucode{p[0:N]}
+in the enclosing host data environment.
 
-In the following example, the if clause on the \kcode{target data} construct 
-indicates that if the variable \ucode{N} is smaller than a given threshold, then 
-the \kcode{target data} construct will not create a device data environment.
+If instead different \kcode{if} clause conditions were used for the constructs,
+or if the clause only appeared on one of the constructs, then a target device
+mismatch is possible that results in incorrect behavior. For instance, if the
+condition evaluates to \vcode{false} for the \kcode{target_data} region only,
+the \kcode{target} region will still execute on the non-host device but the
+pointer variable \ucode{p} will reference the original storage for
+\ucode{p[0:N]} in the enclosing host data environment that is potentially
+inaccessible. If the condition evaluates to \vcode{false} for the \kcode{target}
+region only, a different problem emerges. The \kcode{target_data} region may map
+storage to and from a non-host device data environment, while the \kcode{target}
+region operates only on storage in the host device data environment. At the end
+of the \kcode{target_data} region, the array section \ucode{p[0:N]} will be
+assigned from the device data environment to the original storage in the data
+environment of the task that encountered the \kcode{target_data} construct,
+resulting in undefined values in \ucode{p[0:N]}.
 
-The \kcode{target} constructs enclosed in the \kcode{target data} region 
-must also use an \kcode{if} clause on the same condition, otherwise the pointer 
-variable \ucode{p} is implicitly mapped with a map-type of \kcode{tofrom}, but the storage 
-location for the array section \ucode{p[0:N]} will not be mapped in the device data environments 
-of the \kcode{target} constructs.
 
 \cexample[4.0]{target_data}{6}
 
 %\pagebreak
-The \kcode{if} clauses work the same way for the following Fortran code. The \kcode{target} 
-constructs enclosed in the \kcode{target data} region should also use 
-an \kcode{if} clause with the same condition, so that the \kcode{target data} 
-region and the \kcode{target} region are either both created for the device, or 
-are both ignored.
+The \kcode{if} clauses work the same way for the following Fortran code. The
+\kcode{target} constructs enclosed in the \kcode{target_data} region should also
+use an \kcode{if} clause with the same condition, so that the storage referenced
+by \ucode{p} in the \kcode{target} region is guaranteed to be accessible whether
+the condition evaluates to \vcode{true} or \vcode{false} for the
+\kcode{target_data} region.
 
 \ffreeexample[4.0]{target_data}{6}
 
-%\pagebreak
-In the following example, when the \kcode{if} clause conditional expression on 
-the \kcode{target} construct evaluates to \vcode{false}, the target region will 
-execute on the host device. However, the \kcode{target data} construct 
-created an enclosing device data environment that mapped \ucode{p[0:N]} to a device data 
-environment on the default device. At the end of the \kcode{target data} 
-region the array section \ucode{p[0:N]} will be assigned from the device data environment 
-to the corresponding variable in the data environment of the task that encountered 
-the \kcode{target data} construct, resulting in undefined values in \ucode{p[0:N]}.
-
-\cexample[4.0]{target_data}{7}
-
-%\pagebreak
-The \kcode{if} clauses work the same way for the following Fortran code. When 
-the \kcode{if} clause conditional expression on the \kcode{target} construct 
-evaluates to \vcode{false}, the \kcode{target} region will execute on the host 
-device. However, the \kcode{target data} construct created an enclosing 
-device data environment that mapped the \ucode{p} array (and \ucode{v1} and \ucode{v2}) to a device data 
-environment on the default target device. At the end of the \kcode{target data} 
-region the \ucode{p} array will be assigned from the device data environment to the corresponding 
-variable in the data environment of the task that encountered the \kcode{target data} construct, resulting in undefined values in \ucode{p}.
-
-\ffreeexample[4.0]{target_data}{7}
-
-\subsection{\kcode{target\_data} as a Composite Directive}
+\subsection{\scode{target_data} as a Composite Directive}
 \label{subsec:composite_target_data}
 \index{target_data construct@\kcode{target_data} construct}
 \index{constructs!target_data@\kcode{target_data}}
-\index{directives!target_data@\kcode{target_data}}
-\index{target_data directive@\kcode{target_data} directive}
 
 In the OpenMP Specification 6.0, new semantics were defined for the \kcode{target_data} construct that 
 makes it a task-generating composite construct that has the effect of three task-generating 
@@ -206,7 +181,7 @@ the \kcode{target_data} region.
 The semantically equivalent code is shown in Case 1E 
 where the \kcode{target_enter_data} and \kcode{target_exit_data} directives produce 
 the same mapping that is specified by the Case 1 \kcode{target_data} construct.
-The task generated by the middle constituent construct, denoted by \ucode{T1} in Case 1E, 
+The task generated by the middle constituent construct, denoted by \ucode{T2} in Case 1E, 
 is a transparent task and therefore allows dependences to be established between the 
 \kcode{target} construct and the other two constituent constructs.
 The structured block enclosed by the transparent task in Case 1E contains a \kcode{target} construct 
@@ -226,7 +201,7 @@ Prior to OpenMP 6.0, the behavior of Case 1 would be the same as Case 2,
 allowing the \kcode{target} construct with a \kcode{nowait} to start or continue after the completion of the 
 \kcode{target_data} region.
 
-In Case 3, only \kcode{depend} clause is present on the \kcode{target_data} construct. 
+In Case 3, only a \kcode{depend} clause is present on the \kcode{target_data} construct. 
 In Case 3E, identical dependence will appear on all three constituent tasks of the \kcode{target_data} 
 construct.
 Note that the \kcode{depend} clause on the \kcode{target} construct is superfluous 

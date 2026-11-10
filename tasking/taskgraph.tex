@@ -16,7 +16,7 @@ corresponding to a \kcode{taskgraph} construct, the implementation may record
 encountered task-generating constructs that are designated as replayable into a
 taskgraph record. When a \kcode{taskgraph} construct is encountered and a
 taskgraph record associated with the construct exists that matches any
-specified graph ID), the implementation will execute from the taskgraph record
+specified graph ID, the implementation will execute from the taskgraph record
 instead (referred to as a replay execution). 
 
 In general, the \kcode{replayable} clause determines whether a task-generating
@@ -54,7 +54,7 @@ tasks \plc{A} and \plc{B}. The tasks use the shared variables \ucode{x},
 \ucode{y}, \ucode{z}, \ucode{sums}, and \ucode{i} from the data environment
 that encloses the \kcode{taskgraph} construct. Given that \ucode{x}, \ucode{y},
 \ucode{z}, and \ucode{sums} have static storage, the implementation can assume
-it always comes from the same locations in memory for any replay execution of
+they always come from the same locations in memory for any replay execution of
 the taskgraph record.
 
 \cexample[6.0]{taskgraph}{1}
@@ -67,7 +67,7 @@ The next example is a slight modification of the first one. The variables
 declared local to the \ucode{do_parallel_work} procedure. The implementation
 must take care of recapturing the addresses of the non-static \ucode{x},
 \ucode{y}, and \ucode{z} prior to a replay execution of the taskgraph record
-rather that referring to the storage of \ucode{x}, \ucode{y}, and \ucode{z}
+rather than referring to the storage of \ucode{x}, \ucode{y}, and \ucode{z}
 from when the taskgraph record was created (which would no longer exist in the
 replay executions).
 

@@ -4,7 +4,7 @@
 ! @@expect:	success
 ! @@version:	omp_6.0
 
-! export OMP_THREADS_RESERVE=”structured(2),free_agent(2)”
+! OMP_THREADS_RESERVE="structured(2),free_agent(2)"
 
 program openmp_taskloop_example
   use omp_lib

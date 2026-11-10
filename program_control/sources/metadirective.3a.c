@@ -32,7 +32,7 @@ int main()
   double d[N];
   double my_pi=3.14159265358979e0;
 
-  // Case 1: exp_pi_diff called from a target teams regions, so that array is
+  // Case 1: exp_pi_diff called from a target teams region, so that array is
   // computed across league of teams. Note, however, that a target teams region
   // that falls back to host execution may not work if the callee depends on
   // the target trait.
@@ -42,7 +42,7 @@ int main()
   // value should be near 1
   printf("d[N-1] = %20.14f\n",d[N-1]); // ...= 1.00000000000311
 
-  // Case 2: exp_pi_diff called from a parallel regions, so that array is
+  // Case 2: exp_pi_diff called from a parallel region, so that array is
   // computed across team of threads
 
   #pragma omp parallel

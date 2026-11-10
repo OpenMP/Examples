@@ -46,7 +46,7 @@ program main
 
                          !! loc is non-standard, but found everywhere
                          !! remove these lines if not available
-   if(modulo(loc(x),align) /= 0 .and. modulo(loc(y),align) /=0 ) then
+   if(modulo(loc(x),align) /= 0 .or. modulo(loc(y),align) /= 0) then
       print*,"ERROR: x|y not 64-byte aligned"; stop
    endif
 

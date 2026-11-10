@@ -6,10 +6,9 @@
       program main
       use omp_lib
       integer NT
+      NT = 4
 
-      NT =4
-
-c     sentinel c$omp or *$omp can also be used
+c ... sentinel c$omp or *$omp can also be used
 
 c$omp parallel do num_threads(NT) !comments allowed here   DIR 1
       do i = 1,NT

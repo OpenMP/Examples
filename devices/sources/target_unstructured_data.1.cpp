@@ -8,6 +8,7 @@
 class Matrix
 {
 
+  public: 
   Matrix(int n) {
     len = n;
     v = new double[len];

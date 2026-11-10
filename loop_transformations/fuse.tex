@@ -3,7 +3,6 @@
 \label{sec:fuse}
 \index{constructs!fuse@\kcode{fuse}}
 \index{fuse construct@\kcode{fuse} construct}
-\index{looprange!full@\kcode{looprange}}
 \index{looprange clause@\kcode{looprange} clause}
 \index{clauses!looprange@\kcode{looprange}}
 
@@ -45,20 +44,38 @@ with a size of the largest loop, and their loop blocks
 combined with conditionals to avoid 
 execution of out-of-range iterations for the shorter loop.
 The fusion is applied to minimize loop overhead, and possibly use
-the caches more efficiently when the function \ucode{f()} and \ucode{g()} 
+the caches more efficiently when the functions \ucode{f()} and \ucode{g()} 
 are computed in the same iteration.
 Fusion of different-sized loops works for C++11 range-based for loops.
 
 \cexample[6.0]{fuse}{2}
 \ffreeexample[6.0]{fuse}{2}
 
-In the following example the \kcode{looprange} clause is used to select two loops
-(\ucode{2} in the second argument)
+In the following example the \kcode{looprange} clause is used to select two
+loops,
+as specified by \ucode{2} in the second argument,
 from the loop nest sequence for fusion into a canonical loop. 
 Loop fusion begins with the second loop (\ucode{2} in the first argument)
 of the loop nest sequence. All the other loops are unaltered.
 
 \cexample[6.0]{fuse}{3}
 \ffreeexample[6.0]{fuse}{3}
+\clearpage
 
+\index{depth clause@\kcode{depth} clause}
+\index{clauses!depth@\kcode{depth}}
+The \kcode{depth} clause can be used to fuse loops at multiple nesting levels
+beyond a single level. Semantically the fusion action occurs from the outer
+loops to the inner loops iteratively up to the given depth.
+The following example illustrates the fusion of loops with
+the \kcode{depth(2)} clause.
+The outer level loops \ucode{i} and \ucode{j} are first fused into loop
+\ucode{ij} as shown in \ucode{fuse_midpoint}.
+The second level loops \ucode{k} and \ucode{l} are further fused into
+loop \ucode{kl} as shown in \ucode{fuse_equivalent}.
+In principle, one can use the nested \kcode{apply} clause to achieve
+the same fusion, using one more nested \kcode{apply} clause at each
+additional depth.
 
+\cexample[6.1]{fuse}{4}
+\ffreeexample[6.1]{fuse}{4}

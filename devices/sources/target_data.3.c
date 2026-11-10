@@ -3,7 +3,7 @@
 * @@type:	C
 * @@operation:	compile
 * @@expect:	success
-* @@version:	omp_4.0
+* @@version:	omp_4.5
 */
 #include <math.h>
 #define COLS 100
@@ -16,6 +16,10 @@ void gramSchmidt(float Q[][COLS], const int rows)
     {
         double tmp = 0.0;
 
+        // tmp is explicitly mapped so that its modified value
+        // is exposed outside the target construct, as it would
+        // otherwise be firstprivate and the reduction result
+        // would be discarded.
         #pragma omp target map(tofrom: tmp)
         #pragma omp parallel for reduction(+:tmp)
         for(int i=0; i < rows; i++)
@@ -29,8 +33,3 @@ void gramSchmidt(float Q[][COLS], const int rows)
             Q[i][k] *= tmp;
     }
 }
-
-/* Note:  The variable tmp is now mapped with tofrom, for correct
-          execution with 4.5 (and pre-4.5) compliant compilers.
-          See Devices Intro.
- */

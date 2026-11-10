@@ -42,3 +42,43 @@ blocks of the inner transform. The effective looping is shown in \ucode{func3}.
 
 \cexample[5.1]{tile}{2}
 \ffreeexample[5.1]{tile}{2}
+\clearpage
+
+In this example the \kcode{grid} modifier is used in the \kcode{sizes} clause
+on a \kcode{tile} construct.  When the \kcode{grid} modifier is used,
+the number of tiles in each direction is specified rather than the
+tile size in each direction.
+Here, with static scheduling and collapse of the outer iterations, the 4 tiles are
+assigned to 4 different threads.
+
+When the number of iterations (\ucode{n}) is not evenly divisible by the number of tiles (\ucode{s}),
+then the number of iterations per tile is either $\lfloor n/s \rfloor$ or 
+$\lceil n/s \rceil$ and which tiles have the additional iteration is implementation-defined.
+
+Two possible tilings in the \bcode{i} and \bcode{j} directions are shown in 
+Figure~\ref{fig:Example_tile_1} and Figure~\ref{fig:Example_tile_2}.
+Figure~\ref{fig:Example_non_tile_3} shows the non-rectangular chunks that
+can occur when worksharing the complete iteration space without tiling.
+
+\cexample[6.0]{tile}{3}
+\ffreeexample[6.1]{tile}{3}
+
+\begin{figure}[H]
+\begin{subfigure}[b]{.33\textwidth}
+\includegraphics[width=0.8\textwidth]{figs/tile-blocking1}
+\centering
+\caption{Tile\_1}\label{fig:Example_tile_1}
+\end{subfigure}%
+\begin{subfigure}[b]{.33\textwidth}
+\includegraphics[width=0.8\textwidth]{figs/tile-blocking2}
+\centering
+\caption{Tile\_2}\label{fig:Example_tile_2}
+\end{subfigure}%
+\begin{subfigure}[b]{.33\textwidth}
+\includegraphics[width=0.8\textwidth]{figs/tile-chunking}
+%\vspace*{2mm}
+\centering
+\caption{Non-Tiled}\label{fig:Example_non_tile_3}
+\end{subfigure}
+\caption{Workshare: tiles vs complete iteration space}
+\end{figure}

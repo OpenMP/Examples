@@ -46,7 +46,7 @@ void exec_taskgraph(const int i)
       #pragma omp task depend(in: *x,*y)
       {
 	do_compute(z, x, y, N);
-	#pragma simd reduction(+:sums[i])
+	#pragma omp simd reduction(+:sums[i])
 	for (int j = 0; j < N; j++)
 	  sums[i] += z[j];
       }

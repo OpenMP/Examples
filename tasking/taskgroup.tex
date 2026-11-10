@@ -13,7 +13,7 @@ is started (the task executing the root of the recursive \ucode{compute_tree()}
 calls). While synchronizing tasks at the end of each tree traversal, using the 
 \kcode{taskgroup} construct ensures that the formerly started background task 
 does not participate in the synchronization and is left free to execute in parallel. 
-This is opposed to the behavior of the \kcode{taskwait} construct, which would 
+This is in contrast to the behavior of the \kcode{taskwait} construct, which would 
 include the background tasks in the synchronization.
 
 \cexample[4.0]{taskgroup}{1}

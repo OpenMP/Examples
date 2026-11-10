@@ -3,7 +3,7 @@
 * @@type:	C
 * @@operation:	view
 * @@expect:	none
-* @@version:	omp_5.1
+* @@version:	omp_6.0
 */
 
 #include <omp.h>
@@ -12,31 +12,27 @@
 #include <stdlib.h>
 
 #ifdef _OPENMP
-#pragma omp begin declare variant match(device={kind(nohost)})
+#pragma omp begin declare_variant match(device={kind(nohost)})
 
-  #pragma omp begin declare variant match(implementation={vendor(nvidia)})
+  #pragma omp begin declare_variant match(device={isa(sm_70)})
+    #include "sm70/my_cuda_fun.h"   /* only used if isa is sm70 */
+  #pragma omp end declare_variant
 
-    #pragma omp begin declare variant match(device={isa(sm_70)})
-      #include "sm70/my_cuda_fun.h"   /* only included if isa is sm70 */
-    #pragma omp end declare variant
+  #pragma omp begin declare_variant match(device={isa(sm_80)})
+    #include "sm80/my_cuda_fun.h"   /* only used if isa is sm80 */
+  #pragma omp end declare_variant
 
-    #pragma omp begin declare variant match(device={isa(sm_80)})
-      #include "sm80/my_cuda_fun.h"   /* only included if isa is sm80 */
-    #pragma omp end declare variant
+  #pragma omp begin declare_variant match(device={arch(amdgcn)})
+    #include "amdgpu/my_hip_fun.h"  /* only used for AMD */
+  #pragma omp end declare_variant
 
-  #pragma omp end declare variant
+#pragma omp end declare_variant
 
-  #pragma omp begin declare variant match(implementation={vendor(amd)})
-    #include "amdgpu/my_hip_fun.h" /* only included for AMD */
-  #pragma omp end declare variant
-
-#pragma omp end declare variant
-
-#pragma omp begin declare variant match(device={kind(host)})
+#pragma omp begin declare_variant match(device={kind(host)})
   #include "openmp_host/my_fun.h" 
-#pragma omp end declare variant   
+#pragma omp end declare_variant   
 #else
-    #include "generic/my_fun.h"
+  #include "generic/my_fun.h"
 #endif
 
 #define N 64

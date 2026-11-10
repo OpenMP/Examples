@@ -25,10 +25,8 @@ program  main
   b(:)=10
 
   !$omp target
-
   call foo(a,b) !ERROR: b deallocation/reallocation not allowed
                 !  in target region
-
   !$omp end target
 
 end program

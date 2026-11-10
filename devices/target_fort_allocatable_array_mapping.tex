@@ -21,7 +21,7 @@ In Target 3 and 4 sections, allocatable variables are mapped in two
 different ways before they are allocated on the host and subsequently used on the device.
 In one case, a \kcode{target_data} construct creates an enclosing region for
 the allocatable variable to persist, and in the other case a
-\kcode{declare_target} directive maps the allocation variable for all device executions.
+\kcode{declare_target} directive maps the allocatable variable for all device executions.
 In both cases the new array storage is mapped \kcode{tofrom} with the \kcode{always} modifier.
 An explicit map is used here with an \kcode{always} modifier to ensure that the allocatable
 variable status is updated on the device.
@@ -64,4 +64,22 @@ the compiler will deallocate the associated actual argument when the subroutine 
 as \bcode{intent(inout)}, making the intended use conforming.)
 
 \ffreenexample[5.1]{target_fort_allocatable_map}{3}
+
+\topmarker{Fortran}
+\index{automap modifier@\kcode{automap} modifier}
+The following example illustrates the use of the \kcode{automap}
+modifier, an OpenMP 6.0 feature, in an \kcode{enter} clause on 
+a \kcode{declare_target} directive.
+The allocatable array \ucode{aa} is a list item on the \kcode{enter} clause 
+with the \kcode{automap} modifier.
+The allocation of \ucode{aa} via the \kcode{allocate} statement also allocates
+the array on the default device as if the variable appeared as a list item 
+in a \kcode{map} clause on a \kcode{target_enter_data} directive.
+The deallocation of \ucode{aa} via the \kcode{deallocate} statement also 
+deallocates the array on the same device as if the variable appeared as 
+a list item in a \kcode{map} clause with the \kcode{delete} modifier on 
+a \kcode{target_exit_data} directive.
+
+
+\ffreenexample[6.0]{target_fort_automap}{1}
 \end{fortranspecific}

@@ -20,18 +20,32 @@ array operations run in parallel across the league of teams.
 \topmarker{Fortran}
 The next example shows a \kcode{target teams workdistribute} construct that
 contains several array statements. The statements have dependences between
-them and the implementation will ensure that the array statements are exeuted
+them and the implementation will ensure that the array statements are executed
 in the correct sequence. Therefore, the implementation may introduce additional
 synchronization between the statements or may split the construct into several
 \kcode{target teams} constructs to maintain Fortran semantics.
 
 \ffreenexample{target_teams_workdistribute}{2}
 
-The last example uses \kcode{target teams workdistribute} to perform a more
+The following example uses \kcode{target teams workdistribute} to perform a more
 complex computation. The computation of \ucode{minval(dd)} may be
 parallelized while the assignment to scalar variable \ucode{f} is performed only by a
 single thread.
 
 \ffreenexample{target_teams_workdistribute}{3}
+
+\topmarker{Fortran}
+Multiple \kcode{workdistribute} constructs can be used inside a \kcode{teams}
+construct to split Fortran statements.
+Since there is no cross-team synchronization at the end of each
+\kcode{workdistribute} construct, care must be taken to avoid race conditions.
+In the following example, there is a flow data dependence on array
+\ucode{AA} from \ucode{S1} to \ucode {S2}. Splitting the two statements
+using \kcode{workdistribute} construct as in Case 1 may cause race conditions.
+Having the two statements in a single \kcode{workdistribute} construct as 
+in Case 2 can avoid the race condition as the order is enforced by 
+the Fortran semantics.
+
+\ffreenexample{target_teams_workdistribute}{4}
 
 \end{fortranspecific}

@@ -5,11 +5,11 @@
 \index{directives!declare variant@\kcode{declare variant}}
 \index{directives!metadirective@\kcode{metadirective}}
 
-\index{OpenMP context@OpenMP context}
-\index{context selector@context selector}
-\index{trait selector set@trait selector set}
-\index{trait selector@trait selector}
-\index{trait property@trait property}
+\index{OpenMP context}
+\index{context selector}
+\index{trait selector set}
+\index{trait selector}
+\index{trait property}
 
 Certain directives, including \kcode{declare variant},
 \kcode{begin declare variant}, and \kcode{metadirective}
@@ -125,8 +125,8 @@ A compilation of \ucode{avx512_saxpy()} is aware of
 the AVX-512 instruction set that supports 512-bit vector extensions.
 Within \ucode{avx512_saxpy()}, the \kcode{parallel for simd} construct performs parallel execution, and
 takes advantage of 64-byte data alignment. 
-When the \ucode{avx512_saxpy()} function variant is not selected, the base \ucode{base_saxpy()} function variant
-containing only a basic \kcode{parallel for} construct is used for the call to \ucode{base_saxpy()}.
+When the \ucode{avx512_saxpy()} function variant is not selected, the base function \ucode{base_saxpy()},
+containing only a basic \kcode{parallel for} construct, is used for the call to \ucode{base_saxpy()}.
 
 %Note:
 %An allocator is used to set the alignment to 64 bytes when an OpenMP compilation is performed.  
@@ -137,17 +137,26 @@ containing only a basic \kcode{parallel for} construct is used for the call to \
 
 \ffreeexample[5.0]{declare_variant}{2}
 
-The \kcode{begin declare variant} with a paired \kcode{end declare variant} directive was introduced 
+The \kcode{begin declare_variant} with a paired \kcode{end declare_variant} directive was introduced 
 for C/C++ in OpenMP Specification 5.1 to allow nesting of declare variant directives. 
 This example shows a practical situation where nested declare variant directives can be used 
 to include the correct specialized user function based on the underlying vendor \kcode{isa} trait. 
 The function name \ucode{my_fun()} is identical in all the header files and the version called will 
-differ based on the calling context. The example assumes that either NVIDIA or AMD target devices are used. 
+differ based on the calling context. The example assumes that either NVIDIA or AMD target devices are used 
+and that the header files exist. 
 
 \index{directives!begin declare variant@\kcode{begin declare variant}}
 \index{begin declare variant directive@\kcode{begin declare variant} directive}
 
 \cexample[5.1]{declare_variant}{3}
+
+As of OpenMP Specification 6.0 \kcode{begin declare_variant} with a paired \kcode{end declare_variant} 
+directive is available for use in Fortran programs. Similar to the C example, the Fortran example shows 
+nested declare variant directives where, depending on the underlying hardware, the \kcode{device} trait is set 
+so that a specific module is included. All the variant modules will have an identical 
+\ucode{my_fun()} function, each specialized for the underlying hardware. 
+
+\ffreeexample[6.0]{declare_variant}{3}
 
 %%%%%%%%%%%%%
 \subsection{Metadirectives}
@@ -170,7 +179,7 @@ The directive in an \kcode{otherwise} clause is used when a directive of the
 \index{context selector!construct@\plc{construct}}
 In the \kcode{when} clause the \plc{context selector} (or just \plc{selector}) defines traits that are
 evaluated for selection of the directive that follows the selector. 
-This ``selectables'' directive is called a \plc{directive variant}.
+This ``selectable'' directive is called a \plc{directive variant}.
 
 \index{context selector!device@\plc{device}}
 In the first example the \plc{arch} trait of the
@@ -208,7 +217,6 @@ any clauses, as prescribed by the \kcode{otherwise} clause.
 \cexample[5.2]{metadirective}{2}
 
 \ffreeexample[5.2]{metadirective}{2}
-\clearpage
 
 \index{context selector!construct@\plc{construct}}
 
@@ -238,6 +246,7 @@ called from a \kcode{target} region if the region executes on the host device.
 \cexample[5.2]{metadirective}{3a}
 
 \ffreeexample[5.2]{metadirective}{3a}
+\clearpage
 
 Rather than relying on the \emph{target} trait with a metadirective, a better
 approach would be to condition the directives on whether the call is made from
@@ -253,8 +262,8 @@ preprocessor (an option that is not generally available for Fortran).
 
 In the following C/C++ example, the procedure \ucode{exp_pi_diff} is defined in
 its own header file. At the point the definition is included, a \kcode{match}
-clause may be defined via the preprocessor, and if it is defined then
-definition will be included with corresponding \kcode{begin declare_variant}
+clause may be defined via the preprocessor, and if it is defined, then the
+definition will be included with the corresponding \kcode{begin declare_variant}
 and \kcode{end declare_variant} directives around it. The declare variant
 directives effectively import context information into the definition, which
 can then be used by a metadirective (or another call to a procedure with a
@@ -321,13 +330,13 @@ processing numbers less than 8.
 \subsection{Context Selector Scoring}
 
 \label{subsec:context_selector_scoring}
-\index{context selector scoring@context selector scoring}
+\index{context selector scoring}
 
 Each context selector for which all specified traits are active in the current
 \plc{OpenMP context} is a \plc{compatible context selector}, and the associated
 function variant or directive variant for such a context selector is a
 \plc{replacement candidate}. The final \plc{score} of each of the compatible
-context selectors determine which of the replacement candidates is selected for
+context selectors determines which of the replacement candidates is selected for
 substitution. 
 
 For a given compatible context selector, the score is calculated according
@@ -374,7 +383,7 @@ compatible with the context at the callsite for \ucode{f} inside the
 consisting of all enclosing constructs and having a count of \plc{l=6}, is:
 \{\plc{target}, \plc{teams}, \plc{distribute}, \plc{parallel},
 \plc{for}/\plc{do}, \plc{task}\}. Note that only \plc{context-matching}
-constructs, which does not include \kcode{distribute} or \kcode{task}, may be
+constructs, which do not include \kcode{distribute} or \kcode{task}, may be
 named by a \kcode{construct} trait selector as of OpenMP 5.2. The score for
 \ucode{fx1} is $1+2^0=2$, for \ucode{fx2} is $1+2^1+2^3+2^4=27$,
 for \ucode{fx3} is $1+2^6+2^8=321$, and for \ucode{fx4} is $1+2^7+2^8=385$.
@@ -395,7 +404,7 @@ the active \splc{unified_address} requirement. The score for
 \ucode{kernel_target_usm} is 0, as the selector is a strict subset of the 
 selector for \ucode{kernel_target_usm_v2}. The score for 
 \ucode{kernel_target_usm_v2} is 2, which is one plus the explicit score of 1
-for the \plc{condition} trait and the zero score associated with the acive
+for the \plc{condition} trait and the zero score associated with the active
 \splc{unified_shared_memory} requirement . Since \ucode{kernel_target_usm_v2}
 is the function variant that has the highest scoring selector, it is selected
 by the implementation at the callsite.

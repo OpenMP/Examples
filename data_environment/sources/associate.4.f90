@@ -47,7 +47,7 @@ program main
 
 !!!$omp target map(a_scalr,scalr)  !! TARGET 7
                                    !! mapping, in this case explicit,
-                                   !! of scalr AND a_sclar NOT ALLOWED
+                                   !! of scalr AND a_scalr NOT ALLOWED
 !!    scalr = 5 
 !!  a_scalr = 5 
 !!!$omp end target

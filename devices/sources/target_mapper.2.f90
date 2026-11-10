@@ -10,11 +10,11 @@ module complex_mats
      double precision ::  r_m(N,N), i_m(N,N)
    end type
 
-   !$omp  declare mapper( left_id: dzmat_t :: v) map( v%r_m(N,  1:N/2), &
-   !$omp&                                             v%i_m(N,  1:N/2))
+   !$omp  declare mapper( left_id: dzmat_t :: v) map( v%r_m(1:N,  1:N/2), &
+   !$omp&                                             v%i_m(1:N,  1:N/2))
 
-   !$omp  declare mapper(right_id: dzmat_t :: v) map( v%r_m(N,N/2+1:N), &
-   !$omp&                                             v%i_m(N,N/2+1:N))
+   !$omp  declare mapper(right_id: dzmat_t :: v) map( v%r_m(1:N,N/2+1:N), &
+   !$omp&                                             v%i_m(1:N,N/2+1:N))
 
 end module
 

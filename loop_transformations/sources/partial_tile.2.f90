@@ -22,6 +22,7 @@ subroutine func8(A)
    double precision   :: A(100,100)
    integer            :: i1,i2,j1,j2
 
+   !$omp parallel do schedule(static)
    do i1 =  1, 100,  4
    do j1 =  1, 100, 16
    do i2 = i1,  i1 + 3

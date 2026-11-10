@@ -8,6 +8,7 @@ program rel_acq_ex4
    integer :: x, y, thrd
    integer :: tmp
    x = 0
+   y = 0
 
 !! !!! THIS CODE WILL FAIL TO PRODUCE CONSISTENT RESULTS !!!!!!!
 !! !!! DO NOT PROGRAM SYNCHRONIZATION THIS WAY !!!!!!!
@@ -28,7 +29,7 @@ program rel_acq_ex4
          tmp = 0
          do while(tmp == 0)
            !$omp atomic read acquire ! or seq_cst
-           tmp = x
+           tmp = y
            !$omp end atomic
          end do
          !$omp critical

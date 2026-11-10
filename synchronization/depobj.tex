@@ -6,14 +6,21 @@
 \index{depobj construct@\kcode{depobj} construct!depend clause@\kcode{depend} clause}
 \index{depend clause@\kcode{depend} clause}
 \index{clauses!depend@\kcode{depend}}
+\index{depobj construct@\kcode{depobj} construct!init clause@\kcode{init} clause}
+\index{init clause@\kcode{init} clause}
+\index{clauses!init@\kcode{init}}
 
 The stand-alone \kcode{depobj} construct provides a mechanism 
 to create a \emph{depend object} that expresses a dependence to be 
 used subsequently in the \kcode{depend} clause of another construct.
 Dependence information is created from a dependence type and a storage location
-that is specified in the \kcode{depend} clause of a \kcode{depobj} construct,
+that is specified in the \kcode{init} clause of a \kcode{depobj} construct,
 %just as one would find directly on a \code{task} construct.  
-and it is stored in the depend object.
+and it is stored in the depend object (alternatively, the pre-6.0
+syntax of specifying the dependence information for a depend
+object with a \kcode{depend} clause may be used, but this
+requires the depend object to be provided as an argument
+to the directive.)
 The depend object is represented by a variable of type \kcode{omp_depend_t} 
 in C/C++ and by a scalar variable of integer kind \kcode{omp_depend_kind} in Fortran.
 
@@ -23,8 +30,9 @@ in C/C++ and by a scalar variable of integer kind \kcode{omp_depend_kind} in For
 \index{depobj construct@\kcode{depobj} construct!destroy clause@\kcode{destroy} clause}
 \index{destroy clause@\kcode{destroy} clause}
 \index{clauses!destroy@\kcode{destroy}}
+
 In the example below the stand-alone \kcode{depobj} construct uses the 
-\kcode{depend}, \kcode{update} and \kcode{destroy} clauses to 
+\kcode{init}, \kcode{update} and \kcode{destroy} clauses to 
 \emph{initialize}, \emph{update} and \emph{uninitialize}
 a depend object (\ucode{obj}).
 
@@ -47,7 +55,7 @@ using the \kcode{depobj} construct to represent an \kcode{in} dependence.
 Hence, in the second call to \ucode{driver}, \emph{Task 1}
 will have an \kcode{in} dependence; and \emph{Task 1} and 
 \emph{Task 2} can execute simultaneously. Note: in an \kcode{update}
-clause, only the dependence type can be (is) updated.
+clause, only the dependence type can be updated.
 
 The third \kcode{depobj} construct uses the \kcode{destroy} clause.
 It frees resources as it puts the depend object in an uninitialized state --

@@ -35,14 +35,14 @@ into 3 loops of iteration counts \ucode{m}, \ucode{1}, and
 
     \cexample[6.0]{split}{1}
 \ffreeexample[6.0]{split}{1}
-\clearpage
+%\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 The next example illustrates the concerted application
 of two loop-transforming constructs (\kcode{split} and \kcode{fuse})
 on a single loop. The \kcode{split} construct splits the iteration
 space among three loops with the \kcode{counts(omp_fill,\ucode{n},\ucode{n})} clause,
-with iterations counts of \ucode{1}, \ucode{n} and \ucode{n}. This effectively removes the
+with iteration counts of \ucode{1}, \ucode{n} and \ucode{n}. This effectively removes the
 dependence introduced by the \ucode{if(...)} conditional, and generates
 two loops spanning the next \ucode{n} iterations and the following \ucode{n} iterations.
 The \kcode{fuse} construct combines the latter two

@@ -45,6 +45,7 @@ end module subs
 
 program main
    use subs
+   implicit none
    integer, parameter :: N = 4
    integer :: a(N)
    integer :: i

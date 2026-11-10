@@ -11,7 +11,8 @@ class V {
 
 public:
    V( int _n )     : n(_n)  { p = new float[n]; }
-   V( const V& m ) : n(m.n) { p = new float[n]; } 
+   V( const V& m ) : n(m.n) { p = new float[n]; 
+                     for (int i = 0; i < n; i++) p[i] = m.p[i]; }
    ~V() { delete[] p; }
     
    V& operator+= ( const V& );

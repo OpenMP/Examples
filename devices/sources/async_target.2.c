@@ -28,7 +28,7 @@ void vec_mult(float *p, int N, int dev)
        v2 = (float *)malloc(N*sizeof(float));
        init(v1, v2, N);
    }
-   foo(); // execute other work asychronously
+   foo(); // execute other work asynchronously
    #pragma omp task shared(v1, v2, p) depend(in: v1, v2)
    #pragma omp target device(dev) map(to: v1, v2) map(from: p[0:N])
    {

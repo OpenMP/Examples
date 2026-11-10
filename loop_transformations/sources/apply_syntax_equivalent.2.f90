@@ -5,8 +5,8 @@
 ! @@version:    omp_6.0
 subroutine equivalent(A)
    implicit none
-   double precision :: A(0:2,   0:99,   0:99)
-   integer          ::   k,    j1,j2,  i1,i2
+   double precision :: A(0:2, 0:99, 0:99)
+   integer          :: i, j, k, j1, j2, i1, i2
 
    !$omp interchange       !! grid modifier
    do i1 = 0, 24

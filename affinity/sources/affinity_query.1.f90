@@ -19,8 +19,8 @@ program numa_teams
    use omp_lib
    integer :: n_sockets, socket_num
 
-   call omp_set_nested(.true.)            ! or export OMP_NESTED=true
-   call omp_set_max_active_levels(2) ! or export OMP_MAX_ACTIVE_LEVELS=2
+   call omp_set_nested(.true.)       ! or OMP_NESTED=true
+   call omp_set_max_active_levels(2) ! or OMP_MAX_ACTIVE_LEVELS=2
 
    n_sockets = omp_get_num_places()
    !$omp parallel num_threads(n_sockets) private(socket_num) &

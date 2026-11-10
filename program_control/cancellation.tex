@@ -8,7 +8,7 @@
 The examples in this section show how the \kcode{cancel} directive can be used to terminate 
 an OpenMP region. Cancellation of the binding region is activated only if the \plc{cancel-var} ICV 
 is true, in which case the \kcode{cancel} construct (except \kcode{taskgroup}) causes the encountering 
-\kcode{task} to continue execution at the end of the binding. If the \plc{cancel-var} ICV is false, the 
+\kcode{task} to continue execution at the end of the binding region. If the \plc{cancel-var} ICV is false, the 
 \kcode{cancel} construct is ignored.
 
 \index{cancellation!for parallel region@for \kcode{parallel} region}

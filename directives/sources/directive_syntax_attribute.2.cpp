@@ -12,8 +12,8 @@ int u ,v;
 #pragma omp threadprivate(u, v)
 
 // Case 2
-int a[100] [[ omp::decl(declare_target) ]],
-    b[100] [[ omp::decl(declare_target, link) ]];
+int a [[ omp::decl(declare_target) ]] [100],
+    b [[ omp::decl(declare_target, link) ]] [100];
 // equivalent to
 int a[100], b[100];
 #pragma omp declare_target(a)

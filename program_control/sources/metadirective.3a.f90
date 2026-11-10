@@ -37,17 +37,17 @@ program main
   double precision :: d(N)
   double precision :: my_pi=3.14159265358979d0
 
-  ! Case 1: exp_pi_diff called from a target teams regions, so
+  ! Case 1: exp_pi_diff called from a target teams region, so
   ! that array is computed across league of teams. Note, however,
   ! that a target teams region that falls back to host execution
-  ! may not work if the calle depends on the target trait.
+  ! may not work if the callee depends on the target trait.
   !$omp target teams map(from: d)
   call exp_pi_diff(d, my_pi)
   !$omp end target teams
   ! value should be near 1
   print*, "d(N) = ", d(N) ! 1.00000000000311
 
-  ! Case 2: exp_pi_diff called from a parallel regions, so that
+  ! Case 2: exp_pi_diff called from a parallel region, so that
   ! array is computed across team of threads.
   !$omp parallel
   call exp_pi_diff(d, my_pi) 

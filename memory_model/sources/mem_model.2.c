@@ -16,7 +16,7 @@ int main()
       if (omp_get_thread_num()==0)
       {
       /* Write to the data buffer that will be
-       * read by thread */
+       * read by thread 1 */
           data = 42;
       /* Flush data to thread 1 and strictly order
        * the write to data relative to the write to the flag */

@@ -4,7 +4,7 @@
 ! @@expect:	success
 ! @@version:	omp_6.0
 
-! export OMP_THREADS_RESERVE=”structured(64),free_agent(4)”
+! OMP_THREADS_RESERVE="structured(64),free_agent(4)"
 
 program main
   use omp_lib

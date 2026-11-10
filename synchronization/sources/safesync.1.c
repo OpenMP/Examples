@@ -24,7 +24,10 @@ int main()
    int b[N];
    int count1 = 0;
    int count2 = 0;
-   for (int i = 0; i < N; i++) b[i] = i;
+   for (int i = 0; i < N; i++) {
+      a[i] = 0;
+      b[i] = i;
+   }
 
    #pragma omp target thread_limit(NT) map(to:count1,count2) map(a) map(to:b)
    #pragma omp metadirective \

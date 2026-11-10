@@ -4,7 +4,7 @@
 ! @@expect:	success
 ! @@version:	omp_4.5
 module params
-integer,parameter :: THRESHOLD1=1000000, THRESHHOLD2=1000
+integer,parameter :: THRESHOLD1=1000000, THRESHOLD2=1000
 end module
 
 subroutine vec_mult(p, v1, v2, N)
@@ -15,7 +15,7 @@ subroutine vec_mult(p, v1, v2, N)
    call init(v1, v2, N)
 
    !$omp target parallel do  &
-   !$omp&   if(target: N>THRESHHOLD1) if(parallel: N>THRESHOLD2) &
+   !$omp&   if(target: N>THRESHOLD1) if(parallel: N>THRESHOLD2) &
    !$omp&   map(to: v1, v2 ) map(from: p)
       do i=1,N
 	 p(i) = v1(i) * v2(i)

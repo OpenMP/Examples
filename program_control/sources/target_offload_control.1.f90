@@ -50,7 +50,7 @@ program policy_test
      ! to test offload policy.
   device_num = omp_get_num_devices() + 1
 
-                      !! Report OMP_TARGET_OFFOAD value
+                      !! Report OMP_TARGET_OFFLOAD value
   select CASE (policy)
      case("MANDATORY")
           print*,"Policy:  MANDATORY-Terminate if dev. not avail."

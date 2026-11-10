@@ -9,7 +9,7 @@ The \kcode{critical} construct is a directive that contains a structured block.
 The construct allows only a single thread at a time to execute the region.
 Multiple \kcode{critical} regions may exist in a parallel region, and they may act
 cooperatively (only one thread at a time in all \kcode{critical} regions) or
-separately (only one thread at a time in each \kcode{critical} regions when a
+separately (only one thread at a time in each \kcode{critical} region when a
 unique name is supplied on each \kcode{critical} construct). An optional (lock)
 \kcode{hint} clause may be specified on a named \kcode{critical} construct to
 provide the OpenMP runtime guidance in selecting a locking mechanism.
@@ -20,7 +20,7 @@ atomic read, write, or update statement, and a limited number of combinations
 when specifying the \kcode{capture} and \kcode{compare} \plc{extended-atomic}
 clauses.  Unlike the \kcode{read} and \kcode{write} \plc{atomic} clauses, the
 \kcode{update} \plc{atomic} clause is optional and implied for update
-statements if not explicitly specified.. The \plc{memory-order} clause can be
+statements if not explicitly specified. The \plc{memory-order} clause can be
 used to specify the degree of memory ordering enforced by an \kcode{atomic}
 construct. From weakest to strongest, they are \emph{relaxed} (the default),
 \emph{acquire} and/or \emph{release} (specified with \kcode{acquire},
@@ -30,7 +30,7 @@ Construct} subsection of the \docref{Synchronization Constructs and Clauses}
 chapter in the OpenMP Specification document.
 
 The \kcode{ordered} construct may be block-associated or stand-alone. The
-block-associated form may appear in worksharing-loop (\kcode{for} or
+block-associated form may appear in a worksharing-loop (\kcode{for} or
 \kcode{do}), \kcode{simd}, or worksharing-loop SIMD (\kcode{for simd} or
 \kcode{do simd}) region. It sequentializes and orders the execution of the
 \kcode{ordered} regions while allowing code outside the region to run in
@@ -39,7 +39,7 @@ dependences in a \emph{doacross} loop nest. The \kcode{doacross} clause uses a
 \kcode{sink} \plc{dependence-type}, along with an iteration vector argument
 (\plc{vec}) to indicate the iteration that satisfies the dependence.  The
 \kcode{doacross} clause with a \kcode{source} \plc{dependence-type} (and
-optional \kcode{omp_curr_iteration} keyword as the iteration vector
+optional \kcode{omp_cur_iteration} keyword as the iteration vector
 representing the current iteration) specifies dependence satisfaction.
 
 The \kcode{flush} directive is a stand-alone construct for enforcing consistency
@@ -64,7 +64,7 @@ represented by lock variables.
 The semantics allows a task to \emph{set}, and hence 
 \emph{own} a lock, until it is \emph{unset} by the task that set it. A 
 \emph{nestable} lock can be set multiple times by a task, and is used
-when in code requires nested control of locks.  A \emph{simple lock} can
+when code requires nested control of locks.  A \emph{simple lock} can
 only be set once by the owning task. There are specific calls for the two
 types of locks, and the variable of a specific lock type cannot be used by the
 other lock type.  

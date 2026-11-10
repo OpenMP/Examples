@@ -1,0 +1,84 @@
+\section{Array Sections}
+\label{sec:array_sections_syntax}
+\index{array sections!syntax}
+
+An array section designates a subset of the elements in an array
+and may be used in OpenMP directives.
+Array sections may be specified on multidimensional arrays.
+
+\begin{ccppspecific}
+For C/C++ the syntax of an array section is:
+
+\begin{indentedcodelist}
+[\plc{ [lower-bound] }:\plc{ [length] [}:\plc{ stride] }]
+\end{indentedcodelist}
+
+When evaluated, an array section represents a set of integer values
+as follows:
+
+\{ \plc{lower-bound}, \plc{lower-bound} + \plc{stride}, \plc{lower-bound} + 2 * \plc{stride},... , \plc{lower-bound} + ((\plc{length} - 1) * \plc{stride}) \}
+
+When the \plc{lower-bound} is absent it defaults to 0.
+When the \plc{stride} is absent it defaults to 1.
+When the \plc{length} is absent and the size of the dimension is known, it
+defaults to $(\plc{size} - \plc{lower-bound})/\plc{stride}$,
+where \plc{size} is the size of the array dimension.
+When the \plc{length} is absent and the size of the dimension is unknown, 
+the array section is an assumed-size array.
+
+The following are examples of array sections:
+
+\begin{boxedcode}
+a[0:6]
+a[0:6:1]
+a[1:10]
+a[1:]
+a[:10:2]
+b[10][:][:]
+b[10][:][:0]
+c[42][0:6][:]
+c[42][0:6:2][:]
+c[1:10][42][0:6]
+S.c[:100]
+p->y[:10]
+this->a[:N]
+(p+10)[:N]
+\end{boxedcode}
+
+Assume \ucode{a} is declared to be a 1-dimensional array with dimension
+size 11. The first two examples are equivalent, and the third and fourth
+examples are equivalent. The fifth example specifies a stride of 2 and
+therefore is not contiguous.
+
+Assume \ucode{b} is declared to be a pointer to a 2-dimensional array with
+dimension sizes 10 and 10. The sixth example refers to all elements of the
+2-dimensional array given by \ucode{b[10]}. The seventh example is an
+array section with zero length.
+
+Assume \ucode{c} is declared to be a 3-dimensional array with dimension
+sizes 50, 50, and 50.  The eighth example is contiguous, while the ninth
+and tenth examples are not contiguous.
+
+The final four examples show array sections that are formed from
+more general array bases.
+
+The following are examples that are non-conforming array sections:
+
+\begin{boxedcode}
+s[:10].x
+p[:10]->y
+*(xp[:10])
+\end{boxedcode}
+
+For all three examples, a base language operator is applied in an
+undefined manner to an array section. The only operator that may be
+applied to an array section is a subscript operator for which the
+array section appears as the postfix expression.
+\end{ccppspecific}
+
+\begin{fortranspecific}
+Fortran has built-in support for array sections with some
+restrictions applied to their use in OpenMP directives.
+For example, if a stride is specified, it must be positive.
+See the OpenMP Specification for details.
+\end{fortranspecific}

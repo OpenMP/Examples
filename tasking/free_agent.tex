@@ -33,14 +33,14 @@ as a structured thread).
 
 In the following example, the \kcode{OMP_THREAD_LIMIT} environment variable is set to 8. Using the \kcode{OMP_THREADS_RESERVE}
 environment variable structured thread reservation is set to 5 and free-agent thread reservation is set to 2. 
-Though the actual number of structured and unassigned threads are ultimately decided by the implementation, 
+Though the actual numbers of structured and unassigned threads are ultimately decided by the implementation, 
 the reservation for structured threads has a limiting effect on the number of free-agent threads and vice versa. 
 Hence, the assigned threads for any implicit parallel regions cannot exceed 6 (8 minus 2) and the 
 free-agent threads cannot exceed 3 (8 minus 5) threads.
 
 \begin{boxedcode}
-export OMP_THREAD_LIMIT=8
-export OMP_THREADS_RESERVE="structured(5),free_agent(2)"
+OMP_THREAD_LIMIT=\ucode{8}
+OMP_THREADS_RESERVE=\ucode{"structured(5),free_agent(2)"}
 \end{boxedcode}
 
 Even if no free-agent threads are reserved, an implementation may still provide free-agent threads. 

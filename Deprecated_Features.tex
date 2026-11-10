@@ -46,14 +46,16 @@ accordingly and listed in Section~\ref{sec:Updated Examples}.
   \hline\\[-3.5ex]
 }
 \tablehead{%
-  \tabpcont{from previous}\\
-  \hline
-  \tabpheader\\
-  \hline\\[-3ex]
+%uncomment below for crossing multi-pages
+%  \tabpcont{from previous}\\
+%  \hline
+%  \tabpheader\\
+%  \hline\\[-3ex]
 }
 \tabletail{%
-  \hline\\[-4ex]
-  \tabpcont{on next}\\
+%uncomment below for crossing multi-pages
+%  \hline\\[-4ex]
+%  \tabpcont{on next}\\
 }
 \tablelasttail{\hline\\[-2ex]}
 \tablecaption{Deprecated Features and Their Replacements\label{tab:Deprecated Features}}
@@ -62,6 +64,9 @@ accordingly and listed in Section~\ref{sec:Updated Examples}.
     & \kcode{declare reduction(}\plc{reduction-id}: \plc{typename-list}\kcode{)} \kcode{combiner(\plc{combiner-exp})} \\ 
 6.0 & Fortran include file \kcode{omp_lib.h}
     & Fortran module \kcode{omp_lib} \\
+6.0 & optional white spaces in directive name in Fortran
+    & use white spaces in directive name
+      (see \nspecref{Chapter}{chap:directive_syntax}) \\
 \hline
 5.2 & \kcode{default} clause on metadirectives 
     & \kcode{otherwise} clause \\

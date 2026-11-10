@@ -17,7 +17,7 @@ void my_gather(double *,double *,int);
 void my_gpu_vxv(double *, double *, int);
 #pragma omp end  declare target
 
-#define Nhb 1024*1024      // high bandwith
+#define Nhb 1024*1024      // high bandwidth
 #define Nbg 1024*1024*64   // big memory, default
 #define Nll 1024*1024      // low latency memory
 

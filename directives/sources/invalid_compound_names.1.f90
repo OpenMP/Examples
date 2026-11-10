@@ -11,7 +11,7 @@ subroutine component_names(n, x)
   interface
     subroutine f()
     end subroutine
-    subroutine f(xi)
+    subroutine g(xi)
       real :: xi
     end subroutine
   end interface
@@ -37,9 +37,9 @@ subroutine component_names(n, x)
   !$omp end teams masked
 
   !! invalid: multiple data-mapping constituents
-  !$omp target_data parallel target map(x[:n])
+  !$omp target_data parallel target map(x(1:n))
     call f()
-  !$omp end target_data parallel target map(x[:n])
+  !$omp end target_data parallel target
 
   !! invalid: task and taskloop both generate tasks in
   !! same parallel region

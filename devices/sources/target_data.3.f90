@@ -2,13 +2,18 @@
 ! @@type:	F-free
 ! @@operation:	compile
 ! @@expect:	success
-! @@version:	omp_4.0
+! @@version:	omp_4.5
 subroutine gramSchmidt(Q,rows,cols)
 integer             ::   rows,cols,  i,k
 double precision    :: Q(rows,cols), tmp
       !$omp target data map(Q)
       do k=1,cols
-         tmp = 0.0d0
+        tmp = 0.0d0
+        
+        ! tmp is explicitly mapped so that its modified value
+        ! is exposed outside the target construct, as it would
+        ! otherwise be firstprivate and the reduction result
+        ! would be discarded.
         !$omp target map(tofrom: tmp)
            !$omp parallel do reduction(+:tmp)
            do i=1,rows
@@ -16,7 +21,7 @@ double precision    :: Q(rows,cols), tmp
            end do
         !$omp end target
 
-          tmp = 1.0d0/sqrt(tmp)
+        tmp = 1.0d0/sqrt(tmp)
 
         !$omp target
            !$omp parallel do
@@ -27,6 +32,3 @@ double precision    :: Q(rows,cols), tmp
       end do
       !$omp end target data
 end subroutine
-
-! Note:  The variable tmp is now mapped with tofrom, for correct 
-! execution with 4.5 (and pre-4.5) compliant compilers. See Devices Intro.

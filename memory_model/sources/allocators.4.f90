@@ -14,7 +14,7 @@ subroutine test_allocate
      end subroutine
    end interface
 
-   integer,parameter :: Nhb=1024*1024,   & !! high bandwith
+   integer,parameter :: Nhb=1024*1024,   & !! high bandwidth
                         Nbg=1024*1024*64,& !! big memory, default
                         Nll=1024*1024      !! low latency memory
 

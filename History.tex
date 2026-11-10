@@ -2,6 +2,99 @@
 \label{chap:history}
 
 %=====================================
+\section{Changes from 6.0.1 to 6.1}
+\label{sec:history_601_to_61}
+
+\begin{itemize}
+\item Added the following examples for the 6.1 features:
+\begin{itemize}
+  \item \kcode{OMP_PLACES} environment variable to specify places and
+    place groups
+    (\specref{sec: place_groups})
+  \item Synchronization guarantee between \kcode{taskwait} and
+    transparent tasks (example \example{task_dep.16} 
+    \specref{subsec:depend_trans_task})
+  \item \kcode{omp_default_device} as a predefined device identifier
+    (\specref{sec:pointer_mapping})
+  \item \kcode{depth} clause for \kcode{fuse} directive
+    (\specref{sec:fuse})
+  \item \kcode{flatten} construct to combine a loop nest into a single
+    flattened loop (\specref{sec:flatten})
+  \item \kcode{dyn_groupprivate} clause and
+    \kcode{omp_get_dyn_gprivate_ptr} routine
+    (\specref{sec:dyn_groupprivate})
+  \item Non-commutative reduction using the \kcode{noncommutative} modifier
+    (\specref{subsec:noncommutative_reduction})
+\end{itemize}
+\item Added the following examples for the 6.0 features:
+\begin{itemize}
+  \item \kcode{ref_ptr} and \kcode{ref_ptee} modifiers to control
+    the mapping of allocatable and pointer variables in Fortran
+    (\specref{sec:pointer_mapping})
+  \item \kcode{automap} modifier for Fortran allocatable arrays
+    (\specref{sec:fort_allocatable_array_mapping})
+  \item Implication of splitting Fortran statements with multiple
+    \kcode{workdistribute} directives
+    (\specref{sec:target_teams_workdistribute})
+  \item \kcode{grid} modifier in the \kcode{sizes} clause to control
+    the number of tiles
+    (\specref{sec:tile})
+  \item Updated \kcode{depobj} examples with the 6.0 syntax
+    (\specref{sec:depobj})
+  \item Fortran example for \kcode{begin declare_variant}
+    (\specref{subsec:declare_variant})
+\end{itemize}
+\item Example code fixes:
+\begin{itemize}
+  \item \pexample[cpp]{directive_syntax_attribute.2}: fixed the use of C/C++ 
+    attribute in multi-variable declaration for arrays
+  \item \pexample[f90]{task_dep.5}: fixed inconsistency in array subscript usage
+  \item \pexample{taskgraph.1}, \pexample{taskgraph.2}, \pexample{taskgraph.3},
+     \pexample{taskgraph.4}, \pexample{taskgraph.5}: fixed incorrect directive
+     specification (missing ``\kcode{omp}'')
+  \item \pexample[f90]{target_mapper.2}: fixed incorrect mapping of array sections
+  \item \pexample[f90]{teams.2}: fixed array bound checking
+  \item \pexample{async_target.1}: fixed array bound access
+  \item \pexample[f90]{device.4}: fixed verification test
+  \item \pexample{atomic.4}: fixed incorrect loop bound (\ucode{idx <= N} to \ucode{idx < N})
+  \item \pexample{acquire_release_broke.4}[f90]: added initialization for
+     variable \ucode{y} and changed \ucode{tmp = x} to \ucode{tmp = y}
+  \item \pexample{safesync.1}[f90]: added initialization for array \ucode{a}
+  \item \pexample[f90]{allocators.1}: fixed the logic in verification test
+  \item \pexample[f90]{declare_variant.2}: fixed the logic in verification test
+  \item \pexample{declare_variant.3}: fixed the use of 
+    \kcode{begin declare_variant}
+\end{itemize}
+\item Other changes:
+\begin{itemize}
+  \item Optional use of white space to separate keywords in directive
+    name is deprecated
+    (\nspecref{Chapter}{chap:directive_syntax})
+  \item Updated the conditional compilation examples
+    (\specref{sec:cond_compilation})
+  \item Added a new section to describe the list item expression terminology
+    (\specref{sec:list_item_expressions})
+  \item Added examples on array section syntax that were removed
+     from the Specification
+    (\specref{sec:array_sections_syntax})
+  \item Merged a sub-section so that ``Matrix Multiplication'' is
+     no longer a separate sub-section
+    (\specref{subsec:task_concurrent_depend})
+  \item Added equivalent Fortran code for the example
+     \example{target_ptr_map.4} and fixed the text description
+     of the return value for the \kcode{omp_target_is_accessible} routine
+    (\specref{sec:pointer_mapping})
+  \item Reworded the description of \kcode{target_data} construct.
+    Removed redundant examples \example{target_data.5.f90},
+    \example{target_data.7.c}, and \example{target_data.7.f90}
+    (\specref{sec:target_data})
+  \item Clarification for invoking procedure in Fortran user-defined
+     reduction that uses an array or array section
+    (\specref{subsec:UDR})
+\end{itemize}
+\end{itemize}
+
+%=====================================
 \section{Changes from 6.0 to 6.0.1}
 \label{sec:history_60_to_601}
 
@@ -14,7 +107,7 @@
   \item More transparent task examples
     (\specref{subsec:depend_trans_task})
   \item Tasking examples using free-agent threads (\specref{sec:free_agent})
-  \item \kcode{taskgraph} construct for replay execution of taskgraph records.
+  \item \kcode{taskgraph} construct for replaying the execution of task-graph records.
     (\specref{sec:taskgraph})
   \item \kcode{self} modifier for the \kcode{map} clause to require self mapping
     (\specref{sec:self_mapping})
@@ -47,7 +140,7 @@
     initialization for devices. Renamed \docref{Pointer Mapping} section
     to \docref{Pointer Initialization for Devices}
     (\specref{sec:pointer_mapping}).
-  \item Fixed a logical condition test in checking the \kcode{user} trail
+  \item Fixed a logical condition test in checking the \kcode{user} trait
     for \kcode{metadirective} in Example \example{target_ptr_map.5.f90}
     (\specref{sec:pointer_mapping})
   \item Changed to use the underscore form of directive names for the 6.0
@@ -525,7 +618,7 @@ a combined construct                              (\specref{subsec:target_if})
 
 Added the following new examples:
 \begin{itemize}
-\item the \kcode{proc_bind} clause   (\specref{sec:affinity})
+\item the \kcode{proc_bind} clause   (\specref{sec: affinity_proc_bind})
 \item the \kcode{taskgroup} construct (\specref{sec:taskgroup})
 \end{itemize}
 

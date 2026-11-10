@@ -55,7 +55,7 @@ to \ucode{x} happens before the execution of the \kcode{critical} region,
 consistent with the program order of the thread.  Meanwhile, thread 1 executes a
 \kcode{critical} region in a loop until it reads a non-zero value from
 \ucode{y} in the \kcode{critical} region, after which it prints the value of
-\ucode{x}; again, the execution of the \kcode{critical} regions happen before the
+\ucode{x}; again, the execution of the \kcode{critical} regions happens before the
 read from \ucode{x} based on the program order of the thread. The \kcode{critical}
 regions executed by the two threads execute in a serial manner, with a
 pair-wise synchronization from the exit of one \kcode{critical} region to the

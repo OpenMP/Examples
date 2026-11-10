@@ -153,7 +153,7 @@ this section are not met. Specifically, there is no mapped list item for which
 \ucode{p1} is a base pointer. Conversely, the firstprivate \ucode{p2} is
 properly initialized to point to array \ucode{y} on entry to the \kcode{target}
 construct. Note that prior to OpenMP 6.0 this initialization of \ucode{p2} was
-not guaranteed, unless \ucode{y} was present on the device \emph{prior} the
+not guaranteed, unless \ucode{y} was present on the device \emph{prior} to the
 encountering of the \kcode{target} construct. But OpenMP 6.0 expands the cases
 where \ucode{p2} would be initialized to include this case where \ucode{y} is
 created in the device data environment by the same construct. Consequentially,
@@ -178,6 +178,9 @@ the \kcode{target} construct is therefore valid.
 
 \index{routines!omp_target_is_accessible@\kcode{omp_target_is_accessible}}
 \index{omp_target_is_accessible routine@\kcode{omp_target_is_accessible} routine}
+\index{routines!omp_get_default_device@\kcode{omp_get_default_device}}
+\index{omp_get_default_device routine@\kcode{omp_get_default_device} routine}
+\index{omp_default_device identifier@\kcode{omp_default_device} identifier}
 
 In the following example, storage allocated on the host is not mapped in a
 \kcode{target} region if it is determined that the host memory is accessible
@@ -189,7 +192,7 @@ storage of size \ucode{buf_size} is accessible on the device, and a
 metadirective is used to select the appropriate directive variant (either a
 \kcode{target} with a \kcode{map} clause or without one).
 
-The \kcode{omp_target_is_accessible} routine will return true if the storage
+The \kcode{omp_target_is_accessible} routine will return a non-zero value if the storage
 indicated by the first and second arguments is accessible on the target device.
 In this case, the host pointer \ucode{ptr} may be directly dereferenced in the
 subsequent \kcode{target} region to access this storage, rather than mapping an
@@ -201,8 +204,13 @@ points, and since this storage is not mapped by the program, \ucode{ptr} will
 be \bcode{NULL}-initialized in the \kcode{target} region. As of OpenMP 5.2, a
 false presence check without the \kcode{firstprivate} clause will cause the
 pointer to retain its original value.
+The example also includes a call to the API routine \kcode{omp_get_default_device} that 
+returns the value of the \textit{default-device-var} ICV. 
+As of OpenMP 6.1 the \kcode{omp_default_device} predefined identifier 
+can be used in place of a call to the API routine \kcode{omp_get_default_device}.
 
 \cexample[5.2]{target_ptr_map}{4}
+\ffreeexample[5.2]{target_ptr_map}{4}
 
 \index{mapping!deep copy}
 Similar to the previous example, the \kcode{omp_target_is_accessible} routine
@@ -213,3 +221,38 @@ is not accessible from the device.
 
 \cexample[5.2]{target_ptr_map}{5}
 \ffreeexample[5.2]{target_ptr_map}{5}
+
+\begin{fortranspecific}
+Allocatable and pointer variables in Fortran are referencing-variables.
+They are generally 
+implemented using descriptors that act as their referring-pointers. 
+These descriptors hold information such as rank, bounds, strides, allocation 
+status etc.\ of their referencing-variables. Users can access this 
+information through various intrinsic procedures.
+
+OpenMP requires that whenever the same referencing-variable is specified 
+as a list item in a \kcode{map} clause, its referring-pointer should occupy 
+the same address on the host. That means for the test in the following example,
+at locations (A), (B) and (C), it is guaranteed that the referring-pointer 
+(\kcode{ref_ptr}) of variable \ucode{a} will occupy the same address, 
+hence the present check in (B) should succeed.
+
+However, when referencing-variables are passed to procedures, implementations 
+can create temporary referring-pointers (descriptors) at their discretion. 
+For example, a valid implementation may create a temporary \ucode{tmp_dv} 
+around the call to procedure \ucode{f1}. This means when the present-check 
+in (F) is encountered, the host address of \kcode{ref_ptr(\ucode{x})} may 
+or may not match that of \kcode{ref_ptr(\ucode{a})}. Hence, the behavior 
+of (F) is unspecified.
+
+One way to think of this is that variable \ucode{x} is not the same 
+referencing-variable as the actual argument \ucode{a}. It only points to 
+the same referenced-pointee as variable \ucode{a}.
+In that vein, the present checks (D) and (E), which only ensure that 
+the pointee of \ucode{x} (which is the same as the pointee of \ucode{a}) 
+exists on the device, are expected to succeed.
+
+\ffreenexample[6.0]{ptr_ptee_map}{1}
+
+\end{fortranspecific}
+

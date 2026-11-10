@@ -57,7 +57,7 @@ The following example shows an incorrect use of the \kcode{ordered}
 directive with a \kcode{doacross} clause.  There are two issues with the code.  
 The first issue is a missing \kcode{ordered doacross(source:)} directive,
 which could cause a deadlock.  
-The second issue is the \kcode{doacross(sink:\ucode{i+1,j})} and \kcode{doacross(sink:\ucode{i,j+1})} 
+The second issue is that the \kcode{doacross(sink:\ucode{i+1,j})} and \kcode{doacross(sink:\ucode{i,j+1})} 
 clauses define dependences on lexicographically later 
 source iterations (\ucode{i+1, j}) and (\ucode{i, j+1}), which could cause 
 a deadlock as well since they may not start to execute until the current iteration completes.

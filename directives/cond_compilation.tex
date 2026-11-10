@@ -1,0 +1,42 @@
+\section{Conditional Compilation}
+\label{sec:cond_compilation}
+\index{directive syntax!conditional compilation}
+\index{conditional compilation!_OPENMP macro@\kcode{_OPENMP} macro}
+\index{conditional compilation!sentinel}
+
+The OpenMP API supports conditional compilation by defining the 
+\kcode{_OPENMP} macro name for preprocessing.
+In addition, for Fortran the following conditional compilation sentinels
+are recognized:
+\begin{boxedcode}
+!$               ! in Fortran free form sources
+!$ | *$ | c$     ! in Fortran fixed form sources
+\end{boxedcode}
+
+\begin{ccppspecific}
+The following example illustrates the use of conditional compilation using 
+the OpenMP macro \kcode{_OPENMP}. With OpenMP compilation, the \kcode{_OPENMP} 
+macro becomes defined.
+
+\cnexample{cond_comp}{1}
+\end{ccppspecific}
+
+\begin{fortranspecific}
+The following example illustrates the use of the conditional compilation
+sentinel in free form source. 
+With OpenMP compilation, the conditional compilation sentinel \scode{!$} is
+replaced with two spaces.
+
+\ffreenexample{cond_comp}{1}
+
+The following example illustrates the use of the conditional compilation 
+sentinel in fixed form source. 
+With OpenMP compilation, the conditional compilation sentinel \scode{!$} is
+replaced with two spaces.
+In fixed form source, the sentinel \scode{!$} must start on column 1 and
+statements guarded by the sentinel must start after column 6.
+The first line (\ucode{S-1}) is used here to identify the first 9 columns.
+
+\fnexample{cond_comp}{1}
+\end{fortranspecific}
+

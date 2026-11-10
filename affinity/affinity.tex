@@ -1,14 +1,17 @@
-\pagebreak
+%\pagebreak
 
 \section{Affinity Policies}
 \label{sec: affinity_policies}
-\label{sec: affinity_policies}
+\label{sec: affinity_proc_bind}
 \index{affinity!policies}
 
 Affinity policies define the assignment of threads for a parallel region to
-places available in that parallel region. The available places are taken from
-the \emph{input place partition} of the region, which is generally given by the
-\plc{place-partition-var} ICV for the encountering thread. 
+places available in that parallel region. The available places or place groups
+are taken from the \emph{input place group} of the region, which is generally
+given by the \plc{place-group-var} ICV for the encountering thread. Place
+groups may be nested hierarchically into a tree-like structure, with the leaves
+of the tree corresponding to places. The \emph{input place partition} is the ordered
+list of places encountered in a depth-first traversal of the tree.
 
 Potential thread assignments due to various affinity policies are illustrated
 in Figure~\ref{fig:affinity_illustrations}.  The input place partition is
@@ -58,34 +61,43 @@ There are three policies:
 \begin{itemize}
 \item The \kcode{spread} policy divides the input place partition into
 subpartitions and then distributes the threads to a place in each of the
-subpartitions while setting the \plc{place-partition-var} ICV for each
-thread to the subpartition to which it is distributed. This policy
-can be useful for reducing resource contention between threads that
-execute in the parallel region or if threads are expected to spawn
-nested parallelism that is confined to their new place subpartition. 
+subpartitions while setting the \plc{place-group-var} ICV for each
+thread to a place group that encloses the subpartition to which it is
+distributed. This policy can be useful for reducing resource
+contention between threads that execute in the parallel region
+or if threads are expected to spawn nested parallelism that is
+confined to their new place subpartition. 
 
 \item The \kcode{close} policy round-robin assigns threads (one or more at a
-time) to places in the input place partition. The \plc{place-partition-var}
-ICV for each thread is set to the input place partition of the region.
+time) to places in the input place partition. The \plc{place-group-var}
+ICV for each thread is set to the input place group of the region.
 
 \item The \kcode{primary} policy is used to ensure all threads are assigned to
 the same place, which is the place of the encountering thread if it is bound to
-a place. Again, each thread inherits the input place partition for its
-\plc{place-partition-var} ICV.
+a place. Again, each thread inherits the input place group for its
+\plc{place-group-var} ICV.
 \end{itemize} 
 
-Let $T$ be the team size and $P$ be the number of places in the input place
-partition. For the \kcode{spread} policy, when $T < P$ the input place
-partition is subdivided into $T$ subpartitions of $\lceil P/T \rceil$ or
-$\lfloor P/T \rfloor$ places, and otherwise the input place partition is
-subdivided into $P$ subpartitions of one place each. The first place of each of
-the subpartitions is \emph{team-eligible} for place assignment (meaning one of
-the $T$ team threads can be assigned to it). For the \kcode{close} policy, each
-place in the input place partition is team-eligible for place assignment.
-Finally, for the \kcode{primary} policy only the place to which the primary
-thread is assigned (or will be assigned as chosen by the implementation) is
-team-eligible for place assignment. In Figure~\ref{fig:affinity_illustrations},
-the team-eligible places are depicted as gray circles.
+Let $T$ be the team size, let $P$ be the number of places in the input place
+partition, and let $G$ be the number of children (immediately nested places or
+place groups) of the input place group.
+
+For the \kcode{spread} policy, when $T < G$ each thread is assigned to one of
+$T$ sets of $\lceil G/T \rceil$ or $\lfloor G/T \rfloor$ children, and
+otherwise each set of $\lceil T/G \rceil$ or $\lfloor T/G \rfloor$ consecutive
+threads are assigned to a different child. If the child is itself a place
+group, its assigned threads are then similarly spread over its children, and
+this process continues recursively. The first place of each of the
+subpartitions is \emph{team-eligible} for place assignment (meaning one of the
+$T$ team threads can be assigned to it).
+
+For the \kcode{close} policy, each place in the input place partition is
+team-eligible for place assignment.  Finally, for the \kcode{primary} policy
+only the place to which the primary thread is assigned (or will be assigned as
+chosen by the implementation) is team-eligible for place assignment.
+
+In Figure~\ref{fig:affinity_illustrations}, the team-eligible places are depicted
+as gray circles.
 
 Let $Q$ be the number of team-eligible places in the input place partition. When
 $T > Q$, the $T$ threads that comprise the team are divided into $Q$ sets of
@@ -100,24 +112,17 @@ For the \kcode{spread} policy when $T > P$ or for the \kcode{close} policy,
 after the $T$ threads are assigned there will be $K = P - T \bmod P$
 team-eligible places with one less thread than the rest. If $K < P$, each of
 the first $K$ free-agent threads that begin execution in the parallel region
-will be assigned to one these places, in some order defined by the
-implementation. The bottom case of Figure~\ref{fig:spread_policy} and both
-cases of Figure~\ref{fig:close_policy} provide an illustration of such
-assigments.
+will be assigned to one of these places not reserved for structured threads, in
+some order defined by the implementation. The bottom case of
+Figure~\ref{fig:spread_policy} and both cases of Figure~\ref{fig:close_policy}
+provide an illustration of such assignments.
 
-% NOTE: the round-robin assingment of additional free-agent threads may be
-% relaxed in OpenMP 6.1. Keeping this for now.
-Any additional free-agent threads are handled as follows. For the
-\kcode{spread} policy when $T \le P$, the first free-agent thread goes to the
-subpartition to which the primary thread is assigned, the next free-agent
-thread goes to the next subpartition, and so on with wrap-around. Within each
-subpartition, free-agent threads are round-robin assigned to the allotted
-places with wrap-around, starting with the second place in the subpartition if
-it has more than one place. See the top case of Figure~\ref{fig:spread_policy}
-for an illustration of such assignments. For all other cases, additional
-free-agent threads are round-robin assigned to team-eligible places in the
-input place partition with wrap-around, starting with the place to which the
-primary thread is assigned.
+Any additional free-agent threads for the \kcode{spread} policy are fairly
+distributed over subpartitions and their places, avoiding subpartitions or
+places reserved for structured threads. See the top case of
+Figure~\ref{fig:spread_policy} for an example illustration of such assignments.
+For other policies, additional free-agent threads are fairly distributed over
+team-eligible places, again avoiding places reserved for structured threads. 
 
 The following example demonstrates how to control thread affinity for a
 parallel region according to an affinity policy. The machine architecture
@@ -139,20 +144,19 @@ $0$,$1$ form the first physical core.
 The following equivalent place list declarations consist of eight places (which 
 we designate as p0 to p7):
 \begin{boxeducode}
-\kcode{export OMP_PLACES=}"{0,1},{2,3},{4,5},{6,7},{8,9},{10,11},{12,13},
-{14,15}"
+\kcode{OMP_PLACES}="{0,1},{2,3},{4,5},{6,7},{8,9},{10,11},{12,13},{14,15}"
 \end{boxeducode}
 or
 \begin{boxeducode}
-\kcode{export OMP_PLACES=}"{0:2}:8:2"
+\kcode{OMP_PLACES}="{0:2}:8:2"
 \end{boxeducode}
 or
 \begin{boxeducode}
-\kcode{export OMP_PLACES=}"cores"
+\kcode{OMP_PLACES}="cores"
 \end{boxeducode}
 
 \cexample[6.0]{affinity_control}{1}
-\clearpage
+%\clearpage
 
 \ffreeexample[6.0]{affinity_control}{1}
 
@@ -169,18 +173,16 @@ the device, which again is 16 for the machine we are assuming.
 The thread affinity policy can then be controlled via the \kcode{OMP_PROC_BIND}
 environment variable. 
 If \kcode{OMP_PROC_BIND} is set to
-a comma separated list of \kcode{spread}, \kcode{close}, or \kcode{primary},
+a comma-separated list of \kcode{spread}, \kcode{close}, or \kcode{primary},
 then each element of the list is used for each level of parallelism from left
 to right. For example, setting \kcode{OMP_PROC_BIND} to \pout{"spread,close"}
 will apply the \kcode{spread} affinity policy to the outer active
 \kcode{parallel} region and a \kcode{close} affinity policy (operating within
 an updated place partition) for an inner active \kcode{parallel} region.
 
-
-\section{\kcode{proc\_bind} Clause} \label{sec:affinity}
 \index{affinity!proc_bind clause@\kcode{proc_bind} clause}
-\index{clauses!proc_bind@\kcode{proc_bind}} \index{proc_bind
-clause@\kcode{proc_bind} clause}
+\index{clauses!proc_bind@\kcode{proc_bind}}
+\index{proc_bind clause@\kcode{proc_bind} clause}
 
 The following examples demonstrate how to use the \kcode{proc_bind} clause to
 control the thread binding for a team of threads in a \kcode{parallel} region.
@@ -293,13 +295,13 @@ and distribution of the place partition would be as follows:
 
 The following example shows the result of the \kcode{close} affinity policy on 
 the partition list when the number of threads is less than or equal to the number 
-of places in parent's place partition, for the machine architecture depicted above. 
+of places in the parent's place partition, for the machine architecture depicted above. 
 The place partition is not changed by the \kcode{close} policy.
 
 \cexample[4.0]{affinity}{3}
-\clearpage
 
 \fexample[4.0]{affinity}{3}
+\clearpage
 
 It is unspecified on which place the primary thread is initially started. If the 
 primary thread is initially started on p0, the following placement of threads will 
@@ -341,6 +343,7 @@ is not changed by the \kcode{close} policy.
 \cexample[4.0]{affinity}{4}
 
 \ffreeexample[4.0]{affinity}{4}
+\clearpage
 
 It is unspecified on which place the primary thread is initially started. If the 
 primary thread is initially running on p0, the following placement of threads will 

@@ -31,8 +31,9 @@ be accomplished with the \kcode{cancel} construct. The construct uses a
 That is, inclusion of one of the \plc{construct-type-clause} names \kcode{parallel}, \kcode{for}, 
 \kcode{do}, \kcode{sections} or \kcode{taskgroup} on the directive line 
 activates the corresponding region.
-The \kcode{cancel} construct is activated by the first encountering thread, and it
-continues execution at the end of the named region.
+The cancellation request is activated by the first thread that encounters
+the \kcode{cancel} construct, and it
+continues execution after the end of the named region.
 The \kcode{cancel} construct is also a cancellation point for any other thread of the team 
 to also continue execution at the end of the named region.  
 
@@ -69,10 +70,10 @@ if the \kcode{OMP_DISPLAY_ENV} environment variable has been set to \vcode{TRUE}
 NESTED CONSTRUCTS
 
 Certain combinations of nested constructs are permitted, giving rise to \emph{combined} constructs
-consisting of two or more directives. These can be used when the two (or several) constructs would be used
+consisting of two or more constituent constructs. These can be used when the two (or several) constructs would be used
 immediately in succession (closely nested). A combined construct can use the clauses of the component
 constructs without restrictions.
-A \emph{composite} construct is a combined construct which has one or more clauses with (an often obviously)
+A \emph{composite} construct is a combined construct which has one or more clauses with an (often obviously)
 modified or restricted meaning, relative to when the constructs are uncombined.
 
 Certain nestings are forbidden, and often the reasoning is obvious. For example, worksharing constructs cannot be nested, and
@@ -86,13 +87,12 @@ Use the \kcode{omp_get_max_active_levels} routine to determine the maximum level
 As of OpenMP 5.0, use of the \kcode{OMP_NESTED} environment variable and the \kcode{omp_set_nested} routine 
 has been deprecated.
 
-More details on nesting can be found in the \docref{Nesting of Regions} of the \docref{Directives} 
+More details on nesting can be found in the \docref{Nesting of Regions} section of the \docref{Directives} 
 chapter in the OpenMP Specifications document.
 
 
 %===== Examples Sections =====
 \input{program_control/assumption}
-\input{program_control/cond_comp}
 \input{program_control/icv}
 \input{program_control/standalone}
 \input{program_control/cancellation}

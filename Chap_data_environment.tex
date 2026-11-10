@@ -84,7 +84,7 @@ The \kcode{map} clause can appear on data-mapping constructs (specifically,
 \kcode{target_exit_data}).  The operations of creation and removal of corresponding
 storage as well as assignment of the original list item values to the
 corresponding list items may be complicated when the list item appears on
-multiple constructs that are executed concurrently. To accomodate this, a
+multiple constructs that are executed concurrently. To accommodate this, a
 reference count is maintained to determine which of those operations are
 needed. This can help ensure that corresponding storage is not removed on
 completion of one construct while another construct that has mapped the same
@@ -99,6 +99,7 @@ OpenMP Specification document.
 %===== Examples Sections =====
 \input{data_environment/threadprivate}
 \input{data_environment/groupprivate}
+\input{data_environment/dyn_groupprivate}
 \input{data_environment/default_none}
 \input{data_environment/private}
 \input{data_environment/fort_loopvar}

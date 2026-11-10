@@ -24,7 +24,7 @@ int main()
   double d[N];
   double my_pi=3.14159265358979e0;
 
-  // Case 1: exp_pi_diff called from a teams regions, so that
+  // Case 1: exp_pi_diff called from a teams region, so that
   // array is computed across league of teams. This ends up calling
   // the exp_pi_diff variant for teams, which uses the loop bind(teams)
   // directive via metadirective selection.
@@ -34,7 +34,7 @@ int main()
   // value should be near 1
   printf("d[N-1] = %20.14f\n",d[N-1]); // ...= 1.00000000000311
 
-  // Case 2: exp_pi_diff called from a parallel regions, so that
+  // Case 2: exp_pi_diff called from a parallel region, so that
   // array is computed across team of threads. This ends up calling
   // the exp_pi_diff variant for parallel, which uses the loop
   // bind(parallel) directive via metadirective selection.
@@ -45,7 +45,7 @@ int main()
   printf("d[N-1] = %20.14f\n",d[N-1]); // ...= 1.00000000000311
 
   // Case 3: exp_pi_diff called from outside a teams or parallel
-  // region, so that array is computed by the encountering. This
+  // region, so that array is computed by the encountering thread. This
   // ends up calling the exp_pi_diff base function, which uses the
   // loop bind(thread) directive via metadirective selection.
 

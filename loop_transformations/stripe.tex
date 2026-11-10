@@ -6,13 +6,13 @@
 
 Striping changes the order of logical iterations of a loop nest such that 
 consecutive iterations become iterations executed with distances specified
-by the \kcode{sizes(\plc{k1,k2..})} clause on the \kcode{stripe} construct.
+by the \kcode{sizes(\plc{k1,k2,...})} clause on the \kcode{stripe} construct.
 The values in the distance list apply to the associated loops in the loop
 nest, from outermost to innermost.
 For a striping distance of \plc{k}, the execution starts with the first iteration,
 then skips \plc{k-1} iterations, and continues with logical iteration \plc{k}, then 
-skips next \plc{k-1} iterations, and so on until exceeding the logicial iteration space.
-The execution continues with ``stripes'' starting with the second iterations,
+skips the next \plc{k-1} iterations, and so on until exceeding the logical iteration space.
+The execution continues with ``stripes'' starting with the second iteration,
 until all logical iterations have been executed exactly once.
 
 Some of the use cases of striping include:
@@ -44,6 +44,7 @@ and its equivalent code
 
 \cexample[6.0]{stripe}{1}
 \ffreeexample[6.0]{stripe}{1}
+\clearpage
 
 The following example shows 2-d striping of two nested loops using
 the \kcode{stripe} directive with the \kcode{sizes(\ucode{2,2})} clause 

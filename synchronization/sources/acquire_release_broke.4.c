@@ -14,7 +14,7 @@ int main()
 // !!! THIS CODE WILL FAIL TO PRODUCE CONSISTENT RESULTS !!!!!!!
 // !!! DO NOT PROGRAM SYNCHRONIZATION THIS WAY !!!!!!!
 
-   int x = 0, y;
+   int x = 0, y = 0;
    #pragma omp parallel num_threads(2)
    {
       int thrd = omp_get_thread_num();

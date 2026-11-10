@@ -1,5 +1,5 @@
 %\pagebreak
-\section{\kcode{simd} and \kcode{declare_simd} Directives}
+\section{\kcode{simd} and \scode{declare_simd} Directives}
 \label{sec:SIMD}
 
 \index{constructs!simd@\kcode{simd}}
@@ -21,11 +21,11 @@ to assure the compiler that the loop can be vectorized.
 When a function can be inlined within a loop the compiler has an opportunity to 
 vectorize the loop. By guaranteeing SIMD behavior of a function's operations, 
 characterizing the arguments of the function and privatizing temporary 
-variables of the loop, the compiler can often create faster, vector code for 
+variables of the loop, the compiler can often create faster vector code for 
 the loop. In the examples below the \kcode{declare_simd} directive is 
 used on the \ucode{add1} and \ucode{add2} functions to enable creation of their 
 corresponding SIMD function versions for execution within the associated SIMD 
-loop. The functions characterize two different approaches of accessing data 
+loop. The functions characterize two different approaches to accessing data 
 within the function: by a single variable and as an element in a data array, 
 respectively. The \ucode{add3} C function uses dereferencing.
 
@@ -56,8 +56,8 @@ variable.
 \index{clauses!reduction@\kcode{reduction}}
 \index{reduction clause@\kcode{reduction} clause}
 \index{reductions!reduction clause@\kcode{reduction} clause}
-A thread that encounters a SIMD construct executes a vectorized code of the 
-iterations. Similar to the concerns of a worksharing loop a loop vectorized 
+A thread that encounters a SIMD construct executes vectorized code for the 
+iterations. As with a worksharing loop, a loop vectorized 
 with a SIMD construct must assure that temporary and reduction variables are 
 privatized and declared as reductions with clauses.  The example below 
 illustrates the use of \kcode{private} and \kcode{reduction} clauses in a SIMD 
@@ -138,11 +138,11 @@ version of the \ucode{fib()} function.
 \index{dependences!loop-carried lexical forward}
 
 
- The following example tests the restriction on an SIMD loop with the loop-carried lexical forward-dependence. This dependence must be preserved for the correct execution of SIMD loops.
+ The following example tests the restriction on a SIMD loop with the loop-carried lexical forward dependence. This dependence must be preserved for the correct execution of SIMD loops.
 
 A loop can be vectorized even though the iterations are not completely independent when it has loop-carried dependences that are forward lexical dependences, indicated in the code below by the read of \ucode{A[j+1]} and the write to \ucode{A[j]} in C/C++ code (or \ucode{A(j+1)} and \ucode{A(j)} in Fortran). That is, the read of \ucode{A[j+1]} (or \ucode{A(j+1)} in Fortran) before the write to \ucode{A[j]} (or \ucode{A(j)} in Fortran) ordering must be preserved for each iteration in \ucode{j} for valid SIMD code generation.
 
-This test assures that the compiler preserves the loop-carried lexical forward-dependence for generating a correct SIMD code.
+This test assures that the compiler preserves the loop-carried lexical forward dependence for generating correct SIMD code.
 
 \cexample[4.0]{SIMD}{8}
 

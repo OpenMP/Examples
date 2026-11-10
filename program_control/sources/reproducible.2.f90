@@ -10,7 +10,7 @@ program main
    integer :: i
 
    !$omp parallel 
-      !! reproducible schedules are used the following two constructs 
+      !! reproducible schedules are used for the following two constructs 
       !$omp do order(reproducible: concurrent) 
       do i = 1, n
          u(i) = i
